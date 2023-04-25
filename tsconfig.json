@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                                                                   
+    "esModuleInterop": true,                           
+    "strict": true,     
+    "moduleResolution": "node",  
+    "outDir": "build/src"              
+  },
+  "exclude": ["node_modules"]
+}
