@@ -7,11 +7,12 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && cross-env NODE_ENV=production node build/src/index.js",
-    "start:dev": "nodemon --watch 'src/**/*.ts' --exec ts-node --esm src/index.ts",
+    "start": "tsc && cross-env NODE_ENV=production node -r dotenv/config build/src/index.js",
+    "start:dev": "nodemon --watch 'src/**/*.ts' --exec ts-node --esm -r dotenv/config src/index.ts",
     "lint": "eslint . --ext .ts --ignore-pattern node_modules/"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "typescript": "^5.0.4"
   },
   "devDependencies": {
