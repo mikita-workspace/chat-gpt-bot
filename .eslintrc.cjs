@@ -1,9 +1,18 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
+  extends: [
+    'airbnb-typescript/base',
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/typescript',
+  ],
+  plugins: [
+    '@typescript-eslint',
+    'prettier'
+  ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
+    project: './tsconfig.eslint.json',
   },
   env: {
     es6: true,
@@ -11,11 +20,19 @@ module.exports = {
   },
   rules: {
     'no-var': 'error',
-    semi: 'error',
-    indent: ['error', 2, { SwitchCase: 1 }],
-    'no-multi-spaces': 'error',
-    'space-in-parens': 'error',
-    'no-multiple-empty-lines': 'error',
-    'prefer-const': 'error',
+    'no-debugger': 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'error',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
+    'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error'
+    ],
+    'import/extensions': 'off',
+    'import/prefer-default-export': 'off',
+    'no-console': 0,
+    'import/no-extraneous-dependencies': 'off',
+    'prettier/prettier': ['error']
   },
 };

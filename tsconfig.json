@@ -1,10 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                                                                   
-    "esModuleInterop": true,                           
-    "strict": true,     
-    "moduleResolution": "node",  
-    "outDir": "build/src"              
+    "target": "ESNext",
+    "module": "CommonJS",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["./src/*"]
+    },
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
   },
-  "exclude": ["node_modules"]
+  "include": ["src"],
+  "exclude": ["node_modules", "build"],
 }

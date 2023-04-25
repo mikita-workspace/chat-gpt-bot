@@ -37,3 +37,6 @@ Thumbs.db
 
 # Ignore built ts files
 build/**/*
+
+# Telegraph sessions
+session
