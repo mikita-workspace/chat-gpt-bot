@@ -39,4 +39,4 @@ Thumbs.db
 build/**/*
 
 # Telegraph sessions
-session
+sessions.json

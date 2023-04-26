@@ -1,27 +1,31 @@
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
-import { Context } from 'telegraf';
+import { Context, Telegraf } from 'telegraf';
 import { MessageRoles } from '../constants';
 
 // Utils
-export interface IOggConverter {
+interface IOggConverter {
   toMp3(input: string, output: string): void;
   create(url: string, filename: string): void;
 }
 
-export interface IOpenAI {
+interface IOpenAI {
   openAI: OpenAIApi;
   chat(messages: ChatCompletionRequestMessage[]): void;
   transcription(filepath: string): void;
 }
 
 // Telegraph
-export type SessionMessageType = {
+type SessionMessageType = {
   content: string;
   role: `${MessageRoles}`;
 };
 
-export type BotContextType = Context & {
+type BotContextType = Context & {
   session: {
     messages: SessionMessageType[];
   };
 };
+
+type BotType = Telegraf<BotContextType>;
+
+export { BotType, BotContextType, IOggConverter, IOpenAI };
