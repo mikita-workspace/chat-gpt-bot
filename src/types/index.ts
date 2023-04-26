@@ -3,12 +3,12 @@ import { Context, Telegraf } from 'telegraf';
 import { MessageRoles } from '../constants';
 
 // Utils
-interface IOggConverter {
+export interface IOggConverter {
   toMp3(input: string, output: string): void;
   create(url: string, filename: string): void;
 }
 
-interface IOpenAI {
+export interface IOpenAI {
   openAI: OpenAIApi;
   chat(messages: ChatCompletionRequestMessage[]): void;
   transcription(filepath: string): void;
@@ -26,6 +26,4 @@ type BotContextType = Context & {
   };
 };
 
-type BotType = Telegraf<BotContextType>;
-
-export { BotType, BotContextType, IOggConverter, IOpenAI };
+export type BotType = Telegraf<BotContextType>;
