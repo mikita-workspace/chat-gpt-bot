@@ -15,12 +15,12 @@ export interface IOpenAI {
 }
 
 // Telegraph
-type SessionMessageType = {
+export type SessionMessageType = {
   content: string;
   role: `${MessageRoles}`;
 };
 
-type BotContextType = Context & {
+export type BotContextType = Context & {
   session: {
     messages: SessionMessageType[];
   };
