@@ -4,9 +4,9 @@ import { dirname, resolve as resolvePath } from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import installer from '@ffmpeg-installer/ffmpeg';
 import { IOggConverter } from '../types';
-import { removeFile } from '.';
+import { removeFile } from '../utils';
 
-class OggConverter implements IOggConverter {
+class OggConverterService implements IOggConverter {
   constructor() {
     ffmpeg.setFfmpegPath(installer.path);
   }
@@ -53,4 +53,4 @@ class OggConverter implements IOggConverter {
   }
 }
 
-export const oggConverter = new OggConverter();
+export const oggConverter = new OggConverterService();

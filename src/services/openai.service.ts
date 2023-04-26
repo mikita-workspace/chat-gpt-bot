@@ -1,10 +1,10 @@
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 import { createReadStream } from 'fs';
-import { removeFile } from '.';
+import { removeFile } from '../utils';
 import { IOpenAI } from '../types';
 import { OPEN_AI_TOKEN, gptModel, transcriptionModel } from '../constants';
 
-class OpenAI implements IOpenAI {
+class OpenAIService implements IOpenAI {
   openAI: OpenAIApi;
 
   constructor(apiKey: string) {
@@ -47,4 +47,4 @@ class OpenAI implements IOpenAI {
   }
 }
 
-export const openAI = new OpenAI(OPEN_AI_TOKEN);
+export const openAI = new OpenAIService(OPEN_AI_TOKEN);

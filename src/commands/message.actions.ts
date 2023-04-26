@@ -1,10 +1,12 @@
 import { message } from 'telegraf/filters';
-import { oggConverter, openAI } from '../utils';
+import { oggConverter, openAI, i18n } from '../services';
 import { BotType } from '../types';
 import { INITIAL_SESSION, MessageRoles } from '../constants';
 
 export const textMessage = (bot: BotType) => {
   bot.on(message('text'), async (ctx) => {
+    i18n.setLocale(ctx.from.language_code);
+
     ctx.session ??= INITIAL_SESSION;
 
     try {
@@ -27,6 +29,7 @@ export const textMessage = (bot: BotType) => {
         reply_to_message_id: messageId,
       });
     } catch (error) {
+      await ctx.reply(i18n.translate('commonError'));
       console.error(`ERROR::Listener::Voice::${(error as Error).message}`);
     }
   });
@@ -34,6 +37,8 @@ export const textMessage = (bot: BotType) => {
 
 export const voiceMessage = (bot: BotType) => {
   bot.on(message('voice'), async (ctx) => {
+    i18n.setLocale(ctx.from.language_code);
+
     ctx.session ??= INITIAL_SESSION;
 
     try {
@@ -64,7 +69,7 @@ export const voiceMessage = (bot: BotType) => {
         reply_to_message_id: messageId,
       });
     } catch (error) {
-      await ctx.reply('Something went wrong. Try again!');
+      await ctx.reply(i18n.translate('commonError'));
       console.error(`ERROR::Listener::Voice::${(error as Error).message}`);
     }
   });
