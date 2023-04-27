@@ -21,9 +21,23 @@ export type SessionMessageType = {
 };
 
 export type BotContextType = Context & {
+  readonly update?: {
+    readonly message: {
+      readonly from?: {
+        readonly id?: number;
+      };
+    };
+  };
+
   session: {
     messages: SessionMessageType[];
   };
 };
 
 export type BotType = Telegraf<BotContextType>;
+
+// Middleware
+export type TelegrafMiddlewareFn<Context> = (
+  ctx: Context,
+  next: () => Promise<void>,
+) => Promise<void>;
