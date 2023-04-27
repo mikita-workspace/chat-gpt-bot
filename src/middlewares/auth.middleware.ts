@@ -2,11 +2,11 @@ import { i18n } from '../services';
 import { BotContextType, TelegrafMiddlewareFn } from '../types';
 
 export const auth =
-  (allowUsersList: number[]): TelegrafMiddlewareFn<BotContextType> =>
+  (allowUsersList: string[]): TelegrafMiddlewareFn<BotContextType> =>
   async (ctx, next) => {
-    const userId = ctx?.update?.message?.from?.id ?? null;
+    const userName = ctx?.update?.message?.from?.username ?? '';
 
-    if (userId !== null && allowUsersList.includes(userId)) {
+    if (allowUsersList.includes(userName)) {
       return next();
     }
 

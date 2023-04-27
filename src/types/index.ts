@@ -24,7 +24,7 @@ export type BotContextType = Context & {
   readonly update?: {
     readonly message: {
       readonly from?: {
-        readonly id?: number;
+        readonly username?: string;
         readonly language_code?: string;
       };
     };

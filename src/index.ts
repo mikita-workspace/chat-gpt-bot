@@ -16,7 +16,7 @@ const bot = new Telegraf<BotContextType>(TELEGRAM_TOKEN);
 
 bot.use(locale());
 
-bot.use(auth([Number(process.env.ALLOW_USER)]));
+bot.use(auth([process.env.ALLOW_USER ?? '']));
 
 bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
 
