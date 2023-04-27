@@ -10,13 +10,16 @@ import {
 } from './commands';
 import { TELEGRAM_TOKEN } from './constants';
 import { BotContextType } from './types';
-import { auth } from './middlewares';
+import { auth, locale } from './middlewares';
 
 // TODO: Move it to MongoDB as well
 const allowUsers = [Number(process.env.ALLOW_USER)];
 
 // Bot initialization
 const bot = new Telegraf<BotContextType>(TELEGRAM_TOKEN);
+
+// Locale
+bot.use(locale());
 
 // Auth
 bot.use(auth(allowUsers));

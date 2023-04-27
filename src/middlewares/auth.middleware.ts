@@ -1,3 +1,4 @@
+import { i18n } from '../services';
 import { BotContextType, TelegrafMiddlewareFn } from '../types';
 
 export const auth =
@@ -9,7 +10,7 @@ export const auth =
       return next();
     }
 
-    await ctx.reply('auth');
+    await ctx.reply(i18n.translate('authError'));
 
     return;
   };

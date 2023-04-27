@@ -5,8 +5,6 @@ import { INITIAL_SESSION, MessageRoles } from '../constants';
 
 export const textMessage = (bot: BotType) => {
   bot.on(message('text'), async (ctx) => {
-    i18n.setLocale(ctx.from.language_code);
-
     ctx.session ??= INITIAL_SESSION;
 
     try {
@@ -37,8 +35,6 @@ export const textMessage = (bot: BotType) => {
 
 export const voiceMessage = (bot: BotType) => {
   bot.on(message('voice'), async (ctx) => {
-    i18n.setLocale(ctx.from.language_code);
-
     ctx.session ??= INITIAL_SESSION;
 
     try {
