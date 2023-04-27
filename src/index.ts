@@ -15,28 +15,22 @@ import { auth, locale } from './middlewares';
 // TODO: Move it to MongoDB as well
 const allowUsers = [Number(process.env.ALLOW_USER)];
 
-// Bot initialization
 const bot = new Telegraf<BotContextType>(TELEGRAM_TOKEN);
 
-// Locale
 bot.use(locale());
 
-// Auth
 bot.use(auth(allowUsers));
 
-// TODO: implement session with MongoDB Atlas
-// Local session
 bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
 
-// Command actions
-startCommand(bot);
-newCommand(bot);
-aboutCommand(bot);
-descriptionCommand(bot);
-
-// Message actions
-textMessage(bot);
-voiceMessage(bot);
+[
+  aboutCommand,
+  descriptionCommand,
+  newCommand,
+  startCommand,
+  textMessage,
+  voiceMessage,
+].forEach((handle) => handle(bot));
 
 bot.launch();
 
