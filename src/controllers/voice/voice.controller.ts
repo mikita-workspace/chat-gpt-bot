@@ -1,6 +1,7 @@
 import { oggConverter, openAI } from '../../services';
-import { getGPTMessage } from '../../helpers';
+import { getFileApiLink, getGPTAnswer } from '../../helpers';
 import { BotType } from '../../types';
+import { TELEGRAM_TOKEN } from '../../constants';
 
 export const voiceController = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {
@@ -9,15 +10,19 @@ export const voiceController = (bot: BotType) => {
       const messageId = Number(ctx.message.message_id);
       const chatId = String(ctx.chat.id);
 
-      const voiceFileLink = (await ctx.api.getFile(ctx.message.voice.file_id))
-        .file_path;
-      const oggPath = await oggConverter.create(voiceFileLink, userId);
+      const voiceFile = await ctx.api.getFile(ctx.message.voice.file_id);
+      const voiceFileApiLink = getFileApiLink(
+        TELEGRAM_TOKEN,
+        voiceFile.file_path,
+      );
+
+      const oggPath = await oggConverter.create(voiceFileApiLink, userId);
       const mp3Path = await oggConverter.toMp3(oggPath, userId);
 
       const text = await openAI.transcription(mp3Path);
-      const gptMessage = (await getGPTMessage(ctx, text)) ?? '';
+      const gptAnswer = (await getGPTAnswer(ctx, text)) ?? '';
 
-      await ctx.api.sendMessage(chatId, gptMessage, {
+      await ctx.api.sendMessage(chatId, gptAnswer, {
         reply_to_message_id: messageId,
       });
     } catch (error) {

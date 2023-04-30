@@ -1,4 +1,4 @@
-import { getGPTMessage } from '../../helpers';
+import { getGPTAnswer } from '../../helpers';
 import { BotType } from '../../types';
 
 export const textController = (bot: BotType) => {
@@ -8,9 +8,9 @@ export const textController = (bot: BotType) => {
       const text = String(ctx?.message?.text);
       const chatId = String(ctx?.chat?.id);
 
-      const gptMessage = (await getGPTMessage(ctx, text)) ?? '';
+      const gptAnswer = (await getGPTAnswer(ctx, text)) ?? '';
 
-      await ctx.api.sendMessage(chatId, gptMessage, {
+      await ctx.api.sendMessage(chatId, gptAnswer, {
         reply_to_message_id: messageId,
       });
     } catch (error) {

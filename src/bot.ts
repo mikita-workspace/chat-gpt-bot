@@ -12,6 +12,7 @@ import {
   textController,
   voiceController,
 } from './controllers';
+import { auth } from './middlewares';
 import { TELEGRAM_TOKEN } from './constants';
 import { BotContextType } from './types';
 
@@ -33,7 +34,7 @@ export const createBot = (db: typeof mongoose) => {
 
   bot.use(i18n);
 
-  // bot.use(auth([process.env.ALLOW_USER ?? '']));
+  bot.use(auth());
 
   bot.use(
     session({

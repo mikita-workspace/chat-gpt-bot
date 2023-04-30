@@ -11,7 +11,7 @@ export const convertGPTMessage = (
   role,
 });
 
-export const getGPTMessage = async (ctx: BotContextType, text = '') => {
+export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
   try {
     ctx.session.messages.push(convertGPTMessage(text));
 

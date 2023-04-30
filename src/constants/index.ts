@@ -11,3 +11,6 @@ export enum MessageRoles {
   USER = 'user',
   SYSTEM = 'system',
 }
+
+// Telegram API
+export const telegramApi = 'https://api.telegram.org';

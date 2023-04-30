@@ -1,16 +1,17 @@
-import { i18n } from '../services';
+import { UserModel } from '../models';
 import { BotContextType, GrammyMiddlewareFn } from '../types';
 
 export const auth =
-  (allowUsersList: string[]): GrammyMiddlewareFn<BotContextType> =>
-  async (ctx, next) => {
-    const userName = ctx?.update?.message?.from?.username ?? '';
+  (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
+    const username = ctx?.update?.message?.from?.username ?? '';
 
-    if (allowUsersList.includes(userName)) {
+    const isAccessAllowed = await UserModel.findOne({ username }).exec();
+
+    if (isAccessAllowed) {
       return next();
     }
 
-    await ctx.reply(i18n.translate('authError'));
+    await ctx.reply(ctx.t('authError'));
 
     return;
   };
