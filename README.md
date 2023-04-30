@@ -8,7 +8,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/mikita-kandratsyeu/telegram-bot)
 
 <img src="./.github/md-icons/TypeScript.svg" width="48">
-<img src="./.github/md-icons/NodeJS-Dark.svg" width="48">
+<img src="./.github/md-icons/NodeJS-Light.svg" width="48">
 <img src="./.github/md-icons/Docker.svg" width="48">  
 <img src="./.github/md-icons/ChatGPT_logo.svg" width="48">
 
