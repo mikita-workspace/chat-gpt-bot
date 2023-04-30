@@ -1,8 +1,8 @@
 import { i18n } from '../services';
-import { BotContextType, TelegrafMiddlewareFn } from '../types';
+import { BotContextType, GrammyMiddlewareFn } from '../types';
 
 export const auth =
-  (allowUsersList: string[]): TelegrafMiddlewareFn<BotContextType> =>
+  (allowUsersList: string[]): GrammyMiddlewareFn<BotContextType> =>
   async (ctx, next) => {
     const userName = ctx?.update?.message?.from?.username ?? '';
 

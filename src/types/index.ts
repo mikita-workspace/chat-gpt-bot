@@ -1,3 +1,3 @@
 export * from './service.types';
 export * from './middleware.types';
-export * from './telegraf.types';
+export * from './bot.types';
