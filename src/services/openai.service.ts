@@ -24,11 +24,11 @@ class OpenAIService implements IOpenAI {
 
       return response.data.choices[0].message;
     } catch (error) {
-      console.error(`ERROR::OpenAI::chat::${(error as Error).message}`);
+      console.error(`ERROR::OpenAIService::chat::${(error as Error).message}`);
     }
   }
 
-  async transcription(filepath: string) {
+  async transcription(filepath = '') {
     try {
       const fileStream: unknown = createReadStream(filepath);
 
@@ -41,7 +41,7 @@ class OpenAIService implements IOpenAI {
       return response.data.text;
     } catch (error) {
       console.error(
-        `ERROR::OpenAI::transcription::${(error as Error).message}`,
+        `ERROR::OpenAIService::transcription::${(error as Error).message}`,
       );
     }
   }

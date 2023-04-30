@@ -7,5 +7,5 @@ export const locale =
 
     i18n.setLocale(userLanguageCode);
 
-    next();
+    return next();
   };

@@ -11,7 +11,7 @@ class OggConverterService implements IOggConverter {
     ffmpeg.setFfmpegPath(installer.path);
   }
 
-  async toMp3(input: string, output: string) {
+  async toMp3(input = '', output = '') {
     try {
       const outputPath = resolvePath(dirname(input), `${output}.mp3`);
 
@@ -27,7 +27,9 @@ class OggConverterService implements IOggConverter {
           .run();
       });
     } catch (error) {
-      console.error(`ERROR::OggConverter::toMp3::${(error as Error).message}`);
+      console.error(
+        `ERROR::OggConverterService::toMp3::${(error as Error).message}`,
+      );
     }
   }
 
@@ -48,7 +50,9 @@ class OggConverterService implements IOggConverter {
         stream.on('finish', () => resolve(oggPath));
       });
     } catch (error) {
-      console.error(`ERROR::OggConverter::create::${(error as Error).message}`);
+      console.error(
+        `ERROR::OggConverterService::create::${(error as Error).message}`,
+      );
     }
   }
 }

@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+import { MONGODB_URI, TELEGRAM_TOKEN } from './constants';
 import { Telegraf } from 'telegraf';
 import LocalSession from 'telegraf-session-local';
 import {
@@ -8,28 +10,40 @@ import {
   textMessage,
   voiceMessage,
 } from './commands';
-import { TELEGRAM_TOKEN } from './constants';
 import { BotContextType } from './types';
-import { auth, locale } from './middlewares';
+import { auth, locale, normalize } from './middlewares';
 
-const bot = new Telegraf<BotContextType>(TELEGRAM_TOKEN);
+const botInitialize = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI);
 
-bot.use(locale());
+    const bot = new Telegraf<BotContextType>(TELEGRAM_TOKEN);
 
-bot.use(auth([process.env.ALLOW_USER ?? '']));
+    bot.use(new LocalSession({ database: 'session.json' }).middleware());
 
-bot.use(new LocalSession({ database: 'sessions.json' }).middleware());
+    bot.use(normalize());
 
-[
-  aboutCommand,
-  descriptionCommand,
-  newCommand,
-  startCommand,
-  textMessage,
-  voiceMessage,
-].forEach((handle) => handle(bot));
+    bot.use(locale());
 
-bot.launch();
+    // bot.use(auth([process.env.ALLOW_USER ?? '']));
 
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+    [
+      aboutCommand,
+      descriptionCommand,
+      newCommand,
+      startCommand,
+      textMessage,
+      voiceMessage,
+    ].forEach((handle) => handle(bot));
+    bot.launch();
+
+    console.info('INFO::botInitialize::MongoDB has been started');
+
+    process.once('SIGINT', () => bot.stop('SIGINT'));
+    process.once('SIGTERM', () => bot.stop('SIGTERM'));
+  } catch (error) {
+    console.error(`ERROR::botInitialize::${(error as Error).message}`);
+  }
+};
+
+botInitialize();
