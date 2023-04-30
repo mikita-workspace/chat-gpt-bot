@@ -10,9 +10,3 @@ export const removeFile = async (path: string) => {
 
 export const isEmptyObject = (object: object) =>
   Object.keys(object).length === 0;
-
-export const mapContextData = (from: any) => ({
-  telegramId: from.id,
-  username: from.username,
-  firstname: from.first_name,
-});
