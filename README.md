@@ -6,11 +6,14 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/mikita-kandratsyeu/telegram-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/telegram-bot/commits/main)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/mikita-kandratsyet/telegram-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/telegram-bot/releases)
 
+<div>
 
 <img src="./.github/md-icons/TypeScript.svg" width="48">
 <img src="./.github/md-icons/NodeJS-Light.svg" width="48">
 <img src="./.github/md-icons/Docker.svg" width="48">  
 <img src="./.github/md-icons/ChatGPT_logo.svg" width="48">
+
+</div>
 
 ## Getting Started
 
