@@ -1,16 +1,21 @@
-import { i18n } from '../services';
-import { BotContextType, TelegrafMiddlewareFn } from '../types';
+import { UserModel } from '../models';
+import { fetchCachedData } from '../utils';
+import { BotContextType, GrammyMiddlewareFn } from '../types';
 
 export const auth =
-  (allowUsersList: string[]): TelegrafMiddlewareFn<BotContextType> =>
-  async (ctx, next) => {
-    const userName = ctx?.update?.message?.from?.username ?? '';
+  (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
+    const userId = ctx?.update?.message?.from?.id ?? '';
+    const username = ctx?.update?.message?.from?.username ?? '';
 
-    if (allowUsersList.includes(userName)) {
+    const user = await fetchCachedData(`${userId}-${username}`, async () =>
+      UserModel.findOne({ username }).exec(),
+    );
+
+    if (user) {
       return next();
     }
 
-    await ctx.reply(i18n.translate('authError'));
+    await ctx.reply(ctx.t('authError'));
 
     return;
   };

@@ -10,7 +10,3 @@ export interface IOpenAI {
   chat(messages: ChatCompletionRequestMessage[]): void;
   transcription(filepath: string): void;
 }
-
-export interface IMongoDB {
-  createOrGetUser(from: any): any;
-}

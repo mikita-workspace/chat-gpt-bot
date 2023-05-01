@@ -33,7 +33,7 @@ class OggConverterService implements IOggConverter {
     }
   }
 
-  async create(url: string, filename: string) {
+  async create(url = '', filename = '') {
     try {
       const oggPath = resolvePath(__dirname, '../../assets', `${filename}.ogg`);
 
