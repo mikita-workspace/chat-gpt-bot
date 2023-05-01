@@ -18,3 +18,10 @@ export const telegramApi = 'https://api.telegram.org';
 
 // Node cache
 export const TTL_DEFAULT = 60;
+
+// Privileges
+export enum UserRoles {
+  ADMIN = 'admin',
+  USER = 'user',
+  MODERATOR = 'moderator',
+}
