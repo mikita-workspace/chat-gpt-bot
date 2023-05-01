@@ -21,6 +21,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "grammy": "^1.16.0",
     "mongoose": "^7.1.0",
+    "node-cache": "^5.1.2",
     "openai": "^3.2.1",
     "typescript": "^5.0.4"
   },

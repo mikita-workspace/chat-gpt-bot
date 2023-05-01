@@ -14,3 +14,6 @@ export enum MessageRoles {
 
 // Telegram API
 export const telegramApi = 'https://api.telegram.org';
+
+// Node cache
+export const TTL_DEFAULT = 60;

@@ -1,4 +1,35 @@
 import { unlink } from 'fs/promises';
+import NodeCache from 'node-cache';
+import { TTL_DEFAULT } from '../constants';
+
+export const memoryCache = new NodeCache({
+  stdTTL: TTL_DEFAULT,
+});
+
+export const setValueToMemoryCache = <T>(
+  key: string,
+  value: T,
+  expires = TTL_DEFAULT,
+) => memoryCache.set(key, value, expires);
+
+export const getValueFromMemoryCache = (key: string) => memoryCache.get(key);
+
+export const fetchCachedData = async <T>(
+  key: string,
+  dataCallback: () => T,
+) => {
+  const cachedData = getValueFromMemoryCache(key);
+
+  if (cachedData) {
+    return cachedData;
+  }
+
+  const response = await dataCallback();
+
+  setValueToMemoryCache<T>(key, response);
+
+  return response;
+};
 
 export const removeFile = async (path: string) => {
   try {
