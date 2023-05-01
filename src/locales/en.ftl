@@ -9,3 +9,4 @@ commonError = Something went wrong. Try again!
 
 authError = Your account ({ $username }) does not have permission to use this bot. Please contact administrator
 
+sessionMessagesError = Error reading messages from the session for { $key }:{ $targetUsername }

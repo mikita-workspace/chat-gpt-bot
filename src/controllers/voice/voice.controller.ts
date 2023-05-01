@@ -1,7 +1,7 @@
+import { config } from '../../config';
 import { oggConverter, openAI } from '../../services';
 import { getFileApiLink, getGPTAnswer } from '../../helpers';
 import { BotType } from '../../types';
-import { TELEGRAM_TOKEN } from '../../constants';
 
 export const voiceController = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {
@@ -12,7 +12,7 @@ export const voiceController = (bot: BotType) => {
 
       const voiceFile = await ctx.api.getFile(ctx.message.voice.file_id);
       const voiceFileApiLink = getFileApiLink(
-        TELEGRAM_TOKEN,
+        config.TELEGRAM_TOKEN,
         voiceFile.file_path,
       );
 

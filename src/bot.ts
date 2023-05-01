@@ -1,9 +1,8 @@
 import path from 'path';
-import mongoose from 'mongoose';
 import { Bot, session } from 'grammy';
 import { I18n } from '@grammyjs/i18n';
-import { MongoDBAdapter, ISession } from '@grammyjs/storage-mongodb';
-import { createInitialSessionData } from './helpers';
+import { config } from './config';
+import { createInitialSessionData, getHtmlForSessionMessages } from './helpers';
 import {
   aboutController,
   descriptionController,
@@ -13,11 +12,12 @@ import {
   voiceController,
 } from './controllers';
 import { auth } from './middlewares';
-import { TELEGRAM_TOKEN, gptModel } from './constants';
+import { mongo } from './services';
+import { gptModel } from './constants';
 import { BotContextType } from './types';
 
-export const createBot = (db: typeof mongoose) => {
-  const bot = new Bot<BotContextType>(TELEGRAM_TOKEN);
+export const createBot = () => {
+  const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);
 
   const i18n = new I18n<BotContextType>({
     defaultLocale: 'en',
@@ -32,8 +32,6 @@ export const createBot = (db: typeof mongoose) => {
     },
   });
 
-  const collection = db.connection.db.collection<ISession>('sessions');
-
   bot.use(i18n);
 
   bot.use(auth());
@@ -41,18 +39,34 @@ export const createBot = (db: typeof mongoose) => {
   bot.use(
     session({
       initial: createInitialSessionData,
-      storage: new MongoDBAdapter({ collection }),
+      storage: mongo.sessionAdapter,
     }),
   );
 
-  [
-    aboutController,
-    descriptionController,
-    newController,
-    startController,
-    textController,
-    voiceController,
-  ].forEach((handle) => handle(bot));
+  // [
+  //   aboutController,
+  //   descriptionController,
+  //   newController,
+  //   startController,
+  //   textController,
+  //   voiceController,
+  // ].forEach((handle) => handle(bot));
+
+  bot.command('test', async (ctx) => {
+    const msg = await mongo.getUserSessionMessages('495000805');
+
+    console.log(getHtmlForSessionMessages());
+
+    await ctx.api.sendMessage(
+      ctx.chat.id,
+      getHtmlForSessionMessages(msg, 'error'),
+      {
+        parse_mode: 'HTML',
+      },
+    );
+
+    await ctx.reply(ctx.t('commonError'));
+  });
 
   return bot;
 };

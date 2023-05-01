@@ -1,4 +1,4 @@
-import { UserModel } from '../models';
+import { mongo } from '../services';
 import { fetchCachedData } from '../utils';
 import { BotContextType, GrammyMiddlewareFn } from '../types';
 
@@ -8,7 +8,7 @@ export const auth =
     const username = ctx?.update?.message?.from?.username ?? '';
 
     const user = await fetchCachedData(`${userId}-${username}`, async () =>
-      UserModel.findOne({ username }).exec(),
+      mongo.getUser(username),
     );
 
     if (user) {

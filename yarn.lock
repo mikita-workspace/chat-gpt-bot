@@ -115,6 +115,11 @@
   dependencies:
     "@deno/shim-deno" "~0.9.0"
 
+"@grammyjs/menu@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@grammyjs/menu/-/menu-1.2.0.tgz#ce2fbf083e115b78c5b3d736ac7f825c692cbd15"
+  integrity sha512-dz0ts9c+g2zZ5ZW+Md8vGhLncI4QwKGMDyEnjgjr7CFBUYizsUmNhPTANmt6UlXaRfp0v6rtHmWtAjkmZ9Bw3Q==
+
 "@grammyjs/storage-mongodb@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@grammyjs/storage-mongodb/-/storage-mongodb-2.2.0.tgz#ff2096187fd86859162af678d1c7a98b2028b800"

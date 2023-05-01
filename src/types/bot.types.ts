@@ -3,7 +3,10 @@ import { I18nFlavor } from '@grammyjs/i18n';
 import { MessageRoles } from '../constants';
 
 export type SessionType = {
-  messages: { content: string; role: `${MessageRoles}` }[];
+  messages: {
+    gptFormat: { content: string; role: `${MessageRoles}` };
+    timestamp: number;
+  }[];
 };
 
 export type BotContextType = Context & SessionFlavor<SessionType> & I18nFlavor;

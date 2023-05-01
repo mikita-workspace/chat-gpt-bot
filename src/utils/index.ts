@@ -41,3 +41,11 @@ export const removeFile = async (path: string) => {
 
 export const isEmptyObject = (object: object) =>
   Object.keys(object).length === 0;
+
+export const parseTimestamp = (timestamp: number) => {
+  const date = new Date(timestamp);
+
+  return `${date.toLocaleDateString('en-US')} ${date.toLocaleTimeString(
+    'en-US',
+  )}`;
+};
