@@ -2,6 +2,7 @@
 export const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN ?? '';
 export const OPEN_AI_TOKEN = process.env.OPEN_AI_TOKEN ?? '';
 export const MONGODB_URI = process.env.MONGODB_URI ?? '';
+export const MONGODB_URI_LOCAL = process.env.MONGODB_URI_LOCAL ?? '';
 
 // Open AI
 export const gptModel = 'gpt-3.5-turbo';
