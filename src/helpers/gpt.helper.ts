@@ -18,8 +18,6 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
     const response = await openAI.chat(ctx.session.messages);
 
     if (!response) {
-      await ctx.reply('Error');
-
       return '';
     }
 
