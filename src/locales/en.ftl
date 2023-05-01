@@ -7,4 +7,5 @@ description = I'm ChatGPT, an intelligent bot capable of responding to various u
 
 commonError = Something went wrong. Try again!
 
-authError = You do not have access rights to use this bot
+authError = Your account ({ $username }) does not have permission to use this bot. Please contact administrator
+

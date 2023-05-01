@@ -13,7 +13,7 @@ import {
   voiceController,
 } from './controllers';
 import { auth } from './middlewares';
-import { TELEGRAM_TOKEN } from './constants';
+import { TELEGRAM_TOKEN, gptModel } from './constants';
 import { BotContextType } from './types';
 
 export const createBot = (db: typeof mongoose) => {
@@ -26,6 +26,8 @@ export const createBot = (db: typeof mongoose) => {
     globalTranslationContext(ctx) {
       return {
         first_name: ctx.from?.first_name ?? '',
+        username: ctx?.from?.username ?? '',
+        model: gptModel,
       };
     },
   });
