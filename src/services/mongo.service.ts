@@ -34,7 +34,7 @@ export class MongoService {
       return enabledUsers;
     } catch (error) {
       console.error(
-        `ERROR::MongoService::getAllUsers::${(error as Error).message}`,
+        `ERROR::MongoService::getEnabledUsers::${(error as Error).message}`,
       );
     }
   }

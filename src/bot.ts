@@ -2,9 +2,10 @@ import path from 'path';
 import { Bot, session } from 'grammy';
 import { I18n } from '@grammyjs/i18n';
 import { config } from './config';
-import { createInitialSessionData, getHtmlForSessionMessages } from './helpers';
+import { createInitialSessionData } from './helpers';
 import {
   aboutController,
+  adminController,
   descriptionController,
   newController,
   startController,
@@ -43,30 +44,15 @@ export const createBot = () => {
     }),
   );
 
-  // [
-  //   aboutController,
-  //   descriptionController,
-  //   newController,
-  //   startController,
-  //   textController,
-  //   voiceController,
-  // ].forEach((handle) => handle(bot));
-
-  bot.command('test', async (ctx) => {
-    const msg = await mongo.getUserSessionMessages('495000805');
-
-    console.log(getHtmlForSessionMessages());
-
-    await ctx.api.sendMessage(
-      ctx.chat.id,
-      getHtmlForSessionMessages(msg, 'error'),
-      {
-        parse_mode: 'HTML',
-      },
-    );
-
-    await ctx.reply(ctx.t('commonError'));
-  });
+  [
+    aboutController,
+    adminController,
+    descriptionController,
+    newController,
+    startController,
+    textController,
+    voiceController,
+  ].forEach((handle) => handle(bot));
 
   return bot;
 };
