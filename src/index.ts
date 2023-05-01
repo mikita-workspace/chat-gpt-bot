@@ -10,8 +10,6 @@ const botInitialize = async () => {
 
     bot.start();
 
-    console.info('bot started');
-
     process.once('SIGINT', () => bot.stop());
     process.once('SIGTERM', () => bot.stop());
   } catch (error) {
