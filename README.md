@@ -2,7 +2,7 @@
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-6.7-blue?logo=telegram&style=for-the-badge&labelColor=000&color=3b82f6&)](https://core.telegram.org/bots/api)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mikita-kandratsyeu/telegram-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/telegram-bot/commits/main)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/mikita-kandratsyet/telegram-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/telegram-bot/releases)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/mikita-kandratsyeu/telegram-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/telegram-bot/releases)
 
 <div>
 
