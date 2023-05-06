@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import { UserModel } from '../models';
+import { fetchCachedData } from '../utils';
 import { SessionType } from '../types';
 
 export class MongoService {
@@ -17,7 +18,9 @@ export class MongoService {
 
   async getUsers() {
     try {
-      const users = await UserModel.find({}).exec();
+      const users = await fetchCachedData('cached-users', async () =>
+        UserModel.find({}).exec(),
+      );
 
       return users;
     } catch (error) {
@@ -27,21 +30,11 @@ export class MongoService {
     }
   }
 
-  async getEnabledUsers() {
-    try {
-      const enabledUsers = await UserModel.find({ enabled: true }).exec();
-
-      return enabledUsers;
-    } catch (error) {
-      console.error(
-        `ERROR::MongoService::getEnabledUsers::${(error as Error).message}`,
-      );
-    }
-  }
-
   async getUser(username: string) {
     try {
-      const user = await UserModel.findOne({ username }).exec();
+      const user = await fetchCachedData(`cached-user-${username}`, async () =>
+        UserModel.findOne({ username }).exec(),
+      );
 
       return user;
     } catch (error) {
@@ -53,7 +46,10 @@ export class MongoService {
 
   async getUserSessionMessages(key: string) {
     try {
-      const userSessionMessages = await this.sessionAdapter.read(key);
+      const userSessionMessages = await fetchCachedData(
+        `cached-session-messages-${key}`,
+        async () => this.sessionAdapter.read(key),
+      );
 
       return (userSessionMessages as unknown as SessionType)?.messages;
     } catch (error) {
