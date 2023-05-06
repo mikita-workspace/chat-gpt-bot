@@ -19,3 +19,15 @@ export enum UserRoles {
   USER = 'user',
   MODERATOR = 'moderator',
 }
+
+// Callback query actions
+export enum CallbackQueryActions {
+  USERS = 'users-action',
+  ADD_USER = 'add-user-action',
+  BLOCK_USER = 'block-user-action',
+  UNBLOCK_USER = 'unblock-user-action',
+  GET_ALL_USERS = 'get-all-users-action',
+  SESSIONS = 'sessions-action',
+  DELETE_SESSION = 'delete-session-action',
+  GET_SESSION = 'get-session-action',
+}
