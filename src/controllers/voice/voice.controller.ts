@@ -8,7 +8,6 @@ export const voiceController = (bot: BotType) => {
     try {
       const userId = String(ctx.message.from.id);
       const messageId = Number(ctx.message.message_id);
-      const chatId = String(ctx.chat.id);
 
       const voiceFile = await ctx.api.getFile(ctx.message.voice.file_id);
       const voiceFileApiLink = getFileApiLink(
@@ -22,9 +21,7 @@ export const voiceController = (bot: BotType) => {
       const text = await openAI.transcription(mp3Path);
       const gptAnswer = (await getGPTAnswer(ctx, text)) ?? '';
 
-      await ctx.api.sendMessage(chatId, gptAnswer, {
-        reply_to_message_id: messageId,
-      });
+      await ctx.reply(gptAnswer, { reply_to_message_id: messageId });
     } catch (error) {
       await ctx.reply(ctx.t('error-common'));
       console.error(

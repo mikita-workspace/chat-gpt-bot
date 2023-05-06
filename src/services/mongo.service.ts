@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import { UserModel } from '../models';
-import { fetchCachedData } from '../utils';
+import { fetchCachedData, removeValueFromMemoryCache } from '../utils';
 import { SessionType } from '../types';
 
 export class MongoService {
@@ -55,6 +55,20 @@ export class MongoService {
     } catch (error) {
       console.error(
         `ERROR::MongoService::getUserSessionMessages::${
+          (error as Error).message
+        }`,
+      );
+    }
+  }
+
+  async deleteUserSessionMessages(key: string) {
+    try {
+      await this.sessionAdapter.delete(key);
+
+      removeValueFromMemoryCache(`cached-session-messages-${key}`);
+    } catch (error) {
+      console.error(
+        `ERROR::MongoService::deleteUserSessionMessages::${
           (error as Error).message
         }`,
       );

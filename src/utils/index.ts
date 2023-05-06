@@ -12,6 +12,8 @@ export const setValueToMemoryCache = <T>(
   expires = TTL_DEFAULT,
 ) => memoryCache.set(key, value, expires);
 
+export const removeValueFromMemoryCache = (key: string) => memoryCache.del(key);
+
 export const getValueFromMemoryCache = (key: string) => memoryCache.get(key);
 
 export const fetchCachedData = async <T>(

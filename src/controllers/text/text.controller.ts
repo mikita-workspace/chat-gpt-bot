@@ -6,11 +6,10 @@ export const textController = (bot: BotType) => {
     try {
       const messageId = Number(ctx?.message?.message_id);
       const text = String(ctx?.message?.text);
-      const chatId = String(ctx?.chat?.id);
 
       const gptAnswer = (await getGPTAnswer(ctx, text)) ?? '';
 
-      await ctx.api.sendMessage(chatId, gptAnswer, {
+      await ctx.reply(gptAnswer, {
         reply_to_message_id: messageId,
       });
     } catch (error) {
