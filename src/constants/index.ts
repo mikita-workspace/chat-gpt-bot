@@ -30,4 +30,5 @@ export enum CallbackQueryActions {
   SESSIONS = 'sessions-action',
   DELETE_SESSION = 'delete-session-action',
   GET_SESSION = 'get-session-action',
+  GO_BACK = 'go-back-action',
 }

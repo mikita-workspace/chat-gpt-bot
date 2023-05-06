@@ -9,4 +9,13 @@ error-common = Something went wrong. Try again!
 error-auth = Your account ({ $username }) does not have permission to use this bot. Please contact administrator
 error-session-reading = Error reading messages from the session for { $key }:{ $targetUsername }
 
-admin-initial = Admin panel 🤖:
+admin-initial = Welcome, { $firstName }, to the Admin-panel of { $botName }. You can control the following actions:
+admin-go-back =  ⬅️ Go back
+admin-sessions = Sessions
+admin-get-session = Get session
+admin-delete-session = Delete session
+admin-users = Users
+admin-get-all-users = Get all users
+admin-add-user = Add user
+admin-block-user = Block user
+admin-unblock-user = Unblock user
