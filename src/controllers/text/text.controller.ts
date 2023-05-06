@@ -14,7 +14,7 @@ export const textController = (bot: BotType) => {
         reply_to_message_id: messageId,
       });
     } catch (error) {
-      await ctx.reply(ctx.t('commonError'));
+      await ctx.reply(ctx.t('error-common'));
       console.error(
         `ERROR::Controller::textController::${(error as Error).message}`,
       );

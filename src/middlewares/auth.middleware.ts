@@ -21,7 +21,7 @@ export const auth =
       return next();
     }
 
-    await ctx.reply(ctx.t('authError'));
+    await ctx.reply(ctx.t('error-auth'));
 
     return;
   };
