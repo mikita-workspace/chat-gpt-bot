@@ -12,7 +12,8 @@ import {
   textController,
   voiceController,
 } from './controllers';
-import { auth } from './middlewares';
+import { adminMainMenu, adminSessionsMenu, adminUsersMenu } from './menu';
+import { auth, normalize } from './middlewares';
 import { mongo } from './services';
 import { gptModel } from './constants';
 import { BotContextType } from './types';
@@ -33,9 +34,12 @@ export const createBot = () => {
     },
   });
 
+  adminMainMenu.register(adminSessionsMenu);
+  adminMainMenu.register(adminUsersMenu);
+
   bot.use(i18n);
 
-  bot.use(auth());
+  // bot.use(auth());
 
   bot.use(
     session({
@@ -44,14 +48,18 @@ export const createBot = () => {
     }),
   );
 
+  bot.use(normalize());
+
+  bot.use(adminMainMenu);
+
   [
     aboutController,
     adminController,
     descriptionController,
     newController,
     startController,
-    textController,
-    voiceController,
+    // textController,
+    // voiceController,
   ].forEach((handle) => handle(bot));
 
   return bot;

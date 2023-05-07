@@ -3,6 +3,7 @@ import { MessageRoles } from '../constants';
 import { SessionType } from '../types';
 
 export const createInitialSessionData = (): SessionType => ({
+  username: null,
   messages: [],
 });
 

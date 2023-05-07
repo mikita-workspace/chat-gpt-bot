@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
-import { UserModel } from '../models';
+import { UserModel, SessionModel } from '../models';
 import { fetchCachedData, removeValueFromMemoryCache } from '../utils';
-import { SessionType } from '../types';
 
 export class MongoService {
   sessions: mongoose.mongo.Collection<ISession>;
@@ -44,14 +43,46 @@ export class MongoService {
     }
   }
 
-  async getUserSessionMessages(key: string) {
+  async setUser(username: string, role: string) {
+    try {
+      await UserModel.create({ username, role });
+    } catch (error) {
+      console.error(
+        `ERROR::MongoService::setUser::${(error as Error).message}`,
+      );
+    }
+  }
+
+  async updateUser(
+    username: string,
+    firstName: string,
+    lastName: string,
+    telegramId: number,
+  ) {
+    try {
+      await UserModel.findOneAndUpdate(
+        { username },
+        { firstName, lastName, telegramId },
+        { new: true },
+      );
+    } catch (error) {
+      console.error(
+        `ERROR::MongoService::updateUser::${(error as Error).message}`,
+      );
+    }
+  }
+
+  async getUserSessionMessages(username: string) {
     try {
       const userSessionMessages = await fetchCachedData(
-        `cached-session-messages-${key}`,
-        async () => this.sessionAdapter.read(key),
+        `cached-session-messages-${username}`,
+        async () =>
+          SessionModel.findOne({
+            'value.username': username,
+          }),
       );
 
-      return (userSessionMessages as unknown as SessionType)?.messages;
+      return userSessionMessages?.value?.messages ?? [];
     } catch (error) {
       console.error(
         `ERROR::MongoService::getUserSessionMessages::${
@@ -61,11 +92,11 @@ export class MongoService {
     }
   }
 
-  async deleteUserSessionMessages(key: string) {
+  async deleteUserSessionMessages(username: string) {
     try {
-      await this.sessionAdapter.delete(key);
+      await SessionModel.findOneAndDelete({ 'value.username': username });
 
-      removeValueFromMemoryCache(`cached-session-messages-${key}`);
+      removeValueFromMemoryCache(`cached-session-messages-${username}`);
     } catch (error) {
       console.error(
         `ERROR::MongoService::deleteUserSessionMessages::${

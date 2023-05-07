@@ -20,15 +20,10 @@ export enum UserRoles {
   MODERATOR = 'moderator',
 }
 
-// Callback query actions
-export enum CallbackQueryActions {
-  USERS = 'users-action',
-  ADD_USER = 'add-user-action',
-  BLOCK_USER = 'block-user-action',
-  UNBLOCK_USER = 'unblock-user-action',
-  GET_ALL_USERS = 'get-all-users-action',
-  SESSIONS = 'sessions-action',
-  DELETE_SESSION = 'delete-session-action',
-  GET_SESSION = 'get-session-action',
-  GO_BACK = 'go-back-action',
-}
+export const ADD_USER_FORMAT = '#<username>;#<role>;';
+
+// Regexp
+export const REGEXP_ADD_USER_INPUT = /^#[a-zA-Z0-9_]+;#[a-z]+;$/;
+
+// Normalize
+export const MAX_SESSION_MESSAGES = 30;
