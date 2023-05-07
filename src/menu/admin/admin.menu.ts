@@ -21,7 +21,7 @@ export const dynamicUsersRange = async (
   const users: UserModelType[] = (await mongo.getUsers()) ?? [];
 
   users
-    .filter((user) => user.username !== currentUsername && !isSession)
+    .filter((user) => isSession || user.username !== currentUsername)
     .forEach((user) => {
       const username = user.username;
 
