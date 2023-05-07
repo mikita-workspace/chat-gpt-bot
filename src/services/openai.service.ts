@@ -1,8 +1,9 @@
-import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 import { createReadStream } from 'fs';
+import { config } from '../config';
+import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 import { removeFile } from '../utils';
 import { IOpenAI } from '../types';
-import { OPEN_AI_TOKEN, gptModel, transcriptionModel } from '../constants';
+import { gptModel, transcriptionModel } from '../constants';
 
 class OpenAIService implements IOpenAI {
   openAI: OpenAIApi;
@@ -40,11 +41,9 @@ class OpenAIService implements IOpenAI {
       removeFile(filepath);
       return response.data.text;
     } catch (error) {
-      console.error(
-        `ERROR::OpenAIService::transcription::${(error as Error).message}`,
-      );
+      console.error(`ERROR::OpenAIService::transcription::${(error as Error).message}`);
     }
   }
 }
 
-export const openAI = new OpenAIService(OPEN_AI_TOKEN);
+export const openAI = new OpenAIService(config.OPEN_AI_TOKEN);

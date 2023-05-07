@@ -1,14 +1,12 @@
 import mongoose from 'mongoose';
+import { config } from './config';
 import { createBot } from './bot';
-import { MONGODB_URI, MONGODB_URI_LOCAL } from './constants';
 
 const botInitialize = async () => {
   try {
-    const db = await mongoose.connect(
-      process.env.NODE_ENV === 'production' ? MONGODB_URI : MONGODB_URI_LOCAL,
-    );
+    await mongoose.connect(config.MONGODB_URI);
 
-    const bot = createBot(db);
+    const bot = createBot();
 
     bot.start();
 

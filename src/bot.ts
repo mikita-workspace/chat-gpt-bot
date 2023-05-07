@@ -1,23 +1,32 @@
 import path from 'path';
-import mongoose from 'mongoose';
 import { Bot, session } from 'grammy';
 import { I18n } from '@grammyjs/i18n';
-import { MongoDBAdapter, ISession } from '@grammyjs/storage-mongodb';
+import { config } from './config';
 import { createInitialSessionData } from './helpers';
 import {
   aboutController,
+  adminController,
   descriptionController,
   newController,
   startController,
   textController,
   voiceController,
 } from './controllers';
-import { auth } from './middlewares';
-import { TELEGRAM_TOKEN, gptModel } from './constants';
+import {
+  adminDynamicUsersForDeleteSessionsMenu,
+  adminDynamicUsersForSessionsMenu,
+  adminDynamicUsersMenu,
+  adminMainMenu,
+  adminSessionsMenu,
+  adminUsersMenu,
+} from './menu';
+import { auth, normalize } from './middlewares';
+import { mongo } from './services';
+import { gptModel } from './constants';
 import { BotContextType } from './types';
 
-export const createBot = (db: typeof mongoose) => {
-  const bot = new Bot<BotContextType>(TELEGRAM_TOKEN);
+export const createBot = () => {
+  const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);
 
   const i18n = new I18n<BotContextType>({
     defaultLocale: 'en',
@@ -32,7 +41,11 @@ export const createBot = (db: typeof mongoose) => {
     },
   });
 
-  const collection = db.connection.db.collection<ISession>('sessions');
+  adminMainMenu.register(adminSessionsMenu);
+  adminMainMenu.register(adminUsersMenu);
+  adminMainMenu.register(adminDynamicUsersMenu);
+  adminMainMenu.register(adminDynamicUsersForSessionsMenu);
+  adminMainMenu.register(adminDynamicUsersForDeleteSessionsMenu);
 
   bot.use(i18n);
 
@@ -41,12 +54,17 @@ export const createBot = (db: typeof mongoose) => {
   bot.use(
     session({
       initial: createInitialSessionData,
-      storage: new MongoDBAdapter({ collection }),
+      storage: mongo.sessionAdapter,
     }),
   );
 
+  bot.use(normalize());
+
+  bot.use(adminMainMenu);
+
   [
     aboutController,
+    adminController,
     descriptionController,
     newController,
     startController,

@@ -1,9 +1,3 @@
-// envs
-export const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN ?? '';
-export const OPEN_AI_TOKEN = process.env.OPEN_AI_TOKEN ?? '';
-export const MONGODB_URI = process.env.MONGODB_URI ?? '';
-export const MONGODB_URI_LOCAL = process.env.MONGODB_URI_LOCAL ?? '';
-
 // Open AI
 export const gptModel = 'gpt-3.5-turbo';
 export const transcriptionModel = 'whisper-1';
@@ -18,3 +12,18 @@ export const telegramApi = 'https://api.telegram.org';
 
 // Node cache
 export const TTL_DEFAULT = 60;
+
+// Privileges
+export enum UserRoles {
+  ADMIN = 'admin',
+  USER = 'user',
+  MODERATOR = 'moderator',
+}
+
+export const ADD_USER_FORMAT = '#<username>;#<role>;';
+
+// Regexp
+export const REGEXP_ADD_USER_INPUT = /^#[a-zA-Z0-9_]+;#[a-z]+;$/;
+
+// Normalize
+export const MAX_SESSION_MESSAGES = 30;

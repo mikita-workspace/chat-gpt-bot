@@ -1,4 +1,4 @@
-# Telegram Bot 🤖
+# [ChatGPT | Smart Bot 🤖](https://t.me/smart_gpt_voice_bot)
 
 [![Bot API](https://img.shields.io/badge/Bot%20API-6.7-blue?logo=telegram&style=for-the-badge&labelColor=000&color=3b82f6&)](https://core.telegram.org/bots/api)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mikita-kandratsyeu/telegram-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/telegram-bot/commits/main)
@@ -14,7 +14,7 @@
 </div>
 
 ## Description
-Bot based on the `Grammy` and `OpenAI` libraries, providing convenient and fast access to the cutting-edge `GPT-3.5` technology for text generation, answering questions, and solving other tasks. Expand your natural language processing capabilities and stay at the forefront of developments in this field using this bot.
+Bot based on the `Grammy` and `OpenAI` libraries, providing convenient and fast access to the cutting-edge `gpt-3.5-turbo` technology for text generation, answering questions, and solving other tasks. Expand your natural language processing capabilities and stay at the forefront of developments in this field using this bot.
 
 ## Getting Started
 
