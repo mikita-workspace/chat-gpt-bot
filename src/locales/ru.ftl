@@ -29,5 +29,4 @@ admin-add-user-exist = Пользователь { $username } был уже до
 admin-block-unblock-user = Заблокировать/Разблокировать пользователя
 admin-block-block-user-successful = Пользователь { $username } был заблокирован
 admin-block-unblock-user-successful = Пользователь { $username } был разблокирован
-admin-enter-username = Выберите пользователя
 admin-enter-user = Введите пользовтеля в следующем формате: { $inputFormat }

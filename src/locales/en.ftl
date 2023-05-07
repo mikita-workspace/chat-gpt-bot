@@ -28,5 +28,4 @@ admin-add-user-exist = User { $username } was already added
 admin-block-unblock-user = Block/Unblock user
 admin-block-block-user-successful = User { $username } has been blocked
 admin-block-unblock-user-successful = User { $username } has been unblocked
-admin-enter-username = Select a user
 admin-enter-user = Enter user following next format: { $inputFormat }
