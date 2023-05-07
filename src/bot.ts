@@ -12,7 +12,14 @@ import {
   textController,
   voiceController,
 } from './controllers';
-import { adminDynamicUsersMenu, adminMainMenu, adminSessionsMenu, adminUsersMenu } from './menu';
+import {
+  adminDynamicUsersForDeleteSessionsMenu,
+  adminDynamicUsersForSessionsMenu,
+  adminDynamicUsersMenu,
+  adminMainMenu,
+  adminSessionsMenu,
+  adminUsersMenu,
+} from './menu';
 import { auth, normalize } from './middlewares';
 import { mongo } from './services';
 import { gptModel } from './constants';
@@ -37,6 +44,8 @@ export const createBot = () => {
   adminMainMenu.register(adminSessionsMenu);
   adminMainMenu.register(adminUsersMenu);
   adminMainMenu.register(adminDynamicUsersMenu);
+  adminMainMenu.register(adminDynamicUsersForSessionsMenu);
+  adminMainMenu.register(adminDynamicUsersForDeleteSessionsMenu);
 
   bot.use(i18n);
 

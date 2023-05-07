@@ -1,3 +1,4 @@
+import { adminInlineGoToMainMenu } from '../../menu';
 import { mongo } from '../../services';
 import { UserRoles, ADD_USER_FORMAT } from '../../constants';
 import { BotContextType } from '../../types';
@@ -28,6 +29,7 @@ export const addUserCallback = async (ctx: BotContextType) => {
 
       await ctx.reply(ctx.t('admin-add-user-successful', { username }), {
         reply_to_message_id: messageId,
+        reply_markup: adminInlineGoToMainMenu(ctx),
       });
     }
   } catch (error) {
@@ -43,7 +45,10 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
     const users = (await mongo.getUsers()) ?? [];
 
     await ctx.deleteMessage();
-    await ctx.api.sendMessage(chatId, getHtmlForUsers(users, ctx), { parse_mode: 'HTML' });
+    await ctx.api.sendMessage(chatId, getHtmlForUsers(users, ctx), {
+      parse_mode: 'HTML',
+      reply_markup: adminInlineGoToMainMenu(ctx),
+    });
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
     console.error(`ERROR::Callbacks::Users::getAllUsersCallback::${(error as Error).message}`);

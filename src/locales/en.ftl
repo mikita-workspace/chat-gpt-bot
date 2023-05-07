@@ -13,6 +13,7 @@ error-auth-admin = Your account ({ $username }) does not have permission to use 
 admin-initial = Welcome, { $firstName }, to the Admin-panel of { $botName }!
 admin-go-back =  ⬅️ Go back
 admin-cancel = Cancel
+admin-go-to-main = Go to Admin-panel
 admin-sessions = Sessions
 admin-get-session = Get session
 admin-delete-session = Delete session
