@@ -15,10 +15,10 @@ export const getHtmlForSessionMessages = (
         } = message;
 
         if (role === MessageRoles.USER) {
-          return `<code>[${parseTimestamp(timestamp)}]</code>\n\r<b>- ${content}</b>\n\r\n\r`;
+          return `<code>[${parseTimestamp(timestamp)}]</code>\n\r<b>- ${content}</b>\n\r`;
         }
 
-        return `${content}\n\r\n\r`;
+        return `${content}\n\r`;
       })
       .join('');
   }
