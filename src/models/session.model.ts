@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { SessionModelType } from '../types';
 
-const schema = new Schema({
+const schema = new Schema<SessionModelType>({
   key: { type: String },
   value: {
     username: { type: String },

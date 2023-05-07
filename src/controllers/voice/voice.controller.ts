@@ -10,10 +10,7 @@ export const voiceController = (bot: BotType) => {
       const messageId = Number(ctx.message.message_id);
 
       const voiceFile = await ctx.api.getFile(ctx.message.voice.file_id);
-      const voiceFileApiLink = getFileApiLink(
-        config.TELEGRAM_TOKEN,
-        voiceFile.file_path,
-      );
+      const voiceFileApiLink = getFileApiLink(config.TELEGRAM_TOKEN, voiceFile.file_path);
 
       const oggPath = await oggConverter.create(voiceFileApiLink, userId);
       const mp3Path = await oggConverter.toMp3(oggPath, userId);
@@ -24,9 +21,7 @@ export const voiceController = (bot: BotType) => {
       await ctx.reply(gptAnswer, { reply_to_message_id: messageId });
     } catch (error) {
       await ctx.reply(ctx.t('error-common'));
-      console.error(
-        `ERROR::Controller::voiceController::${(error as Error).message}`,
-      );
+      console.error(`ERROR::Controller::voiceController::${(error as Error).message}`);
     }
   });
 };

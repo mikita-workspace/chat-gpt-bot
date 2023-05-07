@@ -27,9 +27,7 @@ class OggConverterService implements IOggConverter {
           .run();
       });
     } catch (error) {
-      console.error(
-        `ERROR::OggConverterService::toMp3::${(error as Error).message}`,
-      );
+      console.error(`ERROR::OggConverterService::toMp3::${(error as Error).message}`);
     }
   }
 
@@ -50,9 +48,7 @@ class OggConverterService implements IOggConverter {
         stream.on('finish', () => resolve(oggPath));
       });
     } catch (error) {
-      console.error(
-        `ERROR::OggConverterService::create::${(error as Error).message}`,
-      );
+      console.error(`ERROR::OggConverterService::create::${(error as Error).message}`);
     }
   }
 }

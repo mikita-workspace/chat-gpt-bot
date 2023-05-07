@@ -6,21 +6,14 @@ export const memoryCache = new NodeCache({
   stdTTL: TTL_DEFAULT,
 });
 
-export const setValueToMemoryCache = (
-  key: string,
-  value: string,
-  expires = TTL_DEFAULT,
-) => memoryCache.set(key, value, expires);
+export const setValueToMemoryCache = (key: string, value: string, expires = TTL_DEFAULT) =>
+  memoryCache.set(key, value, expires);
 
 export const removeValueFromMemoryCache = (key: string) => memoryCache.del(key);
 
-export const getValueFromMemoryCache = (key: string) =>
-  memoryCache.get<string>(key);
+export const getValueFromMemoryCache = (key: string) => memoryCache.get<string>(key);
 
-export const fetchCachedData = async <T>(
-  key: string,
-  dataCallback: () => T,
-) => {
+export const fetchCachedData = async <T>(key: string, dataCallback: () => T) => {
   const cachedData = getValueFromMemoryCache(key);
 
   if (cachedData) {
@@ -42,13 +35,10 @@ export const removeFile = async (path: string) => {
   }
 };
 
-export const isEmptyObject = (object: object) =>
-  Object.keys(object).length === 0;
+export const isEmptyObject = (object: object) => Object.keys(object).length === 0;
 
 export const parseTimestamp = (timestamp: number) => {
   const date = new Date(timestamp);
 
-  return `${date.toLocaleDateString('en-US')} ${date.toLocaleTimeString(
-    'en-US',
-  )}`;
+  return `${date.toDateString()} ${date.toLocaleTimeString('en-US')}`;
 };

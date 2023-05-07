@@ -18,9 +18,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
       timestamp: Date.now(),
     });
 
-    const response = await openAI.chat(
-      ctx.session.messages.map(({ gptFormat }) => gptFormat),
-    );
+    const response = await openAI.chat(ctx.session.messages.map(({ gptFormat }) => gptFormat));
 
     if (!response) {
       return '';

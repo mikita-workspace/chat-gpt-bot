@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import { UserModel, SessionModel } from '../models';
-import { fetchCachedData, removeValueFromMemoryCache } from '../utils';
+import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '../utils';
+import { IMongo } from '../types';
 
-export class MongoService {
+export class MongoService implements IMongo {
   sessions: mongoose.mongo.Collection<ISession>;
 
   sessionAdapter: MongoDBAdapter<unknown>;
@@ -17,15 +18,11 @@ export class MongoService {
 
   async getUsers() {
     try {
-      const users = await fetchCachedData('cached-users', async () =>
-        UserModel.find({}).exec(),
-      );
+      const users = await fetchCachedData('cached-users', async () => UserModel.find({}).exec());
 
       return users;
     } catch (error) {
-      console.error(
-        `ERROR::MongoService::getAllUsers::${(error as Error).message}`,
-      );
+      console.error(`ERROR::MongoService::getAllUsers::${(error as Error).message}`);
     }
   }
 
@@ -37,9 +34,7 @@ export class MongoService {
 
       return user;
     } catch (error) {
-      console.error(
-        `ERROR::MongoService::getUser::${(error as Error).message}`,
-      );
+      console.error(`ERROR::MongoService::getUser::${(error as Error).message}`);
     }
   }
 
@@ -47,28 +42,23 @@ export class MongoService {
     try {
       await UserModel.create({ username, role });
     } catch (error) {
-      console.error(
-        `ERROR::MongoService::setUser::${(error as Error).message}`,
-      );
+      console.error(`ERROR::MongoService::setUser::${(error as Error).message}`);
     }
   }
 
-  async updateUser(
-    username: string,
-    firstName: string,
-    lastName: string,
-    telegramId: number,
-  ) {
+  async updateUser(username: string, enabled: boolean) {
     try {
-      await UserModel.findOneAndUpdate(
+      const updatedUser = await UserModel.findOneAndUpdate(
         { username },
-        { firstName, lastName, telegramId },
+        { enabled },
         { new: true },
       );
+
+      setValueToMemoryCache(`cached-user-${username}`, JSON.stringify(updatedUser));
+
+      return updatedUser;
     } catch (error) {
-      console.error(
-        `ERROR::MongoService::updateUser::${(error as Error).message}`,
-      );
+      console.error(`ERROR::MongoService::updateUser::${(error as Error).message}`);
     }
   }
 
@@ -84,11 +74,7 @@ export class MongoService {
 
       return userSessionMessages?.value?.messages ?? [];
     } catch (error) {
-      console.error(
-        `ERROR::MongoService::getUserSessionMessages::${
-          (error as Error).message
-        }`,
-      );
+      console.error(`ERROR::MongoService::getUserSessionMessages::${(error as Error).message}`);
     }
   }
 
@@ -98,11 +84,7 @@ export class MongoService {
 
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
     } catch (error) {
-      console.error(
-        `ERROR::MongoService::deleteUserSessionMessages::${
-          (error as Error).message
-        }`,
-      );
+      console.error(`ERROR::MongoService::deleteUserSessionMessages::${(error as Error).message}`);
     }
   }
 }

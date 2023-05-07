@@ -41,9 +41,7 @@ class OpenAIService implements IOpenAI {
       removeFile(filepath);
       return response.data.text;
     } catch (error) {
-      console.error(
-        `ERROR::OpenAIService::transcription::${(error as Error).message}`,
-      );
+      console.error(`ERROR::OpenAIService::transcription::${(error as Error).message}`);
     }
   }
 }

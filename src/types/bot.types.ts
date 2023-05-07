@@ -11,9 +11,6 @@ export type SessionType = {
   }[];
 };
 
-export type BotContextType = Context &
-  SessionFlavor<SessionType> &
-  I18nFlavor &
-  MenuFlavor;
+export type BotContextType = Context & SessionFlavor<SessionType> & I18nFlavor & MenuFlavor;
 
 export type BotType = Bot<BotContextType>;
