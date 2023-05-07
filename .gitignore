@@ -21,8 +21,8 @@ public/css/main.css
 coverage
 
 # API keys and secrets
-src/env/.env.development
-src/env/.env.production
+.env.development
+.env.production
 
 # Dependency directory
 node_modules
