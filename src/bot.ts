@@ -40,7 +40,7 @@ export const createBot = () => {
 
   bot.use(i18n);
 
-  // bot.use(auth());
+  bot.use(auth());
 
   bot.use(
     session({
@@ -59,8 +59,8 @@ export const createBot = () => {
     descriptionController,
     newController,
     startController,
-    // textController,
-    // voiceController,
+    textController,
+    voiceController,
   ].forEach((handle) => handle(bot));
 
   return bot;

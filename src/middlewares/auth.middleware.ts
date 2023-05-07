@@ -7,7 +7,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
 
   const user = await mongo.getUser(username);
 
-  if (user) {
+  if (user.enabled) {
     return next();
   }
 

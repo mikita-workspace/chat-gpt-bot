@@ -8,6 +8,7 @@ bot-description = I'm ChatGPT, an intelligent bot capable of responding to vario
 error-common = Something went wrong. Try again!
 error-auth = Your account ({ $username }) does not have permission to use this bot. Please contact administrator
 error-session-reading = Error reading messages from the session for { $key }:{ $targetUsername }
+error-auth-admin = Your account ({ $username }) does not have permission to use Admin-panel. Please contact administrator
 
 admin-initial = Welcome, { $firstName }, to the Admin-panel of { $botName }!
 admin-go-back =  ⬅️ Go back
