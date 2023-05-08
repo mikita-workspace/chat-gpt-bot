@@ -4,9 +4,10 @@ import { mongo } from '../../services';
 import {
   addUserInitialCallback,
   blockUnblockUserCallback,
-  deleteUserSessionMessages,
+  deleteUserSessionMessagesCallback,
+  downloadLogsCallback,
   getAllUsersCallback,
-  getUserSessionMessages,
+  getUserSessionMessagesCallback,
 } from '../../callbacks';
 import { BotContextType, SessionModelType, UserModelType } from '../../types';
 
@@ -55,6 +56,7 @@ export const adminMainMenu = new Menu<BotContextType>('admin-main-menu')
   .submenu((ctx) => ctx.t('admin-sessions'), 'admin-sessions-menu')
   .submenu((ctx) => ctx.t('admin-users'), 'admin-users-menu')
   .row()
+  .submenu((ctx) => ctx.t('admin-logs'), 'admin-logs-menu')
   .text(
     (ctx) => ctx.t('admin-go-to-bot'),
     async (ctx) => {
@@ -78,6 +80,19 @@ export const adminUsersMenu = new Menu<BotContextType>('admin-users-menu')
   .row()
   .back((ctx) => ctx.t('admin-go-back'));
 
+export const adminLogsMenu = new Menu<BotContextType>('admin-logs-menu')
+  .text(
+    (ctx) => ctx.t('admin-logs-download', { filename: 'errors.log' }),
+    (ctx) => downloadLogsCallback('errors', ctx),
+  )
+  .row()
+  .text(
+    (ctx) => ctx.t('admin-logs-download', { filename: 'combined.log' }),
+    (ctx) => downloadLogsCallback('combined', ctx),
+  )
+  .row()
+  .back((ctx) => ctx.t('admin-go-back'));
+
 export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-users-menu')
   .dynamic(async (ctx) => dynamicUsersRange(ctx, blockUnblockUserCallback))
   .back((ctx) => ctx.t('admin-cancel'));
@@ -85,13 +100,15 @@ export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-use
 export const adminDynamicUsersForSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-sessions-menu',
 )
-  .dynamic(async (ctx) => dynamicUsersWithSessionRange(ctx, getUserSessionMessages))
+  .dynamic(async (ctx) => dynamicUsersWithSessionRange(ctx, getUserSessionMessagesCallback))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminDynamicUsersForDeleteSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-delete-sessions-menu',
 )
-  .dynamic(async (ctx) => dynamicUsersWithSessionRange(ctx, deleteUserSessionMessages, false))
+  .dynamic(async (ctx) =>
+    dynamicUsersWithSessionRange(ctx, deleteUserSessionMessagesCallback, false),
+  )
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminInlineGoToMainMenu = (ctx: BotContextType) =>
