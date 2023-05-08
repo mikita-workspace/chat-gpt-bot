@@ -1,6 +1,7 @@
 import { InputFile } from 'grammy';
 import { createObjectCsvWriter } from 'csv-writer';
 import { resolve as resolvePath } from 'path';
+import { logger } from '../services';
 import { mapUserSessionMessages, mapUsers } from '../helpers';
 import { SessionCsvIds, UsersCsvIds } from '../constants';
 import { ICsv, SessionModelType, UserModelType } from '../types';
@@ -9,7 +10,6 @@ class CsvService implements ICsv {
   async createUsersCsv(users: UserModelType[]) {
     try {
       const filePath = resolvePath(__dirname, '../../assets', 'users.csv');
-
       const writer = createObjectCsvWriter({
         path: resolvePath(__dirname, '../../assets', 'users.csv'),
         header: [
@@ -29,7 +29,7 @@ class CsvService implements ICsv {
         filePathForReply: new InputFile(filePath),
       };
     } catch (error) {
-      console.error(`ERROR::CsvService::createUsersCsv::${(error as Error).message}`);
+      logger.error(`csvService::createUsersCsv::${(error as Error).message}`);
     }
   }
 
@@ -61,7 +61,7 @@ class CsvService implements ICsv {
         filePathForReply: new InputFile(filePath),
       };
     } catch (error) {
-      console.error(`ERROR::CsvService::createSessionCsv::${(error as Error).message}`);
+      logger.error(`csvService::createSessionCsv::${(error as Error).message}`);
     }
   }
 }

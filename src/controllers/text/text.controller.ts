@@ -1,4 +1,5 @@
 import { getGPTAnswer } from '../../helpers';
+import { logger } from '../../services';
 import { BotType } from '../../types';
 
 export const textController = (bot: BotType) => {
@@ -14,7 +15,7 @@ export const textController = (bot: BotType) => {
       });
     } catch (error) {
       await ctx.reply(ctx.t('error-common'));
-      console.error(`ERROR::Controller::textController::${(error as Error).message}`);
+      logger.error(`controller::textController::${(error as Error).message}`);
     }
   });
 };

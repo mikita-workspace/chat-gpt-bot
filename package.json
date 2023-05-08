@@ -25,7 +25,8 @@
     "mongoose": "^7.1.0",
     "node-cache": "^5.1.2",
     "openai": "^3.2.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.21",

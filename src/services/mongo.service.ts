@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
+import { logger } from '.';
 import { UserModel, SessionModel } from '../models';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '../utils';
 import { IMongo } from '../types';
@@ -22,7 +23,7 @@ export class MongoService implements IMongo {
 
       return users ?? [];
     } catch (error) {
-      console.error(`ERROR::MongoService::getAllUsers::${(error as Error).message}`);
+      logger.error(`mongoService::getAllUsers::${(error as Error).message}`);
     }
   }
 
@@ -34,7 +35,7 @@ export class MongoService implements IMongo {
 
       return user;
     } catch (error) {
-      console.error(`ERROR::MongoService::getUser::${(error as Error).message}`);
+      logger.error(`mongoService::getUser::${(error as Error).message}`);
     }
   }
 
@@ -42,7 +43,7 @@ export class MongoService implements IMongo {
     try {
       await UserModel.create({ username, role });
     } catch (error) {
-      console.error(`ERROR::MongoService::setUser::${(error as Error).message}`);
+      logger.error(`mongoService::setUser::${(error as Error).message}`);
     }
   }
 
@@ -58,7 +59,7 @@ export class MongoService implements IMongo {
 
       return updatedUser;
     } catch (error) {
-      console.error(`ERROR::MongoService::updateUser::${(error as Error).message}`);
+      logger.error(`mongoService::updateUser::${(error as Error).message}`);
     }
   }
 
@@ -70,7 +71,7 @@ export class MongoService implements IMongo {
 
       return allUserSessions ?? [];
     } catch (error) {
-      console.error(`ERROR::MongoService::getAllUserSessionMessages::${(error as Error).message}`);
+      logger.error(`mongoService::getAllUserSessionMessages::${(error as Error).message}`);
     }
   }
 
@@ -86,7 +87,7 @@ export class MongoService implements IMongo {
 
       return userSessionMessages;
     } catch (error) {
-      console.error(`ERROR::MongoService::getUserSessionMessages::${(error as Error).message}`);
+      logger.error(`mongoService::getUserSessionMessages::${(error as Error).message}`);
     }
   }
 
@@ -96,7 +97,7 @@ export class MongoService implements IMongo {
 
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
     } catch (error) {
-      console.error(`ERROR::MongoService::deleteUserSessionMessages::${(error as Error).message}`);
+      logger.error(`mongoService::deleteUserSessionMessages::${(error as Error).message}`);
     }
   }
 }

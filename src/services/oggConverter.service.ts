@@ -3,6 +3,7 @@ import { createWriteStream } from 'fs';
 import { dirname, resolve as resolvePath } from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import installer from '@ffmpeg-installer/ffmpeg';
+import { logger } from '.';
 import { IOggConverter } from '../types';
 import { removeFile } from '../utils';
 
@@ -27,7 +28,7 @@ class OggConverterService implements IOggConverter {
           .run();
       });
     } catch (error) {
-      console.error(`ERROR::OggConverterService::toMp3::${(error as Error).message}`);
+      logger.error(`oggConverterService::toMp3::${(error as Error).message}`);
     }
   }
 
@@ -48,7 +49,7 @@ class OggConverterService implements IOggConverter {
         stream.on('finish', () => resolve(oggPath));
       });
     } catch (error) {
-      console.error(`ERROR::OggConverterService::create::${(error as Error).message}`);
+      logger.error(`oggConverterService::create::${(error as Error).message}`);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { config } from '../../config';
-import { oggConverter, openAI } from '../../services';
+import { oggConverter, openAI, logger } from '../../services';
 import { getFileApiLink, getGPTAnswer } from '../../helpers';
 import { BotType } from '../../types';
 
@@ -21,7 +21,7 @@ export const voiceController = (bot: BotType) => {
       await ctx.reply(gptAnswer, { reply_to_message_id: messageId });
     } catch (error) {
       await ctx.reply(ctx.t('error-common'));
-      console.error(`ERROR::Controller::voiceController::${(error as Error).message}`);
+      logger.error(`controller::voiceController::${(error as Error).message}`);
     }
   });
 };

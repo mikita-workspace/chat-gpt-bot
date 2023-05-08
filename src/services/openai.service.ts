@@ -1,4 +1,5 @@
 import { createReadStream } from 'fs';
+import { logger } from '.';
 import { config } from '../config';
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 import { removeFile } from '../utils';
@@ -25,7 +26,7 @@ class OpenAIService implements IOpenAI {
 
       return response.data.choices[0].message;
     } catch (error) {
-      console.error(`ERROR::OpenAIService::chat::${(error as Error).message}`);
+      logger.error(`openAIService::chat::${(error as Error).message}`);
     }
   }
 
@@ -41,7 +42,7 @@ class OpenAIService implements IOpenAI {
       removeFile(filepath);
       return response.data.text;
     } catch (error) {
-      console.error(`ERROR::OpenAIService::transcription::${(error as Error).message}`);
+      logger.error(`openAIService::transcription::${(error as Error).message}`);
     }
   }
 }

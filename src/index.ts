@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { BotError, GrammyError, HttpError } from 'grammy';
+import { logger } from './services';
 import { config } from './config';
 import { createBot } from './bot';
 
@@ -7,14 +8,14 @@ const handleBotError = (error: BotError) => {
   const ctx = error.ctx;
   const err = error.error;
 
-  console.error(`Error while handling update ${ctx.update.update_id}:`);
+  logger.error(`error while handling update::${ctx.update.update_id}:`);
 
   if (err instanceof GrammyError) {
-    console.error('Error in request:', err.description);
+    logger.error(`error in request::${err.description}`);
   } else if (err instanceof HttpError) {
-    console.error('Could not contact Telegram:', err);
+    logger.error(`could not contact Telegram::${err.message}`);
   } else {
-    console.error('Unknown error:', err);
+    logger.error(`unknown error::${(err as Error).message}`);
   }
 };
 
