@@ -1,5 +1,5 @@
-import { UserModelType } from '../types';
-import { UsersCsvIds } from '../constants';
+import { UserModelType } from '@bot/types';
+import { UsersCsvIds } from '@bot/constants';
 
 export const mapUsers = (users: UserModelType[]) =>
   users.map(({ username, role, enabled, timestamp }) => ({

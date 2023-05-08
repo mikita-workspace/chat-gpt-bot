@@ -1,5 +1,5 @@
-import { BotContextType, GrammyMiddlewareFn } from '../types';
-import { MAX_SESSION_MESSAGES } from '../constants';
+import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
+import { MAX_SESSION_MESSAGES } from '@bot/constants';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   const username =

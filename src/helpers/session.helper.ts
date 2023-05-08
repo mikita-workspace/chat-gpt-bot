@@ -1,5 +1,5 @@
-import { SessionType, SessionModelType } from '../types';
-import { SessionCsvIds } from '../constants';
+import { SessionType, SessionModelType } from '@bot/types';
+import { SessionCsvIds } from '@bot/constants';
 
 export const createInitialSessionData = (): SessionType => ({
   username: null,

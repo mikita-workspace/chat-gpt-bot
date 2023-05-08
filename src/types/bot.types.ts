@@ -1,7 +1,7 @@
 import { Bot, Context, SessionFlavor } from 'grammy';
 import { I18nFlavor } from '@grammyjs/i18n';
 import { MenuFlavor } from '@grammyjs/menu';
-import { MessageRoles } from '../constants';
+import { MessageRoles } from '@bot/constants';
 
 export type SessionType = {
   username: string | null;

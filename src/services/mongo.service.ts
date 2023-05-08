@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import { logger } from '.';
-import { UserModel, SessionModel } from '../models';
-import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '../utils';
-import { IMongo } from '../types';
+import { UserModel, SessionModel } from '@bot/models';
+import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
+import { IMongo } from '@bot/types';
 
 export class MongoService implements IMongo {
   sessions: mongoose.mongo.Collection<ISession>;

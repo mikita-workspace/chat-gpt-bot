@@ -1,8 +1,8 @@
-import { adminInlineGoToMainMenu } from '../../menu';
-import { mongo, csv, logger } from '../../services';
-import { UserRoles, ADD_USER_FORMAT } from '../../constants';
-import { BotContextType } from '../../types';
-import { removeFile } from '../../utils';
+import { adminInlineGoToMainMenu } from '@bot/menu';
+import { mongo, csv, logger } from '@bot/services';
+import { UserRoles, ADD_USER_FORMAT } from '@bot/constants';
+import { BotContextType } from '@bot/types';
+import { removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }));

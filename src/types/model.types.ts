@@ -1,4 +1,4 @@
-import { UserRoles } from '../constants';
+import { UserRoles } from '@bot/constants';
 import { SessionType } from '.';
 
 export type UserModelType = {

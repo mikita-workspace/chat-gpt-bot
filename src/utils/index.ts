@@ -1,7 +1,7 @@
 import { unlink } from 'fs/promises';
 import NodeCache from 'node-cache';
-import { logger } from '../services';
-import { TTL_DEFAULT } from '../constants';
+import { logger } from '@bot/services';
+import { TTL_DEFAULT } from '@bot/constants';
 
 export const memoryCache = new NodeCache({
   stdTTL: TTL_DEFAULT,

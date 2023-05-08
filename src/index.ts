@@ -1,8 +1,10 @@
+import 'module-alias/register';
+
 import mongoose from 'mongoose';
 import { BotError, GrammyError, HttpError } from 'grammy';
-import { logger } from './services';
-import { config } from './config';
-import { createBot } from './bot';
+import { logger } from '@bot/services';
+import { config } from '@bot/config';
+import { createBot } from '@bot/bot';
 
 const handleBotError = (error: BotError) => {
   const ctx = error.ctx;

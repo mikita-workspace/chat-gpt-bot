@@ -4,8 +4,8 @@ import { dirname, resolve as resolvePath } from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import installer from '@ffmpeg-installer/ffmpeg';
 import { logger } from '.';
-import { IOggConverter } from '../types';
-import { removeFile } from '../utils';
+import { IOggConverter } from '@bot/types';
+import { removeFile } from '@bot/utils';
 
 class OggConverterService implements IOggConverter {
   constructor() {
