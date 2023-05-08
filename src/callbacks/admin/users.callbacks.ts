@@ -42,10 +42,10 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
     const chatId = ctx?.chat?.id ?? '';
 
-    const users = (await mongo.getUsers()) ?? [];
+    const users = await mongo.getUsers();
 
     await ctx.deleteMessage();
-    await ctx.api.sendMessage(chatId, getHtmlForUsers(users, ctx), {
+    await ctx.api.sendMessage(chatId, getHtmlForUsers(ctx, users), {
       parse_mode: 'HTML',
       reply_markup: adminInlineGoToMainMenu(ctx),
     });

@@ -20,6 +20,7 @@ export interface IMongo {
   getUser(username: string): void;
   setUser(username: string, role: string): void;
   updateUser(username: string, enabled: boolean): void;
+  getAllUserSessions(): void;
   getUserSessionMessages(username: string): void;
   deleteUserSessionMessages(username: string): void;
 }

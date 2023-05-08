@@ -7,11 +7,11 @@ export const getUserSessionMessages = async (username: string, ctx: BotContextTy
   try {
     const chatId = ctx?.chat?.id ?? '';
 
-    const userMessages = (await mongo.getUserSessionMessages(username)) ?? [];
+    const userMessages = await mongo.getUserSessionMessages(username);
 
     if (userMessages.length > 0) {
       await ctx.deleteMessage();
-      await ctx.api.sendMessage(chatId, getHtmlForSessionMessages(userMessages, ctx), {
+      await ctx.api.sendMessage(chatId, getHtmlForSessionMessages(ctx, userMessages), {
         parse_mode: 'HTML',
         reply_markup: adminInlineGoToMainMenu(ctx),
       });

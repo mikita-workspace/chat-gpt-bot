@@ -3,8 +3,8 @@ import { MessageRoles } from '../constants';
 import { BotContextType, SessionType, UserModelType } from '../types';
 
 export const getHtmlForSessionMessages = (
-  messages: SessionType['messages'],
   ctx: BotContextType,
+  messages: SessionType['messages'],
 ) => {
   if (messages.length > 0) {
     return messages
@@ -15,10 +15,10 @@ export const getHtmlForSessionMessages = (
         } = message;
 
         if (role === MessageRoles.USER) {
-          return `<code>[${parseTimestamp(timestamp)}]</code>\n\r<b>- ${content}</b>\n\r`;
+          return `<code>[${parseTimestamp(timestamp)}]</code>\n\r<b>${content}</b>\n\r`;
         }
 
-        return `${content}\n\r`;
+        return `${content}\n\r\n\r`;
       })
       .join('');
   }
@@ -26,7 +26,7 @@ export const getHtmlForSessionMessages = (
   return ctx.t('error-common');
 };
 
-export const getHtmlForUsers = (users: UserModelType[], ctx: BotContextType) => {
+export const getHtmlForUsers = (ctx: BotContextType, users: UserModelType[]) => {
   if (users.length > 0) {
     return users
       .map((user) => {

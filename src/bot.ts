@@ -49,14 +49,14 @@ export const createBot = () => {
 
   bot.use(i18n);
 
-  bot.use(auth());
-
   bot.use(
     session({
       initial: createInitialSessionData,
       storage: mongo.sessionAdapter,
     }),
   );
+
+  bot.use(auth());
 
   bot.use(normalize());
 

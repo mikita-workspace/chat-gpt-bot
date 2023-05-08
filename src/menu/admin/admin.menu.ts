@@ -8,20 +8,19 @@ import {
   getAllUsersCallback,
   getUserSessionMessages,
 } from '../../callbacks';
-import { BotContextType, UserModelType } from '../../types';
+import { BotContextType, SessionModelType, UserModelType } from '../../types';
 
 export const dynamicUsersRange = async (
-  callback: (username: string, ctx: BotContextType) => void,
   ctx: BotContextType,
-  isSession = false,
+  callback: (username: string, ctx: BotContextType) => void,
 ) => {
   const range = new MenuRange<BotContextType>();
   const currentUsername = ctx?.update?.callback_query?.from?.username ?? '';
 
-  const users: UserModelType[] = (await mongo.getUsers()) ?? [];
+  const users: UserModelType[] = await mongo.getUsers();
 
   users
-    .filter((user) => isSession || user.username !== currentUsername)
+    .filter((user) => user.username !== currentUsername)
     .forEach((user) => {
       const username = user.username;
 
@@ -31,9 +30,38 @@ export const dynamicUsersRange = async (
   return range;
 };
 
+export const dynamicUsersWithSessionRange = async (
+  ctx: BotContextType,
+  callback: (username: string, ctx: BotContextType) => void,
+  showCurrentUsername = true,
+) => {
+  const range = new MenuRange<BotContextType>();
+  const currentUsername = ctx?.update?.callback_query?.from?.username ?? '';
+
+  const allUserSessions: SessionModelType[] = await mongo.getAllUserSessions();
+
+  allUserSessions
+    .filter((session) => showCurrentUsername || session.value.username !== currentUsername)
+    .forEach((session) => {
+      const username = session.value.username;
+
+      range.text(username, async () => callback(username, ctx)).row();
+    });
+
+  return range;
+};
+
 export const adminMainMenu = new Menu<BotContextType>('admin-main-menu')
   .submenu((ctx) => ctx.t('admin-sessions'), 'admin-sessions-menu')
-  .submenu((ctx) => ctx.t('admin-users'), 'admin-users-menu');
+  .submenu((ctx) => ctx.t('admin-users'), 'admin-users-menu')
+  .row()
+  .text(
+    (ctx) => ctx.t('admin-go-to-bot'),
+    async (ctx) => {
+      await ctx.deleteMessage();
+      await ctx.reply(ctx.t('bot-initial'));
+    },
+  );
 
 export const adminSessionsMenu = new Menu<BotContextType>('admin-sessions-menu')
   .submenu((ctx) => ctx.t('admin-get-session'), 'admin-dynamic-users-for-sessions-menu')
@@ -51,19 +79,19 @@ export const adminUsersMenu = new Menu<BotContextType>('admin-users-menu')
   .back((ctx) => ctx.t('admin-go-back'));
 
 export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-users-menu')
-  .dynamic(async (ctx) => dynamicUsersRange(blockUnblockUserCallback, ctx))
+  .dynamic(async (ctx) => dynamicUsersRange(ctx, blockUnblockUserCallback))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminDynamicUsersForSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-sessions-menu',
 )
-  .dynamic(async (ctx) => dynamicUsersRange(getUserSessionMessages, ctx, true))
+  .dynamic(async (ctx) => dynamicUsersWithSessionRange(ctx, getUserSessionMessages))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminDynamicUsersForDeleteSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-delete-sessions-menu',
 )
-  .dynamic(async (ctx) => dynamicUsersRange(deleteUserSessionMessages, ctx, true))
+  .dynamic(async (ctx) => dynamicUsersWithSessionRange(ctx, deleteUserSessionMessages, false))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminInlineGoToMainMenu = (ctx: BotContextType) =>
