@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: CodeBuild
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +24,7 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: lint:ci
-      - name: CodeBuild
+      - name: Run production build
         uses: borales/actions-yarn@v4
         with:
           cmd: build:prod
