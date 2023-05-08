@@ -1,5 +1,5 @@
 import { adminInlineGoToMainMenu } from '../../menu';
-import { mongo, csv } from '../../services';
+import { mongo, csv, logger } from '../../services';
 import { UserRoles, ADD_USER_FORMAT } from '../../constants';
 import { BotContextType } from '../../types';
 import { removeFile } from '../../utils';
@@ -34,7 +34,8 @@ export const addUserCallback = async (ctx: BotContextType) => {
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
-    console.error(`ERROR::Callbacks::Users::addUserCallback::${(error as Error).message}`);
+
+    logger.error(`callbacks::users::addUserCallback::${(error as Error).message}`);
   }
 };
 
@@ -56,7 +57,8 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
-    console.error(`ERROR::Callbacks::Users::getAllUsersCallback::${(error as Error).message}`);
+
+    logger.error(`callbacks::users::getAllUsersCallback::${(error as Error).message}`);
   }
 };
 
@@ -77,6 +79,7 @@ export const blockUnblockUserCallback = async (username: string, ctx: BotContext
     await ctx.answerCallbackQuery(answer);
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
-    console.error(`ERROR::Callbacks::Users::blockUnblockUserCallback::${(error as Error).message}`);
+
+    logger.error(`callbacks::users::blockUnblockUserCallback::${(error as Error).message}`);
   }
 };

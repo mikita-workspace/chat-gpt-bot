@@ -1,5 +1,6 @@
 import { unlink } from 'fs/promises';
 import NodeCache from 'node-cache';
+import { logger } from '../services';
 import { TTL_DEFAULT } from '../constants';
 
 export const memoryCache = new NodeCache({
@@ -31,7 +32,7 @@ export const removeFile = async (path: string) => {
   try {
     await unlink(path);
   } catch (error) {
-    console.error(`ERROR::util::removeFile::${(error as Error).message}`);
+    logger.error(`util::removeFile::${(error as Error).message}`);
   }
 };
 

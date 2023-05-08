@@ -16,6 +16,7 @@ import {
   adminDynamicUsersForDeleteSessionsMenu,
   adminDynamicUsersForSessionsMenu,
   adminDynamicUsersMenu,
+  adminLogsMenu,
   adminMainMenu,
   adminSessionsMenu,
   adminUsersMenu,
@@ -43,6 +44,7 @@ export const createBot = () => {
 
   adminMainMenu.register(adminSessionsMenu);
   adminMainMenu.register(adminUsersMenu);
+  adminMainMenu.register(adminLogsMenu);
   adminMainMenu.register(adminDynamicUsersMenu);
   adminMainMenu.register(adminDynamicUsersForSessionsMenu);
   adminMainMenu.register(adminDynamicUsersForDeleteSessionsMenu);

@@ -1,5 +1,5 @@
-import { openAI } from '../services';
 import { ChatCompletionRequestMessage } from 'openai';
+import { openAI, logger } from '../services';
 import { BotContextType } from '../types';
 import { MessageRoles } from '../constants';
 
@@ -31,6 +31,6 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
 
     return response.content;
   } catch (error) {
-    console.error(`ERROR::helper::getGPTMessage::${(error as Error).message}`);
+    logger.error(`helper::getGPTMessage::${(error as Error).message}`);
   }
 };

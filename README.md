@@ -19,11 +19,11 @@ Bot based on the `Grammy` and `OpenAI` libraries, providing convenient and fast 
 ## Getting Started
 
 ```bash
-docker build -t telegram-bot .
+docker build -t chat-gpt-bot .
 
-docker run -d -p 3000:3000 -e NODE_ENV=production --rm --name telegram-bot telegram-bot
+docker run -d -p 3000:3000 -e NODE_ENV=production --rm --name chat-gpt-bot chat-gpt-bot
 
-docker stop telegram-bot
+docker stop chat-gpt-bot
 ```
 
 ## Support languages

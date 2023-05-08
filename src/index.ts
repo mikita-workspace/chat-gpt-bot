@@ -1,7 +1,23 @@
 import mongoose from 'mongoose';
+import { BotError, GrammyError, HttpError } from 'grammy';
+import { logger } from './services';
 import { config } from './config';
 import { createBot } from './bot';
-import { GrammyError, HttpError } from 'grammy';
+
+const handleBotError = (error: BotError) => {
+  const ctx = error.ctx;
+  const err = error.error;
+
+  logger.error(`error while handling update::${ctx.update.update_id}:`);
+
+  if (err instanceof GrammyError) {
+    logger.error(`error in request::${err.description}`);
+  } else if (err instanceof HttpError) {
+    logger.error(`could not contact Telegram::${err.message}`);
+  } else {
+    logger.error(`unknown error::${(err as Error).message}`);
+  }
+};
 
 const botInitialize = async () => {
   await mongoose.connect(config.MONGODB_URI);
@@ -10,19 +26,7 @@ const botInitialize = async () => {
 
   bot.start();
 
-  // TODO: fix in Error Report feat
-  bot.catch((err) => {
-    const ctx = err.ctx;
-    console.error(`Error while handling update ${ctx.update.update_id}:`);
-    const e = err.error;
-    if (e instanceof GrammyError) {
-      console.error('Error in request:', e.description);
-    } else if (e instanceof HttpError) {
-      console.error('Could not contact Telegram:', e);
-    } else {
-      console.error('Unknown error:', e);
-    }
-  });
+  bot.catch(handleBotError);
 
   process.once('SIGINT', () => bot.stop());
   process.once('SIGTERM', () => bot.stop());

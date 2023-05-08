@@ -1,9 +1,9 @@
 import { adminInlineGoToMainMenu } from '../../menu';
-import { mongo, csv } from '../../services';
+import { mongo, csv, logger } from '../../services';
 import { BotContextType } from '../../types';
 import { removeFile } from '../../utils';
 
-export const getUserSessionMessages = async (username: string, ctx: BotContextType) => {
+export const getUserSessionMessagesCallback = async (username: string, ctx: BotContextType) => {
   try {
     const userSession = await mongo.getUserSession(username);
 
@@ -26,13 +26,12 @@ export const getUserSessionMessages = async (username: string, ctx: BotContextTy
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
-    console.error(
-      `ERROR::Callbacks::Sessions::getUserSessionMessages::${(error as Error).message}`,
-    );
+
+    logger.error(`callbacks::sessions::getUserSessionMessages::${(error as Error).message}`);
   }
 };
 
-export const deleteUserSessionMessages = async (username: string, ctx: BotContextType) => {
+export const deleteUserSessionMessagesCallback = async (username: string, ctx: BotContextType) => {
   try {
     await mongo.deleteUserSessionMessages(username);
 
@@ -42,8 +41,7 @@ export const deleteUserSessionMessages = async (username: string, ctx: BotContex
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
-    console.error(
-      `ERROR::Callbacks::Sessions::deleteUserSessionMessages::${(error as Error).message}`,
-    );
+
+    logger.error(`callbacks::sessions::deleteUserSessionMessages::${(error as Error).message}`);
   }
 };
