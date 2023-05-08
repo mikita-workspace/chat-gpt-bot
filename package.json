@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build:prod": "tsc && copyfiles -u 1 -e \"**/*.ts\" \"./src/locales/**/*.ftl\" \"./build\" --flatten",
-    "start": "yarn run build:prod && cross-env NODE_ENV=production node build/index.js",
+    "start:prod": "yarn run build:prod && cross-env NODE_ENV=production node build/index.js",
     "start:dev": "nodemon --watch 'src/**/*.ts' --exec ts-node --esm src/index.ts",
     "lint": "eslint . --ext .ts --ignore-pattern node_modules/",
     "lint:ci": "eslint . --plugin file-progress --rule \"file-progress/activate: 0\" --ext .ts --ignore-pattern node_modules/"
