@@ -20,7 +20,7 @@ export class MongoService implements IMongo {
     try {
       const users = await fetchCachedData('cached-users', async () => UserModel.find({}).exec());
 
-      return users;
+      return users ?? [];
     } catch (error) {
       console.error(`ERROR::MongoService::getAllUsers::${(error as Error).message}`);
     }
@@ -62,7 +62,19 @@ export class MongoService implements IMongo {
     }
   }
 
-  async getUserSessionMessages(username: string) {
+  async getAllUserSessions() {
+    try {
+      const allUserSessions = await fetchCachedData('cached-all-session-messages', async () =>
+        SessionModel.find({}).exec(),
+      );
+
+      return allUserSessions ?? [];
+    } catch (error) {
+      console.error(`ERROR::MongoService::getAllUserSessionMessages::${(error as Error).message}`);
+    }
+  }
+
+  async getUserSession(username: string) {
     try {
       const userSessionMessages = await fetchCachedData(
         `cached-session-messages-${username}`,
@@ -72,7 +84,7 @@ export class MongoService implements IMongo {
           }),
       );
 
-      return userSessionMessages?.value?.messages ?? [];
+      return userSessionMessages;
     } catch (error) {
       console.error(`ERROR::MongoService::getUserSessionMessages::${(error as Error).message}`);
     }

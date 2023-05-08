@@ -2,7 +2,7 @@ import { UserRoles } from '../constants';
 import { SessionType } from '.';
 
 export type UserModelType = {
-  createTimestamp: number;
+  timestamp: number;
   enabled: boolean;
   role: UserRoles;
   username: string;

@@ -1,8 +1,8 @@
 import { adminInlineGoToMainMenu } from '../../menu';
-import { mongo } from '../../services';
+import { mongo, csv } from '../../services';
 import { UserRoles, ADD_USER_FORMAT } from '../../constants';
 import { BotContextType } from '../../types';
-import { getHtmlForUsers } from '../../helpers';
+import { removeFile } from '../../utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }));
@@ -40,15 +40,20 @@ export const addUserCallback = async (ctx: BotContextType) => {
 
 export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
-    const chatId = ctx?.chat?.id ?? '';
+    const users = await mongo.getUsers();
 
-    const users = (await mongo.getUsers()) ?? [];
+    if (users) {
+      const { filePath, filePathForReply } = (await csv.createUsersCsv(users)) ?? {};
 
-    await ctx.deleteMessage();
-    await ctx.api.sendMessage(chatId, getHtmlForUsers(users, ctx), {
-      parse_mode: 'HTML',
-      reply_markup: adminInlineGoToMainMenu(ctx),
-    });
+      if (filePath && filePathForReply) {
+        await ctx.deleteMessage();
+        await ctx.replyWithDocument(filePathForReply, {
+          reply_markup: adminInlineGoToMainMenu(ctx),
+        });
+
+        await removeFile(filePath);
+      }
+    }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
     console.error(`ERROR::Callbacks::Users::getAllUsersCallback::${(error as Error).message}`);
