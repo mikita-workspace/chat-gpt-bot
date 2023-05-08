@@ -74,7 +74,7 @@ export class MongoService implements IMongo {
     }
   }
 
-  async getUserSessionMessages(username: string) {
+  async getUserSession(username: string) {
     try {
       const userSessionMessages = await fetchCachedData(
         `cached-session-messages-${username}`,
@@ -84,7 +84,7 @@ export class MongoService implements IMongo {
           }),
       );
 
-      return userSessionMessages?.value?.messages ?? [];
+      return userSessionMessages;
     } catch (error) {
       console.error(`ERROR::MongoService::getUserSessionMessages::${(error as Error).message}`);
     }

@@ -1,20 +1,23 @@
 import { adminInlineGoToMainMenu } from '../../menu';
-import { mongo } from '../../services';
+import { mongo, csv } from '../../services';
 import { BotContextType } from '../../types';
-import { getHtmlForSessionMessages } from '../../helpers';
+import { removeFile } from '../../utils';
 
 export const getUserSessionMessages = async (username: string, ctx: BotContextType) => {
   try {
-    const chatId = ctx?.chat?.id ?? '';
+    const userSession = await mongo.getUserSession(username);
 
-    const userMessages = await mongo.getUserSessionMessages(username);
+    if (userSession) {
+      const { filePath, filePathForReply } = (await csv.createSessionCsv(userSession)) ?? {};
 
-    if (userMessages.length > 0) {
-      await ctx.deleteMessage();
-      await ctx.api.sendMessage(chatId, getHtmlForSessionMessages(ctx, userMessages), {
-        parse_mode: 'HTML',
-        reply_markup: adminInlineGoToMainMenu(ctx),
-      });
+      if (filePath && filePathForReply) {
+        await ctx.deleteMessage();
+        await ctx.replyWithDocument(filePathForReply, {
+          reply_markup: adminInlineGoToMainMenu(ctx),
+        });
+
+        await removeFile(filePath);
+      }
     } else {
       await ctx.deleteMessage();
       await ctx.reply(ctx.t('admin-delete-session-not-found', { username }), {
