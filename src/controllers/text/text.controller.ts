@@ -15,6 +15,7 @@ export const textController = (bot: BotType) => {
       });
     } catch (error) {
       await ctx.reply(ctx.t('error-common'));
+
       logger.error(`controller::textController::${(error as Error).message}`);
     }
   });

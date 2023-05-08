@@ -26,6 +26,7 @@ export const getUserSessionMessagesCallback = async (username: string, ctx: BotC
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
+
     logger.error(`callbacks::sessions::getUserSessionMessages::${(error as Error).message}`);
   }
 };
@@ -40,6 +41,7 @@ export const deleteUserSessionMessagesCallback = async (username: string, ctx: B
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
+
     logger.error(`callbacks::sessions::deleteUserSessionMessages::${(error as Error).message}`);
   }
 };

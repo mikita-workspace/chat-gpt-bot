@@ -21,6 +21,7 @@ export const voiceController = (bot: BotType) => {
       await ctx.reply(gptAnswer, { reply_to_message_id: messageId });
     } catch (error) {
       await ctx.reply(ctx.t('error-common'));
+
       logger.error(`controller::voiceController::${(error as Error).message}`);
     }
   });

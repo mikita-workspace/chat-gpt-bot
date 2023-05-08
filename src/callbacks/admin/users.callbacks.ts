@@ -34,6 +34,7 @@ export const addUserCallback = async (ctx: BotContextType) => {
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
+
     logger.error(`callbacks::users::addUserCallback::${(error as Error).message}`);
   }
 };
@@ -56,6 +57,7 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
+
     logger.error(`callbacks::users::getAllUsersCallback::${(error as Error).message}`);
   }
 };
@@ -77,6 +79,7 @@ export const blockUnblockUserCallback = async (username: string, ctx: BotContext
     await ctx.answerCallbackQuery(answer);
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
+
     logger.error(`callbacks::users::blockUnblockUserCallback::${(error as Error).message}`);
   }
 };
