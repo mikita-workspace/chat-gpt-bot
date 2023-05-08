@@ -8,7 +8,8 @@ module.exports = {
   ],
   plugins: [
     '@typescript-eslint',
-    'prettier'
+    'prettier',
+    'file-progress'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -33,6 +34,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-console': 0,
     'import/no-extraneous-dependencies': 'off',
-    'prettier/prettier': ['error']
+    'prettier/prettier': ['error'],
+    'file-progress/activate': 1,
   },
 };
