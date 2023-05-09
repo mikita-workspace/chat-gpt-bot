@@ -1,8 +1,8 @@
-import { resolve as resolvePath } from 'path';
 import { adminInlineGoToMainMenu } from '@bot/menu';
 import { logger } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { InputFile } from 'grammy';
+import { resolve as resolvePath } from 'path';
 
 export const downloadLogsCallback = async (filename: string, ctx: BotContextType) => {
   try {

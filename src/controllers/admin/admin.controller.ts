@@ -1,7 +1,7 @@
-import { BotType } from '@bot/types';
-import { adminMainMenu } from '@bot/menu';
 import { addUserCallback } from '@bot/callbacks';
 import { REGEXP_ADD_USER_INPUT } from '@bot/constants';
+import { adminMainMenu } from '@bot/menu';
+import { BotType } from '@bot/types';
 
 export const adminController = async (bot: BotType) => {
   bot.callbackQuery('admin-go-to-main-action', async (ctx) => {

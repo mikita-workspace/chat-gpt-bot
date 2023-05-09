@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import { BotError, GrammyError, HttpError } from 'grammy';
-import { logger } from '@bot/services';
-import { config } from '@bot/config';
 import { createBot } from '@bot/bot';
+import { config } from '@bot/config';
+import { logger } from '@bot/services';
+import { BotError, GrammyError, HttpError } from 'grammy';
+import mongoose from 'mongoose';
 
 const handleBotError = (error: BotError) => {
   const ctx = error.ctx;

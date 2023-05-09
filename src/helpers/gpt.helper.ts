@@ -1,7 +1,7 @@
-import { ChatCompletionRequestMessage } from 'openai';
-import { openAI, logger } from '@bot/services';
-import { BotContextType } from '@bot/types';
 import { MessageRoles } from '@bot/constants';
+import { logger, openAI } from '@bot/services';
+import { BotContextType } from '@bot/types';
+import { ChatCompletionRequestMessage } from 'openai';
 
 export const convertGPTMessage = (
   content: ChatCompletionRequestMessage['content'],

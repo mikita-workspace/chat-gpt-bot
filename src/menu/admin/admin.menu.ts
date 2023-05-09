@@ -1,6 +1,3 @@
-import { InlineKeyboard } from 'grammy';
-import { Menu, MenuRange } from '@grammyjs/menu';
-import { mongo } from '@bot/services';
 import {
   addUserInitialCallback,
   blockUnblockUserCallback,
@@ -9,8 +6,11 @@ import {
   getAllUsersCallback,
   getUserSessionMessagesCallback,
 } from '@bot/callbacks';
-import { BotContextType, SessionModelType, UserModelType } from '@bot/types';
 import { CSV_READER_URL } from '@bot/constants';
+import { mongo } from '@bot/services';
+import { BotContextType, SessionModelType, UserModelType } from '@bot/types';
+import { Menu, MenuRange } from '@grammyjs/menu';
+import { InlineKeyboard } from 'grammy';
 
 export const dynamicUsersMenuRange = async (
   ctx: BotContextType,

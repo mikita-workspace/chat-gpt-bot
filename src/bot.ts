@@ -1,8 +1,5 @@
-import path from 'path';
-import { Bot, session } from 'grammy';
-import { I18n } from '@grammyjs/i18n';
 import { config } from '@bot/config';
-import { createInitialSessionData } from '@bot/helpers';
+import { gptModel } from '@bot/constants';
 import {
   aboutController,
   adminController,
@@ -12,6 +9,7 @@ import {
   textController,
   voiceController,
 } from '@bot/controllers';
+import { createInitialSessionData } from '@bot/helpers';
 import {
   adminDynamicUsersForDeleteSessionsMenu,
   adminDynamicUsersForSessionsMenu,
@@ -23,8 +21,10 @@ import {
 } from '@bot/menu';
 import { auth, normalize } from '@bot/middlewares';
 import { mongo } from '@bot/services';
-import { gptModel } from '@bot/constants';
 import { BotContextType } from '@bot/types';
+import { I18n } from '@grammyjs/i18n';
+import { Bot, session } from 'grammy';
+import path from 'path';
 
 export const createBot = () => {
   const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);

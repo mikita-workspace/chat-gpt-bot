@@ -1,4 +1,4 @@
-import { createLogger, format, transports, addColors } from 'winston';
+import { addColors, createLogger, format, transports } from 'winston';
 
 const config = {
   levels: {

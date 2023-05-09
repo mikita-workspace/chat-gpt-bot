@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import { SessionModelType, UserModelType } from '@bot/types';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
+import mongoose from 'mongoose';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
-import { SessionModelType, UserModelType } from '.';
 
 export interface IOggConverter {
   toMp3(input: string, output: string): void;

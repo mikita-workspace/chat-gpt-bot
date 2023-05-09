@@ -1,6 +1,6 @@
+import { ADD_USER_FORMAT, UserRoles } from '@bot/constants';
 import { adminInlineGoToMainMenu } from '@bot/menu';
-import { mongo, csv, logger } from '@bot/services';
-import { UserRoles, ADD_USER_FORMAT } from '@bot/constants';
+import { csv, logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { removeFile } from '@bot/utils';
 

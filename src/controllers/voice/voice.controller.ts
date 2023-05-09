@@ -1,6 +1,6 @@
 import { config } from '@bot/config';
-import { oggConverter, openAI, logger } from '@bot/services';
 import { getFileApiLink, getGPTAnswer } from '@bot/helpers';
+import { logger, oggConverter, openAI } from '@bot/services';
 import { BotType } from '@bot/types';
 
 export const voiceController = (bot: BotType) => {

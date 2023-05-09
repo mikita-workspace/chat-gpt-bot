@@ -1,5 +1,5 @@
+import { REGEXP_ADD_USER_INPUT, UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
-import { UserRoles, REGEXP_ADD_USER_INPUT } from '@bot/constants';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
