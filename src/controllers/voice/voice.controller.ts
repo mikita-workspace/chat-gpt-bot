@@ -1,7 +1,7 @@
-import { config } from '../../config';
-import { oggConverter, openAI, logger } from '../../services';
-import { getFileApiLink, getGPTAnswer } from '../../helpers';
-import { BotType } from '../../types';
+import { config } from '@bot/config';
+import { getFileApiLink, getGPTAnswer } from '@bot/helpers';
+import { logger, oggConverter, openAI } from '@bot/services';
+import { BotType } from '@bot/types';
 
 export const voiceController = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {

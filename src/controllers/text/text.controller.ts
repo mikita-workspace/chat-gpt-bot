@@ -1,6 +1,6 @@
-import { getGPTAnswer } from '../../helpers';
-import { logger } from '../../services';
-import { BotType } from '../../types';
+import { getGPTAnswer } from '@bot/helpers';
+import { logger } from '@bot/services';
+import { BotType } from '@bot/types';
 
 export const textController = (bot: BotType) => {
   bot.on('message:text', async (ctx) => {

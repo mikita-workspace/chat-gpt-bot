@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+import { SessionModel, UserModel } from '@bot/models';
+import { logger } from '@bot/services';
+import { IMongo } from '@bot/types';
+import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
-import { logger } from '.';
-import { UserModel, SessionModel } from '../models';
-import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '../utils';
-import { IMongo } from '../types';
+import mongoose from 'mongoose';
 
 export class MongoService implements IMongo {
   sessions: mongoose.mongo.Collection<ISession>;
@@ -17,8 +17,12 @@ export class MongoService implements IMongo {
     this.sessionAdapter = new MongoDBAdapter({ collection: sessions });
   }
 
-  async getUsers() {
+  async getUsers(resetCache = false) {
     try {
+      if (resetCache) {
+        removeValueFromMemoryCache('cached-users');
+      }
+
       const users = await fetchCachedData('cached-users', async () => UserModel.find({}).exec());
 
       return users ?? [];

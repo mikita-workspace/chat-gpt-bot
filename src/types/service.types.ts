@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import { SessionModelType, UserModelType } from '@bot/types';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
+import mongoose from 'mongoose';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
-import { SessionModelType, UserModelType } from '.';
 
 export interface IOggConverter {
   toMp3(input: string, output: string): void;
@@ -17,7 +17,7 @@ export interface IOpenAI {
 export interface IMongo {
   sessions: mongoose.mongo.Collection<ISession>;
   sessionAdapter: MongoDBAdapter<unknown>;
-  getUsers(): void;
+  getUsers(resetCache: boolean): void;
   getUser(username: string): void;
   setUser(username: string, role: string): void;
   updateUser(username: string, enabled: boolean): void;

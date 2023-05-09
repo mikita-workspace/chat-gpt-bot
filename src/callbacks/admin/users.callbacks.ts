@@ -1,17 +1,20 @@
-import { adminInlineGoToMainMenu } from '../../menu';
-import { mongo, csv, logger } from '../../services';
-import { UserRoles, ADD_USER_FORMAT } from '../../constants';
-import { BotContextType } from '../../types';
-import { removeFile } from '../../utils';
+import { ADD_USER_FORMAT, UserRoles } from '@bot/constants';
+import { adminInlineGoToMainMenu } from '@bot/menu';
+import { csv, logger, mongo } from '@bot/services';
+import { BotContextType } from '@bot/types';
+import { removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
-  await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }));
+  await ctx.deleteMessage();
+  await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }), {
+    reply_markup: adminInlineGoToMainMenu(ctx),
+  });
 };
 
 export const addUserCallback = async (ctx: BotContextType) => {
   const [username = '', role = ''] = (ctx?.update?.message?.text ?? '')
     .replace(/;/g, '')
-    .split('#')
+    .split('$')
     .slice(1);
   const messageId = Number(ctx?.message?.message_id);
 

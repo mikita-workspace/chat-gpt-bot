@@ -1,10 +1,10 @@
+import { config } from '@bot/config';
+import { gptModel, transcriptionModel } from '@bot/constants';
+import { logger } from '@bot/services';
+import { IOpenAI } from '@bot/types';
+import { removeFile } from '@bot/utils';
 import { createReadStream } from 'fs';
-import { logger } from '.';
-import { config } from '../config';
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
-import { removeFile } from '../utils';
-import { IOpenAI } from '../types';
-import { gptModel, transcriptionModel } from '../constants';
 
 class OpenAIService implements IOpenAI {
   openAI: OpenAIApi;

@@ -1,7 +1,7 @@
-import { adminInlineGoToMainMenu } from '../../menu';
-import { mongo, csv, logger } from '../../services';
-import { BotContextType } from '../../types';
-import { removeFile } from '../../utils';
+import { adminInlineGoToMainMenu } from '@bot/menu';
+import { csv, logger, mongo } from '@bot/services';
+import { BotContextType } from '@bot/types';
+import { removeFile } from '@bot/utils';
 
 export const getUserSessionMessagesCallback = async (username: string, ctx: BotContextType) => {
   try {

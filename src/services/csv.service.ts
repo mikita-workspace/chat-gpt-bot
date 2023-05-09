@@ -1,10 +1,10 @@
-import { InputFile } from 'grammy';
+import { SessionCsvIds, UsersCsvIds } from '@bot/constants';
+import { mapUsers, mapUserSessionMessages } from '@bot/helpers';
+import { logger } from '@bot/services';
+import { ICsv, SessionModelType, UserModelType } from '@bot/types';
 import { createObjectCsvWriter } from 'csv-writer';
+import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
-import { logger } from '../services';
-import { mapUserSessionMessages, mapUsers } from '../helpers';
-import { SessionCsvIds, UsersCsvIds } from '../constants';
-import { ICsv, SessionModelType, UserModelType } from '../types';
 
 class CsvService implements ICsv {
   async createUsersCsv(users: UserModelType[]) {

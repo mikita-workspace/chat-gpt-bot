@@ -4,7 +4,10 @@
     "module": "CommonJS",
     "baseUrl": "./",
     "paths": {
-      "*": ["./src/*"]
+      "*": ["./src/*"],
+      "@bot/*": [
+        "./src/*"
+      ],
     },
     "outDir": "./build",
     "esModuleInterop": true,

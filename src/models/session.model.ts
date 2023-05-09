@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose';
-import { SessionModelType } from '../types';
+import { SessionModelType } from '@bot/types';
+import { model, Schema } from 'mongoose';
 
 const schema = new Schema<SessionModelType>({
   key: { type: String },

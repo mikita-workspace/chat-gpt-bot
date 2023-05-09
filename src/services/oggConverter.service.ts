@@ -1,11 +1,11 @@
+import { logger } from '@bot/services';
+import { IOggConverter } from '@bot/types';
+import { removeFile } from '@bot/utils';
+import installer from '@ffmpeg-installer/ffmpeg';
 import axios from 'axios';
+import ffmpeg from 'fluent-ffmpeg';
 import { createWriteStream } from 'fs';
 import { dirname, resolve as resolvePath } from 'path';
-import ffmpeg from 'fluent-ffmpeg';
-import installer from '@ffmpeg-installer/ffmpeg';
-import { logger } from '.';
-import { IOggConverter } from '../types';
-import { removeFile } from '../utils';
 
 class OggConverterService implements IOggConverter {
   constructor() {

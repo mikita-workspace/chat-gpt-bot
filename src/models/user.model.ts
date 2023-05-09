@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose';
-import { UserModelType } from '../types';
+import { UserModelType } from '@bot/types';
+import { model, Schema } from 'mongoose';
 
 const schema = new Schema<UserModelType>({
   timestamp: { type: Number, require: true, default: Date.now() },

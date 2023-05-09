@@ -1,6 +1,3 @@
-import { InlineKeyboard } from 'grammy';
-import { Menu, MenuRange } from '@grammyjs/menu';
-import { mongo } from '../../services';
 import {
   addUserInitialCallback,
   blockUnblockUserCallback,
@@ -8,30 +5,48 @@ import {
   downloadLogsCallback,
   getAllUsersCallback,
   getUserSessionMessagesCallback,
-} from '../../callbacks';
-import { BotContextType, SessionModelType, UserModelType } from '../../types';
+} from '@bot/callbacks';
+import { CSV_READER_URL } from '@bot/constants';
+import { mongo } from '@bot/services';
+import { BotContextType, SessionModelType, UserModelType } from '@bot/types';
+import { isDocumentsTheSame } from '@bot/utils';
+import { Menu, MenuRange } from '@grammyjs/menu';
+import { InlineKeyboard } from 'grammy';
 
-export const dynamicUsersRange = async (
+export const dynamicUsersMenuRange = async (
   ctx: BotContextType,
   callback: (username: string, ctx: BotContextType) => void,
 ) => {
   const range = new MenuRange<BotContextType>();
   const currentUsername = ctx?.update?.callback_query?.from?.username ?? '';
 
-  const users: UserModelType[] = await mongo.getUsers();
+  let users: UserModelType[] = await mongo.getUsers();
 
   users
     .filter((user) => user.username !== currentUsername)
     .forEach((user) => {
       const username = user.username;
+      const status = user.enabled ? 'Available' : 'Blocked';
 
-      range.text(username, async () => callback(username, ctx)).row();
+      range.text(`${username} - ${status}`, async () => callback(username, ctx)).row();
     });
+
+  range.text(
+    () => ctx.t('admin-block-unblock-user-refresh'),
+    async () => {
+      const newUsers = await mongo.getUsers(true);
+
+      if (!isDocumentsTheSame(users, newUsers)) {
+        users = newUsers;
+        ctx.menu.update();
+      }
+    },
+  );
 
   return range;
 };
 
-export const dynamicUsersWithSessionRange = async (
+export const dynamicUsersWithSessionMenuRange = async (
   ctx: BotContextType,
   callback: (username: string, ctx: BotContextType) => void,
   showCurrentUsername = true,
@@ -57,6 +72,8 @@ export const adminMainMenu = new Menu<BotContextType>('admin-main-menu')
   .submenu((ctx) => ctx.t('admin-users'), 'admin-users-menu')
   .row()
   .submenu((ctx) => ctx.t('admin-logs'), 'admin-logs-menu')
+  .url((ctx) => ctx.t('admin-csv-reader'), CSV_READER_URL)
+  .row()
   .text(
     (ctx) => ctx.t('admin-go-to-bot'),
     async (ctx) => {
@@ -72,9 +89,15 @@ export const adminSessionsMenu = new Menu<BotContextType>('admin-sessions-menu')
   .back((ctx) => ctx.t('admin-go-back'));
 
 export const adminUsersMenu = new Menu<BotContextType>('admin-users-menu')
-  .text((ctx) => ctx.t('admin-get-all-users'), getAllUsersCallback)
+  .text(
+    (ctx) => ctx.t('admin-get-all-users'),
+    (ctx) => getAllUsersCallback(ctx),
+  )
   .row()
-  .text((ctx) => ctx.t('admin-add-user'), addUserInitialCallback)
+  .text(
+    (ctx) => ctx.t('admin-add-user'),
+    (ctx) => addUserInitialCallback(ctx),
+  )
   .row()
   .submenu((ctx) => ctx.t('admin-block-unblock-user'), 'admin-dynamic-users-menu')
   .row()
@@ -93,21 +116,23 @@ export const adminLogsMenu = new Menu<BotContextType>('admin-logs-menu')
   .row()
   .back((ctx) => ctx.t('admin-go-back'));
 
-export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-users-menu')
-  .dynamic(async (ctx) => dynamicUsersRange(ctx, blockUnblockUserCallback))
+export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-users-menu', {
+  onMenuOutdated: false,
+})
+  .dynamic(async (ctx) => dynamicUsersMenuRange(ctx, blockUnblockUserCallback))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminDynamicUsersForSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-sessions-menu',
 )
-  .dynamic(async (ctx) => dynamicUsersWithSessionRange(ctx, getUserSessionMessagesCallback))
+  .dynamic(async (ctx) => dynamicUsersWithSessionMenuRange(ctx, getUserSessionMessagesCallback))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminDynamicUsersForDeleteSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-delete-sessions-menu',
 )
   .dynamic(async (ctx) =>
-    dynamicUsersWithSessionRange(ctx, deleteUserSessionMessagesCallback, false),
+    dynamicUsersWithSessionMenuRange(ctx, deleteUserSessionMessagesCallback, false),
   )
   .back((ctx) => ctx.t('admin-cancel'));
 

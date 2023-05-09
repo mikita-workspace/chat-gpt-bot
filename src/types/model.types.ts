@@ -1,5 +1,5 @@
-import { UserRoles } from '../constants';
-import { SessionType } from '.';
+import { UserRoles } from '@bot/constants';
+import { SessionType } from '@bot/types';
 
 export type UserModelType = {
   enabled: boolean;
