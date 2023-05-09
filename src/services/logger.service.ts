@@ -51,7 +51,7 @@ export const logger = createLogger({
       ),
     }),
     new transports.File({
-      filename: `combined.log`,
+      filename: 'combined.log',
       level: 'silly',
       format: format.printf(
         (info) =>
