@@ -17,8 +17,12 @@ export class MongoService implements IMongo {
     this.sessionAdapter = new MongoDBAdapter({ collection: sessions });
   }
 
-  async getUsers() {
+  async getUsers(resetCache = false) {
     try {
+      if (resetCache) {
+        removeValueFromMemoryCache('cached-users');
+      }
+
       const users = await fetchCachedData('cached-users', async () => UserModel.find({}).exec());
 
       return users ?? [];

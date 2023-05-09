@@ -38,6 +38,8 @@ export const removeFile = async (path: string) => {
 
 export const isEmptyObject = (object: object) => Object.keys(object).length === 0;
 
+export const isDocumentsTheSame = (a: object, b: object) => JSON.stringify(a) === JSON.stringify(b);
+
 export const parseTimestamp = (timestamp: number) => {
   const date = new Date(timestamp);
 

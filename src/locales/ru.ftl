@@ -30,6 +30,7 @@ admin-add-user-exist = Пользователь { $username } был уже до
 admin-block-unblock-user = Заблокировать/Разблокировать
 admin-block-block-user-successful = Пользователь { $username } был заблокирован
 admin-block-unblock-user-successful = Пользователь { $username } был разблокирован
+admin-block-unblock-user-refresh = 🔄 Обновить
 admin-enter-user = Введите пользовтеля в следующем формате: { $inputFormat }
 admin-logs = Логи
 admin-logs-download = Скачать { $filename } файл

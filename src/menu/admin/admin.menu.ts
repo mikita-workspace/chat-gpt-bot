@@ -9,6 +9,7 @@ import {
 import { CSV_READER_URL } from '@bot/constants';
 import { mongo } from '@bot/services';
 import { BotContextType, SessionModelType, UserModelType } from '@bot/types';
+import { isDocumentsTheSame } from '@bot/utils';
 import { Menu, MenuRange } from '@grammyjs/menu';
 import { InlineKeyboard } from 'grammy';
 
@@ -19,15 +20,28 @@ export const dynamicUsersMenuRange = async (
   const range = new MenuRange<BotContextType>();
   const currentUsername = ctx?.update?.callback_query?.from?.username ?? '';
 
-  const users: UserModelType[] = await mongo.getUsers();
+  let users: UserModelType[] = await mongo.getUsers();
 
   users
     .filter((user) => user.username !== currentUsername)
     .forEach((user) => {
       const username = user.username;
+      const status = user.enabled ? 'Available' : 'Blocked';
 
-      range.text(username, async () => callback(username, ctx)).row();
+      range.text(`${username} - ${status}`, async () => callback(username, ctx)).row();
     });
+
+  range.text(
+    () => ctx.t('admin-block-unblock-user-refresh'),
+    async () => {
+      const newUsers = await mongo.getUsers(true);
+
+      if (!isDocumentsTheSame(users, newUsers)) {
+        users = newUsers;
+        ctx.menu.update();
+      }
+    },
+  );
 
   return range;
 };
@@ -102,7 +116,9 @@ export const adminLogsMenu = new Menu<BotContextType>('admin-logs-menu')
   .row()
   .back((ctx) => ctx.t('admin-go-back'));
 
-export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-users-menu')
+export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-users-menu', {
+  onMenuOutdated: false,
+})
   .dynamic(async (ctx) => dynamicUsersMenuRange(ctx, blockUnblockUserCallback))
   .back((ctx) => ctx.t('admin-cancel'));
 

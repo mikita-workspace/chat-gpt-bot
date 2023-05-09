@@ -17,7 +17,7 @@ export interface IOpenAI {
 export interface IMongo {
   sessions: mongoose.mongo.Collection<ISession>;
   sessionAdapter: MongoDBAdapter<unknown>;
-  getUsers(): void;
+  getUsers(resetCache: boolean): void;
   getUser(username: string): void;
   setUser(username: string, role: string): void;
   updateUser(username: string, enabled: boolean): void;
