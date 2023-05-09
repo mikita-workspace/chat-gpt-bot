@@ -11,7 +11,7 @@ export const addUserInitialCallback = async (ctx: BotContextType) => {
 export const addUserCallback = async (ctx: BotContextType) => {
   const [username = '', role = ''] = (ctx?.update?.message?.text ?? '')
     .replace(/;/g, '')
-    .split('#')
+    .split('$')
     .slice(1);
   const messageId = Number(ctx?.message?.message_id);
 

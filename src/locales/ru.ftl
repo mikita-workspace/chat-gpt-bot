@@ -33,3 +33,4 @@ admin-block-unblock-user-successful = Пользователь { $username } б�
 admin-enter-user = Введите пользовтеля в следующем формате: { $inputFormat }
 admin-logs = Логи
 admin-logs-download = Скачать { $filename } файл
+admin-csv-reader = CSV Считыватель

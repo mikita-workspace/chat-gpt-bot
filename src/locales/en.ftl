@@ -32,3 +32,4 @@ admin-block-unblock-user-successful = User { $username } has been unblocked
 admin-enter-user = Enter user following next format: { $inputFormat }
 admin-logs = Logs
 admin-logs-download = Download { $filename } file
+admin-csv-reader = CSV Reader

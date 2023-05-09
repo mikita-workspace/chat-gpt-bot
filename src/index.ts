@@ -1,5 +1,3 @@
-import 'module-alias/register';
-
 import mongoose from 'mongoose';
 import { BotError, GrammyError, HttpError } from 'grammy';
 import { logger } from '@bot/services';

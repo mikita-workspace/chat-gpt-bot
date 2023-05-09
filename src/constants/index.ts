@@ -20,15 +20,17 @@ export enum UserRoles {
   MODERATOR = 'moderator',
 }
 
-export const ADD_USER_FORMAT = '#<username>;#<role>;';
+export const ADD_USER_FORMAT = '$<username>;$<admin | user | moderator>;';
 
 // Regexp
-export const REGEXP_ADD_USER_INPUT = /^#[a-zA-Z0-9_]+;#[a-z]+;$/;
+export const REGEXP_ADD_USER_INPUT = /^\$[a-zA-Z0-9_]+;\$[a-z]+;$/;
 
 // Normalize
 export const MAX_SESSION_MESSAGES = 30;
 
 // CSV files
+export const CSV_READER_URL = 'https://www.convertcsv.com/csv-viewer-editor.htm';
+
 export enum SessionCsvIds {
   CONTENT = 'content',
   KEY = 'key',

@@ -10,8 +10,9 @@ import {
   getUserSessionMessagesCallback,
 } from '@bot/callbacks';
 import { BotContextType, SessionModelType, UserModelType } from '@bot/types';
+import { CSV_READER_URL } from '@bot/constants';
 
-export const dynamicUsersRange = async (
+export const dynamicUsersMenuRange = async (
   ctx: BotContextType,
   callback: (username: string, ctx: BotContextType) => void,
 ) => {
@@ -31,7 +32,7 @@ export const dynamicUsersRange = async (
   return range;
 };
 
-export const dynamicUsersWithSessionRange = async (
+export const dynamicUsersWithSessionMenuRange = async (
   ctx: BotContextType,
   callback: (username: string, ctx: BotContextType) => void,
   showCurrentUsername = true,
@@ -57,6 +58,8 @@ export const adminMainMenu = new Menu<BotContextType>('admin-main-menu')
   .submenu((ctx) => ctx.t('admin-users'), 'admin-users-menu')
   .row()
   .submenu((ctx) => ctx.t('admin-logs'), 'admin-logs-menu')
+  .url((ctx) => ctx.t('admin-csv-reader'), CSV_READER_URL)
+  .row()
   .text(
     (ctx) => ctx.t('admin-go-to-bot'),
     async (ctx) => {
@@ -94,20 +97,20 @@ export const adminLogsMenu = new Menu<BotContextType>('admin-logs-menu')
   .back((ctx) => ctx.t('admin-go-back'));
 
 export const adminDynamicUsersMenu = new Menu<BotContextType>('admin-dynamic-users-menu')
-  .dynamic(async (ctx) => dynamicUsersRange(ctx, blockUnblockUserCallback))
+  .dynamic(async (ctx) => dynamicUsersMenuRange(ctx, blockUnblockUserCallback))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminDynamicUsersForSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-sessions-menu',
 )
-  .dynamic(async (ctx) => dynamicUsersWithSessionRange(ctx, getUserSessionMessagesCallback))
+  .dynamic(async (ctx) => dynamicUsersWithSessionMenuRange(ctx, getUserSessionMessagesCallback))
   .back((ctx) => ctx.t('admin-cancel'));
 
 export const adminDynamicUsersForDeleteSessionsMenu = new Menu<BotContextType>(
   'admin-dynamic-users-for-delete-sessions-menu',
 )
   .dynamic(async (ctx) =>
-    dynamicUsersWithSessionRange(ctx, deleteUserSessionMessagesCallback, false),
+    dynamicUsersWithSessionMenuRange(ctx, deleteUserSessionMessagesCallback, false),
   )
   .back((ctx) => ctx.t('admin-cancel'));
 
