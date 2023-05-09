@@ -75,9 +75,15 @@ export const adminSessionsMenu = new Menu<BotContextType>('admin-sessions-menu')
   .back((ctx) => ctx.t('admin-go-back'));
 
 export const adminUsersMenu = new Menu<BotContextType>('admin-users-menu')
-  .text((ctx) => ctx.t('admin-get-all-users'), getAllUsersCallback)
+  .text(
+    (ctx) => ctx.t('admin-get-all-users'),
+    (ctx) => getAllUsersCallback(ctx),
+  )
   .row()
-  .text((ctx) => ctx.t('admin-add-user'), addUserInitialCallback)
+  .text(
+    (ctx) => ctx.t('admin-add-user'),
+    (ctx) => addUserInitialCallback(ctx),
+  )
   .row()
   .submenu((ctx) => ctx.t('admin-block-unblock-user'), 'admin-dynamic-users-menu')
   .row()

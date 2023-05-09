@@ -5,7 +5,10 @@ import { BotContextType } from '@bot/types';
 import { removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
-  await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }));
+  await ctx.deleteMessage();
+  await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }), {
+    reply_markup: adminInlineGoToMainMenu(ctx),
+  });
 };
 
 export const addUserCallback = async (ctx: BotContextType) => {
