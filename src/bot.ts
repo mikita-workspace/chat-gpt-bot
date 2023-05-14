@@ -9,6 +9,7 @@ import {
   textController,
   voiceController,
 } from '@bot/controllers';
+import { addUserConversation } from '@bot/conversations';
 import { createInitialSessionData } from '@bot/helpers';
 import {
   adminDynamicUsersForDeleteSessionsMenu,
@@ -22,11 +23,12 @@ import {
 import { auth, normalize } from '@bot/middlewares';
 import { mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
+import { conversations, createConversation } from '@grammyjs/conversations';
 import { I18n } from '@grammyjs/i18n';
 import { Bot, session } from 'grammy';
 import path from 'path';
 
-export const createBot = () => {
+export const createBot = async () => {
   const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);
 
   const i18n = new I18n<BotContextType>({
@@ -61,6 +63,9 @@ export const createBot = () => {
   bot.use(auth());
 
   bot.use(normalize());
+
+  bot.use(conversations());
+  bot.use(createConversation(addUserConversation));
 
   bot.use(adminMainMenu);
 

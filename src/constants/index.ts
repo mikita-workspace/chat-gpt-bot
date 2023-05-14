@@ -20,10 +20,10 @@ export enum UserRoles {
   MODERATOR = 'moderator',
 }
 
-export const ADD_USER_FORMAT = '$<username>;$<admin | user | moderator>;';
+export const ADD_USER_FORMAT = '<username>;<admin | user | moderator>';
 
 // Regexp
-export const REGEXP_ADD_USER_INPUT = /^\$[a-zA-Z0-9_]+;\$[a-z]+;$/;
+export const REGEXP_USERNAME = /^[a-z0-9_-]{3,16}$/;
 
 // Normalize
 export const MAX_SESSION_MESSAGES = 30;

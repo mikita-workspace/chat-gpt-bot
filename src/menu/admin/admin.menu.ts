@@ -138,3 +138,6 @@ export const adminDynamicUsersForDeleteSessionsMenu = new Menu<BotContextType>(
 
 export const adminInlineGoToMainMenu = (ctx: BotContextType) =>
   new InlineKeyboard().text(ctx.t('admin-go-to-main'), 'admin-go-to-main-action');
+
+export const adminInlineAddNewUser = (ctx: BotContextType) =>
+  new InlineKeyboard().text(ctx.t('error-common-try-again'), 'admin-add-new-user-action');
