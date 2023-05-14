@@ -1,6 +1,8 @@
 // Open AI
 export const gptModel = 'gpt-3.5-turbo';
+
 export const transcriptionModel = 'whisper-1';
+
 export enum MessageRoles {
   ASSISTANT = 'assistant',
   USER = 'user',
@@ -9,6 +11,23 @@ export enum MessageRoles {
 
 // Telegram API
 export const telegramApi = 'https://api.telegram.org';
+
+// Bot
+export const supportLanguageCodes = ['en', 'ru'];
+
+export enum BotCommands {
+  ABOUT = 'about',
+  ADMIN = 'admin',
+  DESCRIPTION = 'description',
+  NEW = 'new',
+  START = 'start',
+}
+
+export const BotCommandsWithDescription = [
+  { command: BotCommands.ADMIN, i18nKey: 'bot-command-admin' },
+  { command: BotCommands.DESCRIPTION, i18nKey: 'bot-command-description' },
+  { command: BotCommands.ABOUT, i18nKey: 'bot-command-about' },
+];
 
 // Node cache
 export const TTL_DEFAULT = 60;

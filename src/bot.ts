@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { gptModel } from '@bot/constants';
+import { gptModel, supportLanguageCodes } from '@bot/constants';
 import {
   aboutController,
   adminController,
@@ -10,7 +10,7 @@ import {
   voiceController,
 } from '@bot/controllers';
 import { addUserConversation } from '@bot/conversations';
-import { createInitialSessionData } from '@bot/helpers';
+import { createInitialSessionData, mapBotCommands, mapBotDescription } from '@bot/helpers';
 import {
   adminDynamicUsersForDeleteSessionsMenu,
   adminDynamicUsersForSessionsMenu,
@@ -48,15 +48,24 @@ export const createBot = async () => {
 
   const i18n = new I18n<BotContextType>({
     defaultLocale: 'en',
-    useSession: true,
+    globalTranslationContext: (ctx) => ({
+      botName: ctx?.me?.first_name ?? '',
+      firstName: ctx?.from?.first_name ?? '',
+      model: gptModel,
+      username: ctx?.from?.username ?? '',
+    }),
     directory: path.join(__dirname, './locales'),
-    globalTranslationContext(ctx) {
-      return {
-        first_name: ctx.from?.first_name ?? '',
-        username: ctx?.from?.username ?? '',
-        model: gptModel,
-      };
-    },
+    useSession: true,
+  });
+
+  supportLanguageCodes.forEach(async (languageCode) => {
+    await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
+      language_code: languageCode,
+    });
+
+    await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
+      language_code: languageCode,
+    });
   });
 
   adminMainMenu.register(adminSessionsMenu);
@@ -80,6 +89,7 @@ export const createBot = async () => {
   bot.use(normalize());
 
   bot.use(conversations());
+
   bot.use(createConversation(addUserConversation));
 
   bot.use(adminMainMenu);

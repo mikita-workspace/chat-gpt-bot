@@ -6,6 +6,7 @@ const schema = new Schema<SessionModelType>({
   value: {
     username: { type: String },
     messages: [],
+    conversation: { type: Object, default: {} },
   },
 });
 
