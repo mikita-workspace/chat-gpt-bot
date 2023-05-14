@@ -13,5 +13,6 @@ export type SessionModelType = {
   value: {
     username: string;
     messages: SessionType['messages'];
+    conversation: SessionType['conversation'];
   };
 };

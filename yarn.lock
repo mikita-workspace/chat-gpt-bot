@@ -156,6 +156,13 @@
   resolved "https://registry.yarnpkg.com/@grammyjs/menu/-/menu-1.2.0.tgz#ce2fbf083e115b78c5b3d736ac7f825c692cbd15"
   integrity sha512-dz0ts9c+g2zZ5ZW+Md8vGhLncI4QwKGMDyEnjgjr7CFBUYizsUmNhPTANmt6UlXaRfp0v6rtHmWtAjkmZ9Bw3Q==
 
+"@grammyjs/runner@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@grammyjs/runner/-/runner-2.0.3.tgz#cfb08958fd563ce1e0eda5754a40b3d632c4eaa1"
+  integrity sha512-nckmTs1dPWfVQteK9cxqxzE+0m1VRvluLWB8UgFzsjg62w3qthPJt0TYtJBEdG7OedvfQq4vnFAyE6iaMkR42A==
+  dependencies:
+    abort-controller "^3.0.0"
+
 "@grammyjs/storage-mongodb@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@grammyjs/storage-mongodb/-/storage-mongodb-2.2.0.tgz#ff2096187fd86859162af678d1c7a98b2028b800"
