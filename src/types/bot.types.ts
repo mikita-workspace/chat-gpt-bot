@@ -10,6 +10,7 @@ export type SessionType = {
     gptFormat: { content: string; role: `${MessageRoles}` };
     timestamp: number;
   }[];
+  conversation: object;
 };
 
 export type BotContextType = Context &

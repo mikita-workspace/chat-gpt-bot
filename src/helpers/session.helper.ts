@@ -4,6 +4,7 @@ import { SessionModelType, SessionType } from '@bot/types';
 export const createInitialSessionData = (): SessionType => ({
   username: null,
   messages: [],
+  conversation: {},
 });
 
 export const mapUserSessionMessages = (userSession: SessionModelType) =>
