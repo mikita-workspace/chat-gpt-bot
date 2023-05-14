@@ -48,14 +48,14 @@ export const createBot = async () => {
 
   const i18n = new I18n<BotContextType>({
     defaultLocale: 'en',
-    useSession: true,
-    directory: path.join(__dirname, './locales'),
     globalTranslationContext: (ctx) => ({
-      firstName: ctx?.from?.first_name ?? '',
-      username: ctx?.from?.username ?? '',
-      model: gptModel,
       botName: ctx?.me?.first_name ?? '',
+      firstName: ctx?.from?.first_name ?? '',
+      model: gptModel,
+      username: ctx?.from?.username ?? '',
     }),
+    directory: path.join(__dirname, './locales'),
+    useSession: true,
   });
 
   supportLanguageCodes.forEach(async (languageCode) => {
