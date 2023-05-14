@@ -1,4 +1,4 @@
-import { REGEXP_ADD_USER_INPUT, UserRoles } from '@bot/constants';
+import { UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
@@ -10,10 +10,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
   const user = await mongo.getUser(username);
 
   if (user?.enabled) {
-    if (
-      (action === '/admin' || REGEXP_ADD_USER_INPUT.test(action)) &&
-      user?.role !== UserRoles.ADMIN
-    ) {
+    if (action === '/admin' && user?.role !== UserRoles.ADMIN) {
       await ctx.reply(ctx.t('error-auth-admin'));
 
       return;

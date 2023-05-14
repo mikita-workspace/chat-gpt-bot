@@ -7,6 +7,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   const sessionMessages = ctx.session.messages;
 
   ctx.session.username ??= username;
+  ctx.session.conversation ??= {};
 
   if (sessionMessages.length >= MAX_SESSION_MESSAGES) {
     ctx.session.messages = sessionMessages.slice(Math.floor(MAX_SESSION_MESSAGES / 2.5));
