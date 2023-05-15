@@ -1,4 +1,4 @@
-import { SessionModelType, UserModelType } from '@bot/types';
+import { LoggerModelType, SessionModelType, UserModelType } from '@bot/types';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';
 import { ChatCompletionRequestMessage, OpenAIApi } from 'openai';
@@ -24,9 +24,13 @@ export interface IMongo {
   getAllUserSessions(): void;
   getUserSession(username: string): void;
   deleteUserSessionMessages(username: string): void;
+  getUserConversation(username: string): void;
+  updateUserConversation(username: string): void;
+  deleteUserConversation(username: string): void;
 }
 
 export interface ICsv {
+  createLoggerCsv(loggerInfo: LoggerModelType[]): void;
   createSessionCsv(userSession: SessionModelType): void;
   createUsersCsv(users: UserModelType[]): void;
 }

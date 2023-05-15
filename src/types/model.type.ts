@@ -21,3 +21,13 @@ export type LoggerModelType = {
   level: string;
   message: string;
 };
+
+export type UserConversationModelType = {
+  key: string;
+  username: string;
+  messages: {
+    role: UserRoles;
+    timestamp: number;
+    content: string;
+  }[];
+};
