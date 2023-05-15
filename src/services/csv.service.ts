@@ -3,91 +3,72 @@ import { mapLoggerInfo, mapUsers, mapUserSessionMessages } from '@bot/helpers';
 import { logger } from '@bot/services';
 import { ICsv, LoggerModelType, SessionModelType, UserModelType } from '@bot/types';
 import { createObjectCsvWriter } from 'csv-writer';
+import { ObjectMap } from 'csv-writer/src/lib/lang/object';
+import { ObjectStringifierHeader } from 'csv-writer/src/lib/record';
 import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
 
 class CsvService implements ICsv {
-  async createLoggerCsv(loggerInfo: LoggerModelType[]) {
+  private async csvWriter<T>(
+    filename: string,
+    header: ObjectStringifierHeader,
+    objectMap: ObjectMap<T>[],
+  ) {
     try {
-      const filePath = resolvePath(__dirname, '../../assets', 'logger-info.csv');
+      const filePath = resolvePath(__dirname, '../../assets', `${filename}.csv`);
       const writer = createObjectCsvWriter({
         path: filePath,
-        header: [
-          { id: LoggerInfoCsvIds.TIMESTAMP, title: LoggerInfoCsvIds.TIMESTAMP },
-          { id: LoggerInfoCsvIds.LEVEL, title: LoggerInfoCsvIds.LEVEL },
-          { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
-        ],
+        header,
       });
 
-      const mappedLoggerInfo = mapLoggerInfo(loggerInfo);
-
-      await writer.writeRecords(mappedLoggerInfo);
+      await writer.writeRecords(objectMap);
 
       return {
         filePath,
         filePathForReply: new InputFile(filePath),
       };
     } catch (error) {
-      logger.error(`csvService::createLoggerCsv::${(error as Error).message}`);
+      logger.error(`csvService::csvWriter::${(error as Error).message}`);
     }
+  }
+
+  async createLoggerCsv(loggerInfo: LoggerModelType[]) {
+    const header = [
+      { id: LoggerInfoCsvIds.TIMESTAMP, title: LoggerInfoCsvIds.TIMESTAMP },
+      { id: LoggerInfoCsvIds.LEVEL, title: LoggerInfoCsvIds.LEVEL },
+      { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
+    ];
+
+    const mappedLoggerInfo = mapLoggerInfo(loggerInfo);
+
+    return this.csvWriter('logger-info', header, mappedLoggerInfo);
   }
 
   async createUsersCsv(users: UserModelType[]) {
-    try {
-      const filePath = resolvePath(__dirname, '../../assets', 'users.csv');
-      const writer = createObjectCsvWriter({
-        path: filePath,
-        header: [
-          { id: UsersCsvIds.USERNAME, title: UsersCsvIds.USERNAME },
-          { id: UsersCsvIds.ROLE, title: UsersCsvIds.ROLE },
-          { id: UsersCsvIds.ENABLED, title: UsersCsvIds.ENABLED },
-          { id: UsersCsvIds.TIMESTAMP, title: UsersCsvIds.TIMESTAMP },
-        ],
-      });
+    const header = [
+      { id: UsersCsvIds.USERNAME, title: UsersCsvIds.USERNAME },
+      { id: UsersCsvIds.ROLE, title: UsersCsvIds.ROLE },
+      { id: UsersCsvIds.ENABLED, title: UsersCsvIds.ENABLED },
+      { id: UsersCsvIds.TIMESTAMP, title: UsersCsvIds.TIMESTAMP },
+    ];
 
-      const mappedUsers = mapUsers(users);
+    const mappedUsers = mapUsers(users);
 
-      await writer.writeRecords(mappedUsers);
-
-      return {
-        filePath,
-        filePathForReply: new InputFile(filePath),
-      };
-    } catch (error) {
-      logger.error(`csvService::createUsersCsv::${(error as Error).message}`);
-    }
+    return this.csvWriter('users', header, mappedUsers);
   }
 
   async createSessionCsv(userSession: SessionModelType) {
-    try {
-      const filePath = resolvePath(
-        __dirname,
-        '../../assets',
-        `${userSession.value.username}-session.csv`,
-      );
+    const header = [
+      { id: SessionCsvIds.KEY, title: SessionCsvIds.KEY },
+      { id: SessionCsvIds.USERNAME, title: SessionCsvIds.USERNAME },
+      { id: SessionCsvIds.ROLE, title: SessionCsvIds.ROLE },
+      { id: SessionCsvIds.TIMESTAMP, title: SessionCsvIds.TIMESTAMP },
+      { id: SessionCsvIds.CONTENT, title: SessionCsvIds.CONTENT },
+    ];
 
-      const writer = createObjectCsvWriter({
-        path: filePath,
-        header: [
-          { id: SessionCsvIds.KEY, title: SessionCsvIds.KEY },
-          { id: SessionCsvIds.USERNAME, title: SessionCsvIds.USERNAME },
-          { id: SessionCsvIds.ROLE, title: SessionCsvIds.ROLE },
-          { id: SessionCsvIds.TIMESTAMP, title: SessionCsvIds.TIMESTAMP },
-          { id: SessionCsvIds.CONTENT, title: SessionCsvIds.CONTENT },
-        ],
-      });
+    const mappedUserSession = mapUserSessionMessages(userSession);
 
-      const mappedUserSession = mapUserSessionMessages(userSession);
-
-      await writer.writeRecords(mappedUserSession);
-
-      return {
-        filePath,
-        filePathForReply: new InputFile(filePath),
-      };
-    } catch (error) {
-      logger.error(`csvService::createSessionCsv::${(error as Error).message}`);
-    }
+    return this.csvWriter(`${userSession.value.username}-session`, header, mappedUserSession);
   }
 }
 
