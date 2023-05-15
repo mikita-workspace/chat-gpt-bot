@@ -1,4 +1,4 @@
-import { conversationComposer, menuComposer, sessionComposer } from '@bot/composers';
+import { conversationComposer, i18nComposer, menuComposer, sessionComposer } from '@bot/composers';
 import { config } from '@bot/config';
 import {
   aboutController,
@@ -12,7 +12,6 @@ import {
 import { handleBotError } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
 import { BotContextType } from '@bot/types';
-import { i18nComposer } from 'composers/i18n.composer';
 import { Bot } from 'grammy';
 
 export const createBot = () => {

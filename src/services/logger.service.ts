@@ -1,3 +1,6 @@
+import 'winston-mongodb';
+
+import { config as globalConfig } from '@bot/config';
 import { addColors, createLogger, format, transports } from 'winston';
 
 const config = {
@@ -63,6 +66,13 @@ export const logger = createLogger({
             minute: '2-digit',
           })} ${info.level.toLocaleUpperCase()}: ${info.message}`,
       ),
+    }),
+    new transports.MongoDB({
+      db: globalConfig.MONGODB_URI,
+      collection: 'logger',
+      options: {
+        useUnifiedTopology: true,
+      },
     }),
   ],
 });
