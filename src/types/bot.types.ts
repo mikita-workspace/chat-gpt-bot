@@ -5,12 +5,13 @@ import { MenuFlavor } from '@grammyjs/menu';
 import { Bot, Context, SessionFlavor } from 'grammy';
 
 export type SessionType = {
-  username: string | null;
-  messages: {
-    gptFormat: { content: string; role: `${MessageRoles}` };
-    timestamp: number;
-  }[];
-  conversation: object;
+  custom: {
+    username: string | null;
+    messages: {
+      gptFormat: { content: string; role: `${MessageRoles}` };
+      timestamp: number;
+    }[];
+  };
 };
 
 export type BotContextType = Context &

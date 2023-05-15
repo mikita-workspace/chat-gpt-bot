@@ -79,8 +79,12 @@ export const createBot = async () => {
 
   bot.use(
     session({
-      initial: createInitialSessionData,
-      storage: mongo.sessionAdapter,
+      type: 'multi',
+      custom: {
+        storage: mongo.sessionAdapter,
+        initial: createInitialSessionData,
+      },
+      conversation: {},
     }),
   );
 
