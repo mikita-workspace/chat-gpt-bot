@@ -12,7 +12,6 @@ export type SessionModelType = {
   key: string;
   value: {
     username: string;
-    messages: SessionType['messages'];
-    conversation: SessionType['conversation'];
+    messages: SessionType['custom']['messages'];
   };
 };

@@ -13,18 +13,20 @@ export const convertGPTMessage = (
 
 export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
   try {
-    ctx.session.messages.push({
+    ctx.session.custom.messages.push({
       gptFormat: convertGPTMessage(text),
       timestamp: Date.now(),
     });
 
-    const response = await openAI.chat(ctx.session.messages.map(({ gptFormat }) => gptFormat));
+    const response = await openAI.chat(
+      ctx.session.custom.messages.map(({ gptFormat }) => gptFormat),
+    );
 
     if (!response) {
       return '';
     }
 
-    ctx.session.messages.push({
+    ctx.session.custom.messages.push({
       gptFormat: convertGPTMessage(response.content, MessageRoles.ASSISTANT),
       timestamp: Date.now(),
     });

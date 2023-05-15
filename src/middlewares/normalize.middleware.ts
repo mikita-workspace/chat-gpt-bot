@@ -3,13 +3,12 @@ import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   const username = ctx?.from?.username ?? '';
-  const sessionMessages = ctx.session.messages;
+  const sessionMessages = ctx.session.custom.messages;
 
-  ctx.session.username ??= username;
-  ctx.session.conversation ??= {};
+  ctx.session.custom.username ??= username;
 
   if (sessionMessages.length >= MAX_SESSION_MESSAGES) {
-    ctx.session.messages = sessionMessages.slice(Math.floor(MAX_SESSION_MESSAGES / 2.5));
+    ctx.session.custom.messages = sessionMessages.slice(Math.floor(MAX_SESSION_MESSAGES / 2.5));
   }
 
   return next();
