@@ -1,4 +1,4 @@
-import { SessionModel, UserModel } from '@bot/models';
+import { LoggerModel, SessionModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
 import { IMongo, SessionType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
@@ -15,6 +15,18 @@ export class MongoService implements IMongo {
 
     this.sessions = sessions;
     this.sessionAdapter = new MongoDBAdapter({ collection: sessions });
+  }
+
+  async getLoggerInfo() {
+    try {
+      const loggerInfo = await fetchCachedData('cached-logger-info', async () =>
+        LoggerModel.find({}).exec(),
+      );
+
+      return loggerInfo ?? [];
+    } catch (error) {
+      logger.error(`mongoService::getLoggerInfo::${(error as Error).message}`);
+    }
   }
 
   async getUsers(resetCache = false) {
@@ -89,7 +101,7 @@ export class MongoService implements IMongo {
           }),
       );
 
-      return userSessionMessages;
+      return userSessionMessages ?? [];
     } catch (error) {
       logger.error(`mongoService::getUserSessionMessages::${(error as Error).message}`);
     }

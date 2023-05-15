@@ -1,17 +1,42 @@
-import { SessionCsvIds, UsersCsvIds } from '@bot/constants';
-import { mapUsers, mapUserSessionMessages } from '@bot/helpers';
+import { LoggerInfoCsvIds, SessionCsvIds, UsersCsvIds } from '@bot/constants';
+import { mapLoggerInfo, mapUsers, mapUserSessionMessages } from '@bot/helpers';
 import { logger } from '@bot/services';
-import { ICsv, SessionModelType, UserModelType } from '@bot/types';
+import { ICsv, LoggerModelType, SessionModelType, UserModelType } from '@bot/types';
 import { createObjectCsvWriter } from 'csv-writer';
 import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
 
 class CsvService implements ICsv {
+  async createLoggerCsv(loggerInfo: LoggerModelType[]) {
+    try {
+      const filePath = resolvePath(__dirname, '../../assets', 'logger-info.csv');
+      const writer = createObjectCsvWriter({
+        path: filePath,
+        header: [
+          { id: LoggerInfoCsvIds.TIMESTAMP, title: LoggerInfoCsvIds.TIMESTAMP },
+          { id: LoggerInfoCsvIds.LEVEL, title: LoggerInfoCsvIds.LEVEL },
+          { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
+        ],
+      });
+
+      const mappedLoggerInfo = mapLoggerInfo(loggerInfo);
+
+      await writer.writeRecords(mappedLoggerInfo);
+
+      return {
+        filePath,
+        filePathForReply: new InputFile(filePath),
+      };
+    } catch (error) {
+      logger.error(`csvService::createLoggerCsv::${(error as Error).message}`);
+    }
+  }
+
   async createUsersCsv(users: UserModelType[]) {
     try {
       const filePath = resolvePath(__dirname, '../../assets', 'users.csv');
       const writer = createObjectCsvWriter({
-        path: resolvePath(__dirname, '../../assets', 'users.csv'),
+        path: filePath,
         header: [
           { id: UsersCsvIds.USERNAME, title: UsersCsvIds.USERNAME },
           { id: UsersCsvIds.ROLE, title: UsersCsvIds.ROLE },
@@ -42,7 +67,7 @@ class CsvService implements ICsv {
       );
 
       const writer = createObjectCsvWriter({
-        path: resolvePath(filePath),
+        path: filePath,
         header: [
           { id: SessionCsvIds.KEY, title: SessionCsvIds.KEY },
           { id: SessionCsvIds.USERNAME, title: SessionCsvIds.USERNAME },

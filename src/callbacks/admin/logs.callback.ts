@@ -1,18 +1,23 @@
 import { adminInlineGoToMainMenu } from '@bot/menu';
-import { logger } from '@bot/services';
+import { csv, logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
-import { InputFile } from 'grammy';
-import { resolve as resolvePath } from 'path';
+import { removeFile } from '@bot/utils';
 
-export const downloadLogsCallback = async (filename: string, ctx: BotContextType) => {
+export const downloadLogsCallback = async (ctx: BotContextType) => {
   try {
-    if (filename) {
-      const filePath = resolvePath(__dirname, '../../../', `${filename}.log`);
+    const loggerInfo = await mongo.getLoggerInfo();
 
-      await ctx.deleteMessage();
-      await ctx.replyWithDocument(new InputFile(filePath), {
-        reply_markup: adminInlineGoToMainMenu(ctx),
-      });
+    if (loggerInfo) {
+      const { filePath, filePathForReply } = (await csv.createLoggerCsv(loggerInfo)) ?? {};
+
+      if (filePath && filePathForReply) {
+        await ctx.deleteMessage();
+        await ctx.replyWithDocument(filePathForReply, {
+          reply_markup: adminInlineGoToMainMenu(ctx),
+        });
+
+        await removeFile(filePath);
+      }
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));

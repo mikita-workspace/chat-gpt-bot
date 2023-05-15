@@ -69,7 +69,7 @@ export const logger = createLogger({
     }),
     new transports.MongoDB({
       db: globalConfig.MONGODB_URI,
-      collection: 'logger',
+      collection: 'loggers',
       options: {
         useUnifiedTopology: true,
       },
