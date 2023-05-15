@@ -9,6 +9,33 @@ import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
 
 class CsvService implements ICsv {
+  private readonly loggerHeader: ObjectStringifierHeader;
+
+  private readonly usersHeader: ObjectStringifierHeader;
+
+  private readonly sessionHeader: ObjectStringifierHeader;
+
+  constructor() {
+    this.loggerHeader = [
+      { id: LoggerInfoCsvIds.TIMESTAMP, title: LoggerInfoCsvIds.TIMESTAMP },
+      { id: LoggerInfoCsvIds.LEVEL, title: LoggerInfoCsvIds.LEVEL },
+      { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
+    ];
+    this.usersHeader = [
+      { id: UsersCsvIds.USERNAME, title: UsersCsvIds.USERNAME },
+      { id: UsersCsvIds.ROLE, title: UsersCsvIds.ROLE },
+      { id: UsersCsvIds.ENABLED, title: UsersCsvIds.ENABLED },
+      { id: UsersCsvIds.TIMESTAMP, title: UsersCsvIds.TIMESTAMP },
+    ];
+    this.sessionHeader = [
+      { id: SessionCsvIds.KEY, title: SessionCsvIds.KEY },
+      { id: SessionCsvIds.USERNAME, title: SessionCsvIds.USERNAME },
+      { id: SessionCsvIds.ROLE, title: SessionCsvIds.ROLE },
+      { id: SessionCsvIds.TIMESTAMP, title: SessionCsvIds.TIMESTAMP },
+      { id: SessionCsvIds.CONTENT, title: SessionCsvIds.CONTENT },
+    ];
+  }
+
   private async csvWriter<T>(
     filename: string,
     header: ObjectStringifierHeader,
@@ -33,42 +60,19 @@ class CsvService implements ICsv {
   }
 
   async createLoggerCsv(loggerInfo: LoggerModelType[]) {
-    const header = [
-      { id: LoggerInfoCsvIds.TIMESTAMP, title: LoggerInfoCsvIds.TIMESTAMP },
-      { id: LoggerInfoCsvIds.LEVEL, title: LoggerInfoCsvIds.LEVEL },
-      { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
-    ];
-
-    const mappedLoggerInfo = mapLoggerInfo(loggerInfo);
-
-    return this.csvWriter('logger-info', header, mappedLoggerInfo);
+    return this.csvWriter('logger-info', this.loggerHeader, mapLoggerInfo(loggerInfo));
   }
 
   async createUsersCsv(users: UserModelType[]) {
-    const header = [
-      { id: UsersCsvIds.USERNAME, title: UsersCsvIds.USERNAME },
-      { id: UsersCsvIds.ROLE, title: UsersCsvIds.ROLE },
-      { id: UsersCsvIds.ENABLED, title: UsersCsvIds.ENABLED },
-      { id: UsersCsvIds.TIMESTAMP, title: UsersCsvIds.TIMESTAMP },
-    ];
-
-    const mappedUsers = mapUsers(users);
-
-    return this.csvWriter('users', header, mappedUsers);
+    return this.csvWriter('users', this.usersHeader, mapUsers(users));
   }
 
   async createSessionCsv(userSession: SessionModelType) {
-    const header = [
-      { id: SessionCsvIds.KEY, title: SessionCsvIds.KEY },
-      { id: SessionCsvIds.USERNAME, title: SessionCsvIds.USERNAME },
-      { id: SessionCsvIds.ROLE, title: SessionCsvIds.ROLE },
-      { id: SessionCsvIds.TIMESTAMP, title: SessionCsvIds.TIMESTAMP },
-      { id: SessionCsvIds.CONTENT, title: SessionCsvIds.CONTENT },
-    ];
-
-    const mappedUserSession = mapUserSessionMessages(userSession);
-
-    return this.csvWriter(`${userSession.value.username}-session`, header, mappedUserSession);
+    return this.csvWriter(
+      `${userSession.value.username}-session`,
+      this.sessionHeader,
+      mapUserSessionMessages(userSession),
+    );
   }
 }
 
