@@ -15,3 +15,9 @@ export type SessionModelType = {
     messages: SessionType['custom']['messages'];
   };
 };
+
+export type LoggerModelType = {
+  timestamp: string;
+  level: string;
+  message: string;
+};

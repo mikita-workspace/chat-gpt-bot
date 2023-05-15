@@ -18,11 +18,6 @@ export const getUserSessionMessagesCallback = async (username: string, ctx: BotC
 
         await removeFile(filePath);
       }
-    } else {
-      await ctx.deleteMessage();
-      await ctx.reply(ctx.t('admin-delete-session-not-found', { username }), {
-        reply_markup: adminInlineGoToMainMenu(ctx),
-      });
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));

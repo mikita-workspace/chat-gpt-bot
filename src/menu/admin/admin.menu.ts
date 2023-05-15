@@ -71,7 +71,10 @@ export const adminMainMenu = new Menu<BotContextType>('admin-main-menu')
   .submenu((ctx) => ctx.t('admin-sessions'), 'admin-sessions-menu')
   .submenu((ctx) => ctx.t('admin-users'), 'admin-users-menu')
   .row()
-  .submenu((ctx) => ctx.t('admin-logs'), 'admin-logs-menu')
+  .text(
+    (ctx) => ctx.t('admin-logs'),
+    (ctx) => downloadLogsCallback(ctx),
+  )
   .url((ctx) => ctx.t('admin-csv-reader'), CSV_READER_URL)
   .row()
   .text(
@@ -100,19 +103,6 @@ export const adminUsersMenu = new Menu<BotContextType>('admin-users-menu')
   )
   .row()
   .submenu((ctx) => ctx.t('admin-block-unblock-user'), 'admin-dynamic-users-menu')
-  .row()
-  .back((ctx) => ctx.t('admin-go-back'));
-
-export const adminLogsMenu = new Menu<BotContextType>('admin-logs-menu')
-  .text(
-    (ctx) => ctx.t('admin-logs-download', { filename: 'errors.log' }),
-    (ctx) => downloadLogsCallback('errors', ctx),
-  )
-  .row()
-  .text(
-    (ctx) => ctx.t('admin-logs-download', { filename: 'combined.log' }),
-    (ctx) => downloadLogsCallback('combined', ctx),
-  )
   .row()
   .back((ctx) => ctx.t('admin-go-back'));
 

@@ -64,3 +64,9 @@ export enum UsersCsvIds {
   TIMESTAMP = 'timestamp',
   USERNAME = 'username',
 }
+
+export enum LoggerInfoCsvIds {
+  LEVEL = 'level',
+  MESSAGE = 'message',
+  TIMESTAMP = 'timestamp',
+}
