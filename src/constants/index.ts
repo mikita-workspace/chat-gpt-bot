@@ -12,7 +12,7 @@ export enum MessageRoles {
 // Telegram API
 export const telegramApi = 'https://api.telegram.org';
 
-// Bot
+// Bot config
 export const supportLanguageCodes = ['en', 'ru'];
 
 export enum BotCommands {

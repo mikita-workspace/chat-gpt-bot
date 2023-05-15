@@ -1,11 +1,15 @@
+import { config } from '@bot/config';
 import { UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
-  const username =
-    ctx?.update?.message?.from?.username ?? ctx?.update?.callback_query?.from?.username ?? '';
+  const username = ctx?.from?.username ?? '';
   const action = ctx?.update?.message?.text ?? '';
+
+  if (username === config.SUPER_ADMIN_USERNAME) {
+    return next();
+  }
 
   const user = await mongo.getUser(username);
 

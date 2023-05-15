@@ -9,4 +9,5 @@ export const config = {
   TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN ?? '',
   OPEN_AI_TOKEN: process.env.OPEN_AI_TOKEN ?? '',
   MONGODB_URI: process.env.MONGODB_URI ?? '',
+  SUPER_ADMIN_USERNAME: process.env.SUPER_ADMIN_USERNAME ?? '',
 };
