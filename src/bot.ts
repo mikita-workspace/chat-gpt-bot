@@ -11,7 +11,6 @@ import {
 } from '@bot/controllers';
 import { handleBotError } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
-import { logger } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { Bot } from 'grammy';
 
@@ -41,9 +40,6 @@ export const createBot = () => {
   ].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);
-
-  logger.info('test');
-  logger.error('test');
 
   return bot;
 };
