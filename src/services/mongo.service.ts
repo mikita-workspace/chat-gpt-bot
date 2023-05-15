@@ -1,4 +1,4 @@
-import { LoggerModel, SessionModel, UserModel } from '@bot/models';
+import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
 import { IMongo, SessionType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
@@ -116,6 +116,13 @@ export class MongoService implements IMongo {
       logger.error(`mongoService::deleteUserSessionMessages::${(error as Error).message}`);
     }
   }
+
+  // TODO
+  async getUserConversation(username: string) {}
+
+  async updateUserConversation(username: string) {}
+
+  async deleteUserConversation(username: string) {}
 }
 
 export const mongo = new MongoService();

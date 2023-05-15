@@ -1,4 +1,5 @@
 import {
+  adminConversationsMenu,
   adminDynamicUsersForDeleteSessionsMenu,
   adminDynamicUsersForSessionsMenu,
   adminDynamicUsersMenu,
@@ -13,6 +14,7 @@ const composer = new Composer<BotContextType>();
 
 adminMainMenu.register(adminSessionsMenu);
 adminMainMenu.register(adminUsersMenu);
+adminMainMenu.register(adminConversationsMenu);
 adminMainMenu.register(adminDynamicUsersMenu);
 adminMainMenu.register(adminDynamicUsersForSessionsMenu);
 adminMainMenu.register(adminDynamicUsersForDeleteSessionsMenu);
