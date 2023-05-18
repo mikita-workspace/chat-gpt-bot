@@ -28,4 +28,4 @@ ru
 ```
 
 ## License
-The bot is published under the Apache 2.0.
+Distributed under the [Apache License 2.0](LICENSE).
