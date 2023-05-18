@@ -26,3 +26,6 @@ docker-compose down
 en
 ru
 ```
+
+## License
+The bot is published under the Apache 2.0.
