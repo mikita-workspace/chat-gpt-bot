@@ -1,11 +1,11 @@
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
-import { IMongo, SessionType } from '@bot/types';
+import { SessionType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';
 
-export class MongoService implements IMongo {
+export class MongoService {
   sessions: mongoose.mongo.Collection<ISession>;
 
   sessionAdapter: MongoDBAdapter<SessionType['custom']>;

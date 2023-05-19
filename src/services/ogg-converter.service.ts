@@ -1,5 +1,4 @@
 import { logger } from '@bot/services';
-import { IOggConverter } from '@bot/types';
 import { removeFile } from '@bot/utils';
 import installer from '@ffmpeg-installer/ffmpeg';
 import axios from 'axios';
@@ -7,7 +6,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import { createWriteStream } from 'fs';
 import { dirname, resolve as resolvePath } from 'path';
 
-class OggConverterService implements IOggConverter {
+class OggConverterService {
   constructor() {
     ffmpeg.setFfmpegPath(installer.path);
   }
