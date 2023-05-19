@@ -4,7 +4,7 @@
   "main": "index.js",
   "repository": "git@github.com:mikita-kandratsyeu/telegram-bot.git",
   "author": "Mikita Kandratsyeu <nickondr.production@gmail.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "build:prod": "tsc && tsc-alias -p tsconfig.build.json && copyfiles -u 1 -e \"**/*.ts\" \"./src/locales/**/*.ftl\" \"./build\" --flatten",
     "start:prod": "yarn run build:prod && cross-env NODE_ENV=production node build/index.js",
