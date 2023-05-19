@@ -9,9 +9,10 @@ import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
 class OpenAIService implements IOpenAI {
   openAI: OpenAIApi;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, organization: string) {
     const configuration = new Configuration({
       apiKey,
+      organization,
     });
 
     this.openAI = new OpenAIApi(configuration);
@@ -20,8 +21,9 @@ class OpenAIService implements IOpenAI {
   async chat(messages: ChatCompletionRequestMessage[]) {
     try {
       const response = await this.openAI.createChatCompletion({
-        model: gptModel,
         messages,
+        model: gptModel,
+        top_p: 0.5,
       });
 
       return response.data.choices[0].message;
@@ -47,4 +49,4 @@ class OpenAIService implements IOpenAI {
   }
 }
 
-export const openAI = new OpenAIService(config.OPEN_AI_TOKEN);
+export const openAI = new OpenAIService(config.OPEN_AI_TOKEN, config.OPEN_AI_ORG);
