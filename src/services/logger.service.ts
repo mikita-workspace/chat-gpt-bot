@@ -60,15 +60,15 @@ class LoggerService {
         }),
       ],
     });
+
+    if (process.env.NODE_ENV !== 'production') {
+      this.logger.add(
+        new transports.Console({
+          format: format.combine(format.colorize(), format.simple()),
+        }),
+      );
+    }
   }
 }
 
 export const { logger } = new LoggerService();
-
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
-    }),
-  );
-}
