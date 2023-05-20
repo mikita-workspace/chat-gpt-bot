@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { gptModel, transcriptionModel } from '@bot/constants';
+import { modelGPT, transcriptionModelGPT } from '@bot/constants';
 import { logger } from '@bot/services';
 import { removeFile } from '@bot/utils';
 import { createReadStream } from 'fs';
@@ -21,7 +21,7 @@ class OpenAIService {
     try {
       const response = await this.openAI.createChatCompletion({
         messages,
-        model: gptModel,
+        model: modelGPT,
         top_p: 0.5,
       });
 
@@ -37,7 +37,7 @@ class OpenAIService {
 
       const response = await this.openAI.createTranscription(
         fileStream as File,
-        transcriptionModel,
+        transcriptionModelGPT,
       );
 
       removeFile(filepath);

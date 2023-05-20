@@ -1,11 +1,11 @@
-import { MessageRoles } from '@bot/constants';
+import { MessageRolesGPT } from '@bot/constants';
 import { logger, openAI } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { ChatCompletionRequestMessage } from 'openai';
 
 export const convertGPTMessage = (
   content: ChatCompletionRequestMessage['content'],
-  role = MessageRoles.USER,
+  role = MessageRolesGPT.USER,
 ) => ({
   content,
   role,
@@ -27,7 +27,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
     }
 
     ctx.session.custom.messages.push({
-      gptFormat: convertGPTMessage(response.content, MessageRoles.ASSISTANT),
+      gptFormat: convertGPTMessage(response.content, MessageRolesGPT.ASSISTANT),
       timestamp: Date.now(),
     });
 

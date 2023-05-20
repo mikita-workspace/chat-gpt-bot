@@ -1,9 +1,9 @@
 // Open AI
-export const gptModel = 'gpt-3.5-turbo';
+export const modelGPT = 'gpt-3.5-turbo';
 
-export const transcriptionModel = 'whisper-1';
+export const transcriptionModelGPT = 'whisper-1';
 
-export enum MessageRoles {
+export enum MessageRolesGPT {
   ASSISTANT = 'assistant',
   USER = 'user',
   SYSTEM = 'system',

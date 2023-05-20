@@ -1,4 +1,4 @@
-import { MessageRoles } from '@bot/constants';
+import { MessageRolesGPT } from '@bot/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
 import { I18nFlavor } from '@grammyjs/i18n';
@@ -9,7 +9,7 @@ export type SessionType = {
   custom: {
     username: string | null;
     messages: {
-      gptFormat: { content: string; role: `${MessageRoles}` };
+      gptFormat: { content: string; role: `${MessageRolesGPT}` };
       timestamp: number;
     }[];
   };

@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { gptModel, supportLanguageCodes } from '@bot/constants';
+import { modelGPT, supportLanguageCodes } from '@bot/constants';
 import { mapBotCommands, mapBotDescription } from '@bot/helpers';
 import { BotContextType } from '@bot/types';
 import { I18n } from '@grammyjs/i18n';
@@ -15,7 +15,7 @@ const i18n = new I18n<BotContextType>({
   globalTranslationContext: (ctx) => ({
     botName: ctx?.me?.first_name ?? '',
     firstName: ctx?.from?.first_name ?? '',
-    model: gptModel,
+    model: modelGPT,
     username: ctx?.from?.username ?? '',
   }),
   directory: path.join(__dirname, '../locales'),
