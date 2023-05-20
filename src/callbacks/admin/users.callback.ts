@@ -1,4 +1,4 @@
-import { adminInlineGoToMainMenu } from '@bot/menu';
+import { adminInlineGoToMainMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { removeFile } from '@bot/utils';
@@ -6,6 +6,11 @@ import { removeFile } from '@bot/utils';
 export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.deleteMessage();
   await ctx.conversation.enter('addUserConversation');
+};
+
+export const changeUserRoleCallback = async (ctx: BotContextType) => {
+  await ctx.deleteMessage();
+  await ctx.conversation.enter('changeUserRoleConversation');
 };
 
 export const getAllUsersCallback = async (ctx: BotContextType) => {
@@ -34,7 +39,7 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
 export const blockUnblockUserCallback = async (username: string, ctx: BotContextType) => {
   try {
     const user = await mongo.getUser(username);
-    const updatedUser = await mongo.updateUser(username, !user.enabled);
+    const updatedUser = await mongo.updateUser(username, { enabled: !user.enabled });
 
     const answer = ctx.t(
       !updatedUser?.enabled
@@ -50,5 +55,20 @@ export const blockUnblockUserCallback = async (username: string, ctx: BotContext
     await ctx.reply(ctx.t('error-common'));
 
     logger.error(`callbacks::users::blockUnblockUserCallback::${(error as Error).message}`);
+  }
+};
+
+export const deleteUserCallback = async (username: string, ctx: BotContextType) => {
+  try {
+    await mongo.deleteUser(username);
+
+    await ctx.deleteMessage();
+    await ctx.reply(ctx.t('admin-block-block-user-successful', { username }), {
+      reply_markup: adminInlineGoToMainMenu(ctx),
+    });
+  } catch (error) {
+    await ctx.reply(ctx.t('error-common'));
+
+    logger.error(`callbacks::users::deleteUsersCallback::${(error as Error).message}`);
   }
 };

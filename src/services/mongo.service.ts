@@ -1,6 +1,8 @@
+import { config } from '@bot/config';
+import { UserRoles } from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
-import { SessionType } from '@bot/types';
+import { SessionType, UserModelType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';
@@ -57,18 +59,26 @@ export class MongoService {
 
   async setUser(username: string, role: string) {
     try {
-      await UserModel.create({ username, role });
-      await UserConversationModel.create({ username, messages: [] });
+      await UserModel.create({
+        username,
+        role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
+      });
+
+      const userConversation = await this.getUserConversation(username);
+
+      if (!userConversation) {
+        await UserConversationModel.create({ username, messages: [] });
+      }
     } catch (error) {
       logger.error(`mongoService::setUser::${(error as Error).message}`);
     }
   }
 
-  async updateUser(username: string, enabled: boolean) {
+  async updateUser(username: string, options: Partial<UserModelType>) {
     try {
       const updatedUser = await UserModel.findOneAndUpdate(
         { username },
-        { enabled },
+        { ...options },
         { new: true },
       );
 
@@ -77,6 +87,16 @@ export class MongoService {
       return updatedUser;
     } catch (error) {
       logger.error(`mongoService::updateUser::${(error as Error).message}`);
+    }
+  }
+
+  async deleteUser(username: string) {
+    try {
+      await UserModel.findOneAndDelete({ username });
+
+      removeValueFromMemoryCache(`cached-user-${username}`);
+    } catch (error) {
+      logger.error(`mongoService::deleteUser::${(error as Error).message}`);
     }
   }
 

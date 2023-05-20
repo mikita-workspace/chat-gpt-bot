@@ -12,10 +12,19 @@ import {
 import { handleBotError } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
 import { BotContextType } from '@bot/types';
+import { hydrate } from '@grammyjs/hydrate';
+import { limit as rateLimit } from '@grammyjs/ratelimiter';
+import { apiThrottler } from '@grammyjs/transformer-throttler';
 import { Bot } from 'grammy';
 
 export const createBot = () => {
   const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);
+
+  bot.api.config.use(apiThrottler());
+
+  bot.use(rateLimit());
+
+  bot.use(hydrate());
 
   bot.use(i18nComposer());
 

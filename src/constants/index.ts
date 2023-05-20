@@ -35,11 +35,12 @@ export const TTL_DEFAULT = 60;
 // Privileges
 export enum UserRoles {
   ADMIN = 'admin',
-  USER = 'user',
   MODERATOR = 'moderator',
+  SUPER_ADMIN = 'super-admin',
+  USER = 'user',
 }
 
-export const ADD_USER_FORMAT = '<username>;<admin | user | moderator>';
+export const ADD_USER_FORMAT = '<username>';
 
 // Regexp
 export const REGEXP_USERNAME = /^[a-z0-9_-]{3,32}$/;
