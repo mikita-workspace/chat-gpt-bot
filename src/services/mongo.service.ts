@@ -58,6 +58,7 @@ export class MongoService {
   async setUser(username: string, role: string) {
     try {
       await UserModel.create({ username, role });
+      await UserConversationModel.create({ username, messages: [] });
     } catch (error) {
       logger.error(`mongoService::setUser::${(error as Error).message}`);
     }
@@ -101,7 +102,7 @@ export class MongoService {
           }),
       );
 
-      return userSessionMessages ?? [];
+      return userSessionMessages ?? {};
     } catch (error) {
       logger.error(`mongoService::getUserSessionMessages::${(error as Error).message}`);
     }
@@ -117,12 +118,47 @@ export class MongoService {
     }
   }
 
-  // TODO
-  async getUserConversation(username: string) {}
+  async getUserConversation(username: string) {
+    try {
+      const userConversation = await fetchCachedData(
+        `cached-user-conversation-${username}`,
+        async () => UserConversationModel.findOne({ username }),
+      );
 
-  async updateUserConversation(username: string) {}
+      return userConversation ?? {};
+    } catch (error) {
+      logger.error(`mongoService::getUserConversation::${(error as Error).message}`);
+    }
+  }
 
-  async deleteUserConversation(username: string) {}
+  async updateUserConversation(username: string, messages: SessionType['custom']['messages']) {
+    try {
+      const updatedUserConversation = await UserConversationModel.findOneAndUpdate(
+        { username },
+        { messages },
+        { new: true },
+      );
+
+      setValueToMemoryCache(
+        `cached-user-conversation-${username}`,
+        JSON.stringify(updatedUserConversation),
+      );
+
+      return updatedUserConversation;
+    } catch (error) {
+      logger.error(`mongoService::updateUserConversation::${(error as Error).message}`);
+    }
+  }
+
+  async deleteUserConversation(username: string) {
+    try {
+      await UserConversationModel.findOneAndDelete({ username });
+
+      removeValueFromMemoryCache(`cached-user-conversation-${username}`);
+    } catch (error) {
+      logger.error(`mongoService::deleteUserConversation::${(error as Error).message}`);
+    }
+  }
 }
 
 export const mongo = new MongoService();

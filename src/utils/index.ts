@@ -38,6 +38,17 @@ export const removeFile = async (path: string) => {
 
 export const isEmptyObject = (object: object) => Object.keys(object).length === 0;
 
+export const uniqBy = <T>(arr: T[], key: keyof T): T[] =>
+  Object.values(
+    arr.reduce(
+      (map, item) => ({
+        ...map,
+        [`${item[key]}`]: item,
+      }),
+      {},
+    ),
+  );
+
 export const isDocumentsTheSame = (a: object, b: object) => JSON.stringify(a) === JSON.stringify(b);
 
 export const parseTimestamp = (timestamp: number) => {

@@ -23,11 +23,6 @@ export type LoggerModelType = {
 };
 
 export type UserConversationModelType = {
-  key: string;
+  messages: SessionType['custom']['messages'];
   username: string;
-  messages: {
-    role: UserRoles;
-    timestamp: number;
-    content: string;
-  }[];
 };

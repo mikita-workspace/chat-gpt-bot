@@ -1,24 +1,11 @@
-import {
-  adminConversationsMenu,
-  adminDynamicUsersForDeleteSessionsMenu,
-  adminDynamicUsersForSessionsMenu,
-  adminDynamicUsersMenu,
-  adminMainMenu,
-  adminSessionsMenu,
-  adminUsersMenu,
-} from '@bot/menu';
+import { adminMenu, adminSubMenu } from '@bot/menu';
 import { BotContextType } from '@bot/types';
 import { Composer, Middleware } from 'grammy';
 
 const composer = new Composer<BotContextType>();
 
-adminMainMenu.register(adminSessionsMenu);
-adminMainMenu.register(adminUsersMenu);
-adminMainMenu.register(adminConversationsMenu);
-adminMainMenu.register(adminDynamicUsersMenu);
-adminMainMenu.register(adminDynamicUsersForSessionsMenu);
-adminMainMenu.register(adminDynamicUsersForDeleteSessionsMenu);
+adminSubMenu.forEach((subMenu) => adminMenu.register(subMenu));
 
-composer.use(adminMainMenu);
+composer.use(adminMenu);
 
 export const menuComposer = (): Middleware<BotContextType> => composer;

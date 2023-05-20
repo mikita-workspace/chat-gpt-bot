@@ -37,7 +37,7 @@ export const createBot = () => {
     startController,
     textController,
     voiceController,
-  ].every((handle) => handle(bot));
+  ].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);
 

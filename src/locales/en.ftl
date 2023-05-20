@@ -36,4 +36,5 @@ admin-csv-reader = CSV Reader
 admin-conversations = Conversations
 admin-get-conversations = Get conversation
 admin-delete-conversations = Delete conversation
+admin-delete-conversation-successful = Conversation for { $username } has been deleted.
 
