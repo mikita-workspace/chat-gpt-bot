@@ -58,7 +58,12 @@ export class MongoService {
   async setUser(username: string, role: string) {
     try {
       await UserModel.create({ username, role });
-      await UserConversationModel.create({ username, messages: [] });
+
+      const userConversation = await this.getUserConversation(username);
+
+      if (!userConversation) {
+        await UserConversationModel.create({ username, messages: [] });
+      }
     } catch (error) {
       logger.error(`mongoService::setUser::${(error as Error).message}`);
     }
