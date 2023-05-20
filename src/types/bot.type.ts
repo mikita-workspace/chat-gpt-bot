@@ -1,5 +1,6 @@
 import { MessageRoles } from '@bot/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
+import { HydrateFlavor } from '@grammyjs/hydrate';
 import { I18nFlavor } from '@grammyjs/i18n';
 import { MenuFlavor } from '@grammyjs/menu';
 import { Bot, Context, SessionFlavor } from 'grammy';
@@ -14,10 +15,8 @@ export type SessionType = {
   };
 };
 
-export type BotContextType = Context &
-  SessionFlavor<SessionType> &
-  I18nFlavor &
-  MenuFlavor &
-  ConversationFlavor;
+export type BotContextType = HydrateFlavor<
+  Context & SessionFlavor<SessionType> & I18nFlavor & MenuFlavor & ConversationFlavor
+>;
 
 export type BotType = Bot<BotContextType>;

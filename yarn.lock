@@ -144,6 +144,13 @@
     debug "^4.3.4"
     o-son "^1.0.0"
 
+"@grammyjs/hydrate@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@grammyjs/hydrate/-/hydrate-1.3.1.tgz#34143936fe1bff0278e13ff20f5ec5d8d522f4d8"
+  integrity sha512-WvUuRBSq81oCuRLLDS6MkLQrSqM0CSiTesPIitQeBcCFy4Y+r9GKbnjBENaPc1AEucjfgT6XLqeeJTbfBLyMsg==
+  dependencies:
+    abort-controller "^3.0.0"
+
 "@grammyjs/i18n@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@grammyjs/i18n/-/i18n-1.0.1.tgz#c51cef83a656884389b51e665b9524e8248cc4e8"
@@ -156,6 +163,11 @@
   resolved "https://registry.yarnpkg.com/@grammyjs/menu/-/menu-1.2.0.tgz#ce2fbf083e115b78c5b3d736ac7f825c692cbd15"
   integrity sha512-dz0ts9c+g2zZ5ZW+Md8vGhLncI4QwKGMDyEnjgjr7CFBUYizsUmNhPTANmt6UlXaRfp0v6rtHmWtAjkmZ9Bw3Q==
 
+"@grammyjs/ratelimiter@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@grammyjs/ratelimiter/-/ratelimiter-1.1.6.tgz#06c3b5f3460d78f5f6618fafdd065e74dc01bed8"
+  integrity sha512-mqBWTdw9YwbQOhT1st3Car1MqoubafHLWYSb9/5UQUCc9EVqih7JmoBiyXB+vBvI3BMgDU5xoWh2gpeCXxURzw==
+
 "@grammyjs/runner@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@grammyjs/runner/-/runner-2.0.3.tgz#cfb08958fd563ce1e0eda5754a40b3d632c4eaa1"
@@ -167,6 +179,13 @@
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@grammyjs/storage-mongodb/-/storage-mongodb-2.2.0.tgz#ff2096187fd86859162af678d1c7a98b2028b800"
   integrity sha512-TxG2XkPSujeqweWsSG3flcxgWWoq/q4Hky57V1KzXkiJGWv09vSF0LTozrlzKcqoT8tgPLsMwQvS/8hfUOngnQ==
+
+"@grammyjs/transformer-throttler@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@grammyjs/transformer-throttler/-/transformer-throttler-1.2.1.tgz#250b93ea8d15158dac5fb8482cba300aa24666f1"
+  integrity sha512-CpWB0F3rJdUiKsq7826QhQsxbZi4wqfz1ccKX+fr+AOC+o8K7ZvS+wqX0suSu1QCsyUq2MDpNiKhyL2ZOJUS4w==
+  dependencies:
+    bottleneck "^2.0.0"
 
 "@grammyjs/types@3.1.1":
   version "3.1.1"
@@ -558,6 +577,11 @@ bl@^4.1.0:
     buffer "^5.5.0"
     inherits "^2.0.4"
     readable-stream "^3.4.0"
+
+bottleneck@^2.0.0:
+  version "2.19.5"
+  resolved "https://registry.yarnpkg.com/bottleneck/-/bottleneck-2.19.5.tgz#5df0b90f59fd47656ebe63c78a98419205cadd91"
+  integrity sha512-VHiNCbI1lKdl44tGrhNfU3lup0Tj/ZBMJB5/2ZbNXRCPuRCO7ed2mgcK4r17y+KB2EfuYuRaVlwNbAeaWGSpbw==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
