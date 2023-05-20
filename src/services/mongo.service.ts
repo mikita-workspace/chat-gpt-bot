@@ -2,7 +2,7 @@ import { config } from '@bot/config';
 import { UserRoles } from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
-import { SessionType } from '@bot/types';
+import { SessionType, UserModelType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';
@@ -74,11 +74,11 @@ export class MongoService {
     }
   }
 
-  async updateUser(username: string, enabled: boolean) {
+  async updateUser(username: string, options: Partial<UserModelType>) {
     try {
       const updatedUser = await UserModel.findOneAndUpdate(
         { username },
-        { enabled },
+        { ...options },
         { new: true },
       );
 

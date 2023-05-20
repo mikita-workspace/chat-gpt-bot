@@ -3,7 +3,7 @@ import { SessionType } from '@bot/types';
 
 export type UserModelType = {
   enabled: boolean;
-  role: UserRoles;
+  role: `${UserRoles}`;
   timestamp: number;
   username: string;
 };

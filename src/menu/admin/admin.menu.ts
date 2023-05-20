@@ -1,6 +1,7 @@
 import {
   addUserInitialCallback,
   blockUnblockUserCallback,
+  changeUserRoleCallback,
   deleteUserCallback,
   deleteUserConversationMessagesCallback,
   deleteUserSessionMessagesCallback,
@@ -12,7 +13,7 @@ import {
 import { CSV_READER_URL } from '@bot/constants';
 import { mongo } from '@bot/services';
 import { BotContextType, SessionModelType, UserModelType } from '@bot/types';
-import { isDocumentsTheSame } from '@bot/utils';
+import { capitalize, isDocumentsTheSame } from '@bot/utils';
 import { Menu, MenuRange } from '@grammyjs/menu';
 
 export const dynamicUsersMenuRange = async (
@@ -29,8 +30,11 @@ export const dynamicUsersMenuRange = async (
     .forEach((user) => {
       const username = user.username;
       const status = user.enabled ? 'Available' : 'Blocked';
+      const role = user.role;
 
-      range.text(`${username} - ${status}`, async () => callback(username, ctx)).row();
+      range
+        .text(`${username} - ${capitalize(role)} - ${status}`, async () => callback(username, ctx))
+        .row();
     });
 
   range.text(
@@ -106,6 +110,11 @@ export const adminSubMenu = [
     )
     .row()
     .submenu((ctx) => ctx.t('admin-block-unblock-user'), 'admin-dynamic-users-menu')
+    .row()
+    .text(
+      (ctx) => ctx.t('admin-change-role-user'),
+      (ctx) => changeUserRoleCallback(ctx),
+    )
     .row()
     .submenu((ctx) => ctx.t('admin-delete-user'), 'admin-dynamic-delete-users')
     .row()

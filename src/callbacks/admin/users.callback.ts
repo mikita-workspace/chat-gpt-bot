@@ -8,6 +8,11 @@ export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.conversation.enter('addUserConversation');
 };
 
+export const changeUserRoleCallback = async (ctx: BotContextType) => {
+  await ctx.deleteMessage();
+  await ctx.conversation.enter('changeUserRoleConversation');
+};
+
 export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
     const users = await mongo.getUsers();
@@ -34,7 +39,7 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
 export const blockUnblockUserCallback = async (username: string, ctx: BotContextType) => {
   try {
     const user = await mongo.getUser(username);
-    const updatedUser = await mongo.updateUser(username, !user.enabled);
+    const updatedUser = await mongo.updateUser(username, { enabled: !user.enabled });
 
     const answer = ctx.t(
       !updatedUser?.enabled
