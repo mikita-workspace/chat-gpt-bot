@@ -6,8 +6,9 @@ dotenv.config({
 });
 
 export const config = {
-  TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN ?? '',
-  OPEN_AI_TOKEN: process.env.OPEN_AI_TOKEN ?? '',
   MONGODB_URI: process.env.MONGODB_URI ?? '',
+  OPEN_AI_ORG: process.env.OPEN_AI_ORG ?? '',
+  OPEN_AI_TOKEN: process.env.OPEN_AI_TOKEN ?? '',
   SUPER_ADMIN_USERNAME: process.env.SUPER_ADMIN_USERNAME ?? '',
+  TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN ?? '',
 };

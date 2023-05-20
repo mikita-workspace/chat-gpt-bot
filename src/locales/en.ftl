@@ -33,3 +33,8 @@ admin-block-unblock-user-refresh = 🔄 Refresh
 admin-enter-user = Enter user following next format: { $inputFormat }.
 admin-logs = Logs
 admin-csv-reader = CSV Reader
+admin-conversations = Conversations
+admin-get-conversations = Get conversation
+admin-delete-conversations = Delete conversation
+admin-delete-conversation-successful = Conversation for { $username } has been deleted.
+

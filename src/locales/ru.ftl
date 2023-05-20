@@ -33,3 +33,8 @@ admin-block-unblock-user-refresh = 🔄 Обновить
 admin-enter-user = Введите пользовтеля в следующем формате: { $inputFormat }.
 admin-logs = Логи
 admin-csv-reader = CSV Считыватель
+admin-conversations = Беседы
+admin-get-conversations = Получить беседу
+admin-delete-conversations = Удалить беседу
+admin-delete-conversation-successful = Беседа для { $username } была удалена.
+

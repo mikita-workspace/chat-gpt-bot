@@ -21,3 +21,8 @@ export type LoggerModelType = {
   level: string;
   message: string;
 };
+
+export type UserConversationModelType = {
+  messages: SessionType['custom']['messages'];
+  username: string;
+};

@@ -42,10 +42,11 @@ export enum UserRoles {
 export const ADD_USER_FORMAT = '<username>;<admin | user | moderator>';
 
 // Regexp
-export const REGEXP_USERNAME = /^[a-z0-9_-]{3,16}$/;
+export const REGEXP_USERNAME = /^[a-z0-9_-]{3,32}$/;
 
 // Normalize
-export const MAX_SESSION_MESSAGES = 30;
+export const MAX_SESSION_MESSAGES = 15;
+export const CUT_NUMBER_OF_SESSION_MESSAGES_TAIL = 5;
 
 // CSV files
 export const CSV_READER_URL = 'https://www.convertcsv.com/csv-viewer-editor.htm';
@@ -70,3 +71,25 @@ export enum LoggerInfoCsvIds {
   MESSAGE = 'message',
   TIMESTAMP = 'timestamp',
 }
+
+// Winston logger
+export const winstonConfig = {
+  levels: {
+    error: 0,
+    debug: 1,
+    warn: 2,
+    data: 3,
+    info: 4,
+    verbose: 5,
+    silly: 6,
+  },
+  colors: {
+    error: 'red',
+    debug: 'blue',
+    warn: 'yellow',
+    data: 'magenta',
+    info: 'green',
+    verbose: 'cyan',
+    silly: 'grey',
+  },
+};
