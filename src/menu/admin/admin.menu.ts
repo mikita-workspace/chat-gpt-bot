@@ -1,6 +1,7 @@
 import {
   addUserInitialCallback,
   blockUnblockUserCallback,
+  deleteUserCallback,
   deleteUserConversationMessagesCallback,
   deleteUserSessionMessagesCallback,
   downloadLogsCallback,
@@ -106,6 +107,8 @@ export const adminSubMenu = [
     .row()
     .submenu((ctx) => ctx.t('admin-block-unblock-user'), 'admin-dynamic-users-menu')
     .row()
+    .submenu((ctx) => ctx.t('admin-delete-user'), 'admin-dynamic-delete-users')
+    .row()
     .back((ctx) => ctx.t('admin-go-back')),
   new Menu<BotContextType>('admin-conversations-menu')
     .submenu(
@@ -140,5 +143,8 @@ export const adminSubMenu = [
     .dynamic(async (ctx) =>
       dynamicUsersWithSessionMenuRange(ctx, deleteUserConversationMessagesCallback, false),
     )
+    .back((ctx) => ctx.t('admin-cancel')),
+  new Menu<BotContextType>('admin-dynamic-delete-users')
+    .dynamic(async (ctx) => dynamicUsersMenuRange(ctx, deleteUserCallback))
     .back((ctx) => ctx.t('admin-cancel')),
 ];

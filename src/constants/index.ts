@@ -35,8 +35,9 @@ export const TTL_DEFAULT = 60;
 // Privileges
 export enum UserRoles {
   ADMIN = 'admin',
-  USER = 'user',
   MODERATOR = 'moderator',
+  SUPER_ADMIN = 'super-admin',
+  USER = 'user',
 }
 
 export const ADD_USER_FORMAT = '<username>';

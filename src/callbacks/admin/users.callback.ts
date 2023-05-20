@@ -52,3 +52,18 @@ export const blockUnblockUserCallback = async (username: string, ctx: BotContext
     logger.error(`callbacks::users::blockUnblockUserCallback::${(error as Error).message}`);
   }
 };
+
+export const deleteUserCallback = async (username: string, ctx: BotContextType) => {
+  try {
+    await mongo.deleteUser(username);
+
+    await ctx.deleteMessage();
+    await ctx.reply(ctx.t('admin-block-block-user-successful', { username }), {
+      reply_markup: adminInlineGoToMainMenu(ctx),
+    });
+  } catch (error) {
+    await ctx.reply(ctx.t('error-common'));
+
+    logger.error(`callbacks::users::deleteUsersCallback::${(error as Error).message}`);
+  }
+};

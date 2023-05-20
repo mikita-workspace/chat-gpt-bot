@@ -1,3 +1,5 @@
+import { config } from '@bot/config';
+import { UserRoles } from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
 import { SessionType } from '@bot/types';
@@ -57,7 +59,10 @@ export class MongoService {
 
   async setUser(username: string, role: string) {
     try {
-      await UserModel.create({ username, role });
+      await UserModel.create({
+        username,
+        role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
+      });
 
       const userConversation = await this.getUserConversation(username);
 
@@ -82,6 +87,16 @@ export class MongoService {
       return updatedUser;
     } catch (error) {
       logger.error(`mongoService::updateUser::${(error as Error).message}`);
+    }
+  }
+
+  async deleteUser(username: string) {
+    try {
+      await UserModel.findOneAndDelete({ username });
+
+      removeValueFromMemoryCache(`cached-user-${username}`);
+    } catch (error) {
+      logger.error(`mongoService::deleteUser::${(error as Error).message}`);
     }
   }
 
