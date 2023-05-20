@@ -24,7 +24,7 @@ export const adminInlineListUsers = (ctx: BotContextType, users: UserModelType[]
   users.forEach(({ username, enabled, role }) =>
     inlineKeyboard
       .add({
-        text: `${username} - ${capitalize(role)} - ${enabled ? 'Available' : 'Blocked'}`,
+        text: `[${username}]: ${capitalize(role)}, ${enabled ? 'Available' : 'Blocked'}`,
         callback_data: `admin-list-users-action-${username}`,
       })
       .row(),

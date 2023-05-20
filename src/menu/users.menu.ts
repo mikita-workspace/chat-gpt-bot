@@ -30,10 +30,7 @@ export const usersMenu = new Menu<BotContextType>(UsersMenu.INITIAL)
   .row()
   .submenu((ctx) => ctx.t('admin-delete-user'), UsersMenu.DELETE)
   .row()
-  .text(
-    (ctx) => ctx.t('admin-go-back'),
-    (ctx) => ctx.menu.nav(UsersMenu.INITIAL),
-  );
+  .back((ctx) => ctx.t('admin-go-back'));
 
 export const blockUnblockUserMenu = new Menu<BotContextType>(UsersMenu.BLOCK_UNBLOCK, {
   onMenuOutdated: false,
