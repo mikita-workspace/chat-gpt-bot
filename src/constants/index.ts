@@ -43,7 +43,7 @@ export enum UserRoles {
 export const ADD_USER_FORMAT = '<username>';
 
 // Regexp
-export const REGEXP_USERNAME = /^[a-z0-9_-]{3,32}$/;
+export const REGEXP_USERNAME = /^[a-zA-Z0-9_-]{3,32}$/;
 
 // Normalize
 export const MAX_SESSION_MESSAGES = 15;

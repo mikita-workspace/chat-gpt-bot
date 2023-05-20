@@ -2,6 +2,7 @@ import { UserRoles } from '@bot/constants';
 import { SessionType } from '@bot/types';
 
 export type UserModelType = {
+  conversation: object;
   enabled: boolean;
   role: `${UserRoles}`;
   timestamp: number;

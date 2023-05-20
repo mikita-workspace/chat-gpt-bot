@@ -11,12 +11,12 @@ export const getUserConversationMessagesCallback = async (
     const userSession = await mongo.getUserSession(username);
     const userConversation = await mongo.getUserConversation(username);
 
-    const messages = uniqBy(
-      [...userConversation?.messages, ...userSession?.value?.messages],
-      'timestamp',
-    );
-
     if (userSession) {
+      const messages = uniqBy(
+        [...(userConversation?.messages ?? []), ...(userSession?.value?.messages ?? [])],
+        'timestamp',
+      );
+
       const { filePath, filePathForReply } =
         (await csv.createSessionCsv({ key: userSession.key, value: { username, messages } })) ?? {};
 

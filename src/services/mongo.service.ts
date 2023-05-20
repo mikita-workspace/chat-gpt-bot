@@ -59,16 +59,18 @@ export class MongoService {
 
   async setUser(username: string, role: string) {
     try {
-      await UserModel.create({
-        username,
+      const userConversation =
+        (await this.getUserConversation(username, true)) ??
+        new UserConversationModel({ username, messages: [] });
+
+      const user = new UserModel({
+        conversation: userConversation._id,
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
+        username,
       });
 
-      const userConversation = await this.getUserConversation(username);
-
-      if (!userConversation) {
-        await UserConversationModel.create({ username, messages: [] });
-      }
+      await userConversation.save();
+      await user.save();
     } catch (error) {
       logger.error(`mongoService::setUser::${(error as Error).message}`);
     }
@@ -122,7 +124,7 @@ export class MongoService {
           }),
       );
 
-      return userSessionMessages ?? {};
+      return userSessionMessages;
     } catch (error) {
       logger.error(`mongoService::getUserSessionMessages::${(error as Error).message}`);
     }
@@ -138,14 +140,18 @@ export class MongoService {
     }
   }
 
-  async getUserConversation(username: string) {
+  async getUserConversation(username: string, resetCache = false) {
     try {
+      if (resetCache) {
+        removeValueFromMemoryCache(`cached-user-conversation-${username}`);
+      }
+
       const userConversation = await fetchCachedData(
         `cached-user-conversation-${username}`,
         async () => UserConversationModel.findOne({ username }),
       );
 
-      return userConversation ?? {};
+      return userConversation;
     } catch (error) {
       logger.error(`mongoService::getUserConversation::${(error as Error).message}`);
     }
