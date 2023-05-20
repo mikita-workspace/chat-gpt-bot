@@ -97,6 +97,7 @@ export const winstonConfig = {
 
 // Menu
 export enum AdminMenu {
+  GO_TO_MENU_ACTION = 'admin-go-to-menu-action',
   INITIAL = 'admin-main-menu',
 }
 
@@ -113,7 +114,8 @@ export enum ConversationsMenu {
 }
 
 export enum UsersMenu {
-  INITIAL = 'users-menu',
+  ADD_NEW_USER_ACTION = 'add-new-user-action',
   BLOCK_UNBLOCK = 'block-unblock-user-menu',
   DELETE = 'delete-user-menu',
+  INITIAL = 'users-menu',
 }

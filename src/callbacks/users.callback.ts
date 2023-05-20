@@ -1,3 +1,4 @@
+import { addUserConversation, changeUserRoleConversation } from '@bot/conversations';
 import { adminInlineGoToMainMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
@@ -5,12 +6,12 @@ import { removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.deleteMessage();
-  await ctx.conversation.enter('addUserConversation');
+  await ctx.conversation.enter(addUserConversation.name);
 };
 
 export const changeUserRoleCallback = async (ctx: BotContextType) => {
   await ctx.deleteMessage();
-  await ctx.conversation.enter('changeUserRoleConversation');
+  await ctx.conversation.enter(changeUserRoleConversation.name);
 };
 
 export const getAllUsersCallback = async (ctx: BotContextType) => {
