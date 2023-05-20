@@ -94,3 +94,26 @@ export const winstonConfig = {
     silly: 'grey',
   },
 };
+
+// Menu
+export enum AdminMenu {
+  INITIAL = 'admin-main-menu',
+}
+
+export enum SessionsMenu {
+  DELETE = 'delete-user-session-menu',
+  GET = 'get-user-session-menu',
+  INITIAL = 'sessions-menu',
+}
+
+export enum ConversationsMenu {
+  DELETE = 'delete-user-conversation-menu',
+  GET = 'get-user-conversation-menu',
+  INITIAL = 'conversations-menu',
+}
+
+export enum UsersMenu {
+  INITIAL = 'users-menu',
+  BLOCK_UNBLOCK = 'block-unblock-user-menu',
+  DELETE = 'delete-user-menu',
+}
