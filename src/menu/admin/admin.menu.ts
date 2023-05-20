@@ -13,13 +13,6 @@ import { mongo } from '@bot/services';
 import { BotContextType, SessionModelType, UserModelType } from '@bot/types';
 import { isDocumentsTheSame } from '@bot/utils';
 import { Menu, MenuRange } from '@grammyjs/menu';
-import { InlineKeyboard } from 'grammy';
-
-export const adminInlineGoToMainMenu = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('admin-go-to-main'), 'admin-go-to-main-action');
-
-export const adminInlineAddNewUser = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('error-common-try-again'), 'admin-add-new-user-action');
 
 export const dynamicUsersMenuRange = async (
   ctx: BotContextType,

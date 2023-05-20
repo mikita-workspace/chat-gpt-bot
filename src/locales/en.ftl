@@ -37,4 +37,5 @@ admin-conversations = Conversations
 admin-get-conversations = Get conversation
 admin-delete-conversations = Delete conversation
 admin-delete-conversation-successful = Conversation for { $username } has been deleted.
+admin-select-role = Select the role of the new user.
 

@@ -1,5 +1,9 @@
-import { ADD_USER_FORMAT, REGEXP_USERNAME, UserRoles } from '@bot/constants';
-import { adminInlineAddNewUser, adminInlineGoToMainMenu } from '@bot/menu';
+import { ADD_USER_FORMAT, REGEXP_USERNAME } from '@bot/constants';
+import {
+  adminInlineAddNewUser,
+  adminInlineGoToMainMenu,
+  adminInlineSelectRole,
+} from '@bot/keyboards';
 import { logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { Conversation } from '@grammyjs/conversations';
@@ -17,7 +21,7 @@ export const addUserConversation = async (
       message: { text, message_id: messageId },
     } = await conversation.waitFor('message:text');
 
-    const [username = '', role = UserRoles.USER] = text?.split(';') ?? '';
+    const username = text.trim();
 
     if (!REGEXP_USERNAME.test(username)) {
       return await ctx.reply(ctx.t('admin-add-user-error', { username }), {
@@ -35,10 +39,23 @@ export const addUserConversation = async (
       });
     }
 
-    const hasCorrectRole = Object.values(UserRoles).includes(role as UserRoles);
+    await ctx.reply(ctx.t('admin-select-role'), {
+      reply_markup: adminInlineSelectRole,
+    });
 
-    await conversation.external(() =>
-      mongo.setUser(username, hasCorrectRole ? role : UserRoles.USER),
+    const {
+      update: {
+        callback_query: { data: roleData, message: callbackMessage },
+      },
+    } = await conversation.waitForCallbackQuery(/admin-select-role-action/gm);
+
+    const role = roleData.replace(/admin-select-role-action-/, '');
+
+    await conversation.external(() => mongo.setUser(username, role));
+
+    await ctx.api.deleteMessage(
+      Number(callbackMessage?.chat.id),
+      Number(callbackMessage?.message_id),
     );
 
     return await ctx.reply(ctx.t('admin-add-user-successful', { username }), {

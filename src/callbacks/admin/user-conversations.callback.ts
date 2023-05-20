@@ -1,4 +1,4 @@
-import { adminInlineGoToMainMenu } from '@bot/menu';
+import { adminInlineGoToMainMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { removeFile, uniqBy } from '@bot/utils';
