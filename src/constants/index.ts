@@ -117,6 +117,7 @@ export enum UsersMenu {
   CHANGE_ROLE = 'change-user-role-menu',
   DELETE = 'delete-user-menu',
   INITIAL = 'users-menu',
+  SELECT_NEW_ROLE = 'select-new-user-role-menu',
 }
 
 // Menu actions

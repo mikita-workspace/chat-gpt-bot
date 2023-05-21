@@ -1,6 +1,7 @@
 import {
   adminMainMenu,
   blockUnblockUserMenu,
+  changeUserRoleMenu,
   conversationsMenu,
   deleteUserConversationMenu,
   deleteUserMenu,
@@ -17,6 +18,7 @@ const composer = new Composer<BotContextType>();
 
 [
   blockUnblockUserMenu,
+  changeUserRoleMenu,
   conversationsMenu,
   deleteUserConversationMenu,
   deleteUserMenu,

@@ -1,7 +1,16 @@
 import { mongo } from '@bot/services';
-import { BotContextType, DynamicUsersMenuType, SessionModelType, UserModelType } from '@bot/types';
+import {
+  BotContextType,
+  // DynamicUserRolesMenuType,
+  DynamicUsersMenuType,
+  SessionModelType,
+  UserModelType,
+} from '@bot/types';
 import { capitalize, isDocumentsTheSame } from '@bot/utils';
 import { MenuRange } from '@grammyjs/menu';
+
+// TODO: finish this function
+// export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, callback) => {};
 
 export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
@@ -17,7 +26,7 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
       const role = user.role;
 
       range
-        .text(`${username} - ${capitalize(role)} - ${status}`, async () => callback(username, ctx))
+        .text(`[ ${username} ] ${capitalize(role)}, ${status}`, async () => callback(username, ctx))
         .row();
     });
 

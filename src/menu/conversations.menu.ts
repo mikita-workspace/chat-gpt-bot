@@ -13,7 +13,9 @@ export const conversationsMenu = new Menu<BotContextType>(ConversationsMenu.INIT
   .row()
   .back((ctx) => ctx.t('admin-go-back'));
 
-export const getUserConversationMenu = new Menu<BotContextType>(ConversationsMenu.GET)
+export const getUserConversationMenu = new Menu<BotContextType>(ConversationsMenu.GET, {
+  onMenuOutdated: false,
+})
   .dynamic(async (ctx) =>
     dynamicUsersWithSessionMenuRange(ctx, getUserConversationMessagesCallback),
   )
@@ -22,7 +24,9 @@ export const getUserConversationMenu = new Menu<BotContextType>(ConversationsMen
     (ctx) => ctx.menu.nav(ConversationsMenu.INITIAL),
   );
 
-export const deleteUserConversationMenu = new Menu<BotContextType>(ConversationsMenu.DELETE)
+export const deleteUserConversationMenu = new Menu<BotContextType>(ConversationsMenu.DELETE, {
+  onMenuOutdated: false,
+})
   .dynamic(async (ctx) =>
     dynamicUsersWithSessionMenuRange(ctx, deleteUserConversationMessagesCallback, false),
   )

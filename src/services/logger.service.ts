@@ -1,6 +1,6 @@
 import 'winston-mongodb';
 
-import { config as globalConfig } from '@bot/config';
+import { config } from '@bot/config';
 import { winstonConfig } from '@bot/constants';
 import { addColors, createLogger, format, Logger, transports } from 'winston';
 
@@ -52,7 +52,7 @@ class LoggerService {
           ),
         }),
         new transports.MongoDB({
-          db: globalConfig.MONGODB_URI,
+          db: config.MONGODB_URI,
           collection: 'loggers',
           options: {
             useUnifiedTopology: true,
