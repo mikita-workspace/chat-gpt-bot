@@ -77,7 +77,7 @@ export const changeUserRoleConversation = async (
   ctx: BotContextType,
 ) => {
   try {
-    const currentUsername = ctx?.from?.username ?? '';
+    const currentUsername = String(ctx?.from?.username);
 
     const users: UserModelType[] = await mongo.getUsers();
     const filteredUsers = users.filter((user) => user.username !== currentUsername);

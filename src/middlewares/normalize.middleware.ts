@@ -3,7 +3,7 @@ import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
-  const username = ctx?.from?.username ?? '';
+  const username = String(ctx?.from?.username);
   const sessionMessages = ctx.session.custom.messages;
 
   ctx.session.custom.username ??= username;

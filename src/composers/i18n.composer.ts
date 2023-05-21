@@ -13,10 +13,10 @@ const composer = new Composer<BotContextType>();
 const i18n = new I18n<BotContextType>({
   defaultLocale: 'en',
   globalTranslationContext: (ctx) => ({
-    botName: ctx?.me?.first_name ?? '',
-    firstName: ctx?.from?.first_name ?? '',
+    botName: String(ctx?.me?.first_name),
+    firstName: String(ctx?.from?.first_name),
     model: modelGPT,
-    username: ctx?.from?.username ?? '',
+    username: String(ctx?.from?.username),
   }),
   directory: path.join(__dirname, '../locales'),
   useSession: true,

@@ -5,7 +5,7 @@ import { MenuRange } from '@grammyjs/menu';
 
 export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
-  const currentUsername = ctx?.from?.username ?? '';
+  const currentUsername = String(ctx?.from?.username);
 
   let users: UserModelType[] = await mongo.getUsers();
 
@@ -42,7 +42,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
   showCurrentUsername = true,
 ) => {
   const range = new MenuRange<BotContextType>();
-  const currentUsername = ctx?.from?.username ?? '';
+  const currentUsername = String(ctx?.from?.username);
 
   const allUserSessions: SessionModelType[] = await mongo.getAllUserSessions();
 
