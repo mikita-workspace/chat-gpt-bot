@@ -1,4 +1,4 @@
-import { telegramApi } from '@bot/constants';
+import { TELEGRAM_API } from '@bot/constants';
 
 export const getFileApiLink = (token: string, filepath = '') =>
-  `${telegramApi}/file/bot${token}/${filepath}`;
+  `${TELEGRAM_API}/file/bot${token}/${filepath}`;

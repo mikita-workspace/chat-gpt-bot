@@ -10,7 +10,7 @@ export enum MessageRolesGPT {
 }
 
 // Telegram API
-export const telegramApi = 'https://api.telegram.org';
+export const TELEGRAM_API = 'https://api.telegram.org';
 
 // Bot config
 export const supportLanguageCodes = ['en', 'ru'];
@@ -97,7 +97,6 @@ export const winstonConfig = {
 
 // Menu
 export enum AdminMenu {
-  GO_TO_MENU_ACTION = 'admin-go-to-menu-action',
   INITIAL = 'admin-main-menu',
 }
 
@@ -114,8 +113,17 @@ export enum ConversationsMenu {
 }
 
 export enum UsersMenu {
-  ADD_NEW_USER_ACTION = 'add-new-user-action',
   BLOCK_UNBLOCK = 'block-unblock-user-menu',
+  CHANGE_ROLE = 'change-user-role-menu',
   DELETE = 'delete-user-menu',
   INITIAL = 'users-menu',
+}
+
+// Menu actions
+export enum AdminMenuActions {
+  GO_TO_MENU = 'go-to-admin-menu-action',
+}
+
+export enum UsersMenuActions {
+  ADD_NEW_USER = 'add-new-user-action',
 }
