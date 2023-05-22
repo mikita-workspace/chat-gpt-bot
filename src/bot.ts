@@ -27,6 +27,8 @@ export const createBot = () => {
   bot.use(hydrate());
 
   bot.use(i18nComposer());
+    
+  bot.use(auth());
 
   bot.use(sessionComposer());
 
@@ -35,8 +37,6 @@ export const createBot = () => {
   bot.use(menuComposer());
 
   bot.use(normalize());
-
-  bot.use(auth());
 
   [
     aboutController,
