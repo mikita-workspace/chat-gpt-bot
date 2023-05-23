@@ -27,7 +27,7 @@ export const createBot = () => {
   bot.use(hydrate());
 
   bot.use(i18nComposer());
-    
+
   bot.use(auth());
 
   bot.use(sessionComposer());
