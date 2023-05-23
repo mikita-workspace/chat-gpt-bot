@@ -45,3 +45,9 @@ admin-delete-conversations = Delete conversation
 admin-delete-conversation-successful = Conversation for { $username } has been deleted.
 admin-select-role = Select the role of the new user.
 
+# User roles
+user-role-admin = Admin
+user-role-moderator = Moderator
+user-role-user = User
+
+

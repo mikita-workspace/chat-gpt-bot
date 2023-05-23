@@ -8,6 +8,7 @@ import {
   deleteUserSessionMenu,
   getUserConversationMenu,
   getUserSessionMenu,
+  selectNewUserRoleMenu,
   sessionsMenu,
   usersMenu,
 } from '@bot/menu';
@@ -25,6 +26,7 @@ const composer = new Composer<BotContextType>();
   deleteUserSessionMenu,
   getUserConversationMenu,
   getUserSessionMenu,
+  selectNewUserRoleMenu,
   sessionsMenu,
   usersMenu,
 ].forEach((subMenu) => adminMainMenu.register(subMenu));

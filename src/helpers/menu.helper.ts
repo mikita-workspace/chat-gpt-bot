@@ -1,7 +1,8 @@
+import { UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
 import {
   BotContextType,
-  // DynamicUserRolesMenuType,
+  DynamicUserRolesMenuType,
   DynamicUsersMenuType,
   SessionModelType,
   UserModelType,
@@ -9,8 +10,22 @@ import {
 import { capitalize, isDocumentsTheSame } from '@bot/utils';
 import { MenuRange } from '@grammyjs/menu';
 
-// TODO: finish this function
-// export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, callback) => {};
+export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, callback) => {
+  const range = new MenuRange<BotContextType>();
+  const selectedUser = ctx.match ?? '';
+
+  Object.values(UserRoles)
+    .filter((role) => role !== UserRoles.SUPER_ADMIN)
+    .forEach((role) => {
+      range
+        .text({ text: ctx.t(`user-role-${role}`), payload: selectedUser }, async () =>
+          callback(selectedUser, role, ctx),
+        )
+        .row();
+    });
+
+  return range;
+};
 
 export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
@@ -26,7 +41,10 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
       const role = user.role;
 
       range
-        .text(`[ ${username} ] ${capitalize(role)}, ${status}`, async () => callback(username, ctx))
+        .text(
+          { text: `[ ${username} ] ${capitalize(role)}, ${status}`, payload: username },
+          async () => callback(username, ctx),
+        )
         .row();
     });
 

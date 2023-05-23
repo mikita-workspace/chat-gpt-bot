@@ -1,12 +1,12 @@
 import {
   addUserInitialCallback,
   blockUnblockUserCallback,
-  // changeUserRoleCallback,
+  changeUserRoleCallback,
   deleteUserCallback,
   getAllUsersCallback,
 } from '@bot/callbacks';
 import { UsersMenu } from '@bot/constants';
-import { dynamicUsersMenuRange } from '@bot/helpers';
+import { dynamicUserRolesMenuRange, dynamicUsersMenuRange } from '@bot/helpers';
 import { BotContextType } from '@bot/types';
 import { Menu } from '@grammyjs/menu';
 
@@ -32,20 +32,21 @@ export const usersMenu = new Menu<BotContextType>(UsersMenu.INITIAL)
 export const changeUserRoleMenu = new Menu<BotContextType>(UsersMenu.CHANGE_ROLE, {
   onMenuOutdated: false,
 })
-  .dynamic(async (ctx) => dynamicUsersMenuRange(ctx, () => {}))
+  .dynamic(async (ctx) =>
+    dynamicUsersMenuRange(ctx, async () => ctx.menu.nav(UsersMenu.SELECT_NEW_ROLE)),
+  )
   .text(
     (ctx) => ctx.t('admin-cancel'),
     (ctx) => ctx.menu.nav(UsersMenu.INITIAL),
   );
 
-// TODO: finish this function
 export const selectNewUserRoleMenu = new Menu<BotContextType>(UsersMenu.SELECT_NEW_ROLE, {
   onMenuOutdated: false,
 })
-  // .dynamic(async (ctx) => {})
+  .dynamic(async (ctx) => dynamicUserRolesMenuRange(ctx, changeUserRoleCallback))
   .text(
     (ctx) => ctx.t('admin-cancel'),
-    (ctx) => ctx.menu.nav(UsersMenu.INITIAL),
+    (ctx) => ctx.menu.nav(UsersMenu.CHANGE_ROLE),
   );
 
 export const blockUnblockUserMenu = new Menu<BotContextType>(UsersMenu.BLOCK_UNBLOCK, {

@@ -1,5 +1,3 @@
-import { conversationComposer, i18nComposer, menuComposer, sessionComposer } from '@bot/composers';
-import { config } from '@bot/config';
 import {
   aboutController,
   adminController,
@@ -8,7 +6,9 @@ import {
   startController,
   textController,
   voiceController,
-} from '@bot/controllers';
+} from '@bot/commands';
+import { conversationComposer, i18nComposer, menuComposer, sessionComposer } from '@bot/composers';
+import { config } from '@bot/config';
 import { handleBotError } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
 import { BotContextType } from '@bot/types';
@@ -32,11 +32,11 @@ export const createBot = () => {
 
   bot.use(sessionComposer());
 
+  bot.use(normalize());
+
   bot.use(conversationComposer());
 
   bot.use(menuComposer());
-
-  bot.use(normalize());
 
   [
     aboutController,

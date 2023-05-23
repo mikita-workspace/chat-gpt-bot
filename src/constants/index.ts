@@ -40,7 +40,7 @@ export enum UserRoles {
   USER = 'user',
 }
 
-export const ADD_USER_FORMAT = '<username>';
+export const ADD_USER_FORMAT = '<username>;<admin | moderator | user>';
 
 // Regexp
 export const REGEXP_USERNAME = /^[a-zA-Z0-9_-]{3,32}$/;
