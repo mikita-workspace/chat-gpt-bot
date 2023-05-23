@@ -102,8 +102,12 @@ export class MongoService {
     }
   }
 
-  async getAllUserSessions() {
+  async getAllUserSessions(resetCache = false) {
     try {
+      if (resetCache) {
+        removeValueFromMemoryCache('cached-all-session-messages');
+      }
+
       const allUserSessions = await fetchCachedData('cached-all-session-messages', async () =>
         SessionModel.find({}).exec(),
       );

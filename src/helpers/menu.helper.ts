@@ -71,15 +71,27 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
   const range = new MenuRange<BotContextType>();
   const currentUsername = String(ctx?.from?.username);
 
-  const allUserSessions: SessionModelType[] = await mongo.getAllUserSessions();
+  let userSessions: SessionModelType[] = await mongo.getAllUserSessions();
 
-  allUserSessions
+  userSessions
     .filter((session) => showCurrentUsername || session.value.username !== currentUsername)
     .forEach((session) => {
       const username = session.value.username;
 
       range.text({ text: username, payload: username }, async () => callback(username, ctx)).row();
     });
+
+  range.text(
+    () => ctx.t('admin-block-unblock-user-refresh'),
+    async () => {
+      const newUserSessions = await mongo.getAllUserSessions(true);
+
+      if (!isDocumentsTheSame(userSessions, newUserSessions)) {
+        userSessions = newUserSessions;
+        ctx.menu.update();
+      }
+    },
+  );
 
   return range;
 };
