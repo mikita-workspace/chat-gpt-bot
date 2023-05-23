@@ -12,7 +12,7 @@ import { MenuRange } from '@grammyjs/menu';
 
 export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
-  const selectedUser = ctx.match ?? '';
+  const selectedUser = String(ctx?.match);
 
   Object.values(UserRoles)
     .filter((role) => role !== UserRoles.SUPER_ADMIN)
@@ -78,7 +78,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
     .forEach((session) => {
       const username = session.value.username;
 
-      range.text(username, async () => callback(username, ctx)).row();
+      range.text({ text: username, payload: username }, async () => callback(username, ctx)).row();
     });
 
   return range;
