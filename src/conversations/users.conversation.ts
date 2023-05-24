@@ -1,4 +1,4 @@
-import { ADD_USER_FORMAT, REGEXP_USERNAME, UserRoles } from '@bot/constants';
+import { ADD_USER_FORMAT_ADMIN, REGEXP_USERNAME, UserRoles } from '@bot/constants';
 import { adminInlineAddNewUser, adminInlineGoToMainMenu } from '@bot/keyboards';
 import { logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
@@ -9,7 +9,7 @@ export const addUserConversation = async (
   ctx: BotContextType,
 ) => {
   try {
-    await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }), {
+    await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT_ADMIN }), {
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
 

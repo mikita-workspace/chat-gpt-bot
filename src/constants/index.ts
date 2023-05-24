@@ -42,7 +42,13 @@ export enum UserRoles {
   USER = 'user',
 }
 
-export const ADD_USER_FORMAT = '<username>;<admin | moderator | user>';
+export const ADD_USER_FORMAT_ADMIN = `<username>;<${Object.values(UserRoles)
+  .filter((role) => role !== UserRoles.SUPER_ADMIN)
+  .join(' | ')}>`;
+
+export const ADD_USER_FORMAT_MODERATOR = `<username>;<${Object.values(UserRoles)
+  .filter((role) => role !== UserRoles.SUPER_ADMIN && role !== UserRoles.ADMIN)
+  .join(' | ')}>`;
 
 // Regexp
 export const REGEXP_USERNAME = /^[a-zA-Z0-9_-]{3,32}$/;
