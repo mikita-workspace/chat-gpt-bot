@@ -18,9 +18,10 @@ export type SessionModelType = {
 };
 
 export type LoggerModelType = {
-  timestamp: string;
   level: string;
   message: string;
+  meta: { username: string };
+  timestamp: string;
 };
 
 export type UserConversationModelType = {

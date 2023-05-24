@@ -13,7 +13,7 @@ export const convertGPTMessage = (
   role,
 });
 
-export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
+export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
   try {
     ctx.session.custom.messages.push({
       gptFormat: convertGPTMessage(text),
@@ -35,7 +35,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
 
     return response.content;
   } catch (error) {
-    logger.error(`helper::getGPTMessage::${(error as Error).message}`);
+    logger.error(`helper::getGPTMessage::${error.message}`);
   }
 };
 

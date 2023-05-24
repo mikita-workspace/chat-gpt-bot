@@ -15,7 +15,9 @@ const i18n = new I18n<BotContextType>({
   globalTranslationContext: (ctx) => ({
     botName: String(ctx?.me?.first_name),
     firstName: String(ctx?.from?.first_name),
+    lastName: String(ctx?.from?.last_name),
     model: modelGPT,
+    releaseVersion: config.RELEASE_VERSION,
     username: String(ctx?.from?.username),
   }),
   directory: path.join(__dirname, '../locales'),

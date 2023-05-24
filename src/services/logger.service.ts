@@ -2,14 +2,15 @@ import 'winston-mongodb';
 
 import { config } from '@bot/config';
 import { winstonConfig } from '@bot/constants';
+import { parseTimestampUTC } from '@bot/utils';
 import { addColors, createLogger, format, Logger, transports } from 'winston';
-
-addColors(winstonConfig.colors);
 
 class LoggerService {
   logger: Logger;
 
   constructor() {
+    addColors(winstonConfig.colors);
+
     this.logger = createLogger({
       level: 'info',
       levels: winstonConfig.levels,
@@ -21,20 +22,15 @@ class LoggerService {
         format.splat(),
         format.json(),
       ),
-      defaultMeta: { service: 'gpt-bot-logger' },
       transports: [
         new transports.File({
           filename: 'errors.log',
           level: 'error',
           format: format.printf(
             (info) =>
-              `${new Date(info.timestamp).toLocaleDateString('tr-Tr', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-              })} ${info.level.toLocaleUpperCase()}: ${info.message}`,
+              `${parseTimestampUTC(info.timestamp)} ${info.level.toLocaleUpperCase()}: ${
+                info.message
+              }`,
           ),
         }),
         new transports.File({
@@ -42,18 +38,15 @@ class LoggerService {
           level: 'silly',
           format: format.printf(
             (info) =>
-              `${new Date(info.timestamp).toLocaleDateString('tr-Tr', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-              })} ${info.level.toLocaleUpperCase()}: ${info.message}`,
+              `${parseTimestampUTC(info.timestamp)} ${info.level.toLocaleUpperCase()}: ${
+                info.message
+              }`,
           ),
         }),
         new transports.MongoDB({
-          db: config.MONGODB_URI,
           collection: 'loggers',
+          db: config.MONGODB_URI,
+          format: format.metadata(),
           options: {
             useUnifiedTopology: true,
           },

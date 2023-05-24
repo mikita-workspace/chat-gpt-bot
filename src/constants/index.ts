@@ -75,6 +75,7 @@ export enum LoggerInfoCsvIds {
   LEVEL = 'level',
   MESSAGE = 'message',
   TIMESTAMP = 'timestamp',
+  USERNAME = 'username',
 }
 
 // Winston logger

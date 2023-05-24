@@ -32,7 +32,7 @@ export const removeFile = async (path: string) => {
   try {
     await unlink(path);
   } catch (error) {
-    logger.error(`util::removeFile::${(error as Error).message}`);
+    logger.error(`util::removeFile::${error.message}`);
   }
 };
 

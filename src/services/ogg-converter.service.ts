@@ -11,7 +11,7 @@ class OggConverterService {
     ffmpeg.setFfmpegPath(installer.path);
   }
 
-  async toMp3(input = '', output = '') {
+  async toMp3(input: string, output: string) {
     try {
       const outputPath = resolvePath(dirname(input), `${output}.mp3`);
 
@@ -27,11 +27,11 @@ class OggConverterService {
           .run();
       });
     } catch (error) {
-      logger.error(`oggConverterService::toMp3::${(error as Error).message}`);
+      logger.error(`oggConverterService::toMp3::${error.message}`);
     }
   }
 
-  async create(url = '', filename = '') {
+  async create(url: string, filename: string) {
     try {
       const oggPath = resolvePath(__dirname, '../../assets', `${filename}.ogg`);
 
@@ -48,7 +48,7 @@ class OggConverterService {
         stream.on('finish', () => resolve(oggPath));
       });
     } catch (error) {
-      logger.error(`oggConverterService::create::${(error as Error).message}`);
+      logger.error(`oggConverterService::create::${error.message}`);
     }
   }
 }

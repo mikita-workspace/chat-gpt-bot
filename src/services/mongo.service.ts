@@ -27,7 +27,7 @@ export class MongoService {
 
       return loggerInfo ?? [];
     } catch (error) {
-      logger.error(`mongoService::getLoggerInfo::${(error as Error).message}`);
+      logger.error(`mongoService::getLoggerInfo::${error.message}`);
     }
   }
 
@@ -41,7 +41,7 @@ export class MongoService {
 
       return users ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUsers::${(error as Error).message}`);
+      logger.error(`mongoService::getAllUsers::${error.message}`);
     }
   }
 
@@ -53,7 +53,7 @@ export class MongoService {
 
       return user;
     } catch (error) {
-      logger.error(`mongoService::getUser::${(error as Error).message}`);
+      logger.error(`mongoService::getUser::${error.message}`);
     }
   }
 
@@ -72,7 +72,7 @@ export class MongoService {
       await userConversation.save();
       await user.save();
     } catch (error) {
-      logger.error(`mongoService::setUser::${(error as Error).message}`);
+      logger.error(`mongoService::setUser::${error.message}`);
     }
   }
 
@@ -88,7 +88,7 @@ export class MongoService {
 
       return updatedUser;
     } catch (error) {
-      logger.error(`mongoService::updateUser::${(error as Error).message}`);
+      logger.error(`mongoService::updateUser::${error.message}`);
     }
   }
 
@@ -98,7 +98,7 @@ export class MongoService {
 
       removeValueFromMemoryCache(`cached-user-${username}`);
     } catch (error) {
-      logger.error(`mongoService::deleteUser::${(error as Error).message}`);
+      logger.error(`mongoService::deleteUser::${error.message}`);
     }
   }
 
@@ -114,7 +114,7 @@ export class MongoService {
 
       return allUserSessions ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUserSessionMessages::${(error as Error).message}`);
+      logger.error(`mongoService::getAllUserSessionMessages::${error.message}`);
     }
   }
 
@@ -130,7 +130,7 @@ export class MongoService {
 
       return userSessionMessages;
     } catch (error) {
-      logger.error(`mongoService::getUserSessionMessages::${(error as Error).message}`);
+      logger.error(`mongoService::getUserSessionMessages::${error.message}`);
     }
   }
 
@@ -140,7 +140,7 @@ export class MongoService {
 
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
     } catch (error) {
-      logger.error(`mongoService::deleteUserSessionMessages::${(error as Error).message}`);
+      logger.error(`mongoService::deleteUserSessionMessages::${error.message}`);
     }
   }
 
@@ -157,7 +157,7 @@ export class MongoService {
 
       return userConversation;
     } catch (error) {
-      logger.error(`mongoService::getUserConversation::${(error as Error).message}`);
+      logger.error(`mongoService::getUserConversation::${error.message}`);
     }
   }
 
@@ -176,7 +176,7 @@ export class MongoService {
 
       return updatedUserConversation;
     } catch (error) {
-      logger.error(`mongoService::updateUserConversation::${(error as Error).message}`);
+      logger.error(`mongoService::updateUserConversation::${error.message}`);
     }
   }
 
@@ -186,7 +186,7 @@ export class MongoService {
 
       removeValueFromMemoryCache(`cached-user-conversation-${username}`);
     } catch (error) {
-      logger.error(`mongoService::deleteUserConversation::${(error as Error).message}`);
+      logger.error(`mongoService::deleteUserConversation::${error.message}`);
     }
   }
 }

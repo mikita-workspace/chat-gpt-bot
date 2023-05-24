@@ -23,15 +23,22 @@ class OpenAIService {
         messages,
         model: modelGPT,
         top_p: 0.5,
+        max_tokens: 11111,
       });
 
       return response.data.choices[0].message;
     } catch (error) {
-      logger.error(`openAIService::chat::${(error as Error).message}`);
+      if (error.response) {
+        logger.error(
+          `openAIService::chat::[${error.response.status}]::${JSON.stringify(error.response.data)}`,
+        );
+      } else {
+        logger.error(`openAIService::chat::${error.message}`);
+      }
     }
   }
 
-  async transcription(filepath = '') {
+  async transcription(filepath: string) {
     try {
       const fileStream: unknown = createReadStream(filepath);
 
@@ -43,7 +50,15 @@ class OpenAIService {
       removeFile(filepath);
       return response.data.text;
     } catch (error) {
-      logger.error(`openAIService::transcription::${(error as Error).message}`);
+      if (error.response) {
+        logger.error(
+          `openAIService::transcription::[${error.response.status}]::${JSON.stringify(
+            error.response.data,
+          )}`,
+        );
+      } else {
+        logger.error(`openAIService::transcription::${error.message}`);
+      }
     }
   }
 }

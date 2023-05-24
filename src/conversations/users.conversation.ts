@@ -49,7 +49,7 @@ export const addUserConversation = async (
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
 
-    logger.error(`conversations::addUserConversation::${(error as Error).message}`);
+    logger.error(`conversations::addUserConversation::${error.message}`);
 
     return;
   }

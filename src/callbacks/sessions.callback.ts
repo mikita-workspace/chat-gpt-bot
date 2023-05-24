@@ -25,9 +25,7 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
 
-    logger.error(
-      `callbacks::sessions::getUserSessionMessagesCallback::${(error as Error).message}`,
-    );
+    logger.error(`callbacks::sessions::getUserSessionMessagesCallback::${error.message}`);
   }
 };
 
@@ -45,8 +43,6 @@ export const deleteUserSessionMessagesCallback: DynamicUsersMenuCallbackType = a
   } catch (error) {
     await ctx.reply(ctx.t('error-common'));
 
-    logger.error(
-      `callbacks::sessions::deleteUserSessionMessagesCallback::${(error as Error).message}`,
-    );
+    logger.error(`callbacks::sessions::deleteUserSessionMessagesCallback::${error.message}`);
   }
 };
