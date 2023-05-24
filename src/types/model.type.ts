@@ -1,5 +1,5 @@
 import { UserRoles } from '@bot/constants';
-import { SessionType } from '@bot/types';
+import { SessionMessagesType } from '@bot/types';
 
 export type UserModelType = {
   conversation: object;
@@ -13,7 +13,7 @@ export type SessionModelType = {
   key: string;
   value: {
     username: string;
-    messages: SessionType['custom']['messages'];
+    messages: SessionMessagesType;
   };
 };
 
@@ -24,6 +24,6 @@ export type LoggerModelType = {
 };
 
 export type UserConversationModelType = {
-  messages: SessionType['custom']['messages'];
+  messages: SessionMessagesType;
   username: string;
 };

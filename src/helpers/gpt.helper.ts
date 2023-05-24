@@ -1,6 +1,7 @@
-import { MessageRolesGPT } from '@bot/constants';
+import { MAX_CONTEXT_GPT_TOKENS, MessageRolesGPT } from '@bot/constants';
 import { logger, openAI } from '@bot/services';
-import { BotContextType } from '@bot/types';
+import { BotContextType, SessionMessagesType } from '@bot/types';
+import { encode } from 'gpt-3-encoder';
 import { ChatCompletionRequestMessage } from 'openai';
 
 export const convertGPTMessage = (
@@ -35,4 +36,34 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
   } catch (error) {
     logger.error(`helper::getGPTMessage::${(error as Error).message}`);
   }
+};
+
+export const splitSessionMessagesByTokenLimit = (
+  messages: SessionMessagesType,
+  tokenLimit = MAX_CONTEXT_GPT_TOKENS,
+) => {
+  let isLimitAchieved = false;
+
+  const [headMessages, tailMessages] = messages
+    .reverse()
+    .reduce<[SessionMessagesType, SessionMessagesType]>(
+      ([head, tail], message) => {
+        const amountTokens = encode(
+          [...head, message].map((msg) => msg.gptFormat.content).join(''),
+        ).length;
+
+        if (amountTokens <= tokenLimit && !isLimitAchieved) {
+          head.push(message);
+        } else {
+          isLimitAchieved = true;
+
+          tail.push(message);
+        }
+
+        return [head, tail];
+      },
+      [[], []],
+    );
+
+  return [headMessages.reverse(), tailMessages.reverse()];
 };

@@ -15,6 +15,8 @@ export type SessionType = {
   };
 };
 
+export type SessionMessagesType = SessionType['custom']['messages'];
+
 export type BotContextType = HydrateFlavor<
   Context & SessionFlavor<SessionType> & I18nFlavor & MenuFlavor & ConversationFlavor
 >;

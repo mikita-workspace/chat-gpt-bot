@@ -9,6 +9,8 @@ export enum MessageRolesGPT {
   SYSTEM = 'system',
 }
 
+export const MAX_CONTEXT_GPT_TOKENS = 4096;
+
 // Telegram API
 export const TELEGRAM_API = 'https://api.telegram.org';
 
@@ -44,10 +46,6 @@ export const ADD_USER_FORMAT = '<username>;<admin | moderator | user>';
 
 // Regexp
 export const REGEXP_USERNAME = /^[a-zA-Z0-9_-]{3,32}$/;
-
-// Normalize
-export const MAX_SESSION_MESSAGES = 15;
-export const CUT_NUMBER_OF_SESSION_MESSAGES_TAIL = 5;
 
 // CSV files
 export const CSV_READER_URL = 'https://www.convertcsv.com/csv-viewer-editor.htm';

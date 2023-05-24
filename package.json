@@ -28,6 +28,7 @@
     "csv-writer": "^1.6.0",
     "dotenv": "^16.0.3",
     "fluent-ffmpeg": "^2.1.2",
+    "gpt-3-encoder": "^1.1.4",
     "grammy": "^1.16.0",
     "mongoose": "^7.1.0",
     "node-cache": "^5.1.2",
