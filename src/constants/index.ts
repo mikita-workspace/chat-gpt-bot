@@ -25,10 +25,12 @@ export enum BotCommands {
   START = 'start',
 }
 
+export const botName = 'ChatGPT | Smart Bot';
+
 export const BotCommandsWithDescription = [
-  { command: BotCommands.ADMIN, i18nKey: 'bot-command-admin' },
-  { command: BotCommands.DESCRIPTION, i18nKey: 'bot-command-description' },
-  { command: BotCommands.ABOUT, i18nKey: 'bot-command-about' },
+  { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
+  { command: BotCommands.DESCRIPTION, i18nKey: 'command-description' },
+  { command: BotCommands.ABOUT, i18nKey: 'command-about' },
 ];
 
 // Node cache

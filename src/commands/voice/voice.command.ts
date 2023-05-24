@@ -3,7 +3,7 @@ import { getFileApiLink, getGPTAnswer } from '@bot/helpers';
 import { logger, oggConverter, openAI } from '@bot/services';
 import { BotType } from '@bot/types';
 
-export const voiceController = (bot: BotType) => {
+export const voiceCommand = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {
     try {
       const userId = String(ctx.message.from.id);
@@ -20,7 +20,7 @@ export const voiceController = (bot: BotType) => {
 
       await ctx.reply(gptAnswer, { reply_to_message_id: messageId });
     } catch (error) {
-      await ctx.reply(ctx.t('error-common'));
+      await ctx.reply(ctx.t('error-message-common'));
 
       logger.error(`controller::voiceController::${error.message}`);
     }

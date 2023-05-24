@@ -37,8 +37,8 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
     .filter((user) => user.username !== currentUsername)
     .forEach((user) => {
       const username = user.username;
-      const status = user.enabled ? 'Available' : 'Blocked';
-      const role = user.role;
+      const status = ctx.t(`user-status-${user.enabled ? 'available' : 'blocked'}`);
+      const role = ctx.t(`user-role-${user.role}`);
 
       range
         .text(
@@ -49,7 +49,7 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
     });
 
   range.text(
-    () => ctx.t('admin-block-unblock-user-refresh'),
+    () => ctx.t('common-button-refresh'),
     async () => {
       const newUsers = await mongo.getUsers(true);
 
@@ -82,7 +82,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
     });
 
   range.text(
-    () => ctx.t('admin-block-unblock-user-refresh'),
+    () => ctx.t('common-button-refresh'),
     async () => {
       const newUserSessions = await mongo.getAllUserSessions(true);
 

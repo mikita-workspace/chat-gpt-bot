@@ -9,7 +9,7 @@ export const addUserConversation = async (
   ctx: BotContextType,
 ) => {
   try {
-    await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT_ADMIN }), {
+    await ctx.reply(ctx.t('users-menu-message-enter', { inputFormat: ADD_USER_FORMAT_ADMIN }), {
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
 
@@ -20,7 +20,7 @@ export const addUserConversation = async (
     const [username = '', role = UserRoles.USER] = text?.split(';');
 
     if (!REGEXP_USERNAME.test(username)) {
-      return await ctx.reply(ctx.t('admin-add-user-error', { username }), {
+      return await ctx.reply(ctx.t('users-menu-message-incorrect', { username }), {
         reply_to_message_id: messageId,
         reply_markup: adminInlineAddNewUser(ctx),
       });
@@ -29,7 +29,7 @@ export const addUserConversation = async (
     const hasUserInDb = await conversation.external(() => mongo.getUser(username));
 
     if (hasUserInDb) {
-      return await ctx.reply(ctx.t('admin-add-user-exist', { username }), {
+      return await ctx.reply(ctx.t('users-menu-message-exist', { username }), {
         reply_to_message_id: messageId,
         reply_markup: adminInlineAddNewUser(ctx),
       });
@@ -42,12 +42,12 @@ export const addUserConversation = async (
       ),
     );
 
-    return await ctx.reply(ctx.t('admin-add-user-successful', { username }), {
+    return await ctx.reply(ctx.t('users-menu-message-add-success', { username }), {
       reply_to_message_id: messageId,
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`conversations::addUserConversation::${error.message}`);
 

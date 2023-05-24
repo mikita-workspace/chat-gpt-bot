@@ -3,7 +3,7 @@ import { BotContextType } from '@bot/types';
 import { InlineKeyboard } from 'grammy';
 
 export const adminInlineGoToMainMenu = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('admin-go-to-main'), AdminMenuActions.GO_TO_MENU);
+  new InlineKeyboard().text(ctx.t('admin-menu-button-go-to-menu'), AdminMenuActions.GO_TO_MENU);
 
 export const adminInlineAddNewUser = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('error-common-try-again'), UsersMenuActions.ADD_NEW_USER);
+  new InlineKeyboard().text(ctx.t('error-message-common-try-again'), UsersMenuActions.ADD_NEW_USER);

@@ -15,7 +15,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
 
   if (user?.enabled) {
     if (action === '/admin' && user?.role !== UserRoles.ADMIN) {
-      await ctx.reply(ctx.t('error-auth-admin'));
+      await ctx.reply(ctx.t('error-message-auth-admin'));
 
       return;
     }
@@ -23,7 +23,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
     return next();
   }
 
-  await ctx.reply(ctx.t('error-auth'));
+  await ctx.reply(ctx.t('error-message-auth'));
 
   return;
 };

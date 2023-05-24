@@ -30,7 +30,7 @@ export const getUserConversationMessagesCallback: DynamicUsersMenuCallbackType =
       }
     }
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::sessions::getUserConversationMessagesCallback::${error.message}`);
   }
@@ -44,11 +44,11 @@ export const deleteUserConversationMessagesCallback: DynamicUsersMenuCallbackTyp
     await mongo.deleteUserConversation(username);
 
     await ctx.deleteMessage();
-    await ctx.reply(ctx.t('admin-delete-conversation-successful', { username }), {
+    await ctx.reply(ctx.t('conversations-menu-delete-success', { username }), {
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::sessions::deleteUserConversationMessagesCallback::${error.message}`);
   }

@@ -30,7 +30,7 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
       }
     }
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::users::getAllUsersCallback::${error.message}`);
   }
@@ -45,11 +45,11 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
     await mongo.updateUser(username, { role });
 
     await ctx.deleteMessage();
-    await ctx.reply(ctx.t('admin-change-role-successful', { username, role }), {
+    await ctx.reply(ctx.t('users-menu-message-change-role-success', { username, role }), {
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::users::changeUserRoleCallback::${error.message}`);
   }
@@ -60,18 +60,13 @@ export const blockUnblockUserCallback: DynamicUsersMenuCallbackType = async (ctx
     const user = await mongo.getUser(username);
     const updatedUser = await mongo.updateUser(username, { enabled: !user.enabled });
 
-    const answer = ctx.t(
-      !updatedUser?.enabled
-        ? 'admin-block-block-user-successful'
-        : 'admin-block-unblock-user-successful',
-      {
-        username,
-      },
-    );
+    const answer = ctx.t(`users-menu-message-${!updatedUser ? ' block' : 'unblock'}-success`, {
+      username,
+    });
 
     await ctx.answerCallbackQuery(answer);
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::users::blockUnblockUserCallback::${error.message}`);
   }
@@ -82,11 +77,11 @@ export const deleteUserCallback: DynamicUsersMenuCallbackType = async (ctx, user
     await mongo.deleteUser(username);
 
     await ctx.deleteMessage();
-    await ctx.reply(ctx.t('admin-block-block-user-successful', { username }), {
+    await ctx.reply(ctx.t('users-menu-message-delete-success', { username }), {
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::users::deleteUsersCallback::${error.message}`);
   }

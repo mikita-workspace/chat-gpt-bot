@@ -10,20 +10,20 @@ import { BotContextType } from '@bot/types';
 import { Menu } from '@grammyjs/menu';
 
 export const adminMainMenu = new Menu<BotContextType>(AdminMenu.INITIAL)
-  .submenu((ctx) => ctx.t('admin-sessions'), SessionsMenu.INITIAL)
-  .submenu((ctx) => ctx.t('admin-conversations'), ConversationsMenu.INITIAL)
+  .submenu((ctx) => ctx.t('admin-menu-button-sessions'), SessionsMenu.INITIAL)
+  .submenu((ctx) => ctx.t('admin-menu-button-conversations'), ConversationsMenu.INITIAL)
   .row()
-  .submenu((ctx) => ctx.t('admin-users'), UsersMenu.INITIAL)
+  .submenu((ctx) => ctx.t('admin-menu-button-users'), UsersMenu.INITIAL)
   .text(
-    (ctx) => ctx.t('admin-logs'),
+    (ctx) => ctx.t('admin-menu-button-logs'),
     (ctx) => downloadLogsCallback(ctx),
   )
   .row()
-  .url((ctx) => ctx.t('admin-csv-reader'), CSV_READER_URL)
+  .url((ctx) => ctx.t('admin-menu-button-csv-reader'), CSV_READER_URL)
   .text(
-    (ctx) => ctx.t('admin-go-to-bot'),
+    (ctx) => ctx.t('common-button-go-to-chat'),
     async (ctx) => {
       await ctx.deleteMessage();
-      await ctx.reply(ctx.t('bot-initial'));
+      await ctx.reply(ctx.t('initial-message-start'));
     },
   );
