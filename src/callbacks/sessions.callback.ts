@@ -1,9 +1,12 @@
 import { adminInlineGoToMainMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
-import { BotContextType } from '@bot/types';
+import { DynamicUsersMenuCallbackType } from '@bot/types';
 import { removeFile } from '@bot/utils';
 
-export const getUserSessionMessagesCallback = async (ctx: BotContextType, username: string) => {
+export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = async (
+  ctx,
+  username,
+) => {
   try {
     const userSession = await mongo.getUserSession(username);
 
@@ -28,7 +31,10 @@ export const getUserSessionMessagesCallback = async (ctx: BotContextType, userna
   }
 };
 
-export const deleteUserSessionMessagesCallback = async (ctx: BotContextType, username: string) => {
+export const deleteUserSessionMessagesCallback: DynamicUsersMenuCallbackType = async (
+  ctx,
+  username,
+) => {
   try {
     await mongo.deleteUserSessionMessages(username);
 

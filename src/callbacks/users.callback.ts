@@ -1,8 +1,11 @@
-import { UserRoles } from '@bot/constants';
 import { addUserConversation } from '@bot/conversations';
 import { adminInlineGoToMainMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
-import { BotContextType } from '@bot/types';
+import {
+  BotContextType,
+  DynamicUserRolesMenuCallbackType,
+  DynamicUsersMenuCallbackType,
+} from '@bot/types';
 import { removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
@@ -33,10 +36,10 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
   }
 };
 
-export const changeUserRoleCallback = async (
-  ctx: BotContextType,
-  username: string,
-  role: `${UserRoles}`,
+export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
+  ctx,
+  username,
+  role,
 ) => {
   try {
     await mongo.updateUser(username, { role });
@@ -52,7 +55,7 @@ export const changeUserRoleCallback = async (
   }
 };
 
-export const blockUnblockUserCallback = async (ctx: BotContextType, username: string) => {
+export const blockUnblockUserCallback: DynamicUsersMenuCallbackType = async (ctx, username) => {
   try {
     const user = await mongo.getUser(username);
     const updatedUser = await mongo.updateUser(username, { enabled: !user.enabled });
@@ -74,7 +77,7 @@ export const blockUnblockUserCallback = async (ctx: BotContextType, username: st
   }
 };
 
-export const deleteUserCallback = async (ctx: BotContextType, username: string) => {
+export const deleteUserCallback: DynamicUsersMenuCallbackType = async (ctx, username) => {
   try {
     await mongo.deleteUser(username);
 

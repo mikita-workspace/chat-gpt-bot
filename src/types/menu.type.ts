@@ -1,13 +1,16 @@
-import { UserRoles } from '@bot/constants';
-import { BotContextType } from '@bot/types';
+import {
+  BotContextType,
+  DynamicUserRolesMenuCallbackType,
+  DynamicUsersMenuCallbackType,
+} from '@bot/types';
 
 export type DynamicUserRolesMenuType = (
   ctx: BotContextType,
-  callback: (ctx: BotContextType, username: string, role: `${UserRoles}`) => void,
+  callback: DynamicUserRolesMenuCallbackType,
 ) => void;
 
 export type DynamicUsersMenuType = (
   ctx: BotContextType,
-  callback: (ctx: BotContextType, username: string) => void,
+  callback: DynamicUsersMenuCallbackType,
   showCurrentUsername?: boolean,
 ) => void;
