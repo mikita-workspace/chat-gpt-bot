@@ -19,8 +19,9 @@ export const handleBotError = (error: BotError) => {
 };
 
 export const mapLoggerInfo = (loggerInfo: LoggerModelType[]) =>
-  loggerInfo.map(({ timestamp, level, message }) => ({
+  loggerInfo.map(({ timestamp, level, message, meta: { username } }) => ({
     [LoggerInfoCsvIds.TIMESTAMP]: timestamp,
     [LoggerInfoCsvIds.LEVEL]: level,
+    [LoggerInfoCsvIds.USERNAME]: username,
     [LoggerInfoCsvIds.MESSAGE]: message,
   }));

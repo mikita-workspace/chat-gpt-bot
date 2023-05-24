@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { gptModel, supportLanguageCodes } from '@bot/constants';
+import { modelGPT, supportLanguageCodes } from '@bot/constants';
 import { mapBotCommands, mapBotDescription } from '@bot/helpers';
 import { BotContextType } from '@bot/types';
 import { I18n } from '@grammyjs/i18n';
@@ -13,10 +13,12 @@ const composer = new Composer<BotContextType>();
 const i18n = new I18n<BotContextType>({
   defaultLocale: 'en',
   globalTranslationContext: (ctx) => ({
-    botName: ctx?.me?.first_name ?? '',
-    firstName: ctx?.from?.first_name ?? '',
-    model: gptModel,
-    username: ctx?.from?.username ?? '',
+    botName: String(ctx?.me?.first_name),
+    firstName: String(ctx?.from?.first_name),
+    lastName: String(ctx?.from?.last_name),
+    model: modelGPT,
+    releaseVersion: config.RELEASE_VERSION,
+    username: String(ctx?.from?.username),
   }),
   directory: path.join(__dirname, '../locales'),
   useSession: true,

@@ -1,12 +1,7 @@
-import { ADD_USER_FORMAT, REGEXP_USERNAME, UserRoles } from '@bot/constants';
-import {
-  adminInlineAddNewUser,
-  adminInlineGoToMainMenu,
-  adminInlineListUsers,
-  adminInlineSelectRole,
-} from '@bot/keyboards';
+import { ADD_USER_FORMAT_ADMIN, REGEXP_USERNAME, UserRoles } from '@bot/constants';
+import { adminInlineAddNewUser, adminInlineGoToMainMenu } from '@bot/keyboards';
 import { logger, mongo } from '@bot/services';
-import { BotContextType, UserModelType } from '@bot/types';
+import { BotContextType } from '@bot/types';
 import { Conversation } from '@grammyjs/conversations';
 
 export const addUserConversation = async (
@@ -14,7 +9,7 @@ export const addUserConversation = async (
   ctx: BotContextType,
 ) => {
   try {
-    await ctx.reply(ctx.t('admin-enter-user', { inputFormat: ADD_USER_FORMAT }), {
+    await ctx.reply(ctx.t('users-menu-message-enter', { inputFormat: ADD_USER_FORMAT_ADMIN }), {
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
 
@@ -22,10 +17,10 @@ export const addUserConversation = async (
       message: { text, message_id: messageId },
     } = await conversation.waitFor('message:text');
 
-    const username = text.trim();
+    const [username = '', role = UserRoles.USER] = text?.split(';');
 
     if (!REGEXP_USERNAME.test(username)) {
-      return await ctx.reply(ctx.t('admin-add-user-error', { username }), {
+      return await ctx.reply(ctx.t('users-menu-message-incorrect', { username }), {
         reply_to_message_id: messageId,
         reply_markup: adminInlineAddNewUser(ctx),
       });
@@ -34,97 +29,27 @@ export const addUserConversation = async (
     const hasUserInDb = await conversation.external(() => mongo.getUser(username));
 
     if (hasUserInDb) {
-      return await ctx.reply(ctx.t('admin-add-user-exist', { username }), {
+      return await ctx.reply(ctx.t('users-menu-message-exist', { username }), {
         reply_to_message_id: messageId,
         reply_markup: adminInlineAddNewUser(ctx),
       });
     }
 
-    await ctx.reply(ctx.t('admin-select-role'), {
-      reply_markup: adminInlineSelectRole,
-    });
-
-    const {
-      update: {
-        callback_query: { data: roleData, message: callbackMessageRole },
-      },
-    } = await conversation.waitForCallbackQuery(/admin-select-role-action/gm);
-
-    const role = roleData.replace(/admin-select-role-action-/, '');
-
-    await conversation.external(() => mongo.setUser(username, role));
-
-    await ctx.api.deleteMessage(
-      Number(callbackMessageRole?.chat.id),
-      Number(callbackMessageRole?.message_id),
+    await conversation.external(() =>
+      mongo.setUser(
+        username,
+        Object.values(UserRoles).includes(role as UserRoles) ? role : UserRoles.USER,
+      ),
     );
 
-    return await ctx.reply(ctx.t('admin-add-user-successful', { username }), {
+    return await ctx.reply(ctx.t('users-menu-message-add-success', { username }), {
       reply_to_message_id: messageId,
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`conversations::addUserConversation::${(error as Error).message}`);
-
-    return;
-  }
-};
-
-export const changeUserRoleConversation = async (
-  conversation: Conversation<BotContextType>,
-  ctx: BotContextType,
-) => {
-  try {
-    const currentUsername = ctx?.from?.username ?? '';
-
-    const users: UserModelType[] = await mongo.getUsers();
-    const filteredUsers = users.filter((user) => user.username !== currentUsername);
-
-    await ctx.reply(ctx.t('admin-change-role-user-select-list'), {
-      reply_markup: adminInlineListUsers(ctx, filteredUsers),
-    });
-
-    const {
-      update: {
-        callback_query: { data: usernameData, message: callbackMessageUserList },
-      },
-    } = await conversation.waitForCallbackQuery(/admin-list-users-action/gm);
-
-    const selectedUsername = usernameData.replace(/admin-list-users-action-/, '');
-
-    await ctx.api.deleteMessage(
-      Number(callbackMessageUserList?.chat.id),
-      Number(callbackMessageUserList?.message_id),
-    );
-
-    await ctx.reply(ctx.t('admin-select-role'), {
-      reply_markup: adminInlineSelectRole,
-    });
-
-    const {
-      update: {
-        callback_query: { data: roleData, message: callbackMessageRole },
-      },
-    } = await conversation.waitForCallbackQuery(/admin-select-role-action/gm);
-
-    const role = roleData.replace(/admin-select-role-action-/, '') as `${UserRoles}`;
-
-    await ctx.api.deleteMessage(
-      Number(callbackMessageRole?.chat.id),
-      Number(callbackMessageRole?.message_id),
-    );
-
-    await mongo.updateUser(selectedUsername, { role });
-
-    await ctx.reply(ctx.t('admin-change-role-successful', { username: selectedUsername, role }), {
-      reply_markup: adminInlineGoToMainMenu(ctx),
-    });
-  } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
-
-    logger.error(`conversations::changeUserRoleConversation::${(error as Error).message}`);
+    logger.error(`conversations::addUserConversation::${error.message}`);
 
     return;
   }

@@ -4,8 +4,8 @@ import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
-  const username = (ctx?.from?.username ?? '').toLowerCase();
-  const action = ctx?.update?.message?.text ?? '';
+  const username = String(ctx?.from?.username);
+  const action = String(ctx?.update?.message?.text);
 
   if (username === config.SUPER_ADMIN_USERNAME) {
     return next();
@@ -15,7 +15,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
 
   if (user?.enabled) {
     if (action === '/admin' && user?.role !== UserRoles.ADMIN) {
-      await ctx.reply(ctx.t('error-auth-admin'));
+      await ctx.reply(ctx.t('error-message-auth-admin'));
 
       return;
     }
@@ -23,7 +23,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
     return next();
   }
 
-  await ctx.reply(ctx.t('error-auth'));
+  await ctx.reply(ctx.t('error-message-auth'));
 
   return;
 };

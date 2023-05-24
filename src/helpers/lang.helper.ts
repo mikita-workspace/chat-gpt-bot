@@ -1,4 +1,4 @@
-import { BotCommandsWithDescription } from '@bot/constants';
+import { BotCommandsWithDescription, botName, modelGPT } from '@bot/constants';
 import { BotContextType } from '@bot/types';
 import { I18n } from '@grammyjs/i18n';
 
@@ -9,4 +9,4 @@ export const mapBotCommands = (i18n: I18n<BotContextType>, languageCode = 'en') 
   }));
 
 export const mapBotDescription = (i18n: I18n<BotContextType>, languageCode = 'en') =>
-  i18n.t(languageCode, 'bot-description-initial');
+  i18n.t(languageCode, 'initial-message-description', { botName, model: modelGPT });

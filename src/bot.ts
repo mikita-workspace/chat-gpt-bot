@@ -1,14 +1,14 @@
+import {
+  aboutCommand,
+  adminCommand,
+  descriptionCommand,
+  newCommand,
+  startCommand,
+  textCommand,
+  voiceCommand,
+} from '@bot/commands';
 import { conversationComposer, i18nComposer, menuComposer, sessionComposer } from '@bot/composers';
 import { config } from '@bot/config';
-import {
-  aboutController,
-  adminController,
-  descriptionController,
-  newController,
-  startController,
-  textController,
-  voiceController,
-} from '@bot/controllers';
 import { handleBotError } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
 import { BotContextType } from '@bot/types';
@@ -28,24 +28,24 @@ export const createBot = () => {
 
   bot.use(i18nComposer());
 
+  bot.use(auth());
+
   bot.use(sessionComposer());
+
+  bot.use(normalize());
 
   bot.use(conversationComposer());
 
   bot.use(menuComposer());
 
-  bot.use(normalize());
-
-  bot.use(auth());
-
   [
-    aboutController,
-    adminController,
-    descriptionController,
-    newController,
-    startController,
-    textController,
-    voiceController,
+    aboutCommand,
+    adminCommand,
+    descriptionCommand,
+    newCommand,
+    startCommand,
+    textCommand,
+    voiceCommand,
   ].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);

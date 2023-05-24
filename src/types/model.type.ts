@@ -1,10 +1,11 @@
 import { UserRoles } from '@bot/constants';
-import { SessionType } from '@bot/types';
+import { SessionMessagesType } from '@bot/types';
 
 export type UserModelType = {
+  conversation: object;
   enabled: boolean;
   role: `${UserRoles}`;
-  timestamp: number;
+  timestamp: string;
   username: string;
 };
 
@@ -12,17 +13,18 @@ export type SessionModelType = {
   key: string;
   value: {
     username: string;
-    messages: SessionType['custom']['messages'];
+    messages: SessionMessagesType;
   };
 };
 
 export type LoggerModelType = {
-  timestamp: string;
   level: string;
   message: string;
+  meta: { username: string };
+  timestamp: string;
 };
 
 export type UserConversationModelType = {
-  messages: SessionType['custom']['messages'];
+  messages: SessionMessagesType;
   username: string;
 };

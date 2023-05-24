@@ -1,9 +1,12 @@
 import { adminInlineGoToMainMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
-import { BotContextType } from '@bot/types';
+import { DynamicUsersMenuCallbackType } from '@bot/types';
 import { removeFile } from '@bot/utils';
 
-export const getUserSessionMessagesCallback = async (username: string, ctx: BotContextType) => {
+export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = async (
+  ctx,
+  username,
+) => {
   try {
     const userSession = await mongo.getUserSession(username);
 
@@ -20,27 +23,26 @@ export const getUserSessionMessagesCallback = async (username: string, ctx: BotC
       }
     }
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(
-      `callbacks::sessions::getUserSessionMessagesCallback::${(error as Error).message}`,
-    );
+    logger.error(`callbacks::sessions::getUserSessionMessagesCallback::${error.message}`);
   }
 };
 
-export const deleteUserSessionMessagesCallback = async (username: string, ctx: BotContextType) => {
+export const deleteUserSessionMessagesCallback: DynamicUsersMenuCallbackType = async (
+  ctx,
+  username,
+) => {
   try {
     await mongo.deleteUserSessionMessages(username);
 
     await ctx.deleteMessage();
-    await ctx.reply(ctx.t('admin-delete-session-successful', { username }), {
+    await ctx.reply(ctx.t('sessions-menu-message-delete-success', { username }), {
       reply_markup: adminInlineGoToMainMenu(ctx),
     });
   } catch (error) {
-    await ctx.reply(ctx.t('error-common'));
+    await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(
-      `callbacks::sessions::deleteUserSessionMessagesCallback::${(error as Error).message}`,
-    );
+    logger.error(`callbacks::sessions::deleteUserSessionMessagesCallback::${error.message}`);
   }
 };

@@ -1,10 +1,12 @@
 import { UserModelType } from '@bot/types';
+import { parseTimestampUTC } from '@bot/utils';
 import { model, Schema } from 'mongoose';
 
 const schema = new Schema<UserModelType>({
-  timestamp: { type: Number, require: true, default: Date.now() },
+  conversation: { type: Schema.Types.ObjectId, ref: 'UserConversation', required: true },
   enabled: { type: Boolean, require: true, default: true },
   role: { type: String, required: true },
+  timestamp: { type: String, require: true, default: parseTimestampUTC(Date.now()) },
   username: { type: String, required: true, unique: true },
 });
 

@@ -19,6 +19,7 @@ class CsvService {
     this.loggerHeader = [
       { id: LoggerInfoCsvIds.TIMESTAMP, title: LoggerInfoCsvIds.TIMESTAMP },
       { id: LoggerInfoCsvIds.LEVEL, title: LoggerInfoCsvIds.LEVEL },
+      { id: LoggerInfoCsvIds.USERNAME, title: LoggerInfoCsvIds.USERNAME },
       { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
     ];
     this.usersHeader = [
@@ -55,7 +56,7 @@ class CsvService {
         filePathForReply: new InputFile(filePath),
       };
     } catch (error) {
-      logger.error(`csvService::csvWriter::${(error as Error).message}`);
+      logger.error(`csvService::csvWriter::${error.message}`);
     }
   }
 
