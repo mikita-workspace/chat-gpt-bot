@@ -2,12 +2,7 @@ import { config } from '@bot/config';
 import { UserRoles } from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
-import {
-  SessionMessagesType,
-  SessionType,
-  UserConversationModelType,
-  UserModelType,
-} from '@bot/types';
+import { SessionMessagesType, SessionType, UserModelType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';

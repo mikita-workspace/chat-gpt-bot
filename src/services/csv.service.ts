@@ -2,6 +2,7 @@ import { LoggerInfoCsvIds, SessionCsvIds, UsersCsvIds } from '@bot/constants';
 import { mapLoggerInfo, mapUsers, mapUserSessionMessages } from '@bot/helpers';
 import { logger } from '@bot/services';
 import { LoggerModelType, SessionModelType, UserModelType } from '@bot/types';
+import { removeFile } from '@bot/utils';
 import axios from 'axios';
 import csvPipe from 'csv-parser';
 import { createObjectCsvWriter } from 'csv-writer';
@@ -92,7 +93,10 @@ class CsvService {
         createReadStream(input)
           .pipe(csvPipe())
           .on('data', (data: T) => results.push(data))
-          .on('end', () => resolve(results));
+          .on('end', async () => {
+            await removeFile(input);
+            resolve(results);
+          });
       });
     } catch (error) {
       logger.error(`csvService::parseCsv::${error.message}`);
