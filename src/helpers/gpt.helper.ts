@@ -1,6 +1,7 @@
 import { MAX_CONTEXT_GPT_TOKENS, MessageRolesGPT } from '@bot/constants';
 import { logger, openAI } from '@bot/services';
 import { BotContextType, SessionMessagesType } from '@bot/types';
+import { parseTimestampUTC } from '@bot/utils';
 import { encode } from 'gpt-3-encoder';
 import { ChatCompletionRequestMessage } from 'openai';
 
@@ -16,7 +17,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
   try {
     ctx.session.custom.messages.push({
       gptFormat: convertGPTMessage(text),
-      timestamp: Date.now(),
+      timestamp: parseTimestampUTC(Date.now()),
     });
 
     const response = await openAI.chat(
@@ -29,7 +30,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text = '') => {
 
     ctx.session.custom.messages.push({
       gptFormat: convertGPTMessage(response.content, MessageRolesGPT.ASSISTANT),
-      timestamp: Date.now(),
+      timestamp: parseTimestampUTC(Date.now()),
     });
 
     return response.content;

@@ -5,7 +5,7 @@ export type UserModelType = {
   conversation: object;
   enabled: boolean;
   role: `${UserRoles}`;
-  timestamp: number;
+  timestamp: string;
   username: string;
 };
 

@@ -10,7 +10,7 @@ export type SessionType = {
     username: string | null;
     messages: {
       gptFormat: { content: string; role: `${MessageRolesGPT}` };
-      timestamp: number;
+      timestamp: string;
     }[];
   };
 };

@@ -51,10 +51,10 @@ export const uniqBy = <T>(arr: T[], key: keyof T): T[] =>
 
 export const isDocumentsTheSame = (a: object, b: object) => JSON.stringify(a) === JSON.stringify(b);
 
-export const parseTimestamp = (timestamp: number) => {
+export const parseTimestampUTC = (timestamp: number) => {
   const date = new Date(timestamp);
 
-  return `${date.toDateString()} ${date.toLocaleTimeString('en-US')}`;
+  return date.toUTCString();
 };
 
 export const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
