@@ -3,7 +3,7 @@ import { csv, logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { removeFile } from '@bot/utils';
 
-export const getUserSessionMessagesCallback = async (username: string, ctx: BotContextType) => {
+export const getUserSessionMessagesCallback = async (ctx: BotContextType, username: string) => {
   try {
     const userSession = await mongo.getUserSession(username);
 
@@ -28,7 +28,7 @@ export const getUserSessionMessagesCallback = async (username: string, ctx: BotC
   }
 };
 
-export const deleteUserSessionMessagesCallback = async (username: string, ctx: BotContextType) => {
+export const deleteUserSessionMessagesCallback = async (ctx: BotContextType, username: string) => {
   try {
     await mongo.deleteUserSessionMessages(username);
 

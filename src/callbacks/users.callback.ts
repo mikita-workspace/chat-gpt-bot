@@ -34,9 +34,9 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
 };
 
 export const changeUserRoleCallback = async (
+  ctx: BotContextType,
   username: string,
   role: `${UserRoles}`,
-  ctx: BotContextType,
 ) => {
   try {
     await mongo.updateUser(username, { role });
@@ -52,7 +52,7 @@ export const changeUserRoleCallback = async (
   }
 };
 
-export const blockUnblockUserCallback = async (username: string, ctx: BotContextType) => {
+export const blockUnblockUserCallback = async (ctx: BotContextType, username: string) => {
   try {
     const user = await mongo.getUser(username);
     const updatedUser = await mongo.updateUser(username, { enabled: !user.enabled });
@@ -74,7 +74,7 @@ export const blockUnblockUserCallback = async (username: string, ctx: BotContext
   }
 };
 
-export const deleteUserCallback = async (username: string, ctx: BotContextType) => {
+export const deleteUserCallback = async (ctx: BotContextType, username: string) => {
   try {
     await mongo.deleteUser(username);
 

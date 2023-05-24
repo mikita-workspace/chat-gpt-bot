@@ -4,8 +4,8 @@ import { BotContextType } from '@bot/types';
 import { removeFile, uniqBy } from '@bot/utils';
 
 export const getUserConversationMessagesCallback = async (
-  username: string,
   ctx: BotContextType,
+  username: string,
 ) => {
   try {
     const userSession = await mongo.getUserSession(username);
@@ -39,8 +39,8 @@ export const getUserConversationMessagesCallback = async (
 };
 
 export const deleteUserConversationMessagesCallback = async (
-  username: string,
   ctx: BotContextType,
+  username: string,
 ) => {
   try {
     await mongo.deleteUserConversation(username);

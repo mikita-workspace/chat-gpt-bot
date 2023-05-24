@@ -19,7 +19,7 @@ export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, c
     .forEach((role) => {
       range
         .text({ text: ctx.t(`user-role-${role}`), payload: selectedUser }, async () =>
-          callback(selectedUser, role, ctx),
+          callback(ctx, selectedUser, role),
         )
         .row();
     });
@@ -43,7 +43,7 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
       range
         .text(
           { text: `[ ${username} ] ${capitalize(role)}, ${status}`, payload: username },
-          async () => callback(username, ctx),
+          async () => callback(ctx, username),
         )
         .row();
     });
@@ -78,7 +78,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
     .forEach((session) => {
       const username = session.value.username;
 
-      range.text({ text: username, payload: username }, async () => callback(username, ctx)).row();
+      range.text({ text: username, payload: username }, async () => callback(ctx, username)).row();
     });
 
   range.text(
