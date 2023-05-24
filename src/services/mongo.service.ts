@@ -76,6 +76,26 @@ export class MongoService {
     }
   }
 
+  async setMultipleUsers(users: { username: string; role: string }[]) {
+    try {
+      const existingUsers: UserModelType[] = await this.getUsers(true);
+
+      const newUsers = users.filter(
+        (user) => !existingUsers.find((existingUser) => existingUser.username === user.username),
+      );
+
+      if (newUsers.length === 0) {
+        return [];
+      }
+
+      newUsers.forEach(async ({ username, role }) => this.setUser(username, role));
+
+      return newUsers;
+    } catch (error) {
+      logger.error(`mongoService::setMultipleUsers::${error.message}`);
+    }
+  }
+
   async updateUser(username: string, options: Partial<UserModelType>) {
     try {
       const updatedUser = await UserModel.findOneAndUpdate(
@@ -141,6 +161,22 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
     } catch (error) {
       logger.error(`mongoService::deleteUserSessionMessages::${error.message}`);
+    }
+  }
+
+  async getAllUserConversations(resetCache = false) {
+    try {
+      if (resetCache) {
+        removeValueFromMemoryCache(`cached-user-conversations`);
+      }
+
+      const userConversations = await fetchCachedData('cached-user-conversations', async () =>
+        UserConversationModel.find({}).exec(),
+      );
+
+      return userConversations ?? [];
+    } catch (error) {
+      logger.error(`mongoService::getAllUserConversations::${error.message}`);
     }
   }
 

@@ -9,7 +9,7 @@ export const voiceCommand = (bot: BotType) => {
       const userId = String(ctx.message.from.id);
       const messageId = Number(ctx.message.message_id);
 
-      const voiceFile = await ctx.api.getFile(ctx.message.voice.file_id);
+      const voiceFile = await ctx.getFile();
       const voiceFileApiLink = getFileApiLink(config.TELEGRAM_TOKEN, voiceFile.file_path ?? '');
 
       const oggPath = (await oggConverter.create(voiceFileApiLink, userId)) ?? '';

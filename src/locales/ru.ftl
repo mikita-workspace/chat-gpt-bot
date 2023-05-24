@@ -54,6 +54,7 @@ conversations-menu-delete-success = Беседа для { $username } была �
 # Users menu buttons
 users-menu-button-get-all = Получить всех пользователей
 users-menu-button-add = Добавить пользователя
+users-menu-button-add-multiple = Добавить нескольких пользователей
 users-menu-button-change-role = Изменить роль
 users-menu-button-block-unblock = Заблокировать/Разблокировать
 users-menu-button-delete = Удалить пользователя
@@ -67,6 +68,10 @@ users-menu-message-unblock-success = Пользователь { $username } бы
 users-menu-message-delete-success = Пользователь { $username } был удален.
 users-menu-message-change-role-success = Пользователю { $username } была предоставлена новая роль - { $role }.
 users-menu-message-enter = Введите пользовтеля в следующем формате: { $inputFormat }.
+users-menu-message-enter-csv = Загрузите файл CSV со следующими столбцами: { $csvFormat }.
+users-menu-message-incorrect-csv = Расширение файла не соответствует CSV. Попробуйте еще раз!
+users-menu-message-multiple-add-success = Пользователи [ { $users } ] были успешно добавлены.
+users-menu-message-multiple-add-error = Пользователи уже были добавлены. Попробуйте еще раз!
 
 # User roles
 user-role-admin = Админ

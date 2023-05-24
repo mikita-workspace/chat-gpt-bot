@@ -2,9 +2,13 @@ import { LoggerInfoCsvIds, SessionCsvIds, UsersCsvIds } from '@bot/constants';
 import { mapLoggerInfo, mapUsers, mapUserSessionMessages } from '@bot/helpers';
 import { logger } from '@bot/services';
 import { LoggerModelType, SessionModelType, UserModelType } from '@bot/types';
+import { removeFile } from '@bot/utils';
+import axios from 'axios';
+import csvPipe from 'csv-parser';
 import { createObjectCsvWriter } from 'csv-writer';
 import { ObjectMap } from 'csv-writer/src/lib/lang/object';
 import { ObjectStringifierHeader } from 'csv-writer/src/lib/record';
+import { createReadStream, createWriteStream } from 'fs';
 import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
 
@@ -57,6 +61,45 @@ class CsvService {
       };
     } catch (error) {
       logger.error(`csvService::csvWriter::${error.message}`);
+    }
+  }
+
+  async createCsv(url: string, filename: string) {
+    try {
+      const csvPath = resolvePath(__dirname, '../../assets', `${filename}.csv`);
+
+      const response = await axios({
+        method: 'get',
+        url,
+        responseType: 'stream',
+      });
+
+      return await new Promise<string>((resolve) => {
+        const stream = createWriteStream(csvPath);
+
+        response.data.pipe(stream);
+        stream.on('finish', () => resolve(csvPath));
+      });
+    } catch (error) {
+      logger.error(`csvService::createCsv::${error.message}`);
+    }
+  }
+
+  async parseCsv<T>(input: string) {
+    try {
+      return await new Promise<T[]>((resolve) => {
+        const results: T[] = [];
+
+        createReadStream(input)
+          .pipe(csvPipe())
+          .on('data', (data: T) => results.push(data))
+          .on('end', async () => {
+            await removeFile(input);
+            resolve(results);
+          });
+      });
+    } catch (error) {
+      logger.error(`csvService::parseCsv::${error.message}`);
     }
   }
 

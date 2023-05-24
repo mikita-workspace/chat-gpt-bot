@@ -1,4 +1,4 @@
-import { adminInlineGoToMainMenu } from '@bot/keyboards';
+import { inlineGoToAdminMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { removeFile } from '@bot/utils';
@@ -13,7 +13,7 @@ export const downloadLogsCallback = async (ctx: BotContextType) => {
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
         await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: adminInlineGoToMainMenu(ctx),
+          reply_markup: inlineGoToAdminMenu(ctx),
         });
 
         await removeFile(filePath);

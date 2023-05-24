@@ -44,16 +44,17 @@ export enum UserRoles {
   USER = 'user',
 }
 
-export const ADD_USER_FORMAT_ADMIN = `<username>;<${Object.values(UserRoles)
-  .filter((role) => role !== UserRoles.SUPER_ADMIN)
-  .join(' | ')}>`;
+export const addUserFormat = (userRole: `${UserRoles}`) =>
+  `<username>;<${Object.values(UserRoles)
+    .filter((role) => role !== UserRoles.SUPER_ADMIN)
+    .filter((role) => userRole !== UserRoles.MODERATOR || role !== UserRoles.ADMIN)
+    .join(' | ')}>`;
 
-export const ADD_USER_FORMAT_MODERATOR = `<username>;<${Object.values(UserRoles)
-  .filter((role) => role !== UserRoles.SUPER_ADMIN && role !== UserRoles.ADMIN)
-  .join(' | ')}>`;
+export const ADD_USER_CSV_FORMAT = '<username> | <role>';
 
 // Regexp
 export const REGEXP_USERNAME = /^[a-zA-Z0-9_-]{3,32}$/;
+export const REGEXP_CSV_FILE_TYPE = /.+(\.csv)$/;
 
 // CSV files
 export const CSV_READER_URL = 'https://www.convertcsv.com/csv-viewer-editor.htm';
@@ -134,4 +135,5 @@ export enum AdminMenuActions {
 
 export enum UsersMenuActions {
   ADD_NEW_USER = 'add-new-user-action',
+  ADD_NEW_MULTIPLE_USERS = 'add-new-multiple-users-action',
 }
