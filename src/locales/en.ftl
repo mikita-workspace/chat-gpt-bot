@@ -53,6 +53,7 @@ conversations-menu-delete-success = Conversation for { $username } has been dele
 # Users menu buttons
 users-menu-button-get-all = Get all users
 users-menu-button-add = Add user
+users-menu-button-add-multiple = Add multiple users
 users-menu-button-change-role = Change role
 users-menu-button-block-unblock = Block/Unblock
 users-menu-button-delete = Delete user
@@ -66,6 +67,10 @@ users-menu-message-unblock-success = User { $username } has been unblocked
 users-menu-message-delete-success = User { $username } has been deleted.
 users-menu-message-change-role-success = User { $username } has been given a new role - { $role }.
 users-menu-message-enter = Enter user following next format: { $inputFormat }.
+users-menu-message-enter-csv = Load a CSV file with the following columns: { $csvFormat }.
+users-menu-message-incorrect-csv = The file extension does not match the CSV. Try again!
+users-menu-message-multiple-add-success = Users [ { $users } ] were successfully added.
+users-menu-message-multiple-add-error = Users have already been added. Try again!
 
 # User roles
 user-role-admin = Admin
