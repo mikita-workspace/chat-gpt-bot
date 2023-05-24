@@ -23,7 +23,6 @@ class OpenAIService {
         messages,
         model: modelGPT,
         top_p: 0.5,
-        max_tokens: 11111,
       });
 
       return response.data.choices[0].message;
