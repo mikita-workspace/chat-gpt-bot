@@ -53,7 +53,7 @@ export const addUserFormat = (userRole: `${UserRoles}`) =>
 export const ADD_USER_CSV_FORMAT = '<username> | <role>';
 
 // Regexp
-export const REGEXP_USERNAME = /^[a-zA-Z0-9_-]{3,32}$/;
+export const REGEXP_USERNAME = /^[a-zA-Z0-9_]{5,32}$/;
 export const REGEXP_CSV_FILE_TYPE = /.+(\.csv)$/;
 
 // CSV files

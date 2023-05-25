@@ -50,9 +50,15 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
     await mongo.updateUser(username, { role });
 
     await ctx.deleteMessage();
-    await ctx.reply(ctx.t('users-menu-message-change-role-success', { username, role }), {
-      reply_markup: inlineGoToAdminMenu(ctx),
-    });
+    await ctx.reply(
+      ctx.t('users-menu-message-change-role-success', {
+        username,
+        role: ctx.t(`user-role-${role}`),
+      }),
+      {
+        reply_markup: inlineGoToAdminMenu(ctx),
+      },
+    );
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
