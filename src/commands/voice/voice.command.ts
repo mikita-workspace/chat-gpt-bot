@@ -1,5 +1,6 @@
 import { config } from '@bot/config';
 import { getFileApiLink, getGPTAnswer } from '@bot/helpers';
+import { inlineShareWithContacts } from '@bot/keyboards';
 import { logger, oggConverter, openAI } from '@bot/services';
 import { BotType } from '@bot/types';
 
@@ -18,7 +19,10 @@ export const voiceCommand = (bot: BotType) => {
       const text = (await openAI.transcription(mp3Path)) ?? '';
       const gptAnswer = (await getGPTAnswer(ctx, text)) ?? '';
 
-      await ctx.reply(gptAnswer, { reply_to_message_id: messageId });
+      await ctx.reply(gptAnswer, {
+        reply_to_message_id: messageId,
+        reply_markup: inlineShareWithContacts(ctx, gptAnswer),
+      });
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 

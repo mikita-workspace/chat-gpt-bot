@@ -1,5 +1,5 @@
 import { addMultipleUsersConversation, addUserConversation } from '@bot/conversations';
-import { inlineAddNewMultipleUsers, inlineGoToAdminMenu } from '@bot/keyboards';
+import { inlineGoToAdminMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import {
   BotContextType,
@@ -50,9 +50,15 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
     await mongo.updateUser(username, { role });
 
     await ctx.deleteMessage();
-    await ctx.reply(ctx.t('users-menu-message-change-role-success', { username, role }), {
-      reply_markup: inlineGoToAdminMenu(ctx),
-    });
+    await ctx.reply(
+      ctx.t('users-menu-message-change-role-success', {
+        username,
+        role: ctx.t(`user-role-${role}`),
+      }),
+      {
+        reply_markup: inlineGoToAdminMenu(ctx),
+      },
+    );
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
@@ -83,7 +89,7 @@ export const deleteUserCallback: DynamicUsersMenuCallbackType = async (ctx, user
 
     await ctx.deleteMessage();
     await ctx.reply(ctx.t('users-menu-message-delete-success', { username }), {
-      reply_markup: inlineAddNewMultipleUsers(ctx),
+      reply_markup: inlineGoToAdminMenu(ctx),
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));

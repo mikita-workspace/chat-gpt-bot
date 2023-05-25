@@ -24,6 +24,7 @@ common-button-refresh = 🔄 Обновить
 common-button-go-to-chat = Перейти в чат
 common-button-go-back = ⬅️ Вернуться назад
 common-button-cancel = Отменить
+common-button-share = Поделиться
 
 # Admin panel
 admin-panel-title = Админ-панель для { $botName }.
