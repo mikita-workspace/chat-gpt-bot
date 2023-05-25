@@ -1,4 +1,5 @@
 import {
+  addMultipleUsersCallback,
   addUserInitialCallback,
   blockUnblockUserCallback,
   changeUserRoleCallback,
@@ -19,6 +20,11 @@ export const usersMenu = new Menu<BotContextType>(UsersMenu.INITIAL)
   .text(
     (ctx) => ctx.t('users-menu-button-add'),
     (ctx) => addUserInitialCallback(ctx),
+  )
+  .row()
+  .text(
+    (ctx) => ctx.t('users-menu-button-add-multiple'),
+    (ctx) => addMultipleUsersCallback(ctx),
   )
   .row()
   .submenu((ctx) => ctx.t('users-menu-button-change-role'), UsersMenu.CHANGE_ROLE)

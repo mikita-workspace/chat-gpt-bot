@@ -1,5 +1,5 @@
-import { addUserConversation } from '@bot/conversations';
-import { adminInlineGoToMainMenu } from '@bot/keyboards';
+import { addMultipleUsersConversation, addUserConversation } from '@bot/conversations';
+import { inlineAddNewMultipleUsers, inlineGoToAdminMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import {
   BotContextType,
@@ -13,6 +13,11 @@ export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.conversation.enter(addUserConversation.name);
 };
 
+export const addMultipleUsersCallback = async (ctx: BotContextType) => {
+  await ctx.deleteMessage();
+  await ctx.conversation.enter(addMultipleUsersConversation.name);
+};
+
 export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
     const users = await mongo.getUsers();
@@ -23,7 +28,7 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
         await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: adminInlineGoToMainMenu(ctx),
+          reply_markup: inlineGoToAdminMenu(ctx),
         });
 
         await removeFile(filePath);
@@ -46,7 +51,7 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
 
     await ctx.deleteMessage();
     await ctx.reply(ctx.t('users-menu-message-change-role-success', { username, role }), {
-      reply_markup: adminInlineGoToMainMenu(ctx),
+      reply_markup: inlineGoToAdminMenu(ctx),
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
@@ -78,7 +83,7 @@ export const deleteUserCallback: DynamicUsersMenuCallbackType = async (ctx, user
 
     await ctx.deleteMessage();
     await ctx.reply(ctx.t('users-menu-message-delete-success', { username }), {
-      reply_markup: adminInlineGoToMainMenu(ctx),
+      reply_markup: inlineAddNewMultipleUsers(ctx),
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));

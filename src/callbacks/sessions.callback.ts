@@ -1,4 +1,4 @@
-import { adminInlineGoToMainMenu } from '@bot/keyboards';
+import { inlineGoToAdminMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { DynamicUsersMenuCallbackType } from '@bot/types';
 import { removeFile } from '@bot/utils';
@@ -16,7 +16,7 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
         await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: adminInlineGoToMainMenu(ctx),
+          reply_markup: inlineGoToAdminMenu(ctx),
         });
 
         await removeFile(filePath);
@@ -38,7 +38,7 @@ export const deleteUserSessionMessagesCallback: DynamicUsersMenuCallbackType = a
 
     await ctx.deleteMessage();
     await ctx.reply(ctx.t('sessions-menu-message-delete-success', { username }), {
-      reply_markup: adminInlineGoToMainMenu(ctx),
+      reply_markup: inlineGoToAdminMenu(ctx),
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
