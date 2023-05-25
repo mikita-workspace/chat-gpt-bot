@@ -24,6 +24,7 @@ common-button-refresh = 🔄 Refresh
 common-button-go-to-chat = Go to chat
 common-button-go-back = ⬅️ Go back
 common-button-cancel = Cancel
+common-button-share = Share
 
 # Admin panel
 admin-panel-title = Admin-panel of { $botName }.
