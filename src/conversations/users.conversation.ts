@@ -36,7 +36,7 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
       message: { text, message_id: messageId },
     } = await conversation.waitFor('message:text');
 
-    const [username = '', role = UserRoles.USER] = text?.split(';');
+    const [username = '', role = UserRoles.USER] = text?.trim().split(';');
 
     if (!REGEXP_USERNAME.test(username)) {
       return await ctx.reply(ctx.t('users-menu-message-incorrect', { username }), {
@@ -57,7 +57,13 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
     await conversation.external(() =>
       mongo.setUser(
         username,
-        Object.values(UserRoles).includes(role as UserRoles) ? role : UserRoles.USER,
+        (() => {
+          if (currentUserRole === UserRoles.MODERATOR) {
+            return UserRoles.USER;
+          }
+
+          return Object.values(UserRoles).includes(role as UserRoles) ? role : UserRoles.USER;
+        })(),
       ),
     );
 

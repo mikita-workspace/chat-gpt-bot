@@ -31,7 +31,7 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
           users.filter(
             (user) =>
               currentUserRole !== UserRoles.MODERATOR ||
-              ![UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(user.role as UserRoles),
+              ![UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(user.role),
           ),
         )) ?? {};
 

@@ -68,6 +68,7 @@ export class MongoService {
       await userConversation.save();
       await user.save();
 
+      setValueToMemoryCache(`cached-user-${username}`, JSON.stringify(user));
       removeValueFromMemoryCache('cached-users');
     } catch (error) {
       logger.error(`mongoService::setUser::${error.message}`);

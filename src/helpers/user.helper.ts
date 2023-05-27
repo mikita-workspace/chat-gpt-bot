@@ -12,5 +12,5 @@ export const mapUsers = (users: UserModelType[]) =>
 export const mapUsersFromCsv = (users: UserModelType[]) =>
   users.map(({ username, role }) => ({
     username,
-    role: Object.values(UserRoles).includes(role as UserRoles) ? role : UserRoles.USER,
+    role: Object.values(UserRoles).includes(role) ? role : UserRoles.USER,
   }));

@@ -40,9 +40,7 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
     .filter(
       (user) =>
         currentUserRole !== UserRoles.MODERATOR ||
-        ![UserRoles.MODERATOR, UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(
-          user.role as UserRoles,
-        ),
+        ![UserRoles.MODERATOR, UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(user.role),
     )
     .forEach((user) => {
       const username = user.username;
@@ -74,7 +72,8 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
   const sessions = userSessions.map((userSession) => ({
     value: {
       username: userSession.value.username,
-      role: users.find((user) => user.username === userSession.value.username)?.role,
+      role:
+        users.find((user) => user.username === userSession.value.username)?.role ?? UserRoles.USER,
     },
   }));
 
@@ -83,7 +82,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
     .filter(
       (session) =>
         currentUserRole !== UserRoles.MODERATOR ||
-        ![UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(session.value.role as UserRoles),
+        ![UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(session.value.role),
     )
     .forEach((session) => {
       const username = session.value.username;

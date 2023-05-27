@@ -4,7 +4,7 @@ import { SessionMessagesType } from '@bot/types';
 export type UserModelType = {
   conversation: object;
   enabled: boolean;
-  role: `${UserRoles}`;
+  role: UserRoles;
   timestamp: string;
   username: string;
 };

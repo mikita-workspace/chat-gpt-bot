@@ -50,15 +50,15 @@ export enum UserRoles {
   USER = 'user',
 }
 
-export const addUserFormat = (userRole: `${UserRoles}`) =>
-  `<username>;<${Object.values(UserRoles)
-    .filter((role) => role !== UserRoles.SUPER_ADMIN)
-    .filter(
-      (role) =>
-        userRole !== UserRoles.MODERATOR ||
-        (role !== UserRoles.ADMIN && role !== UserRoles.MODERATOR),
-    )
-    .join(' | ')}>`;
+export const addUserFormat = (userRole: UserRoles) =>
+  '<username>' +
+  `${
+    [UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(userRole)
+      ? `;<${Object.values(UserRoles)
+          .filter((role) => role !== UserRoles.SUPER_ADMIN)
+          .join(' | ')}>`
+      : ''
+  }`;
 
 export const ADD_USER_CSV_FORMAT = '<username> | <role>';
 
