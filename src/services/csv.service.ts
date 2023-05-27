@@ -111,9 +111,9 @@ class CsvService {
     return this.csvWriter('users', this.usersHeader, mapUsers(users));
   }
 
-  async createSessionCsv(userSession: SessionModelType) {
+  async createSessionCsv(userSession: SessionModelType, withConversation = false) {
     return this.csvWriter(
-      `${userSession.value.username}-session`,
+      `${userSession.value.username}-${withConversation ? 'conversation' : 'session'}`,
       this.sessionHeader,
       mapUserSessionMessages(userSession),
     );

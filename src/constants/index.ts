@@ -20,15 +20,20 @@ export const supportLanguageCodes = ['en', 'ru'];
 export enum BotCommands {
   ABOUT = 'about',
   ADMIN = 'admin',
+  CLEAR = 'clear',
   DESCRIPTION = 'description',
+  MODERATOR = 'moderator',
   NEW = 'new',
+  PROFILE = 'profile',
   START = 'start',
 }
 
 export const botName = 'ChatGPT | Smart Bot';
 
 export const BotCommandsWithDescription = [
+  { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
+  { command: BotCommands.MODERATOR, i18nKey: 'command-moderator' },
   { command: BotCommands.DESCRIPTION, i18nKey: 'command-description' },
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
 ];
@@ -47,7 +52,11 @@ export enum UserRoles {
 export const addUserFormat = (userRole: `${UserRoles}`) =>
   `<username>;<${Object.values(UserRoles)
     .filter((role) => role !== UserRoles.SUPER_ADMIN)
-    .filter((role) => userRole !== UserRoles.MODERATOR || role !== UserRoles.ADMIN)
+    .filter(
+      (role) =>
+        userRole !== UserRoles.MODERATOR ||
+        (role !== UserRoles.ADMIN && role !== UserRoles.MODERATOR),
+    )
     .join(' | ')}>`;
 
 export const ADD_USER_CSV_FORMAT = '<username> | <role>';
@@ -106,8 +115,15 @@ export const winstonConfig = {
 // Menu
 export enum AdminMenu {
   INITIAL = 'admin-main-menu',
+  NAME = 'admin',
 }
 
+export enum ModeratorMenu {
+  INITIAL = 'moderator-main-menu',
+  NAME = 'moderator',
+}
+
+// Submenu
 export enum SessionsMenu {
   DELETE = 'delete-user-session-menu',
   GET = 'get-user-session-menu',
@@ -136,4 +152,8 @@ export enum AdminMenuActions {
 export enum UsersMenuActions {
   ADD_NEW_USER = 'add-new-user-action',
   ADD_NEW_MULTIPLE_USERS = 'add-new-multiple-users-action',
+}
+
+export enum ModeratorMenuActions {
+  GO_TO_MENU = 'go-to-moderator-menu-action',
 }

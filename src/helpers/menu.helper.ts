@@ -29,17 +29,23 @@ export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, c
 
 export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
+
   const currentUsername = String(ctx?.from?.username);
+  const currentUserRole = (await mongo.getUser(String(ctx?.from?.username))).role;
 
   let users: UserModelType[] = await mongo.getUsers();
 
   users
     .filter((user) => user.username !== currentUsername)
+    .filter(
+      (user) =>
+        currentUserRole !== UserRoles.MODERATOR ||
+        ![UserRoles.MODERATOR, UserRoles.ADMIN].includes(user.role as UserRoles),
+    )
     .forEach((user) => {
       const username = user.username;
       const status = ctx.t(`user-status-${user.enabled ? 'available' : 'blocked'}`);
       const role = ctx.t(`user-role-${user.role}`);
-
       range
         .text(
           { text: `[ ${username} ] ${capitalize(role)}, ${status}`, payload: username },
@@ -78,7 +84,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
     .forEach((session) => {
       const username = session.value.username;
 
-      range.text({ text: username, payload: username }, async () => callback(ctx, username)).row();
+      range.text(username, async () => callback(ctx, username)).row();
     });
 
   range.text(

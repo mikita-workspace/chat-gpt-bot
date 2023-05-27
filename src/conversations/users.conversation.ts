@@ -7,15 +7,30 @@ import {
   UserRoles,
 } from '@bot/constants';
 import { getFileApiLink, mapUsersFromCsv } from '@bot/helpers';
-import { inlineAddNewMultipleUsers, inlineAddNewUser, inlineGoToAdminMenu } from '@bot/keyboards';
+import {
+  inlineAddNewMultipleUsers,
+  inlineAddNewUser,
+  inlineGoToAdminMenu,
+  inlineGoToModeratorMenu,
+} from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { ConversationType, UserModelType } from '@bot/types';
 
 export const addUserConversation: ConversationType = async (conversation, ctx) => {
   try {
-    await ctx.reply(ctx.t('users-menu-message-enter', { inputFormat: addUserFormat('admin') }), {
-      reply_markup: inlineGoToAdminMenu(ctx),
-    });
+    const currentUserRole = (
+      await conversation.external(() => mongo.getUser(String(ctx.from?.username)))
+    ).role;
+
+    await ctx.reply(
+      ctx.t('users-menu-message-enter', { inputFormat: addUserFormat(currentUserRole) }),
+      {
+        reply_markup:
+          currentUserRole === UserRoles.MODERATOR
+            ? inlineGoToModeratorMenu(ctx)
+            : inlineGoToAdminMenu(ctx),
+      },
+    );
 
     const {
       message: { text, message_id: messageId },
@@ -35,7 +50,7 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
     if (hasUserInDb) {
       return await ctx.reply(ctx.t('users-menu-message-exist', { username }), {
         reply_to_message_id: messageId,
-        reply_markup: inlineAddNewMultipleUsers(ctx),
+        reply_markup: inlineAddNewUser(ctx),
       });
     }
 
@@ -48,7 +63,10 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
 
     return await ctx.reply(ctx.t('users-menu-message-add-success', { username }), {
       reply_to_message_id: messageId,
-      reply_markup: inlineGoToAdminMenu(ctx),
+      reply_markup:
+        currentUserRole === UserRoles.MODERATOR
+          ? inlineGoToModeratorMenu(ctx)
+          : inlineGoToAdminMenu(ctx),
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));

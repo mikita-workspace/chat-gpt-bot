@@ -1,4 +1,5 @@
-import { inlineGoToAdminMenu } from '@bot/keyboards';
+import { UserRoles } from '@bot/constants';
+import { inlineGoToAdminMenu, inlineGoToModeratorMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { DynamicUsersMenuCallbackType } from '@bot/types';
 import { removeFile } from '@bot/utils';
@@ -9,6 +10,7 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
 ) => {
   try {
     const userSession = await mongo.getUserSession(username);
+    const currentUserRole = await mongo.getUser(String(ctx?.from?.username));
 
     if (userSession) {
       const { filePath, filePathForReply } = (await csv.createSessionCsv(userSession)) ?? {};
@@ -16,7 +18,10 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
         await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: inlineGoToAdminMenu(ctx),
+          reply_markup:
+            currentUserRole === UserRoles.MODERATOR
+              ? inlineGoToModeratorMenu(ctx)
+              : inlineGoToAdminMenu(ctx),
         });
 
         await removeFile(filePath);

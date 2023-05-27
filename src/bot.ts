@@ -2,12 +2,20 @@ import {
   aboutCommand,
   adminCommand,
   descriptionCommand,
+  moderatorCommand,
   newCommand,
+  profileCommand,
   startCommand,
   textCommand,
   voiceCommand,
 } from '@bot/commands';
-import { conversationComposer, i18nComposer, menuComposer, sessionComposer } from '@bot/composers';
+import {
+  callbackQueryComposer,
+  conversationComposer,
+  i18nComposer,
+  menuComposer,
+  sessionComposer,
+} from '@bot/composers';
 import { config } from '@bot/config';
 import { handleBotError } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
@@ -38,11 +46,15 @@ export const createBot = () => {
 
   bot.use(menuComposer());
 
+  bot.use(callbackQueryComposer());
+
   [
     aboutCommand,
     adminCommand,
     descriptionCommand,
+    moderatorCommand,
     newCommand,
+    profileCommand,
     startCommand,
     textCommand,
     voiceCommand,
