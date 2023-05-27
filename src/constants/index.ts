@@ -31,7 +31,8 @@ export enum BotCommands {
 export const botName = 'ChatGPT | Smart Bot';
 
 export const BotCommandsWithDescription = [
-  { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  // TODO: will be implemented here - https://github.com/mikita-kandratsyeu/chat-gpt-bot/issues/22
+  // { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
   { command: BotCommands.MODERATOR, i18nKey: 'command-moderator' },
   { command: BotCommands.DESCRIPTION, i18nKey: 'command-description' },
