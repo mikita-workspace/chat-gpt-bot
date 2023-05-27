@@ -91,3 +91,6 @@ user-role-user = Пользователь
 # User statuses
 user-status-blocked = Заблокирован
 user-status-available = Доступен
+
+# Info messages
+info-message-moderator-panel-for-super-admin = Примечание: Пожалуйста, перейдите в Админ-панель.

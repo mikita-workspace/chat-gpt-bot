@@ -91,3 +91,6 @@ user-role-user = User
 # User statuses
 user-status-blocked = Blocked
 user-status-available = Available
+
+# Info messages
+info-message-moderator-panel-for-super-admin = Note: Please go to the Admin-panel.
