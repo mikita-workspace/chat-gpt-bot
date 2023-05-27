@@ -1,5 +1,7 @@
 import { createBot } from '@bot/bot';
 import { config } from '@bot/config';
+import { botName } from '@bot/constants';
+import { logger } from '@bot/services';
 import { run } from '@grammyjs/runner';
 import express from 'express';
 import { webhookCallback } from 'grammy';
@@ -20,7 +22,7 @@ const botInitialize = async () => {
     const PORT = process.env.PORT || 3000;
 
     app.listen(PORT, () => {
-      console.log(`Bot listening on port ${PORT}`);
+      logger.info(`${botName} listening on port ${PORT}`);
     });
   } else {
     // Use Long Polling for development
