@@ -49,10 +49,7 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
       range
         .text(
           { text: `[ ${username} ] ${capitalize(role)}, ${status}`, payload: username },
-          async () => {
-            await callback(ctx, username);
-            ctx.menu.update();
-          },
+          async () => callback(ctx, username),
         )
         .row();
     });
