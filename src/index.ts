@@ -19,10 +19,6 @@ const botInitialize = async () => {
 
     const PORT = process.env.PORT || 3000;
 
-    app.get('/', (_, res) => {
-      res.send('Running');
-    });
-
     app.listen(PORT, () => {
       console.log(`Bot listening on port ${PORT}`);
     });
