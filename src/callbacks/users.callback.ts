@@ -84,6 +84,7 @@ export const blockUnblockUserCallback: DynamicUsersMenuCallbackType = async (ctx
     );
 
     await ctx.answerCallbackQuery(answer);
+    ctx.menu.update();
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
