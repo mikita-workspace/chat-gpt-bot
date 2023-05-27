@@ -7,4 +7,4 @@ export type DynamicUserRolesMenuCallbackType = (
   role: `${UserRoles}`,
 ) => void;
 
-export type DynamicUsersMenuCallbackType = (ctx: BotContextType, username: string) => void;
+export type DynamicUsersMenuCallbackType = (ctx: BotContextType, username: string) => Promise<void>;

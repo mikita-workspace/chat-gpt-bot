@@ -31,12 +31,8 @@ export class MongoService {
     }
   }
 
-  async getUsers(resetCache = false) {
+  async getUsers() {
     try {
-      if (resetCache) {
-        removeValueFromMemoryCache('cached-users');
-      }
-
       const users = await fetchCachedData('cached-users', async () => UserModel.find({}).exec());
 
       return users ?? [];
@@ -60,7 +56,7 @@ export class MongoService {
   async setUser(username: string, role: string) {
     try {
       const userConversation =
-        (await this.getUserConversation(username, true)) ??
+        (await this.getUserConversation(username)) ??
         new UserConversationModel({ username, messages: [] });
 
       const user = new UserModel({
@@ -71,6 +67,8 @@ export class MongoService {
 
       await userConversation.save();
       await user.save();
+
+      removeValueFromMemoryCache('cached-users');
     } catch (error) {
       logger.error(`mongoService::setUser::${error.message}`);
     }
@@ -78,7 +76,7 @@ export class MongoService {
 
   async setMultipleUsers(users: { username: string; role: string }[]) {
     try {
-      const existingUsers: UserModelType[] = await this.getUsers(true);
+      const existingUsers: UserModelType[] = await this.getUsers();
 
       const newUsers = users.filter(
         (user) => !existingUsers.find((existingUser) => existingUser.username === user.username),
@@ -105,6 +103,7 @@ export class MongoService {
       );
 
       setValueToMemoryCache(`cached-user-${username}`, JSON.stringify(updatedUser));
+      removeValueFromMemoryCache('cached-users');
 
       return updatedUser;
     } catch (error) {
@@ -117,17 +116,14 @@ export class MongoService {
       await UserModel.findOneAndDelete({ username });
 
       removeValueFromMemoryCache(`cached-user-${username}`);
+      removeValueFromMemoryCache('cached-users');
     } catch (error) {
       logger.error(`mongoService::deleteUser::${error.message}`);
     }
   }
 
-  async getAllUserSessions(resetCache = false) {
+  async getAllUserSessions() {
     try {
-      if (resetCache) {
-        removeValueFromMemoryCache('cached-all-session-messages');
-      }
-
       const allUserSessions = await fetchCachedData('cached-all-session-messages', async () =>
         SessionModel.find({}).exec(),
       );
@@ -159,17 +155,14 @@ export class MongoService {
       await SessionModel.findOneAndDelete({ 'value.username': username });
 
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
+      removeValueFromMemoryCache('cached-all-session-messages');
     } catch (error) {
       logger.error(`mongoService::deleteUserSessionMessages::${error.message}`);
     }
   }
 
-  async getAllUserConversations(resetCache = false) {
+  async getAllUserConversations() {
     try {
-      if (resetCache) {
-        removeValueFromMemoryCache(`cached-user-conversations`);
-      }
-
       const userConversations = await fetchCachedData('cached-user-conversations', async () =>
         UserConversationModel.find({}).exec(),
       );
@@ -180,12 +173,8 @@ export class MongoService {
     }
   }
 
-  async getUserConversation(username: string, resetCache = false) {
+  async getUserConversation(username: string) {
     try {
-      if (resetCache) {
-        removeValueFromMemoryCache(`cached-user-conversation-${username}`);
-      }
-
       const userConversation = await fetchCachedData(
         `cached-user-conversation-${username}`,
         async () => UserConversationModel.findOne({ username }),
@@ -221,6 +210,7 @@ export class MongoService {
       await UserConversationModel.findOneAndDelete({ username });
 
       removeValueFromMemoryCache(`cached-user-conversation-${username}`);
+      removeValueFromMemoryCache('cached-user-conversations');
     } catch (error) {
       logger.error(`mongoService::deleteUserConversation::${error.message}`);
     }

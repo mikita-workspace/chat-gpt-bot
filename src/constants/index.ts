@@ -40,7 +40,7 @@ export const BotCommandsWithDescription = [
 ];
 
 // Node cache
-export const TTL_DEFAULT = 60;
+export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
 
 // Privileges
 export enum UserRoles {

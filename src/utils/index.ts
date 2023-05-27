@@ -49,8 +49,6 @@ export const uniqBy = <T>(arr: T[], key: keyof T): T[] =>
     ),
   );
 
-export const isDocumentsTheSame = (a: object, b: object) => JSON.stringify(a) === JSON.stringify(b);
-
 export const parseTimestampUTC = (timestamp: number) => {
   const date = new Date(timestamp);
 

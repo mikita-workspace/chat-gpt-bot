@@ -21,7 +21,6 @@ error-message-auth-admin = Your account ({ $username }) does not have permission
 error-message-auth-moderator = Your account ({ $username }) does not have permission to use Moderator-panel. Please contact administrator.
 
 # Common buttons
-common-button-refresh = 🔄 Refresh
 common-button-go-to-chat = Go to chat
 common-button-go-back = ⬅️ Go back
 common-button-cancel = Cancel

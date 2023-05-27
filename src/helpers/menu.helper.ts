@@ -7,7 +7,7 @@ import {
   SessionModelType,
   UserModelType,
 } from '@bot/types';
-import { capitalize, isDocumentsTheSame } from '@bot/utils';
+import { capitalize } from '@bot/utils';
 import { MenuRange } from '@grammyjs/menu';
 
 export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, callback) => {
@@ -33,7 +33,7 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
   const currentUsername = String(ctx?.from?.username);
   const currentUserRole = (await mongo.getUser(String(ctx?.from?.username))).role;
 
-  let users: UserModelType[] = await mongo.getUsers();
+  const users: UserModelType[] = await mongo.getUsers();
 
   users
     .filter((user) => user.username !== currentUsername)
@@ -49,22 +49,13 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
       range
         .text(
           { text: `[ ${username} ] ${capitalize(role)}, ${status}`, payload: username },
-          async () => callback(ctx, username),
+          async () => {
+            await callback(ctx, username);
+            ctx.menu.update();
+          },
         )
         .row();
     });
-
-  range.text(
-    () => ctx.t('common-button-refresh'),
-    async () => {
-      const newUsers = await mongo.getUsers(true);
-
-      if (!isDocumentsTheSame(users, newUsers)) {
-        users = newUsers;
-        ctx.menu.update();
-      }
-    },
-  );
 
   return range;
 };
@@ -77,7 +68,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
   const range = new MenuRange<BotContextType>();
   const currentUsername = String(ctx?.from?.username);
 
-  let userSessions: SessionModelType[] = await mongo.getAllUserSessions();
+  const userSessions: SessionModelType[] = await mongo.getAllUserSessions();
 
   userSessions
     .filter((session) => showCurrentUsername || session.value.username !== currentUsername)
@@ -86,18 +77,6 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
 
       range.text(username, async () => callback(ctx, username)).row();
     });
-
-  range.text(
-    () => ctx.t('common-button-refresh'),
-    async () => {
-      const newUserSessions = await mongo.getAllUserSessions(true);
-
-      if (!isDocumentsTheSame(userSessions, newUserSessions)) {
-        userSessions = newUserSessions;
-        ctx.menu.update();
-      }
-    },
-  );
 
   return range;
 };
