@@ -40,7 +40,9 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
     .filter(
       (user) =>
         currentUserRole !== UserRoles.MODERATOR ||
-        ![UserRoles.MODERATOR, UserRoles.ADMIN].includes(user.role as UserRoles),
+        ![UserRoles.MODERATOR, UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(
+          user.role as UserRoles,
+        ),
     )
     .forEach((user) => {
       const username = user.username;
@@ -67,6 +69,7 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
 
   const userSessions: SessionModelType[] = await mongo.getAllUserSessions();
 
+  // TODO: Hide admin and super admin sessions if the current user is moderator
   userSessions
     .filter((session) => showCurrentUsername || session.value.username !== currentUsername)
     .forEach((session) => {

@@ -6,6 +6,7 @@ import {
   BotContextType,
   DynamicUserRolesMenuCallbackType,
   DynamicUsersMenuCallbackType,
+  UserModelType,
 } from '@bot/types';
 import { removeFile } from '@bot/utils';
 
@@ -21,11 +22,18 @@ export const addMultipleUsersCallback = async (ctx: BotContextType) => {
 
 export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
-    const users = await mongo.getUsers();
-    const currentUserRole = await mongo.getUser(String(ctx?.from?.username));
+    const users: UserModelType[] = await mongo.getUsers();
+    const currentUserRole = (await mongo.getUser(String(ctx?.from?.username))).role;
 
     if (users) {
-      const { filePath, filePathForReply } = (await csv.createUsersCsv(users)) ?? {};
+      const { filePath, filePathForReply } =
+        (await csv.createUsersCsv(
+          users.filter(
+            (user) =>
+              currentUserRole !== UserRoles.MODERATOR ||
+              ![UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(user.role as UserRoles),
+          ),
+        )) ?? {};
 
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
