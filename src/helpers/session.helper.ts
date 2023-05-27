@@ -1,9 +1,9 @@
 import { SessionCsvIds } from '@bot/constants';
 import { SessionModelType, SessionType } from '@bot/types';
 
-export const createInitialSessionData = (): SessionType['custom'] => ({
-  username: null,
+export const createInitialCustomSessionData = (): SessionType['custom'] => ({
   messages: [],
+  username: null,
 });
 
 export const mapUserSessionMessages = (userSession: SessionModelType) =>

@@ -10,10 +10,16 @@ import { BotContextType } from '@bot/types';
 import { Menu } from '@grammyjs/menu';
 
 export const adminMainMenu = new Menu<BotContextType>(AdminMenu.INITIAL)
-  .submenu((ctx) => ctx.t('admin-menu-button-sessions'), SessionsMenu.INITIAL)
-  .submenu((ctx) => ctx.t('admin-menu-button-conversations'), ConversationsMenu.INITIAL)
+  .submenu(
+    (ctx) => ctx.t('admin-menu-button-sessions'),
+    `${SessionsMenu.INITIAL}-${AdminMenu.NAME}`,
+  )
+  .submenu(
+    (ctx) => ctx.t('admin-menu-button-conversations'),
+    `${ConversationsMenu.INITIAL}-${AdminMenu.NAME}`,
+  )
   .row()
-  .submenu((ctx) => ctx.t('admin-menu-button-users'), UsersMenu.INITIAL)
+  .submenu((ctx) => ctx.t('admin-menu-button-users'), `${UsersMenu.INITIAL}-${AdminMenu.NAME}`)
   .text(
     (ctx) => ctx.t('admin-menu-button-logs'),
     (ctx) => downloadLogsCallback(ctx),

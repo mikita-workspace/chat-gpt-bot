@@ -1,3 +1,4 @@
+import { AdminMenu, ModeratorMenu } from '@bot/constants';
 import {
   adminMainMenu,
   blockUnblockUserMenu,
@@ -8,6 +9,7 @@ import {
   deleteUserSessionMenu,
   getUserConversationMenu,
   getUserSessionMenu,
+  moderatorMainMenu,
   selectNewUserRoleMenu,
   sessionsMenu,
   usersMenu,
@@ -29,8 +31,13 @@ const composer = new Composer<BotContextType>();
   selectNewUserRoleMenu,
   sessionsMenu,
   usersMenu,
-].forEach((subMenu) => adminMainMenu.register(subMenu));
+].forEach((subMenu) => adminMainMenu.register(subMenu(AdminMenu.NAME)));
+
+[blockUnblockUserMenu, getUserSessionMenu, sessionsMenu, usersMenu].forEach((subMenu) =>
+  moderatorMainMenu.register(subMenu(ModeratorMenu.NAME)),
+);
 
 composer.use(adminMainMenu);
+composer.use(moderatorMainMenu);
 
 export const menuComposer = (): Middleware<BotContextType> => composer;

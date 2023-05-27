@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { UserRoles } from '@bot/constants';
+import { BotCommands, UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
@@ -14,8 +14,14 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
   const user = await mongo.getUser(username);
 
   if (user?.enabled) {
-    if (action === '/admin' && user?.role !== UserRoles.ADMIN) {
+    if (action === `/${BotCommands.ADMIN}` && user?.role !== UserRoles.ADMIN) {
       await ctx.reply(ctx.t('error-message-auth-admin'));
+
+      return;
+    }
+
+    if (action === `/${BotCommands.MODERATOR}` && user?.role !== UserRoles.MODERATOR) {
+      await ctx.reply(ctx.t('error-message-auth-moderator'));
 
       return;
     }

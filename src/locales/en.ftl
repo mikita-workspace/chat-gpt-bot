@@ -5,6 +5,7 @@ initial-message-about = Release: { $releaseVersion }
 initial-message-description = Hi there 👋🏻, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on the { $model } architecture and possess extensive knowledge in various areas such as science, technology, arts, sports, health, and more. I can answer users' questions, help solve problems, and also engage in casual conversation on any topic. My interface allows for both text and voice input.
 
 # Commands
+command-profile = Profile
 command-admin = Admin-panel
 command-moderator = Moderator-panel
 command-image = Generate an image via DALL·E 2
@@ -36,6 +37,15 @@ admin-menu-button-users = Users
 admin-menu-button-logs = Logs
 admin-menu-button-csv-reader = CSV Reader
 admin-menu-button-go-to-menu = Go to Admin-panel
+
+# Moderator panel
+moderator-panel-title = Moderator-panel of { $botName }.
+
+# Moderator menu buttons
+moderator-menu-button-sessions = Sessions
+moderator-menu-button-users = Users
+moderator-menu-button-csv-reader = CSV Reader
+moderator-menu-button-go-to-menu = Go to Moderator-panel
 
 # Sessions menu buttons
 sessions-menu-button-get = Get session
@@ -81,3 +91,6 @@ user-role-user = User
 # User statuses
 user-status-blocked = Blocked
 user-status-available = Available
+
+# Info messages
+info-message-moderator-panel-for-super-admin = Note: Please go to the Admin-panel.

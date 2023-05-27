@@ -18,7 +18,10 @@ export const getUserConversationMessagesCallback: DynamicUsersMenuCallbackType =
       );
 
       const { filePath, filePathForReply } =
-        (await csv.createSessionCsv({ key: userSession.key, value: { username, messages } })) ?? {};
+        (await csv.createSessionCsv(
+          { key: userSession.key, value: { username, messages } },
+          true,
+        )) ?? {};
 
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();

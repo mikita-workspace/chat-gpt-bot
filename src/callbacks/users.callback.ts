@@ -1,5 +1,6 @@
+import { UserRoles } from '@bot/constants';
 import { addMultipleUsersConversation, addUserConversation } from '@bot/conversations';
-import { inlineGoToAdminMenu } from '@bot/keyboards';
+import { inlineGoToAdminMenu, inlineGoToModeratorMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import {
   BotContextType,
@@ -21,6 +22,7 @@ export const addMultipleUsersCallback = async (ctx: BotContextType) => {
 export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
     const users = await mongo.getUsers();
+    const currentUserRole = await mongo.getUser(String(ctx?.from?.username));
 
     if (users) {
       const { filePath, filePathForReply } = (await csv.createUsersCsv(users)) ?? {};
@@ -28,7 +30,10 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
         await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: inlineGoToAdminMenu(ctx),
+          reply_markup:
+            currentUserRole === UserRoles.MODERATOR
+              ? inlineGoToModeratorMenu(ctx)
+              : inlineGoToAdminMenu(ctx),
         });
 
         await removeFile(filePath);
@@ -71,9 +76,12 @@ export const blockUnblockUserCallback: DynamicUsersMenuCallbackType = async (ctx
     const user = await mongo.getUser(username);
     const updatedUser = await mongo.updateUser(username, { enabled: !user.enabled });
 
-    const answer = ctx.t(`users-menu-message-${!updatedUser ? ' block' : 'unblock'}-success`, {
-      username,
-    });
+    const answer = ctx.t(
+      `users-menu-message-${!updatedUser?.enabled ? 'block' : 'unblock'}-success`,
+      {
+        username,
+      },
+    );
 
     await ctx.answerCallbackQuery(answer);
   } catch (error) {

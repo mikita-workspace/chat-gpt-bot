@@ -1,4 +1,4 @@
-import { createInitialSessionData } from '@bot/helpers';
+import { createInitialCustomSessionData } from '@bot/helpers';
 import { mongo } from '@bot/services';
 import { BotContextType } from '@bot/types';
 import { Composer, Middleware, session } from 'grammy';
@@ -10,7 +10,7 @@ composer.use(
     type: 'multi',
     custom: {
       storage: mongo.sessionAdapter,
-      initial: createInitialSessionData,
+      initial: createInitialCustomSessionData,
     },
     conversation: {},
   }),
