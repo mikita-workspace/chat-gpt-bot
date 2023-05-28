@@ -1,5 +1,6 @@
 export * from './about/about.command';
 export * from './admin/admin.command';
+export * from './clear/clear.command';
 export * from './description/description.command';
 export * from './moderator/moderator.command';
 export * from './new/new.command';

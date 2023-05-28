@@ -31,8 +31,8 @@ export enum BotCommands {
 export const botName = 'ChatGPT | Smart Bot';
 
 export const BotCommandsWithDescription = [
-  // TODO: will be implemented here - https://github.com/mikita-kandratsyeu/chat-gpt-bot/issues/22
-  // { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommands.CLEAR, i18nKey: 'command-clear' },
   { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
   { command: BotCommands.MODERATOR, i18nKey: 'command-moderator' },
   { command: BotCommands.DESCRIPTION, i18nKey: 'command-description' },
@@ -146,6 +146,10 @@ export enum UsersMenu {
 }
 
 // Menu actions
+export enum CommonActions {
+  GO_TO_CHAT = 'go-to-chat-action',
+}
+
 export enum AdminMenuActions {
   GO_TO_MENU = 'go-to-admin-menu-action',
 }

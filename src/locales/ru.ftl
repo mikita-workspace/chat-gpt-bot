@@ -93,3 +93,4 @@ user-status-available = Доступен
 
 # Info messages
 info-message-moderator-panel-for-super-admin = Примечание: Пожалуйста, перейдите в Админ-панель.
+info-message-clear-current-session = Текущая сессия для { $username } была очищена.

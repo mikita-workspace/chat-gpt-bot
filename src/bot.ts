@@ -1,6 +1,7 @@
 import {
   aboutCommand,
   adminCommand,
+  clearCommand,
   descriptionCommand,
   moderatorCommand,
   newCommand,
@@ -51,6 +52,7 @@ export const createBot = () => {
   [
     aboutCommand,
     adminCommand,
+    clearCommand,
     descriptionCommand,
     moderatorCommand,
     newCommand,
