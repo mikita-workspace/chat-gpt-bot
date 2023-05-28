@@ -3,7 +3,12 @@ import { UserRoles } from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
 import { SessionMessagesType, SessionType, UserModelType } from '@bot/types';
-import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
+import {
+  fetchCachedData,
+  removeValueFromMemoryCache,
+  setValueToMemoryCache,
+  uniqBy,
+} from '@bot/utils';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';
 
@@ -178,7 +183,7 @@ export class MongoService {
     try {
       const userConversation = await fetchCachedData(
         `cached-user-conversation-${username}`,
-        async () => UserConversationModel.findOne({ username }),
+        async () => UserConversationModel.findOne({ username }).exec(),
       );
 
       return userConversation;
@@ -189,9 +194,16 @@ export class MongoService {
 
   async updateUserConversation(username: string, messages: SessionMessagesType) {
     try {
+      const userConversation = await this.getUserConversation(username);
+
       const updatedUserConversation = await UserConversationModel.findOneAndUpdate(
         { username },
-        { messages },
+        {
+          messages: uniqBy(
+            [...(messages ?? []), ...(userConversation.messages ?? [])],
+            'timestamp',
+          ),
+        },
         { new: true },
       );
 
