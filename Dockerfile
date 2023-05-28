@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 80
 
-CMD ["yarn", "start"]
+CMD yarn build && yarn start
