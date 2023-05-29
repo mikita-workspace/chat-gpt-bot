@@ -5,38 +5,42 @@ import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   try {
-    const username = String(ctx?.from?.username);
+    const username = ctx?.from?.username;
     const action = String(ctx?.update?.message?.text);
 
-    logger.defaultMeta = { username };
+    if (username) {
+      logger.defaultMeta = { username };
 
-    if (username === config.SUPER_ADMIN_USERNAME) {
-      return await next();
-    }
-
-    const user = await mongo.getUser(username);
-
-    if (user?.enabled) {
-      if (action === `/${BotCommands.ADMIN}` && user?.role !== UserRoles.ADMIN) {
-        await ctx.reply(ctx.t('error-message-auth-admin'));
-
-        return;
+      if (username === config.SUPER_ADMIN_USERNAME) {
+        return await next();
       }
 
-      if (action === `/${BotCommands.MODERATOR}` && user?.role !== UserRoles.MODERATOR) {
-        await ctx.reply(ctx.t('error-message-auth-moderator'));
+      const user = await mongo.getUser(username);
 
-        return;
+      if (user?.enabled) {
+        if (action === `/${BotCommands.ADMIN}` && user?.role !== UserRoles.ADMIN) {
+          await ctx.reply(ctx.t('error-message-auth-admin'));
+
+          return;
+        }
+
+        if (action === `/${BotCommands.MODERATOR}` && user?.role !== UserRoles.MODERATOR) {
+          await ctx.reply(ctx.t('error-message-auth-moderator'));
+
+          return;
+        }
+
+        return await next();
       }
-
-      return await next();
     }
 
-    await ctx.reply(ctx.t('error-message-auth'));
+    await ctx.reply(ctx.t(`error-message-auth${!username ? '-empty' : ''}`));
+
+    return;
 
     return;
   } catch (error) {
-    logger.error(error.description);
+    logger.error(`middleware::auth::[${error.error_code}]::${error.description}`);
 
     return;
   }
