@@ -35,7 +35,9 @@ export const getUserConversationMessagesCallback: DynamicUsersMenuCallbackType =
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::sessions::getUserConversationMessagesCallback::${JSON.stringify(error)}`);
+    logger.error(
+      `callbacks::sessions::getUserConversationMessagesCallback::${JSON.stringify(error)}`,
+    );
   }
 };
 
@@ -53,6 +55,8 @@ export const deleteUserConversationMessagesCallback: DynamicUsersMenuCallbackTyp
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::sessions::deleteUserConversationMessagesCallback::${JSON.stringify(error)}`);
+    logger.error(
+      `callbacks::sessions::deleteUserConversationMessagesCallback::${JSON.stringify(error)}`,
+    );
   }
 };
