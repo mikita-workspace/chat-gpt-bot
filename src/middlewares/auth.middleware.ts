@@ -40,7 +40,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
 
     return;
   } catch (error) {
-    logger.error(`middleware::auth::[${error.error_code}]::${error.description}`);
+    logger.error(`middleware::auth::${JSON.stringify(error)}`);
 
     return;
   }
