@@ -1,6 +1,6 @@
 import { createBot } from '@bot/bot';
 import { config } from '@bot/config';
-import { botName } from '@bot/constants';
+import { botName, WEBHOOK_TIMEOUT } from '@bot/constants';
 import { run } from '@grammyjs/runner';
 import express from 'express';
 import { webhookCallback } from 'grammy';
@@ -16,7 +16,7 @@ const botInitialize = async () => {
     const app = express();
 
     app.use(express.json());
-    app.use(webhookCallback(bot, 'express'));
+    app.use(webhookCallback(bot, 'express', 'return', WEBHOOK_TIMEOUT));
 
     const PORT = process.env.PORT || 3000;
 
