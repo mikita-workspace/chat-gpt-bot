@@ -32,7 +32,7 @@ export class MongoService {
 
       return loggerInfo ?? [];
     } catch (error) {
-      logger.error(`mongoService::getLoggerInfo::${error.message}`);
+      logger.error(`mongoService::getLoggerInfo::${JSON.stringify(error)}`);
     }
   }
 
@@ -42,7 +42,7 @@ export class MongoService {
 
       return users ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUsers::${error.message}`);
+      logger.error(`mongoService::getAllUsers::${JSON.stringify(error)}`);
     }
   }
 
@@ -54,7 +54,7 @@ export class MongoService {
 
       return user;
     } catch (error) {
-      logger.error(`mongoService::getUser::${error.message}`);
+      logger.error(`mongoService::getUser::${JSON.stringify(error)}`);
     }
   }
 
@@ -76,7 +76,7 @@ export class MongoService {
       setValueToMemoryCache(`cached-user-${username}`, JSON.stringify(user));
       removeValueFromMemoryCache('cached-users');
     } catch (error) {
-      logger.error(`mongoService::setUser::${error.message}`);
+      logger.error(`mongoService::setUser::${JSON.stringify(error)}`);
     }
   }
 
@@ -96,7 +96,7 @@ export class MongoService {
 
       return newUsers;
     } catch (error) {
-      logger.error(`mongoService::setMultipleUsers::${error.message}`);
+      logger.error(`mongoService::setMultipleUsers::${JSON.stringify(error)}`);
     }
   }
 
@@ -113,7 +113,7 @@ export class MongoService {
 
       return updatedUser;
     } catch (error) {
-      logger.error(`mongoService::updateUser::${error.message}`);
+      logger.error(`mongoService::updateUser::${JSON.stringify(error)}`);
     }
   }
 
@@ -124,7 +124,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-user-${username}`);
       removeValueFromMemoryCache('cached-users');
     } catch (error) {
-      logger.error(`mongoService::deleteUser::${error.message}`);
+      logger.error(`mongoService::deleteUser::${JSON.stringify(error)}`);
     }
   }
 
@@ -136,7 +136,7 @@ export class MongoService {
 
       return allUserSessions ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUserSessionMessages::${error.message}`);
+      logger.error(`mongoService::getAllUserSessionMessages::${JSON.stringify(error)}`);
     }
   }
 
@@ -152,7 +152,7 @@ export class MongoService {
 
       return userSessionMessages;
     } catch (error) {
-      logger.error(`mongoService::getUserSessionMessages::${error.message}`);
+      logger.error(`mongoService::getUserSessionMessages::${JSON.stringify(error)}`);
     }
   }
 
@@ -163,7 +163,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
       removeValueFromMemoryCache('cached-all-session-messages');
     } catch (error) {
-      logger.error(`mongoService::deleteUserSessionMessages::${error.message}`);
+      logger.error(`mongoService::deleteUserSessionMessages::${JSON.stringify(error)}`);
     }
   }
 
@@ -175,7 +175,7 @@ export class MongoService {
 
       return userConversations ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUserConversations::${error.message}`);
+      logger.error(`mongoService::getAllUserConversations::${JSON.stringify(error)}`);
     }
   }
 
@@ -188,7 +188,7 @@ export class MongoService {
 
       return userConversation;
     } catch (error) {
-      logger.error(`mongoService::getUserConversation::${error.message}`);
+      logger.error(`mongoService::getUserConversation::${JSON.stringify(error)}`);
     }
   }
 
@@ -214,7 +214,7 @@ export class MongoService {
 
       return updatedUserConversation;
     } catch (error) {
-      logger.error(`mongoService::updateUserConversation::${error.message}`);
+      logger.error(`mongoService::updateUserConversation::${JSON.stringify(error)}`);
     }
   }
 
@@ -225,7 +225,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-user-conversation-${username}`);
       removeValueFromMemoryCache('cached-user-conversations');
     } catch (error) {
-      logger.error(`mongoService::deleteUserConversation::${error.message}`);
+      logger.error(`mongoService::deleteUserConversation::${JSON.stringify(error)}`);
     }
   }
 }

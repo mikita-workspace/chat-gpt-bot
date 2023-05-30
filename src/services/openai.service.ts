@@ -32,7 +32,7 @@ class OpenAIService {
           `openAIService::chat::[${error.response.status}]::${JSON.stringify(error.response.data)}`,
         );
       } else {
-        logger.error(`openAIService::chat::${error.message}`);
+        logger.error(`openAIService::chat::${JSON.stringify(error)}`);
       }
     }
   }
@@ -56,7 +56,7 @@ class OpenAIService {
           )}`,
         );
       } else {
-        logger.error(`openAIService::transcription::${error.message}`);
+        logger.error(`openAIService::transcription::${JSON.stringify(error)}`);
       }
     }
   }

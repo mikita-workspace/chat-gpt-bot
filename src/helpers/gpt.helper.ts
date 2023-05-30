@@ -35,7 +35,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
 
     return response.content;
   } catch (error) {
-    logger.error(`helper::getGPTMessage::${error.message}`);
+    logger.error(`helper::getGPTMessage::${JSON.stringify(error)}`);
   }
 };
 

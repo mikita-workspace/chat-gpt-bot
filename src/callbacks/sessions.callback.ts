@@ -30,7 +30,7 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::sessions::getUserSessionMessagesCallback::${error.message}`);
+    logger.error(`callbacks::sessions::getUserSessionMessagesCallback::${JSON.stringify(error)}`);
   }
 };
 
@@ -48,6 +48,8 @@ export const deleteUserSessionMessagesCallback: DynamicUsersMenuCallbackType = a
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::sessions::deleteUserSessionMessagesCallback::${error.message}`);
+    logger.error(
+      `callbacks::sessions::deleteUserSessionMessagesCallback::${JSON.stringify(error)}`,
+    );
   }
 };

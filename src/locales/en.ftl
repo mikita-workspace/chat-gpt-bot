@@ -17,6 +17,7 @@ command-about = About developer
 error-message-common = Something went wrong. Try again!
 error-message-common-try-again = Try again
 error-message-auth = Your account ({ $username }) does not have permission to use this bot. Please contact administrator.
+error-message-auth-empty = Your account does not have permission to use this bot. Please contact administrator.
 error-message-auth-admin = Your account ({ $username }) does not have permission to use Admin-panel. Please contact administrator.
 error-message-auth-moderator = Your account ({ $username }) does not have permission to use Moderator-panel. Please contact administrator.
 

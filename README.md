@@ -1,4 +1,4 @@
-# [ChatGPT | Smart Bot 🤖](https://t.me/smart_gpt_voice_bot)
+# [ChatGPT | Smart Bot](https://t.me/smart_gpt_voice_bot)
 
 [![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/mikita-kandratsyeu/chat-gpt-bot/ci.yml?branch=main&style=for-the-badge)](https://github.com/mikita-kandratsyeu/chat-gpt-bot/actions)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mikita-kandratsyeu/chat-gpt-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/chat-gpt-bot/commits/main)
@@ -9,6 +9,7 @@
 Bot based on the `GrammY` and `OpenAI` libraries, providing convenient and fast access to the cutting-edge `gpt-3.5-turbo` technology for text generation, answering questions, and solving other tasks. Expand your natural language processing capabilities and stay at the forefront of developments in this field using this bot.
 
 ## Getting Started
+> **Note**: The production build uses a [Webhook](https://core.telegram.org/bots/webhooks).
 
 ```bash
 docker-compose build

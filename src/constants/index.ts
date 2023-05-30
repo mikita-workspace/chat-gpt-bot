@@ -13,6 +13,7 @@ export const MAX_CONTEXT_GPT_TOKENS = 4096;
 
 // Telegram API
 export const TELEGRAM_API = 'https://api.telegram.org';
+export const WEBHOOK_TIMEOUT = 60_000;
 
 // Bot config
 export const supportLanguageCodes = ['en', 'ru'];
