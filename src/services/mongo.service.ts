@@ -32,7 +32,7 @@ export class MongoService {
 
       return loggerInfo ?? [];
     } catch (error) {
-      logger.error(`mongoService::getLoggerInfo::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getLoggerInfo::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -42,7 +42,7 @@ export class MongoService {
 
       return users ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUsers::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getAllUsers::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -54,29 +54,42 @@ export class MongoService {
 
       return user;
     } catch (error) {
-      logger.error(`mongoService::getUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getUser::${JSON.stringify(error.message)}`);
     }
   }
 
   async setUser(username: string, role: string) {
     try {
-      const userConversation =
-        (await this.getUserConversation(username)) ??
-        new UserConversationModel({ username, messages: [] });
+      const existUserConversation = await this.getUserConversation(username);
 
       const user = new UserModel({
-        conversation: userConversation._id,
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
         username,
       });
 
-      await userConversation.save();
+      console.log(existUserConversation);
+
+      if (existUserConversation) {
+        user.set('conversation', existUserConversation._id);
+      } else {
+        const userConversation = new UserConversationModel({ username, messages: [] });
+
+        user.set('conversation', userConversation._id);
+
+        await userConversation.save();
+
+        setValueToMemoryCache(
+          `cached-user-conversation-${username}`,
+          JSON.stringify(userConversation),
+        );
+      }
+
       await user.save();
 
       setValueToMemoryCache(`cached-user-${username}`, JSON.stringify(user));
       removeValueFromMemoryCache('cached-users');
     } catch (error) {
-      logger.error(`mongoService::setUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::setUser::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -96,7 +109,7 @@ export class MongoService {
 
       return newUsers;
     } catch (error) {
-      logger.error(`mongoService::setMultipleUsers::${JSON.stringify(error)}`);
+      logger.error(`mongoService::setMultipleUsers::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -113,7 +126,7 @@ export class MongoService {
 
       return updatedUser;
     } catch (error) {
-      logger.error(`mongoService::updateUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::updateUser::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -124,7 +137,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-user-${username}`);
       removeValueFromMemoryCache('cached-users');
     } catch (error) {
-      logger.error(`mongoService::deleteUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::deleteUser::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -136,7 +149,7 @@ export class MongoService {
 
       return allUserSessions ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUserSessionMessages::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getAllUserSessionMessages::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -152,7 +165,7 @@ export class MongoService {
 
       return userSessionMessages;
     } catch (error) {
-      logger.error(`mongoService::getUserSessionMessages::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getUserSessionMessages::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -163,7 +176,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
       removeValueFromMemoryCache('cached-all-session-messages');
     } catch (error) {
-      logger.error(`mongoService::deleteUserSessionMessages::${JSON.stringify(error)}`);
+      logger.error(`mongoService::deleteUserSessionMessages::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -175,7 +188,7 @@ export class MongoService {
 
       return userConversations ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUserConversations::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getAllUserConversations::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -188,7 +201,7 @@ export class MongoService {
 
       return userConversation;
     } catch (error) {
-      logger.error(`mongoService::getUserConversation::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getUserConversation::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -214,7 +227,7 @@ export class MongoService {
 
       return updatedUserConversation;
     } catch (error) {
-      logger.error(`mongoService::updateUserConversation::${JSON.stringify(error)}`);
+      logger.error(`mongoService::updateUserConversation::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -225,7 +238,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-user-conversation-${username}`);
       removeValueFromMemoryCache('cached-user-conversations');
     } catch (error) {
-      logger.error(`mongoService::deleteUserConversation::${JSON.stringify(error)}`);
+      logger.error(`mongoService::deleteUserConversation::${JSON.stringify(error.message)}`);
     }
   }
 }

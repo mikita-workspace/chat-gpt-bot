@@ -84,6 +84,7 @@ users-menu-message-multiple-add-success = Users [ { $users } ] were successfully
 users-menu-message-multiple-add-error = Users have already been added. Try again!
 
 # User roles
+user-role-super-admin = Super Admin
 user-role-admin = Admin
 user-role-moderator = Moderator
 user-role-user = User
@@ -95,3 +96,10 @@ user-status-available = Available
 # Info messages
 info-message-moderator-panel-for-super-admin = Note: Please go to the Admin-panel.
 info-message-clear-current-session = The current session for the { $username } has been cleared.
+
+# Profile
+profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
+profile-user-available-messages-amount = Available number of GPT tokens: { $amount }
+profile-user-available-images-amount = Available number of GPT images: { $amount }
+profile-user-role = Your role: { $role }
+profile-user-date-register = Date of registration: { $date }

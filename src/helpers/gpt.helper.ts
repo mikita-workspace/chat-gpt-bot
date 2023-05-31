@@ -68,3 +68,6 @@ export const splitSessionMessagesByTokenLimit = (
 
   return [headMessages.reverse(), tailMessages.reverse()];
 };
+
+export const getAmountOfTokensForSessionMessages = (messages: SessionMessagesType) =>
+  encode(messages.map((msg) => msg.gptFormat.content).join('')).length;
