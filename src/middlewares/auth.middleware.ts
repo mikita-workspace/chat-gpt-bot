@@ -34,9 +34,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
       }
     }
 
-    await ctx.reply(ctx.t(`error-message-auth${!username ? '-empty' : ''}`));
-
-    return;
+    await ctx.reply(ctx.t('error-message-auth-empty'));
 
     return;
   } catch (error) {
