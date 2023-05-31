@@ -24,7 +24,6 @@ export enum BotCommands {
   CLEAR = 'clear',
   DESCRIPTION = 'description',
   MODERATOR = 'moderator',
-  NEW = 'new',
   PROFILE = 'profile',
   START = 'start',
 }

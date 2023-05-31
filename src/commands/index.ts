@@ -3,7 +3,6 @@ export * from './admin/admin.command';
 export * from './clear/clear.command';
 export * from './description/description.command';
 export * from './moderator/moderator.command';
-export * from './new/new.command';
 export * from './profile/profile.command';
 export * from './start/start.command';
 export * from './text/text.command';
