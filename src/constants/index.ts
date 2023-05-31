@@ -45,7 +45,7 @@ export const PER_DAY_GPT_TOKEN_LIMIT = 4096;
 export const PER_DAY_GPT_IMAGE_LIMIT = 10;
 
 // Node cache
-export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 600 : 600;
+export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
 
 // Privileges
 export enum UserRoles {
