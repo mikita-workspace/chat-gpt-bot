@@ -30,7 +30,9 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::sessions::getUserSessionMessagesCallback::${JSON.stringify(error.message)}`);
+    logger.error(
+      `callbacks::sessions::getUserSessionMessagesCallback::${JSON.stringify(error.message)}`,
+    );
   }
 };
 

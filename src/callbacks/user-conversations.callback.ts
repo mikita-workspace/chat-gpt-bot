@@ -56,7 +56,9 @@ export const deleteUserConversationMessagesCallback: DynamicUsersMenuCallbackTyp
     await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(
-      `callbacks::sessions::deleteUserConversationMessagesCallback::${JSON.stringify(error.message)}`,
+      `callbacks::sessions::deleteUserConversationMessagesCallback::${JSON.stringify(
+        error.message,
+      )}`,
     );
   }
 };
