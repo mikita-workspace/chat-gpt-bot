@@ -50,7 +50,7 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::users::getAllUsersCallback::${JSON.stringify(error)}`);
+    logger.error(`callbacks::users::getAllUsersCallback::${JSON.stringify(error.message)}`);
   }
 };
 
@@ -75,7 +75,7 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::users::changeUserRoleCallback::${JSON.stringify(error)}`);
+    logger.error(`callbacks::users::changeUserRoleCallback::${JSON.stringify(error.message)}`);
   }
 };
 
@@ -96,7 +96,7 @@ export const blockUnblockUserCallback: DynamicUsersMenuCallbackType = async (ctx
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::users::blockUnblockUserCallback::${JSON.stringify(error)}`);
+    logger.error(`callbacks::users::blockUnblockUserCallback::${JSON.stringify(error.message)}`);
   }
 };
 
@@ -111,6 +111,6 @@ export const deleteUserCallback: DynamicUsersMenuCallbackType = async (ctx, user
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::users::deleteUsersCallback::${JSON.stringify(error)}`);
+    logger.error(`callbacks::users::deleteUsersCallback::${JSON.stringify(error.message)}`);
   }
 };

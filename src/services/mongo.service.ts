@@ -2,7 +2,7 @@ import { config } from '@bot/config';
 import { UserRoles } from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
-import { SessionMessagesType, SessionType, UserModelType } from '@bot/types';
+import { SessionMessageType, SessionType, UserModelType } from '@bot/types';
 import {
   fetchCachedData,
   removeValueFromMemoryCache,
@@ -66,8 +66,6 @@ export class MongoService {
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
         username,
       });
-
-      console.log(existUserConversation);
 
       if (existUserConversation) {
         user.set('conversation', existUserConversation._id);
@@ -205,7 +203,7 @@ export class MongoService {
     }
   }
 
-  async updateUserConversation(username: string, messages: SessionMessagesType) {
+  async updateUserConversation(username: string, messages: SessionMessageType[]) {
     try {
       const userConversation = await this.getUserConversation(username);
 

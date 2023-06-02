@@ -36,7 +36,7 @@ export const getUserConversationMessagesCallback: DynamicUsersMenuCallbackType =
     await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(
-      `callbacks::sessions::getUserConversationMessagesCallback::${JSON.stringify(error)}`,
+      `callbacks::sessions::getUserConversationMessagesCallback::${JSON.stringify(error.message)}`,
     );
   }
 };
@@ -56,7 +56,7 @@ export const deleteUserConversationMessagesCallback: DynamicUsersMenuCallbackTyp
     await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(
-      `callbacks::sessions::deleteUserConversationMessagesCallback::${JSON.stringify(error)}`,
+      `callbacks::sessions::deleteUserConversationMessagesCallback::${JSON.stringify(error.message)}`,
     );
   }
 };

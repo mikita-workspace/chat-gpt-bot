@@ -6,6 +6,11 @@ export const createInitialCustomSessionData = (): SessionType['custom'] => ({
   username: null,
 });
 
+export const createInitialLimitSessionData = (): SessionType['limit'] => ({
+  amountOfGptImages: 0,
+  amountOfGptTokens: 0,
+});
+
 export const mapUserSessionMessages = (userSession: SessionModelType) =>
   userSession.value.messages.map(({ timestamp, gptFormat: { content, role } }) => ({
     [SessionCsvIds.KEY]: userSession.key,

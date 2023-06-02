@@ -77,7 +77,7 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`conversations::addUserConversation::${JSON.stringify(error)}`);
+    logger.error(`conversations::addUserConversation::${JSON.stringify(error.message)}`);
 
     return;
   }
@@ -127,7 +127,7 @@ export const addMultipleUsersConversation: ConversationType = async (conversatio
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`conversations::addMultipleUsersConversation::${JSON.stringify(error)}`);
+    logger.error(`conversations::addMultipleUsersConversation::${JSON.stringify(error.message)}`);
 
     return;
   }

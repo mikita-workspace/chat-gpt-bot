@@ -60,7 +60,7 @@ class CsvService {
         filePathForReply: new InputFile(filePath),
       };
     } catch (error) {
-      logger.error(`csvService::csvWriter::${JSON.stringify(error)}`);
+      logger.error(`csvService::csvWriter::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -81,7 +81,7 @@ class CsvService {
         stream.on('finish', () => resolve(csvPath));
       });
     } catch (error) {
-      logger.error(`csvService::createCsv::${JSON.stringify(error)}`);
+      logger.error(`csvService::createCsv::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -99,7 +99,7 @@ class CsvService {
           });
       });
     } catch (error) {
-      logger.error(`csvService::parseCsv::${JSON.stringify(error)}`);
+      logger.error(`csvService::parseCsv::${JSON.stringify(error.message)}`);
     }
   }
 

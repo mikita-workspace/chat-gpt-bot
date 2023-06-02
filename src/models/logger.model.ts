@@ -5,7 +5,7 @@ const schema = new Schema<LoggerModelType>({
   level: { type: String },
   message: { type: String },
   meta: { type: Object },
-  timestamp: { type: String },
+  timestamp: { type: Date },
 });
 
 export const LoggerModel = model('Logger', schema);

@@ -175,6 +175,13 @@
   dependencies:
     abort-controller "^3.0.0"
 
+"@grammyjs/storage-free@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@grammyjs/storage-free/-/storage-free-2.2.0.tgz#bff860bb78c89bdf83493e26c348acedb5649602"
+  integrity sha512-TvgVrDMYKj6DRatg+xE6quGZ+cb95bfMXjEQICUm1sdRTujOEy02z4XRrcf1DS7GOGvf+NiQ4iX3Idq5pckTbQ==
+  dependencies:
+    node-fetch "^2.6.6"
+
 "@grammyjs/storage-mongodb@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@grammyjs/storage-mongodb/-/storage-mongodb-2.2.0.tgz#ff2096187fd86859162af678d1c7a98b2028b800"
@@ -2183,6 +2190,13 @@ node-cache@^5.1.2:
   integrity sha512-t1QzWwnk4sjLWaQAS8CHgOJ+RAfmHpxFWmc36IWTiWHQfs0w5JDMBS1b1ZxQteo0vVVuWJvIUKHDkkeK7vIGCg==
   dependencies:
     clone "2.x"
+
+node-fetch@^2.6.6:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.11.tgz#cde7fc71deef3131ef80a738919f999e6edfff25"
+  integrity sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w==
+  dependencies:
+    whatwg-url "^5.0.0"
 
 node-fetch@^2.6.9:
   version "2.6.9"

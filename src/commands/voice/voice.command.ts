@@ -26,7 +26,7 @@ export const voiceCommand = (bot: BotType) => {
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 
-      logger.error(`controller::voiceController::${JSON.stringify(error)}`);
+      logger.error(`controller::voiceController::${JSON.stringify(error.message)}`);
     }
   });
 };

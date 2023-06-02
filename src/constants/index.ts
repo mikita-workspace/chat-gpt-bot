@@ -42,6 +42,7 @@ export const BotCommandsWithDescription = [
 // Per day limits
 export const PER_DAY_GPT_TOKEN_LIMIT = 4096;
 export const PER_DAY_GPT_IMAGE_LIMIT = 10;
+export const DAY_MS = 60 * 60 * 24 * 1000;
 
 // Node cache
 export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;

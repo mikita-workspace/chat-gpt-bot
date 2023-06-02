@@ -96,6 +96,7 @@ user-status-available = Available
 # Info messages
 info-message-moderator-panel-for-super-admin = Note: Please go to the Admin-panel.
 info-message-clear-current-session = The current session for the { $username } has been cleared.
+info-message-reach-gpt-tokens-limit = You have used all available GPT tokens. Please try again after { $date }.
 
 # Profile
 profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!

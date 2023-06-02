@@ -96,6 +96,7 @@ user-status-available = Доступен
 # Info messages
 info-message-moderator-panel-for-super-admin = Примечание: Пожалуйста, перейдите в Админ-панель.
 info-message-clear-current-session = Текущая сессия для { $username } была очищена.
+info-message-reach-gpt-tokens-limit = Вы использовали все доступные жетоны. Пожалуйста, повторите попытку после { $date }.
 
 # Profile
 profile-user-initial-message = Привет 👋🏻, { $firstName } { $lastName }!

@@ -22,6 +22,6 @@ export const downloadLogsCallback = async (ctx: BotContextType) => {
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`callbacks::logs::downloadLogsCallback::${JSON.stringify(error)}`);
+    logger.error(`callbacks::logs::downloadLogsCallback::${JSON.stringify(error.message)}`);
   }
 };
