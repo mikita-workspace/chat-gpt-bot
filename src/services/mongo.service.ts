@@ -2,7 +2,7 @@ import { config } from '@bot/config';
 import { UserRoles } from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
-import { SessionType, UserModelType } from '@bot/types';
+import { SessionMessageType, SessionType, UserModelType } from '@bot/types';
 import {
   fetchCachedData,
   removeValueFromMemoryCache,
