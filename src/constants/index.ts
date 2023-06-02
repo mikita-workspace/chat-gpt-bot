@@ -84,6 +84,9 @@ export enum SessionCsvIds {
 
 export enum UsersCsvIds {
   ENABLED = 'enabled',
+  EXPIRE = 'expire',
+  GPT_IMAGES = 'gptImages',
+  GPT_TOKENS = 'gptTokens',
   ROLE = 'role',
   TIMESTAMP = 'timestamp',
   USERNAME = 'username',

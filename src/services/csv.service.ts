@@ -31,6 +31,9 @@ class CsvService {
       { id: UsersCsvIds.ROLE, title: UsersCsvIds.ROLE },
       { id: UsersCsvIds.ENABLED, title: UsersCsvIds.ENABLED },
       { id: UsersCsvIds.TIMESTAMP, title: UsersCsvIds.TIMESTAMP },
+      { id: UsersCsvIds.GPT_TOKENS, title: UsersCsvIds.GPT_TOKENS },
+      { id: UsersCsvIds.GPT_IMAGES, title: UsersCsvIds.GPT_IMAGES },
+      { id: UsersCsvIds.EXPIRE, title: UsersCsvIds.EXPIRE },
     ];
     this.sessionHeader = [
       { id: SessionCsvIds.KEY, title: SessionCsvIds.KEY },
