@@ -1,6 +1,14 @@
-import { AdminMenuActions, ModeratorMenuActions, UsersMenuActions } from '@bot/constants';
+import {
+  AdminMenuActions,
+  CommonActions,
+  ModeratorMenuActions,
+  UsersMenuActions,
+} from '@bot/constants';
 import { BotContextType } from '@bot/types';
 import { InlineKeyboard } from 'grammy';
+
+export const inlineGoToChat = (ctx: BotContextType) =>
+  new InlineKeyboard().text(ctx.t('common-button-go-to-chat'), CommonActions.GO_TO_CHAT);
 
 export const inlineGoToAdminMenu = (ctx: BotContextType) =>
   new InlineKeyboard().text(ctx.t('admin-menu-button-go-to-menu'), AdminMenuActions.GO_TO_MENU);

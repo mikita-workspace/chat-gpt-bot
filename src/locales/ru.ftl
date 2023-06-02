@@ -84,6 +84,7 @@ users-menu-message-multiple-add-success = Пользователи [ { $users } 
 users-menu-message-multiple-add-error = Пользователи уже были добавлены. Попробуйте еще раз!
 
 # User roles
+user-role-super-admin = Супер Админ
 user-role-admin = Админ
 user-role-moderator = Модератор
 user-role-user = Пользователь
@@ -94,3 +95,12 @@ user-status-available = Доступен
 
 # Info messages
 info-message-moderator-panel-for-super-admin = Примечание: Пожалуйста, перейдите в Админ-панель.
+info-message-clear-current-session = Текущая сессия для { $username } была очищена.
+info-message-reach-gpt-tokens-limit = Вы использовали все доступные GPT токены. Пожалуйста, повторите попытку после { $date }.
+
+# Profile
+profile-user-initial-message = Привет 👋🏻, { $firstName } { $lastName }!
+profile-user-available-messages-amount = Доступное количество GPT токенов: { $amount }
+profile-user-available-images-amount = Доступное количество GPT картинок: { $amount }
+profile-user-role = Ваша роль: { $role }
+profile-user-date-register = Дата регистрации: { $date }

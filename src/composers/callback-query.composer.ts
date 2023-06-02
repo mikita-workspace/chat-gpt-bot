@@ -1,4 +1,9 @@
-import { AdminMenuActions, ModeratorMenuActions, UsersMenuActions } from '@bot/constants';
+import {
+  AdminMenuActions,
+  CommonActions,
+  ModeratorMenuActions,
+  UsersMenuActions,
+} from '@bot/constants';
 import { addMultipleUsersConversation, addUserConversation } from '@bot/conversations';
 import { adminMainMenu, moderatorMainMenu } from '@bot/menu';
 import { BotContextType } from '@bot/types';
@@ -31,6 +36,11 @@ composer.callbackQuery(UsersMenuActions.ADD_NEW_USER, async (ctx) => {
 composer.callbackQuery(UsersMenuActions.ADD_NEW_MULTIPLE_USERS, async (ctx) => {
   await ctx.deleteMessage();
   await ctx.conversation.enter(addMultipleUsersConversation.name);
+});
+
+composer.callbackQuery(CommonActions.GO_TO_CHAT, async (ctx) => {
+  await ctx.deleteMessage();
+  await ctx.reply(ctx.t('initial-message-start'));
 });
 
 export const callbackQueryComposer = (): Middleware<BotContextType> => composer;

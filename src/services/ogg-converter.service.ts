@@ -27,7 +27,7 @@ class OggConverterService {
           .run();
       });
     } catch (error) {
-      logger.error(`oggConverterService::toMp3::${JSON.stringify(error)}`);
+      logger.error(`oggConverterService::toMp3::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -48,7 +48,7 @@ class OggConverterService {
         stream.on('finish', () => resolve(oggPath));
       });
     } catch (error) {
-      logger.error(`oggConverterService::create::${JSON.stringify(error)}`);
+      logger.error(`oggConverterService::create::${JSON.stringify(error.message)}`);
     }
   }
 }

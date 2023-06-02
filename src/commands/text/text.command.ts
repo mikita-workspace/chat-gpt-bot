@@ -18,7 +18,7 @@ export const textCommand = (bot: BotType) => {
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 
-      logger.error(`controller::textController::${JSON.stringify(error)}`);
+      logger.error(`controller::textController::${JSON.stringify(error.message)}`);
     }
   });
 };

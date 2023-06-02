@@ -24,7 +24,6 @@ export enum BotCommands {
   CLEAR = 'clear',
   DESCRIPTION = 'description',
   MODERATOR = 'moderator',
-  NEW = 'new',
   PROFILE = 'profile',
   START = 'start',
 }
@@ -32,13 +31,20 @@ export enum BotCommands {
 export const botName = 'ChatGPT | Smart Bot';
 
 export const BotCommandsWithDescription = [
-  // TODO: will be implemented here - https://github.com/mikita-kandratsyeu/chat-gpt-bot/issues/22
-  // { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommands.CLEAR, i18nKey: 'command-clear' },
   { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
   { command: BotCommands.MODERATOR, i18nKey: 'command-moderator' },
   { command: BotCommands.DESCRIPTION, i18nKey: 'command-description' },
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
 ];
+
+// Per day limits
+export const PER_DAY_GPT_TOKEN_LIMIT = 4096;
+export const PER_DAY_GPT_IMAGE_LIMIT = 10;
+export const PER_DAY_GPT_TOKEN_LIMIT_ADMIN = 32768;
+export const PER_DAY_GPT_IMAGE_LIMIT_ADMIN = 50;
+export const DAY_MS = 60 * 60 * 24 * 1000;
 
 // Node cache
 export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
@@ -80,6 +86,9 @@ export enum SessionCsvIds {
 
 export enum UsersCsvIds {
   ENABLED = 'enabled',
+  EXPIRE = 'expire',
+  GPT_IMAGES = 'gptImages',
+  GPT_TOKENS = 'gptTokens',
   ROLE = 'role',
   TIMESTAMP = 'timestamp',
   USERNAME = 'username',
@@ -147,6 +156,10 @@ export enum UsersMenu {
 }
 
 // Menu actions
+export enum CommonActions {
+  GO_TO_CHAT = 'go-to-chat-action',
+}
+
 export enum AdminMenuActions {
   GO_TO_MENU = 'go-to-admin-menu-action',
 }

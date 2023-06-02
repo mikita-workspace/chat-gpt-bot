@@ -5,17 +5,21 @@ import { I18nFlavor } from '@grammyjs/i18n';
 import { MenuFlavor } from '@grammyjs/menu';
 import { Bot, Context, SessionFlavor } from 'grammy';
 
+export type SessionMessageType = {
+  gptFormat: { content: string; role: `${MessageRolesGPT}` };
+  timestamp: string;
+};
+
 export type SessionType = {
   custom: {
     username: string | null;
-    messages: {
-      gptFormat: { content: string; role: `${MessageRolesGPT}` };
-      timestamp: string;
-    }[];
+    messages: SessionMessageType[];
+  };
+  limit: {
+    amountOfGptImages: number;
+    amountOfGptTokens: number;
   };
 };
-
-export type SessionMessagesType = SessionType['custom']['messages'];
 
 export type BotContextType = HydrateFlavor<
   Context & SessionFlavor<SessionType> & I18nFlavor & MenuFlavor & ConversationFlavor

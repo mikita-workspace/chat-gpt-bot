@@ -1,8 +1,12 @@
 import { config } from '@bot/config';
-import { UserRoles } from '@bot/constants';
+import {
+  PER_DAY_GPT_IMAGE_LIMIT_ADMIN,
+  PER_DAY_GPT_TOKEN_LIMIT_ADMIN,
+  UserRoles,
+} from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
-import { SessionMessagesType, SessionType, UserModelType } from '@bot/types';
+import { SessionMessageType, SessionType, UserModelType } from '@bot/types';
 import {
   fetchCachedData,
   removeValueFromMemoryCache,
@@ -32,7 +36,7 @@ export class MongoService {
 
       return loggerInfo ?? [];
     } catch (error) {
-      logger.error(`mongoService::getLoggerInfo::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getLoggerInfo::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -42,7 +46,7 @@ export class MongoService {
 
       return users ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUsers::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getAllUsers::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -54,33 +58,51 @@ export class MongoService {
 
       return user;
     } catch (error) {
-      logger.error(`mongoService::getUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getUser::${JSON.stringify(error.message)}`);
     }
   }
 
-  async setUser(username: string, role: string) {
+  async setUser(username: string, role: UserRoles) {
     try {
-      const userConversation =
-        (await this.getUserConversation(username)) ??
-        new UserConversationModel({ username, messages: [] });
+      const existUserConversation = await this.getUserConversation(username);
 
       const user = new UserModel({
-        conversation: userConversation._id,
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
+
+        ...([UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(role) && {
+          limit: {
+            gptTokens: PER_DAY_GPT_TOKEN_LIMIT_ADMIN,
+            gptImages: PER_DAY_GPT_IMAGE_LIMIT_ADMIN,
+          },
+        }),
         username,
       });
 
-      await userConversation.save();
+      if (existUserConversation) {
+        user.set('conversation', existUserConversation._id);
+      } else {
+        const userConversation = new UserConversationModel({ username, messages: [] });
+
+        user.set('conversation', userConversation._id);
+
+        await userConversation.save();
+
+        setValueToMemoryCache(
+          `cached-user-conversation-${username}`,
+          JSON.stringify(userConversation),
+        );
+      }
+
       await user.save();
 
       setValueToMemoryCache(`cached-user-${username}`, JSON.stringify(user));
       removeValueFromMemoryCache('cached-users');
     } catch (error) {
-      logger.error(`mongoService::setUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::setUser::${JSON.stringify(error.message)}`);
     }
   }
 
-  async setMultipleUsers(users: { username: string; role: string }[]) {
+  async setMultipleUsers(users: { username: string; role: UserRoles }[]) {
     try {
       const existingUsers: UserModelType[] = await this.getUsers();
 
@@ -96,7 +118,7 @@ export class MongoService {
 
       return newUsers;
     } catch (error) {
-      logger.error(`mongoService::setMultipleUsers::${JSON.stringify(error)}`);
+      logger.error(`mongoService::setMultipleUsers::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -113,7 +135,7 @@ export class MongoService {
 
       return updatedUser;
     } catch (error) {
-      logger.error(`mongoService::updateUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::updateUser::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -124,7 +146,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-user-${username}`);
       removeValueFromMemoryCache('cached-users');
     } catch (error) {
-      logger.error(`mongoService::deleteUser::${JSON.stringify(error)}`);
+      logger.error(`mongoService::deleteUser::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -136,7 +158,7 @@ export class MongoService {
 
       return allUserSessions ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUserSessionMessages::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getAllUserSessionMessages::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -152,7 +174,7 @@ export class MongoService {
 
       return userSessionMessages;
     } catch (error) {
-      logger.error(`mongoService::getUserSessionMessages::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getUserSessionMessages::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -163,7 +185,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
       removeValueFromMemoryCache('cached-all-session-messages');
     } catch (error) {
-      logger.error(`mongoService::deleteUserSessionMessages::${JSON.stringify(error)}`);
+      logger.error(`mongoService::deleteUserSessionMessages::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -175,7 +197,7 @@ export class MongoService {
 
       return userConversations ?? [];
     } catch (error) {
-      logger.error(`mongoService::getAllUserConversations::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getAllUserConversations::${JSON.stringify(error.message)}`);
     }
   }
 
@@ -183,16 +205,16 @@ export class MongoService {
     try {
       const userConversation = await fetchCachedData(
         `cached-user-conversation-${username}`,
-        async () => UserConversationModel.findOne({ username }),
+        async () => UserConversationModel.findOne({ username }).exec(),
       );
 
       return userConversation;
     } catch (error) {
-      logger.error(`mongoService::getUserConversation::${JSON.stringify(error)}`);
+      logger.error(`mongoService::getUserConversation::${JSON.stringify(error.message)}`);
     }
   }
 
-  async updateUserConversation(username: string, messages: SessionMessagesType) {
+  async updateUserConversation(username: string, messages: SessionMessageType[]) {
     try {
       const userConversation = await this.getUserConversation(username);
 
@@ -225,7 +247,7 @@ export class MongoService {
       removeValueFromMemoryCache(`cached-user-conversation-${username}`);
       removeValueFromMemoryCache('cached-user-conversations');
     } catch (error) {
-      logger.error(`mongoService::deleteUserConversation::${JSON.stringify(error)}`);
+      logger.error(`mongoService::deleteUserConversation::${JSON.stringify(error.message)}`);
     }
   }
 }
