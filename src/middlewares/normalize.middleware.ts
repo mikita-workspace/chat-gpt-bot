@@ -1,4 +1,11 @@
-import { DAY_MS, PER_DAY_GPT_IMAGE_LIMIT, PER_DAY_GPT_TOKEN_LIMIT } from '@bot/constants';
+import {
+  DAY_MS,
+  PER_DAY_GPT_IMAGE_LIMIT,
+  PER_DAY_GPT_IMAGE_LIMIT_ADMIN,
+  PER_DAY_GPT_TOKEN_LIMIT,
+  PER_DAY_GPT_TOKEN_LIMIT_ADMIN,
+  UserRoles,
+} from '@bot/constants';
 import { createInitialLimitSessionData, splitSessionMessagesByTokenLimit } from '@bot/helpers';
 import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
@@ -9,6 +16,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   const sessionMessages = ctx.session.custom.messages;
 
   const user = await mongo.getUser(username);
+  const currentUserRole = user.role;
 
   ctx.session.custom.username ??= username;
 
@@ -26,8 +34,12 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
 
     await mongo.updateUser(username, {
       limit: {
-        gptTokens: PER_DAY_GPT_TOKEN_LIMIT,
-        gptImages: PER_DAY_GPT_IMAGE_LIMIT,
+        gptTokens: [UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(currentUserRole)
+          ? PER_DAY_GPT_TOKEN_LIMIT_ADMIN
+          : PER_DAY_GPT_TOKEN_LIMIT,
+        gptImages: [UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(currentUserRole)
+          ? PER_DAY_GPT_IMAGE_LIMIT_ADMIN
+          : PER_DAY_GPT_IMAGE_LIMIT,
         expire: parseTimestampUTC(Date.now() + DAY_MS),
       },
     });

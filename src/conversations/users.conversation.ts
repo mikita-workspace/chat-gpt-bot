@@ -36,7 +36,7 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
       message: { text, message_id: messageId },
     } = await conversation.waitFor('message:text');
 
-    const [username = '', role = UserRoles.USER] = text?.trim().split(';');
+    const [username = '', role = UserRoles.USER] = text?.trim().split(';') as [string, UserRoles];
 
     if (!REGEXP_USERNAME.test(username)) {
       return await ctx.reply(ctx.t('users-menu-message-incorrect', { username }), {
@@ -62,7 +62,7 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
             return UserRoles.USER;
           }
 
-          return Object.values(UserRoles).includes(role as UserRoles) ? role : UserRoles.USER;
+          return Object.values(UserRoles).includes(role) ? role : UserRoles.USER;
         })(),
       ),
     );

@@ -1,5 +1,9 @@
 import { config } from '@bot/config';
-import { UserRoles } from '@bot/constants';
+import {
+  PER_DAY_GPT_IMAGE_LIMIT_ADMIN,
+  PER_DAY_GPT_TOKEN_LIMIT_ADMIN,
+  UserRoles,
+} from '@bot/constants';
 import { LoggerModel, SessionModel, UserConversationModel, UserModel } from '@bot/models';
 import { logger } from '@bot/services';
 import { SessionMessageType, SessionType, UserModelType } from '@bot/types';
@@ -58,12 +62,19 @@ export class MongoService {
     }
   }
 
-  async setUser(username: string, role: string) {
+  async setUser(username: string, role: UserRoles) {
     try {
       const existUserConversation = await this.getUserConversation(username);
 
       const user = new UserModel({
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
+
+        ...([UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(role) && {
+          limit: {
+            gptTokens: PER_DAY_GPT_TOKEN_LIMIT_ADMIN,
+            gptImages: PER_DAY_GPT_IMAGE_LIMIT_ADMIN,
+          },
+        }),
         username,
       });
 
@@ -91,7 +102,7 @@ export class MongoService {
     }
   }
 
-  async setMultipleUsers(users: { username: string; role: string }[]) {
+  async setMultipleUsers(users: { username: string; role: UserRoles }[]) {
     try {
       const existingUsers: UserModelType[] = await this.getUsers();
 

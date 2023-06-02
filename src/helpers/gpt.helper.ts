@@ -48,11 +48,12 @@ export const convertGPTMessage = (
 
 export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
   try {
-    const currentUsername = ctx.session.custom.username ?? '';
+    const username = String(ctx?.from?.username);
+
     const usedGptTokens = ctx.session.limit.amountOfGptTokens;
     const currentLocale = await ctx.i18n.getLocale();
 
-    const user = await mongo.getUser(currentUsername);
+    const user = await mongo.getUser(username);
 
     if (usedGptTokens >= user.limit.gptTokens) {
       return ctx.t('info-message-reach-gpt-tokens-limit', {
