@@ -56,3 +56,16 @@ export const parseTimestampUTC = (timestamp: number) => {
 };
 
 export const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const applyMixins = (derivedCtor: any, constructors: any[]) => {
+  constructors.forEach((baseCtor) => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+      Object.defineProperty(
+        derivedCtor.prototype,
+        name,
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null),
+      );
+    });
+  });
+};

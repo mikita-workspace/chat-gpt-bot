@@ -1,5 +1,5 @@
-export * from './csv.service';
-export * from './logger.service';
-export * from './mongo.service';
-export * from './ogg-converter.service';
-export * from './openai.service';
+export { csv } from './csv';
+export { logger } from './logger/logger.service';
+export { mongo } from './mongo';
+export { oggConverter } from './ogg-converter/ogg-converter.service';
+export { openAI } from './openai/openai.service';

@@ -11,7 +11,7 @@ export const createInitialLimitSessionData = (): SessionType['limit'] => ({
   amountOfGptTokens: 0,
 });
 
-export const mapUserSessionMessages = (userSession: SessionModelType) =>
+export const mapUserMessages = (userSession: SessionModelType) =>
   userSession.value.messages.map(({ timestamp, gptFormat: { content, role } }) => ({
     [SessionCsvIds.KEY]: userSession.key,
     [SessionCsvIds.USERNAME]: userSession.value.username,
