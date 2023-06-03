@@ -13,9 +13,9 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
       ctx.t('users-menu-message-enter', { inputFormat: addUserFormat(currentUserRole) }),
       {
         reply_markup:
-          currentUserRole === UserRoles.MODERATOR
-            ? inlineGoToModeratorMenu(ctx)
-            : inlineGoToAdminMenu(ctx),
+          currentUserRole === UserRoles.ADMIN
+            ? inlineGoToAdminMenu(ctx)
+            : inlineGoToModeratorMenu(ctx),
       },
     );
 
@@ -57,9 +57,9 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
     return await ctx.reply(ctx.t('users-menu-message-add-success', { username }), {
       reply_to_message_id: messageId,
       reply_markup:
-        currentUserRole === UserRoles.MODERATOR
-          ? inlineGoToModeratorMenu(ctx)
-          : inlineGoToAdminMenu(ctx),
+        currentUserRole === UserRoles.ADMIN
+          ? inlineGoToAdminMenu(ctx)
+          : inlineGoToModeratorMenu(ctx),
     });
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));

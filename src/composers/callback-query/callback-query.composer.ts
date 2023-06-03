@@ -30,11 +30,13 @@ composer.callbackQuery(ModeratorMenuActions.GO_TO_MENU, async (ctx) => {
 
 composer.callbackQuery(UsersMenuActions.ADD_NEW_USER, async (ctx) => {
   await ctx.deleteMessage();
+
   await ctx.conversation.enter(addUserConversation.name);
 });
 
 composer.callbackQuery(UsersMenuActions.ADD_NEW_MULTIPLE_USERS, async (ctx) => {
   await ctx.deleteMessage();
+
   await ctx.conversation.enter(addMultipleUsersConversation.name);
 });
 

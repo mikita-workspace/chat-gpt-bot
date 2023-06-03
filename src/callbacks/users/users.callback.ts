@@ -37,9 +37,9 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
         await ctx.deleteMessage();
         await ctx.replyWithDocument(filePathForReply, {
           reply_markup:
-            currentUserRole === UserRoles.MODERATOR
-              ? inlineGoToModeratorMenu(ctx)
-              : inlineGoToAdminMenu(ctx),
+            currentUserRole === UserRoles.ADMIN
+              ? inlineGoToAdminMenu(ctx)
+              : inlineGoToModeratorMenu(ctx),
         });
 
         await removeFile(filePath);
