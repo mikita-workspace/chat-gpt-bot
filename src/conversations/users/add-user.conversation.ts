@@ -5,9 +5,9 @@ import { ConversationType } from '@bot/types';
 
 export const addUserConversation: ConversationType = async (conversation, ctx) => {
   try {
-    const currentUserRole = (
-      await conversation.external(() => mongo.getUser(String(ctx.from?.username)))
-    ).role;
+    const currentUserRole =
+      (await conversation.external(() => mongo.getUser(String(ctx.from?.username))))?.role ??
+      UserRoles.USER;
 
     await ctx.reply(
       ctx.t('users-menu-message-enter', { inputFormat: addUserFormat(currentUserRole) }),

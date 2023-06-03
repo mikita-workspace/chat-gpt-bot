@@ -2,6 +2,7 @@ import 'winston-mongodb';
 
 import { config } from '@bot/config';
 import { winstonConfig } from '@bot/constants';
+import { BotLoggerModel } from '@bot/models';
 import { parseTimestampUTC } from '@bot/utils';
 import { addColors, createLogger, format, Logger, transports } from 'winston';
 
@@ -44,7 +45,7 @@ class LoggerService {
           ),
         }),
         new transports.MongoDB({
-          collection: 'loggers',
+          collection: BotLoggerModel.name,
           db: config.MONGODB_URI,
           format: format.metadata(),
           options: {

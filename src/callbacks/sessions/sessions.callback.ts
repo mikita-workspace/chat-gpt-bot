@@ -10,10 +10,10 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
 ) => {
   try {
     const userSession = await mongo.getUserSession(username);
-    const currentUserRole = (await mongo.getUser(String(ctx?.from?.username))).role;
+    const currentUserRole = (await mongo.getUser(String(ctx?.from?.username)))?.role;
 
     if (userSession) {
-      const { filePath, filePathForReply } = (await csv.createUserMessagesCsv(userSession)) ?? {};
+      const { filePath, filePathForReply } = await csv.createUserMessagesCsv(userSession);
 
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();

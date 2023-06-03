@@ -1,5 +1,5 @@
 import { SessionCsvIds } from '@bot/constants';
-import { SessionModelType, SessionType } from '@bot/types';
+import { UserSessionModelType, SessionType } from '@bot/types';
 
 export const createInitialCustomSessionData = (): SessionType['custom'] => ({
   messages: [],
@@ -11,7 +11,7 @@ export const createInitialLimitSessionData = (): SessionType['limit'] => ({
   amountOfGptTokens: 0,
 });
 
-export const mapUserMessages = (userSession: SessionModelType) =>
+export const mapUserMessages = (userSession: UserSessionModelType) =>
   userSession.value.messages.map(({ timestamp, gptFormat: { content, role } }) => ({
     [SessionCsvIds.KEY]: userSession.key,
     [SessionCsvIds.USERNAME]: userSession.value.username,

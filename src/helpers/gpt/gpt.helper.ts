@@ -55,7 +55,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
 
     const user = await mongo.getUser(username);
 
-    if (usedGptTokens >= user.limit.gptTokens) {
+    if (user && usedGptTokens >= user.limit.gptTokens) {
       return ctx.t('info-message-reach-gpt-tokens-limit', {
         date: new Date(user.limit.expire).toLocaleString(currentLocale),
       });

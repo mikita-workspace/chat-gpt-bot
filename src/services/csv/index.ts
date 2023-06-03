@@ -9,7 +9,7 @@ import { createReadStream, createWriteStream } from 'fs';
 import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
 
-import { BotLoggerCsvService } from './logger.csv.service';
+import { BotLoggerCsvService } from './bot-logger.csv.service';
 import { UserMessagesCsvService } from './user-messages.csv.service';
 import { UsersCsvService } from './users.csv.service';
 
@@ -30,6 +30,8 @@ class CsvService {
       };
     } catch (error) {
       logger.error(`csvService::csvWriter::${JSON.stringify(error.message)}`);
+
+      return {};
     }
   }
 
@@ -48,6 +50,8 @@ class CsvService {
       });
     } catch (error) {
       logger.error(`csvService::parseCsv::${JSON.stringify(error.message)}`);
+
+      return [];
     }
   }
 
@@ -69,6 +73,8 @@ class CsvService {
       });
     } catch (error) {
       logger.error(`csvService::createCsv::${JSON.stringify(error.message)}`);
+
+      return '';
     }
   }
 }

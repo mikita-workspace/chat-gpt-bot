@@ -1,10 +1,10 @@
 import { SessionCsvIds } from '@bot/constants';
 import { mapUserMessages } from '@bot/helpers';
 import { csv } from '@bot/services';
-import { SessionModelType } from '@bot/types';
+import { UserSessionModelType } from '@bot/types';
 
 export class UserMessagesCsvService {
-  async createUserMessagesCsv(userSession: SessionModelType, includesConversation = false) {
+  async createUserMessagesCsv(userSession: UserSessionModelType, includesConversation = false) {
     const userMessagesHeader = [
       { id: SessionCsvIds.KEY, title: SessionCsvIds.KEY },
       { id: SessionCsvIds.USERNAME, title: SessionCsvIds.USERNAME },

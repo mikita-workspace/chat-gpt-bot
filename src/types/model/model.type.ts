@@ -1,8 +1,9 @@
 import { UserRoles } from '@bot/constants';
 import { SessionMessageType } from '@bot/types';
+import { Schema } from 'mongoose';
 
 export type UserModelType = {
-  conversation: object;
+  conversation: Schema.Types.ObjectId;
   enabled: boolean;
   limit: {
     gptTokens: number;
@@ -14,7 +15,9 @@ export type UserModelType = {
   username: string;
 };
 
-export type SessionModelType = {
+export type MultipleUserType = { username: string; role: UserRoles };
+
+export type UserSessionModelType = {
   key: string;
   value: {
     username: string;
@@ -30,6 +33,7 @@ export type BotLoggerModelType = {
 };
 
 export type UserConversationModelType = {
+  _id: Schema.Types.ObjectId;
   messages: SessionMessageType[];
   username: string;
 };

@@ -1,26 +1,29 @@
-import { SessionModel } from '@bot/models';
+import { UserSessionModel } from '@bot/models';
 import { logger } from '@bot/services';
+import { UserSessionModelType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache } from '@bot/utils';
 
 export class UserSessionsMongoService {
-  async getAllUserSessions() {
+  async getAllUserSessions(): Promise<UserSessionModelType[]> {
     try {
-      const allUserSessions = await fetchCachedData('cached-all-session-messages', async () =>
-        SessionModel.find({}).exec(),
+      const userSessions = await fetchCachedData('cached-all-session-messages', async () =>
+        UserSessionModel.find({}).sort({ 'value.username': 1 }).exec(),
       );
 
-      return allUserSessions ?? [];
+      return userSessions ?? [];
     } catch (error) {
       logger.error(`mongoService::getAllUserSessionMessages::${JSON.stringify(error.message)}`);
+
+      return [];
     }
   }
 
-  async getUserSession(username: string) {
+  async getUserSession(username: string): Promise<UserSessionModelType | null> {
     try {
       const userSessionMessages = await fetchCachedData(
         `cached-session-messages-${username}`,
         async () =>
-          SessionModel.findOne({
+          UserSessionModel.findOne({
             'value.username': username,
           }),
       );
@@ -28,12 +31,14 @@ export class UserSessionsMongoService {
       return userSessionMessages;
     } catch (error) {
       logger.error(`mongoService::getUserSessionMessages::${JSON.stringify(error.message)}`);
+
+      return null;
     }
   }
 
-  async deleteUserSessionMessages(username: string) {
+  async deleteUserSessionMessages(username: string): Promise<void> {
     try {
-      await SessionModel.findOneAndDelete({ 'value.username': username });
+      await UserSessionModel.findOneAndDelete({ 'value.username': username });
 
       removeValueFromMemoryCache(`cached-session-messages-${username}`);
       removeValueFromMemoryCache('cached-all-session-messages');

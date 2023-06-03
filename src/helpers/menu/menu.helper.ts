@@ -1,12 +1,6 @@
 import { UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
-import {
-  BotContextType,
-  DynamicUserRolesMenuType,
-  DynamicUsersMenuType,
-  SessionModelType,
-  UserModelType,
-} from '@bot/types';
+import { BotContextType, DynamicUserRolesMenuType, DynamicUsersMenuType } from '@bot/types';
 import { capitalize } from '@bot/utils';
 import { MenuRange } from '@grammyjs/menu';
 
@@ -31,9 +25,9 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
   const range = new MenuRange<BotContextType>();
 
   const currentUsername = String(ctx?.from?.username);
-  const currentUserRole = (await mongo.getUser(String(ctx?.from?.username))).role;
+  const currentUserRole = (await mongo.getUser(String(ctx?.from?.username)))?.role;
 
-  const users: UserModelType[] = await mongo.getUsers();
+  const users = await mongo.getUsers();
 
   users
     .filter((user) => user.username !== currentUsername)
@@ -65,9 +59,9 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
   const range = new MenuRange<BotContextType>();
   const currentUsername = String(ctx?.from?.username);
 
-  const userSessions: SessionModelType[] = await mongo.getAllUserSessions();
-  const users: UserModelType[] = await mongo.getUsers();
-  const currentUserRole = (await mongo.getUser(currentUsername)).role;
+  const userSessions = await mongo.getAllUserSessions();
+  const users = await mongo.getUsers();
+  const currentUserRole = (await mongo.getUser(currentUsername))?.role;
 
   const sessions = userSessions.map((userSession) => ({
     value: {

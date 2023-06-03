@@ -1,9 +1,10 @@
+import { UserSessionModel } from '@bot/models';
 import { SessionType } from '@bot/types';
 import { applyMixins } from '@bot/utils';
 import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';
 
-import { LoggerMongoService } from './logger.mongo.service';
+import { BotLoggerMongoService } from './bot-logger.mongo.service';
 import { UserConversationsMongoService } from './user-conversations.mongo.service';
 import { UserSessionsMongoService } from './user-sessions.mongo.service';
 import { UsersMongoService } from './users.mongo.service';
@@ -14,7 +15,7 @@ class MongoService {
   sessionAdapter: MongoDBAdapter<SessionType['custom']>;
 
   constructor() {
-    const sessions = mongoose.connection.collection<ISession>('sessions');
+    const sessions = mongoose.connection.collection<ISession>(UserSessionModel.name);
 
     this.sessions = sessions;
     this.sessionAdapter = new MongoDBAdapter({ collection: sessions });
@@ -22,13 +23,13 @@ class MongoService {
 }
 
 interface MongoService
-  extends LoggerMongoService,
+  extends BotLoggerMongoService,
     UserConversationsMongoService,
     UserSessionsMongoService,
     UsersMongoService {}
 
 applyMixins(MongoService, [
-  LoggerMongoService,
+  BotLoggerMongoService,
   UserConversationsMongoService,
   UserSessionsMongoService,
   UsersMongoService,

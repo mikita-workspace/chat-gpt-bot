@@ -25,8 +25,8 @@ export const addMultipleUsersConversation: ConversationType = async (conversatio
 
     const csvFileApiLink = getFileApiLink(config.TELEGRAM_TOKEN, csvFile.file_path ?? '');
 
-    const csvPath = (await csv.createCsv(csvFileApiLink, 'users')) ?? '';
-    const parsedCsv = (await csv.parseCsv<UserModelType>(csvPath)) ?? [];
+    const csvPath = await csv.createCsv(csvFileApiLink, 'users');
+    const parsedCsv = await csv.parseCsv<UserModelType>(csvPath);
 
     const newUsers = await mongo.setMultipleUsers(mapUsersFromCsv(parsedCsv));
 

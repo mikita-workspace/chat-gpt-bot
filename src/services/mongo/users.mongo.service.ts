@@ -6,21 +6,25 @@ import {
 } from '@bot/constants';
 import { UserConversationModel, UserModel } from '@bot/models';
 import { logger, mongo } from '@bot/services';
-import { UserModelType } from '@bot/types';
+import { MultipleUserType, UserModelType } from '@bot/types';
 import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '@bot/utils';
 
 export class UsersMongoService {
-  async getUsers() {
+  async getUsers(): Promise<UserModelType[]> {
     try {
-      const users = await fetchCachedData('cached-users', async () => UserModel.find({}).exec());
+      const users = await fetchCachedData('cached-users', async () =>
+        UserModel.find({}).sort({ username: 1 }).exec(),
+      );
 
       return users ?? [];
     } catch (error) {
       logger.error(`mongoService::getAllUsers::${JSON.stringify(error.message)}`);
+
+      return [];
     }
   }
 
-  async getUser(username: string) {
+  async getUser(username: string): Promise<UserModelType | null> {
     try {
       const user = await fetchCachedData(`cached-user-${username}`, async () =>
         UserModel.findOne({ username }).exec(),
@@ -29,10 +33,12 @@ export class UsersMongoService {
       return user;
     } catch (error) {
       logger.error(`mongoService::getUser::${JSON.stringify(error.message)}`);
+
+      return null;
     }
   }
 
-  async setUser(username: string, role: UserRoles) {
+  async setUser(username: string, role: UserRoles): Promise<void> {
     try {
       const existUserConversation = await mongo.getUserConversation(username);
 
@@ -72,9 +78,9 @@ export class UsersMongoService {
     }
   }
 
-  async setMultipleUsers(users: { username: string; role: UserRoles }[]) {
+  async setMultipleUsers(users: MultipleUserType[]): Promise<MultipleUserType[]> {
     try {
-      const existingUsers: UserModelType[] = await this.getUsers();
+      const existingUsers = await this.getUsers();
 
       const newUsers = users.filter(
         (user) => !existingUsers.find((existingUser) => existingUser.username === user.username),
@@ -86,13 +92,18 @@ export class UsersMongoService {
 
       newUsers.forEach(async ({ username, role }) => this.setUser(username, role));
 
-      return newUsers;
+      return newUsers ?? [];
     } catch (error) {
       logger.error(`mongoService::setMultipleUsers::${JSON.stringify(error.message)}`);
+
+      return [];
     }
   }
 
-  async updateUser(username: string, options: Partial<UserModelType>) {
+  async updateUser(
+    username: string,
+    options: Partial<UserModelType>,
+  ): Promise<UserModelType | null> {
     try {
       const updatedUser = await UserModel.findOneAndUpdate(
         { username },
@@ -106,10 +117,12 @@ export class UsersMongoService {
       return updatedUser;
     } catch (error) {
       logger.error(`mongoService::updateUser::${JSON.stringify(error.message)}`);
+
+      return null;
     }
   }
 
-  async deleteUser(username: string) {
+  async deleteUser(username: string): Promise<void> {
     try {
       await UserModel.findOneAndDelete({ username });
 

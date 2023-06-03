@@ -22,18 +22,17 @@ export const addMultipleUsersCallback = async (ctx: BotContextType) => {
 
 export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
-    const users: UserModelType[] = await mongo.getUsers();
-    const currentUserRole = (await mongo.getUser(String(ctx?.from?.username))).role;
+    const users = await mongo.getUsers();
+    const currentUserRole = (await mongo.getUser(String(ctx?.from?.username)))?.role;
 
     if (users) {
-      const { filePath, filePathForReply } =
-        (await csv.createUsersCsv(
-          users.filter(
-            (user) =>
-              currentUserRole !== UserRoles.MODERATOR ||
-              ![UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(user.role),
-          ),
-        )) ?? {};
+      const { filePath, filePathForReply } = await csv.createUsersCsv(
+        users.filter(
+          (user) =>
+            currentUserRole !== UserRoles.MODERATOR ||
+            ![UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(user.role),
+        ),
+      );
 
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
@@ -82,7 +81,7 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
 export const blockUnblockUserCallback: DynamicUsersMenuCallbackType = async (ctx, username) => {
   try {
     const user = await mongo.getUser(username);
-    const updatedUser = await mongo.updateUser(username, { enabled: !user.enabled });
+    const updatedUser = await mongo.updateUser(username, { enabled: !user?.enabled });
 
     const answer = ctx.t(
       `users-menu-message-${!updatedUser?.enabled ? 'block' : 'unblock'}-success`,

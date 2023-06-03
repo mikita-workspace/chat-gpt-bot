@@ -57,6 +57,7 @@ export const parseTimestampUTC = (timestamp: number) => {
 
 export const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 
+// Source: https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const applyMixins = (derivedCtor: any, constructors: any[]) => {
   constructors.forEach((baseCtor) => {

@@ -1,6 +1,6 @@
 import { UserConversationModel } from '@bot/models';
 import { logger } from '@bot/services';
-import { SessionMessageType } from '@bot/types';
+import { SessionMessageType, UserConversationModelType } from '@bot/types';
 import {
   fetchCachedData,
   removeValueFromMemoryCache,
@@ -9,19 +9,21 @@ import {
 } from '@bot/utils';
 
 export class UserConversationsMongoService {
-  async getAllUserConversations() {
+  async getAllUserConversations(): Promise<UserConversationModelType[]> {
     try {
       const userConversations = await fetchCachedData('cached-user-conversations', async () =>
-        UserConversationModel.find({}).exec(),
+        UserConversationModel.find({}).sort({ username: 1 }).exec(),
       );
 
       return userConversations ?? [];
     } catch (error) {
       logger.error(`mongoService::getAllUserConversations::${JSON.stringify(error.message)}`);
+
+      return [];
     }
   }
 
-  async getUserConversation(username: string) {
+  async getUserConversation(username: string): Promise<UserConversationModelType | null> {
     try {
       const userConversation = await fetchCachedData(
         `cached-user-conversation-${username}`,
@@ -31,10 +33,15 @@ export class UserConversationsMongoService {
       return userConversation;
     } catch (error) {
       logger.error(`mongoService::getUserConversation::${JSON.stringify(error.message)}`);
+
+      return null;
     }
   }
 
-  async updateUserConversation(username: string, messages: SessionMessageType[]) {
+  async updateUserConversation(
+    username: string,
+    messages: SessionMessageType[],
+  ): Promise<UserConversationModelType | null> {
     try {
       const userConversation = await this.getUserConversation(username);
 
@@ -42,7 +49,7 @@ export class UserConversationsMongoService {
         { username },
         {
           messages: uniqBy(
-            [...(messages ?? []), ...(userConversation.messages ?? [])],
+            [...(messages ?? []), ...(userConversation?.messages ?? [])],
             'timestamp',
           ),
         },
@@ -57,10 +64,12 @@ export class UserConversationsMongoService {
       return updatedUserConversation;
     } catch (error) {
       logger.error(`mongoService::updateUserConversation::${JSON.stringify(error.message)}`);
+
+      return null;
     }
   }
 
-  async deleteUserConversation(username: string) {
+  async deleteUserConversation(username: string): Promise<void> {
     try {
       await UserConversationModel.findOneAndDelete({ username });
 

@@ -5,10 +5,10 @@ import { removeFile } from '@bot/utils';
 
 export const downloadBotLoggerCallback = async (ctx: BotContextType) => {
   try {
-    const loggerInfo = await mongo.getLoggerInfo();
+    const loggerInfo = await mongo.getBotLoggerInfo();
 
     if (loggerInfo) {
-      const { filePath, filePathForReply } = (await csv.createBotLoggerCsv(loggerInfo)) ?? {};
+      const { filePath, filePathForReply } = await csv.createBotLoggerCsv(loggerInfo);
 
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();

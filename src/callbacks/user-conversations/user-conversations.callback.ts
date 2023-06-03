@@ -17,11 +17,10 @@ export const getUserConversationMessagesCallback: DynamicUsersMenuCallbackType =
         'timestamp',
       );
 
-      const { filePath, filePathForReply } =
-        (await csv.createUserMessagesCsv(
-          { key: userSession.key, value: { username, messages } },
-          true,
-        )) ?? {};
+      const { filePath, filePathForReply } = await csv.createUserMessagesCsv(
+        { key: userSession.key, value: { username, messages } },
+        true,
+      );
 
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();

@@ -16,7 +16,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   const sessionMessages = ctx.session.custom.messages;
 
   const user = await mongo.getUser(username);
-  const currentUserRole = user.role;
+  const currentUserRole = user?.role ?? UserRoles.USER;
 
   ctx.session.custom.username ??= username;
 
@@ -29,7 +29,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
     await mongo.updateUserConversation(username, tailSessionMessages);
   }
 
-  if (new Date(user.limit.expire).getTime() <= Date.now()) {
+  if (user && new Date(user.limit.expire).getTime() <= Date.now()) {
     ctx.session.limit = createInitialLimitSessionData();
 
     await mongo.updateUser(username, {
