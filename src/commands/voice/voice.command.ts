@@ -11,7 +11,10 @@ export const voiceCommand = (bot: BotType) => {
       const messageId = Number(ctx.message.message_id);
 
       const voiceFile = await ctx.getFile();
-      const voiceFileApiLink = getFileTelegramApiLink(config.TELEGRAM_TOKEN, voiceFile.file_path ?? '');
+      const voiceFileApiLink = getFileTelegramApiLink(
+        config.TELEGRAM_TOKEN,
+        voiceFile.file_path ?? '',
+      );
 
       const oggPath = (await oggConverter.create(voiceFileApiLink, userId)) ?? '';
       const mp3Path = (await oggConverter.toMp3(oggPath, userId)) ?? '';
