@@ -22,7 +22,7 @@ export type SessionModelType = {
   };
 };
 
-export type LoggerModelType = {
+export type BotLoggerModelType = {
   level: string;
   message: string;
   meta: { username: string };

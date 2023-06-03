@@ -1,6 +1,6 @@
 import { LoggerInfoCsvIds } from '@bot/constants';
 import { logger } from '@bot/services';
-import { LoggerModelType } from '@bot/types';
+import { BotLoggerModelType } from '@bot/types';
 import { BotError, GrammyError, HttpError } from 'grammy';
 
 export const handleBotError = (error: BotError) => {
@@ -18,8 +18,8 @@ export const handleBotError = (error: BotError) => {
   }
 };
 
-export const mapLoggerInfo = (loggerInfo: LoggerModelType[]) =>
-  loggerInfo.map(({ timestamp, level, message, meta: { username } }) => ({
+export const mapBotLoggerInfo = (botLoggerInfo: BotLoggerModelType[]) =>
+  botLoggerInfo.map(({ timestamp, level, message, meta: { username } }) => ({
     [LoggerInfoCsvIds.TIMESTAMP]: timestamp,
     [LoggerInfoCsvIds.LEVEL]: level,
     [LoggerInfoCsvIds.USERNAME]: username,

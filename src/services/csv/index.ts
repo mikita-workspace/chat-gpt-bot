@@ -9,7 +9,7 @@ import { createReadStream, createWriteStream } from 'fs';
 import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
 
-import { LoggerCsvService } from './logger.csv.service';
+import { BotLoggerCsvService } from './logger.csv.service';
 import { UserMessagesCsvService } from './user-messages.csv.service';
 import { UsersCsvService } from './users.csv.service';
 
@@ -73,8 +73,8 @@ class CsvService {
   }
 }
 
-interface CsvService extends LoggerCsvService, UserMessagesCsvService, UsersCsvService {}
+interface CsvService extends BotLoggerCsvService, UserMessagesCsvService, UsersCsvService {}
 
-applyMixins(CsvService, [LoggerCsvService, UserMessagesCsvService, UsersCsvService]);
+applyMixins(CsvService, [BotLoggerCsvService, UserMessagesCsvService, UsersCsvService]);
 
 export const csv = new CsvService();

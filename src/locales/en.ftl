@@ -34,7 +34,7 @@ admin-panel-title = Admin-panel of { $botName }.
 admin-menu-button-sessions = Sessions
 admin-menu-button-conversations = Conversations
 admin-menu-button-users = Users
-admin-menu-button-logs = Logs
+admin-menu-button-loggers = Logs
 admin-menu-button-csv-reader = CSV Reader
 admin-menu-button-go-to-menu = Go to Admin-panel
 

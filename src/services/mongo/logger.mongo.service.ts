@@ -1,4 +1,4 @@
-import { LoggerModel } from '@bot/models';
+import { BotLoggerModel } from '@bot/models';
 import { logger } from '@bot/services';
 import { fetchCachedData } from '@bot/utils';
 
@@ -6,7 +6,7 @@ export class LoggerMongoService {
   async getLoggerInfo() {
     try {
       const loggerInfo = await fetchCachedData('cached-logger-info', async () =>
-        LoggerModel.find({}).exec(),
+        BotLoggerModel.find({}).exec(),
       );
 
       return loggerInfo ?? [];

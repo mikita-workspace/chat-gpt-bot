@@ -34,7 +34,7 @@ admin-panel-title = Админ-панель для { $botName }.
 admin-menu-button-sessions = Сессии
 admin-menu-button-conversations = Беседы
 admin-menu-button-users = Пользователи
-admin-menu-button-logs = Логи
+admin-menu-button-loggers = Логи
 admin-menu-button-csv-reader = CSV Считыватель
 admin-menu-button-go-to-menu = Перейти в Админ-панель
 

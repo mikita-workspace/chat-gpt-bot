@@ -1,4 +1,4 @@
-import { downloadLogsCallback } from '@bot/callbacks';
+import { downloadBotLoggerCallback } from '@bot/callbacks';
 import {
   AdminMenu,
   ConversationsMenu,
@@ -21,8 +21,8 @@ export const adminMainMenu = new Menu<BotContextType>(AdminMenu.INITIAL)
   .row()
   .submenu((ctx) => ctx.t('admin-menu-button-users'), `${UsersMenu.INITIAL}-${AdminMenu.NAME}`)
   .text(
-    (ctx) => ctx.t('admin-menu-button-logs'),
-    (ctx) => downloadLogsCallback(ctx),
+    (ctx) => ctx.t('admin-menu-button-loggers'),
+    (ctx) => downloadBotLoggerCallback(ctx),
   )
   .row()
   .url((ctx) => ctx.t('admin-menu-button-csv-reader'), CSV_READER_URL)

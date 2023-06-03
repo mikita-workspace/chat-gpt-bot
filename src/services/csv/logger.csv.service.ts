@@ -1,10 +1,10 @@
 import { LoggerInfoCsvIds } from '@bot/constants';
-import { mapLoggerInfo } from '@bot/helpers';
+import { mapBotLoggerInfo } from '@bot/helpers';
 import { csv } from '@bot/services';
-import { LoggerModelType } from '@bot/types';
+import { BotLoggerModelType } from '@bot/types';
 
-export class LoggerCsvService {
-  async createLoggerCsv(loggerInfo: LoggerModelType[]) {
+export class BotLoggerCsvService {
+  async createBotLoggerCsv(loggerInfo: BotLoggerModelType[]) {
     const loggerHeader = [
       { id: LoggerInfoCsvIds.TIMESTAMP, title: LoggerInfoCsvIds.TIMESTAMP },
       { id: LoggerInfoCsvIds.LEVEL, title: LoggerInfoCsvIds.LEVEL },
@@ -12,6 +12,6 @@ export class LoggerCsvService {
       { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
     ];
 
-    return csv.csvWriter('logger-info', loggerHeader, mapLoggerInfo(loggerInfo));
+    return csv.csvWriter('bot-logger-info', loggerHeader, mapBotLoggerInfo(loggerInfo));
   }
 }
