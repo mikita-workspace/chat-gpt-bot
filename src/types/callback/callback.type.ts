@@ -7,4 +7,11 @@ export type DynamicUserRolesMenuCallbackType = (
   role: UserRoles,
 ) => void;
 
+export type DynamicNewGptLimitsMenuCallbackType = (
+  ctx: BotContextType,
+  username: string,
+  newPackage: string,
+  newLimit: string,
+) => void;
+
 export type DynamicUsersMenuCallbackType = (ctx: BotContextType, username: string) => Promise<void>;

@@ -1,6 +1,11 @@
-import { UserRoles } from '@bot/constants';
+import { GPTLimits, UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
-import { BotContextType, DynamicUserRolesMenuType, DynamicUsersMenuType } from '@bot/types';
+import {
+  BotContextType,
+  DynamicNewGptLimitsMenuType,
+  DynamicUserRolesMenuType,
+  DynamicUsersMenuType,
+} from '@bot/types';
 import { capitalize } from '@bot/utils';
 import { MenuRange } from '@grammyjs/menu';
 
@@ -17,6 +22,25 @@ export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, c
         )
         .row();
     });
+
+  return range;
+};
+
+export const dynamicNewGptLimitsMenuRange: DynamicNewGptLimitsMenuType = async (ctx, callback) => {
+  const range = new MenuRange<BotContextType>();
+  const selectedUser = String(ctx?.match);
+
+  Object.entries(GPTLimits).forEach(([newPackage, newLimit]) => {
+    range
+      .text(
+        {
+          text: `[ ${ctx.t(`user-gpt-limit-${newPackage.toLowerCase()}`)} ] ${newLimit}`,
+          payload: selectedUser,
+        },
+        async () => callback(ctx, selectedUser, newPackage, newLimit),
+      )
+      .row();
+  });
 
   return range;
 };
@@ -38,11 +62,18 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
     )
     .forEach((user) => {
       const username = user.username;
+      const limits = user.limit;
       const status = ctx.t(`user-status-${user.enabled ? 'available' : 'blocked'}`);
       const role = ctx.t(`user-role-${user.role}`);
+
       range
         .text(
-          { text: `[ ${username} ] ${capitalize(role)}, ${status}`, payload: username },
+          {
+            text: `[ ${username} ] ${capitalize(role)}, ${status}, ${limits.gptTokens} / ${
+              limits.gptImages
+            }`,
+            payload: username,
+          },
           async () => callback(ctx, username),
         )
         .row();

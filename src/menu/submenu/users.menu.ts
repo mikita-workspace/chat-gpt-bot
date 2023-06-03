@@ -2,12 +2,17 @@ import {
   addMultipleUsersCallback,
   addUserInitialCallback,
   blockUnblockUserCallback,
+  changeUserGptLimitsCallback,
   changeUserRoleCallback,
   deleteUserCallback,
   getAllUsersCallback,
 } from '@bot/callbacks';
 import { ModeratorMenu, UsersMenu } from '@bot/constants';
-import { dynamicUserRolesMenuRange, dynamicUsersMenuRange } from '@bot/helpers';
+import {
+  dynamicNewGptLimitsMenuRange,
+  dynamicUserRolesMenuRange,
+  dynamicUsersMenuRange,
+} from '@bot/helpers';
 import { BotContextType } from '@bot/types';
 import { Menu } from '@grammyjs/menu';
 
@@ -55,6 +60,11 @@ export const usersMenu = (menuName: string) => {
     )
     .row()
     .submenu(
+      (ctx) => ctx.t('users-menu-button-change-limits'),
+      `${UsersMenu.CHANGE_GPT_LIMITS}-${menuName}`,
+    )
+    .row()
+    .submenu(
       (ctx) => ctx.t('users-menu-button-block-unblock'),
       `${UsersMenu.BLOCK_UNBLOCK}-${menuName}`,
     )
@@ -86,6 +96,28 @@ export const selectNewUserRoleMenu = (menuName: string) =>
     .text(
       (ctx) => ctx.t('common-button-cancel'),
       (ctx) => ctx.menu.nav(`${UsersMenu.CHANGE_ROLE}-${menuName}`),
+    );
+
+export const changeUserGptLimitsMenu = (menuName: string) =>
+  new Menu<BotContextType>(`${UsersMenu.CHANGE_GPT_LIMITS}-${menuName}`, {
+    onMenuOutdated: false,
+  })
+    .dynamic(async (ctx) =>
+      dynamicUsersMenuRange(ctx, async () =>
+        ctx.menu.nav(`${UsersMenu.SELECT_NEW_GPT_LIMITS}-${menuName}`),
+      ),
+    )
+    .text(
+      (ctx) => ctx.t('common-button-cancel'),
+      (ctx) => ctx.menu.nav(`${UsersMenu.INITIAL}-${menuName}`),
+    );
+
+export const selectNewGptLimits = (menuName: string) =>
+  new Menu<BotContextType>(`${UsersMenu.SELECT_NEW_GPT_LIMITS}-${menuName}`)
+    .dynamic(async (ctx) => dynamicNewGptLimitsMenuRange(ctx, changeUserGptLimitsCallback))
+    .text(
+      (ctx) => ctx.t('common-button-cancel'),
+      (ctx) => ctx.menu.nav(`${UsersMenu.CHANGE_GPT_LIMITS}-${menuName}`),
     );
 
 export const blockUnblockUserMenu = (menuName: string) =>

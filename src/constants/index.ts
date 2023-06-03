@@ -42,12 +42,15 @@ export const BotCommandsWithDescription = [
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
 ];
 
-// Per day limits
-export const PER_DAY_GPT_TOKEN_LIMIT = 4096;
-export const PER_DAY_GPT_IMAGE_LIMIT = 10;
-export const PER_DAY_GPT_TOKEN_LIMIT_ADMIN = 32768;
-export const PER_DAY_GPT_IMAGE_LIMIT_ADMIN = 50;
 export const DAY_MS = 60 * 60 * 24 * 1000;
+
+// Per day GPT Token limits
+export enum GPTLimits {
+  BASE = '4096/10',
+  PREMIUM = '8192/20',
+  VIP = '16384/40',
+  SUPER_VIP = '32768/50',
+}
 
 // Node cache
 export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
@@ -126,7 +129,7 @@ export const winstonConfig = {
   },
 };
 
-// Menu
+// Root menu
 export enum AdminMenu {
   INITIAL = 'admin-main-menu',
   NAME = 'admin',
@@ -151,11 +154,13 @@ export enum ConversationsMenu {
 }
 
 export enum UsersMenu {
-  BLOCK_UNBLOCK = 'block-unblock-user-menu',
-  CHANGE_ROLE = 'change-user-role-menu',
-  DELETE = 'delete-user-menu',
+  BLOCK_UNBLOCK = 'block-unblock-users-menu',
+  CHANGE_GPT_LIMITS = 'change-limits-users-menu',
+  CHANGE_ROLE = 'change-role-users-menu',
+  DELETE = 'delete-users-menu',
   INITIAL = 'users-menu',
-  SELECT_NEW_ROLE = 'select-new-user-role-menu',
+  SELECT_NEW_ROLE = 'new-role-users-menu',
+  SELECT_NEW_GPT_LIMITS = 'new-limits-users-menu',
 }
 
 // Menu actions
@@ -168,8 +173,8 @@ export enum AdminMenuActions {
 }
 
 export enum UsersMenuActions {
-  ADD_NEW_USER = 'add-new-user-action',
-  ADD_NEW_MULTIPLE_USERS = 'add-new-multiple-users-action',
+  ADD_NEW_USER = 'add-new-users-action',
+  ADD_NEW_MULTIPLE_USERS = 'add-multiple-users-action',
 }
 
 export enum ModeratorMenuActions {

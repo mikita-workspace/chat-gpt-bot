@@ -15,7 +15,7 @@ class MongoService {
   sessionAdapter: MongoDBAdapter<SessionType['custom']>;
 
   constructor() {
-    const sessions = mongoose.connection.collection<ISession>(UserSessionModel.name);
+    const sessions = mongoose.connection.collection<ISession>(UserSessionModel.collection.name);
 
     this.sessions = sessions;
     this.sessionAdapter = new MongoDBAdapter({ collection: sessions });

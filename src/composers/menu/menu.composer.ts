@@ -2,6 +2,7 @@ import { AdminMenu, ModeratorMenu } from '@bot/constants';
 import {
   adminMainMenu,
   blockUnblockUserMenu,
+  changeUserGptLimitsMenu,
   changeUserRoleMenu,
   conversationsMenu,
   deleteUserConversationMenu,
@@ -10,6 +11,7 @@ import {
   getUserConversationMenu,
   getUserSessionMenu,
   moderatorMainMenu,
+  selectNewGptLimits,
   selectNewUserRoleMenu,
   sessionsMenu,
   usersMenu,
@@ -21,6 +23,7 @@ const composer = new Composer<BotContextType>();
 
 [
   blockUnblockUserMenu,
+  changeUserGptLimitsMenu,
   changeUserRoleMenu,
   conversationsMenu,
   deleteUserConversationMenu,
@@ -29,6 +32,7 @@ const composer = new Composer<BotContextType>();
   getUserConversationMenu,
   getUserSessionMenu,
   selectNewUserRoleMenu,
+  selectNewGptLimits,
   sessionsMenu,
   usersMenu,
 ].forEach((subMenu) => adminMainMenu.register(subMenu(AdminMenu.NAME)));

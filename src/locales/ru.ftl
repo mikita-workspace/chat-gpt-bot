@@ -69,6 +69,7 @@ users-menu-button-get-all = Получить всех пользователей
 users-menu-button-add = Добавить пользователя
 users-menu-button-add-multiple = Добавить нескольких пользователей
 users-menu-button-change-role = Изменить роль
+users-menu-button-change-limits = Изменить GPT лимиты
 users-menu-button-block-unblock = Заблокировать/Разблокировать
 users-menu-button-delete = Удалить пользователя
 
@@ -85,6 +86,7 @@ users-menu-message-enter-csv = Загрузите файл CSV со следую
 users-menu-message-incorrect-csv = Расширение файла не соответствует CSV. Попробуйте еще раз!
 users-menu-message-multiple-add-success = Пользователи [ { $users } ] были успешно добавлены.
 users-menu-message-multiple-add-error = Пользователи уже были добавлены. Попробуйте еще раз!
+users-menu-message-new-gpt-limits-success =  Пользователю { $username } был предоставлен новый GPT лимит пакет - { $package }.
 
 # User roles
 user-role-super-admin = Супер Админ
@@ -96,6 +98,12 @@ user-role-user = Пользователь
 user-status-blocked = Заблокирован
 user-status-available = Доступен
 
+# User GPT limits packages
+user-gpt-limit-base = Базовый
+user-gpt-limit-premium = Премиум
+user-gpt-limit-vip = VIP
+user-gpt-limit-super_vip = Супер VIP
+
 # Info messages
 info-message-moderator-panel-for-super-admin = Примечание: Пожалуйста, перейдите в Админ-панель.
 info-message-clear-current-session = Текущая сессия для { $username } была очищена.
@@ -103,7 +111,8 @@ info-message-reach-gpt-tokens-limit = Вы использовали все до�
 
 # Profile
 profile-user-initial-message = Привет 👋🏻, { $firstName } { $lastName }!
+profile-user-role = Ваша роль: { $role }
+profile-user-gpt-package = GPT лимит пакет: { $package }
 profile-user-available-messages-amount = Доступное количество GPT токенов: { $amount }
 profile-user-available-images-amount = Доступное количество GPT картинок: { $amount }
-profile-user-role = Ваша роль: { $role }
 profile-user-date-register = Дата регистрации: { $date }

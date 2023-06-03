@@ -69,6 +69,7 @@ users-menu-button-get-all = Get all users
 users-menu-button-add = Add user
 users-menu-button-add-multiple = Add multiple users
 users-menu-button-change-role = Change role
+users-menu-button-change-limits = Change GPT limits
 users-menu-button-block-unblock = Block/Unblock
 users-menu-button-delete = Delete user
 
@@ -85,6 +86,7 @@ users-menu-message-enter-csv = Load a CSV file with the following columns: { $cs
 users-menu-message-incorrect-csv = The file extension does not match the CSV. Try again!
 users-menu-message-multiple-add-success = Users [ { $users } ] were successfully added.
 users-menu-message-multiple-add-error = Users have already been added. Try again!
+users-menu-message-new-gpt-limits-success =  User { $username } has been given a new GPT limit package - { $package }.
 
 # User roles
 user-role-super-admin = Super Admin
@@ -96,6 +98,12 @@ user-role-user = User
 user-status-blocked = Blocked
 user-status-available = Available
 
+# User GPT limits packages
+user-gpt-limit-base = Base
+user-gpt-limit-premium = Premium
+user-gpt-limit-vip = VIP
+user-gpt-limit-super_vip = Super VIP
+
 # Info messages
 info-message-moderator-panel-for-super-admin = Note: Please go to the Admin-panel.
 info-message-clear-current-session = The current session for the { $username } has been cleared.
@@ -103,7 +111,8 @@ info-message-reach-gpt-tokens-limit = You have used all available GPT tokens. Pl
 
 # Profile
 profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
+profile-user-role = Your role: { $role }
+profile-user-gpt-package = GPT limit package: { $package }
 profile-user-available-messages-amount = Available number of GPT tokens: { $amount }
 profile-user-available-images-amount = Available number of GPT images: { $amount }
-profile-user-role = Your role: { $role }
 profile-user-date-register = Date of registration: { $date }

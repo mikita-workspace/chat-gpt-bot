@@ -1,13 +1,14 @@
-import { UserRoles } from '@bot/constants';
+import { DAY_MS, UserRoles } from '@bot/constants';
 import { addMultipleUsersConversation, addUserConversation } from '@bot/conversations';
 import { inlineGoToAdminMenu, inlineGoToModeratorMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import {
   BotContextType,
+  DynamicNewGptLimitsMenuCallbackType,
   DynamicUserRolesMenuCallbackType,
   DynamicUsersMenuCallbackType,
 } from '@bot/types';
-import { removeFile } from '@bot/utils';
+import { parseTimestampUTC, removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.deleteMessage();
@@ -22,7 +23,8 @@ export const addMultipleUsersCallback = async (ctx: BotContextType) => {
 export const getAllUsersCallback = async (ctx: BotContextType) => {
   try {
     const users = await mongo.getUsers();
-    const currentUserRole = (await mongo.getUser(String(ctx?.from?.username)))?.role;
+    const currentUserRole =
+      (await mongo.getUser(String(ctx?.from?.username)))?.role ?? UserRoles.USER;
 
     if (users) {
       const { filePath, filePathForReply } = await csv.createUsersCsv(
@@ -36,10 +38,9 @@ export const getAllUsersCallback = async (ctx: BotContextType) => {
       if (filePath && filePathForReply) {
         await ctx.deleteMessage();
         await ctx.replyWithDocument(filePathForReply, {
-          reply_markup:
-            currentUserRole === UserRoles.ADMIN
-              ? inlineGoToAdminMenu(ctx)
-              : inlineGoToModeratorMenu(ctx),
+          reply_markup: [UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(currentUserRole)
+            ? inlineGoToAdminMenu(ctx)
+            : inlineGoToModeratorMenu(ctx),
         });
 
         await removeFile(filePath);
@@ -74,6 +75,42 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
     await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::users::changeUserRoleCallback::${JSON.stringify(error.message)}`);
+  }
+};
+
+export const changeUserGptLimitsCallback: DynamicNewGptLimitsMenuCallbackType = async (
+  ctx,
+  username,
+  newPackage,
+  newLimit,
+) => {
+  try {
+    const [gptTokens, gptImages] = newLimit.split('/');
+
+    await mongo.updateUser(username, {
+      limit: {
+        gptTokens: Number(gptTokens),
+        gptImages: Number(gptImages),
+        expire: parseTimestampUTC(Date.now() + DAY_MS),
+      },
+    });
+
+    await ctx.deleteMessage();
+    await ctx.reply(
+      ctx.t('users-menu-message-new-gpt-limits-success', {
+        username,
+        package: `[ ${ctx.t(
+          `user-gpt-limit-${newPackage.toLocaleLowerCase()}`,
+        )} ] ${gptTokens} / ${gptImages}`,
+      }),
+      {
+        reply_markup: inlineGoToAdminMenu(ctx),
+      },
+    );
+  } catch (error) {
+    await ctx.reply(ctx.t('error-message-common'));
+
+    logger.error(`callbacks::users::changeUserGptLimitsCallback::${JSON.stringify(error.message)}`);
   }
 };
 

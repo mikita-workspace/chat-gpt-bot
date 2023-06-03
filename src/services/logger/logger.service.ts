@@ -45,7 +45,7 @@ class LoggerService {
           ),
         }),
         new transports.MongoDB({
-          collection: BotLoggerModel.name,
+          collection: BotLoggerModel.collection.name,
           db: config.MONGODB_URI,
           format: format.metadata(),
           options: {
