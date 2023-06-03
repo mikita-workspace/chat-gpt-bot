@@ -30,6 +30,6 @@ export const adminMainMenu = new Menu<BotContextType>(AdminMenu.INITIAL)
     (ctx) => ctx.t('common-button-go-to-chat'),
     async (ctx) => {
       await ctx.deleteMessage();
-      await ctx.reply(ctx.t('initial-message-start'));
+      await ctx.reply(ctx.t('start-message'));
     },
   );

@@ -42,7 +42,7 @@ composer.callbackQuery(UsersMenuActions.ADD_NEW_MULTIPLE_USERS, async (ctx) => {
 
 composer.callbackQuery(CommonActions.GO_TO_CHAT, async (ctx) => {
   await ctx.deleteMessage();
-  await ctx.reply(ctx.t('initial-message-start'));
+  await ctx.reply(ctx.t('start-message'));
 });
 
 export const callbackQueryComposer = (): Middleware<BotContextType> => composer;

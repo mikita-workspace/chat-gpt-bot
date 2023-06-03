@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { getFileApiLink, getGPTAnswer } from '@bot/helpers';
+import { getFileTelegramApiLink, getGPTAnswer } from '@bot/helpers';
 import { inlineShareWithContacts } from '@bot/keyboards';
 import { logger, oggConverter, openAI } from '@bot/services';
 import { BotType } from '@bot/types';
@@ -11,7 +11,7 @@ export const voiceCommand = (bot: BotType) => {
       const messageId = Number(ctx.message.message_id);
 
       const voiceFile = await ctx.getFile();
-      const voiceFileApiLink = getFileApiLink(config.TELEGRAM_TOKEN, voiceFile.file_path ?? '');
+      const voiceFileApiLink = getFileTelegramApiLink(config.TELEGRAM_TOKEN, voiceFile.file_path ?? '');
 
       const oggPath = (await oggConverter.create(voiceFileApiLink, userId)) ?? '';
       const mp3Path = (await oggConverter.toMp3(oggPath, userId)) ?? '';

@@ -9,4 +9,4 @@ export const mapBotCommands = (i18n: I18n<BotContextType>, languageCode = 'en') 
   }));
 
 export const mapBotDescription = (i18n: I18n<BotContextType>, languageCode = 'en') =>
-  i18n.t(languageCode, 'initial-message-description', { botName, model: modelGPT });
+  i18n.t(languageCode, 'description-message', { botName, model: modelGPT });

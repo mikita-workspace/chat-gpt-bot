@@ -1,6 +1,6 @@
 import { config } from '@bot/config';
 import { ADD_USER_CSV_FORMAT, REGEXP_CSV_FILE_TYPE } from '@bot/constants';
-import { getFileApiLink, mapUsersFromCsv } from '@bot/helpers';
+import { getFileTelegramApiLink, mapUsersFromCsv } from '@bot/helpers';
 import { inlineAddNewMultipleUsers, inlineGoToAdminMenu } from '@bot/keyboards';
 import { csv, logger, mongo } from '@bot/services';
 import { ConversationType, UserModelType } from '@bot/types';
@@ -23,7 +23,7 @@ export const addMultipleUsersConversation: ConversationType = async (conversatio
       });
     }
 
-    const csvFileApiLink = getFileApiLink(config.TELEGRAM_TOKEN, csvFile.file_path ?? '');
+    const csvFileApiLink = getFileTelegramApiLink(config.TELEGRAM_TOKEN, csvFile.file_path ?? '');
 
     const csvPath = await csv.createCsv(csvFileApiLink, 'users');
     const parsedCsv = await csv.parseCsv<UserModelType>(csvPath);

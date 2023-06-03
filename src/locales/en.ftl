@@ -1,9 +1,3 @@
-# Initial messages
-initial-message-start = Waiting for a text or voice message...
-initial-message-about = Release: { $releaseVersion }
-  https://github.com/mikita-kandratsyeu/telegram-bot
-initial-message-description = Hi there 👋🏻, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on the { $model } architecture and possess extensive knowledge in various areas such as science, technology, arts, sports, health, and more. I can answer users' questions, help solve problems, and also engage in casual conversation on any topic. My interface allows for both text and voice input.
-
 # Commands
 command-profile = Profile
 command-admin = Admin-panel
@@ -11,7 +5,7 @@ command-moderator = Moderator-panel
 command-image = Generate an image via DALL·E 2
 command-clear = Clear current session
 command-description = Description
-command-about = About developer
+command-about = About the bot
 
 # Errors messages
 error-message-common = Something went wrong. Try again!
@@ -26,6 +20,15 @@ common-button-go-to-chat = Go to chat
 common-button-go-back = ⬅️ Go back
 common-button-cancel = Cancel
 common-button-share = Share
+
+# Start
+start-message = Waiting for a text or voice message...
+
+# Description
+description-message = Hi there 👋🏻, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on the { $model } architecture and possess extensive knowledge in various areas such as science, technology, arts, sports, health, and more. I can answer users' questions, help solve problems, and also engage in casual conversation on any topic. My interface allows for both text and voice input.
+
+# About
+about-message-release = Release: { $release }
 
 # Admin panel
 admin-panel-title = Admin-panel of { $botName }.

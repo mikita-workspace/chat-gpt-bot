@@ -6,6 +6,9 @@ dotenv.config({
 });
 
 export const config = {
+  GITHUB_REPO: process.env.GITHUB_REPO ?? '',
+  GITHUB_TOKEN: process.env.GITHUB_TOKEN ?? '',
+  GITHUB_USERNAME: process.env.GITHUB_USERNAME ?? '',
   MONGODB_URI: process.env.MONGODB_URI ?? '',
   OPEN_AI_ORG: process.env.OPEN_AI_ORG ?? '',
   OPEN_AI_TOKEN: process.env.OPEN_AI_TOKEN ?? '',
