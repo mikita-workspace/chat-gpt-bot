@@ -6,7 +6,6 @@ import {
   BotContextType,
   DynamicUserRolesMenuCallbackType,
   DynamicUsersMenuCallbackType,
-  UserModelType,
 } from '@bot/types';
 import { removeFile } from '@bot/utils';
 
