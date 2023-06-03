@@ -17,7 +17,6 @@ export const aboutCommand = async (bot: BotType) =>
           headers: {
             Authorization: `Bearer ${config.GITHUB_TOKEN}`,
             Accept: 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28',
           },
         });
 
