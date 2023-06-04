@@ -38,6 +38,13 @@ export const removeFile = async (path: string) => {
 
 export const isEmptyObject = (object: object) => Object.keys(object).length === 0;
 
+export const getKeyByValue = (object: object, value: string) => {
+  const indexOfS = Object.values(object).indexOf(value as unknown as object);
+  const key = Object.keys(object)[indexOfS];
+
+  return key;
+};
+
 export const uniqBy = <T>(arr: T[], key: keyof T): T[] =>
   Object.values(
     arr.reduce(
@@ -49,10 +56,25 @@ export const uniqBy = <T>(arr: T[], key: keyof T): T[] =>
     ),
   );
 
-export const parseTimestampUTC = (timestamp: number) => {
+export const parseTimestampUTC = (timestamp: number | string | Date) => {
   const date = new Date(timestamp);
 
   return date.toUTCString();
 };
 
-export const capitalize = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+export const capitalize = (value: string) =>
+  value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+
+// Source: https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const applyMixins = (derivedCtor: any, constructors: any[]) => {
+  constructors.forEach((baseCtor) => {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
+      Object.defineProperty(
+        derivedCtor.prototype,
+        name,
+        Object.getOwnPropertyDescriptor(baseCtor.prototype, name) || Object.create(null),
+      );
+    });
+  });
+};

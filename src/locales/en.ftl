@@ -1,9 +1,3 @@
-# Initial messages
-initial-message-start = Waiting for a text or voice message...
-initial-message-about = Release: { $releaseVersion }
-  https://github.com/mikita-kandratsyeu/telegram-bot
-initial-message-description = Hi there 👋🏻, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on the { $model } architecture and possess extensive knowledge in various areas such as science, technology, arts, sports, health, and more. I can answer users' questions, help solve problems, and also engage in casual conversation on any topic. My interface allows for both text and voice input.
-
 # Commands
 command-profile = Profile
 command-admin = Admin-panel
@@ -11,7 +5,7 @@ command-moderator = Moderator-panel
 command-image = Generate an image via DALL·E 2
 command-clear = Clear current session
 command-description = Description
-command-about = About developer
+command-about = About the bot
 
 # Errors messages
 error-message-common = Something went wrong. Try again!
@@ -27,6 +21,15 @@ common-button-go-back = ⬅️ Go back
 common-button-cancel = Cancel
 common-button-share = Share
 
+# Start
+start-message = Waiting for a text or voice message...
+
+# Description
+description-message = Hi there 👋🏻, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on the { $model } architecture and possess extensive knowledge in various areas such as science, technology, arts, sports, health, and more. I can answer users' questions, help solve problems, and also engage in casual conversation on any topic. My interface allows for both text and voice input.
+
+# About
+about-message-release = Release: { $release }
+
 # Admin panel
 admin-panel-title = Admin-panel of { $botName }.
 
@@ -34,7 +37,7 @@ admin-panel-title = Admin-panel of { $botName }.
 admin-menu-button-sessions = Sessions
 admin-menu-button-conversations = Conversations
 admin-menu-button-users = Users
-admin-menu-button-logs = Logs
+admin-menu-button-loggers = Logs
 admin-menu-button-csv-reader = CSV Reader
 admin-menu-button-go-to-menu = Go to Admin-panel
 
@@ -66,6 +69,7 @@ users-menu-button-get-all = Get all users
 users-menu-button-add = Add user
 users-menu-button-add-multiple = Add multiple users
 users-menu-button-change-role = Change role
+users-menu-button-change-limits = Change GPT limits
 users-menu-button-block-unblock = Block/Unblock
 users-menu-button-delete = Delete user
 
@@ -82,6 +86,7 @@ users-menu-message-enter-csv = Load a CSV file with the following columns: { $cs
 users-menu-message-incorrect-csv = The file extension does not match the CSV. Try again!
 users-menu-message-multiple-add-success = Users [ { $users } ] were successfully added.
 users-menu-message-multiple-add-error = Users have already been added. Try again!
+users-menu-message-new-gpt-limits-success =  User { $username } has been given a new GPT limit package - { $package }.
 
 # User roles
 user-role-super-admin = Super Admin
@@ -93,6 +98,12 @@ user-role-user = User
 user-status-blocked = Blocked
 user-status-available = Available
 
+# User GPT limits packages
+user-gpt-limit-base = Base
+user-gpt-limit-premium = Premium
+user-gpt-limit-vip = VIP
+user-gpt-limit-super_vip = Super VIP
+
 # Info messages
 info-message-moderator-panel-for-super-admin = Note: Please go to the Admin-panel.
 info-message-clear-current-session = The current session for the { $username } has been cleared.
@@ -100,7 +111,8 @@ info-message-reach-gpt-tokens-limit = You have used all available GPT tokens. Pl
 
 # Profile
 profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
+profile-user-role = Your role: { $role }
+profile-user-gpt-package = GPT limit package: { $package }
 profile-user-available-messages-amount = Available number of GPT tokens: { $amount }
 profile-user-available-images-amount = Available number of GPT images: { $amount }
-profile-user-role = Your role: { $role }
 profile-user-date-register = Date of registration: { $date }

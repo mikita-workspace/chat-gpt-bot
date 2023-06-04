@@ -26,7 +26,7 @@ module.exports = {
     '@typescript-eslint/no-unused-expressions': ['error'],
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
-    'no-console': 0,
+    'no-console': 1,
     'import/no-extraneous-dependencies': 'off',
     'prettier/prettier': ['error'],
     'file-progress/activate': 1,

@@ -37,7 +37,6 @@ export const createBot = () => {
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
       model: modelGPT,
-      releaseVersion: config.RELEASE_VERSION,
       username: ctx?.from?.username ?? '',
     }),
     directory: path.join(__dirname, './locales'),

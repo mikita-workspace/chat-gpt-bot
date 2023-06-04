@@ -1,6 +1,7 @@
 import { createBot } from '@bot/bot';
 import { config } from '@bot/config';
 import { botName, WEBHOOK_TIMEOUT } from '@bot/constants';
+import { handleTimeoutError } from '@bot/helpers';
 import { run } from '@grammyjs/runner';
 import express from 'express';
 import { webhookCallback } from 'grammy';
@@ -13,15 +14,15 @@ const botInitialize = async () => {
 
   if (process.env.NODE_ENV === 'production') {
     // Use Webhooks for the production server
+    // Source: https://grammy.dev/guide/deployment-types.html#long-polling-vs-webhooks
     const app = express();
 
     app.use(express.json());
-    app.use(webhookCallback(bot, 'express', 'return', WEBHOOK_TIMEOUT));
+    app.use(webhookCallback(bot, 'express', handleTimeoutError, WEBHOOK_TIMEOUT));
 
-    const PORT = process.env.PORT || 3000;
-
-    app.listen(PORT, () => {
-      console.info(`${botName} listening on port ${PORT}`);
+    app.listen(config.PORT, () => {
+      // eslint-disable-next-line no-console
+      console.info(`${botName} listening on port ${config.PORT}`);
     });
   } else {
     // Use Long Polling for development
