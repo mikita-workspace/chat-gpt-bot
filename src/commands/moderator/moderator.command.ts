@@ -8,7 +8,7 @@ export const moderatorCommand = (bot: BotType) =>
     await ctx.reply(
       `${ctx.t('moderator-panel-title')}` +
         `${
-          config.SUPER_ADMIN_USERNAME === ctx.from?.username
+          config.SUPER_ADMIN_USER_ID === ctx.from?.id
             ? `\n\r\n\r${ctx.t('info-message-moderator-panel-for-super-admin')}`
             : ''
         }`,

@@ -6,15 +6,16 @@ import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   try {
     const username = ctx?.from?.username;
+    const userId = ctx?.from?.id;
     const action = String(ctx?.update?.message?.text);
 
+    logger.defaultMeta = { username: username ?? userId };
+
+    if (userId === config.SUPER_ADMIN_USER_ID) {
+      return await next();
+    }
+
     if (username) {
-      logger.defaultMeta = { username };
-
-      if (username === config.SUPER_ADMIN_USERNAME) {
-        return await next();
-      }
-
       const user = await mongo.getUser(username);
 
       if (user?.enabled) {

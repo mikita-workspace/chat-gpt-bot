@@ -12,8 +12,8 @@ export const config = {
   MONGODB_URI: process.env.MONGODB_URI ?? '',
   OPEN_AI_ORG: process.env.OPEN_AI_ORG ?? '',
   OPEN_AI_TOKEN: process.env.OPEN_AI_TOKEN ?? '',
-  PORT: process.env.PORT ?? 8080,
-  RELEASE_VERSION: process.env.npm_package_version ?? '',
+  PORT: Number(process.env.PORT ?? 8080),
   SUPER_ADMIN_USERNAME: process.env.SUPER_ADMIN_USERNAME ?? '',
+  SUPER_ADMIN_USER_ID: Number(process.env.SUPER_ADMIN_USER_ID ?? ''),
   TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN ?? '',
 };
