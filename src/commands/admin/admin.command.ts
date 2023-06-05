@@ -1,4 +1,4 @@
-import { BotCommands } from '@bot/constants';
+import { BotCommands, TTL_DEFAULT } from '@bot/constants';
 import { adminMainMenu } from '@bot/menu';
 import { BotType } from '@bot/types';
 
