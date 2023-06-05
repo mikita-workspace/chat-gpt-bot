@@ -106,6 +106,7 @@ user-gpt-limit-super_vip = Супер VIP
 
 # Info messages
 info-message-moderator-panel-for-super-admin = Примечание: Пожалуйста, перейдите в Админ-панель.
+info-message-node-cache = Примечание: Установлено кэширование данных - { $cache } минут.
 info-message-clear-current-session = Текущая сессия для { $username } была очищена.
 info-message-reach-gpt-tokens-limit = Вы использовали все доступные GPT токены. Пожалуйста, повторите попытку после { $date }.
 
