@@ -4,7 +4,11 @@ import {
   ModeratorMenuActions,
   UsersMenuActions,
 } from '@bot/constants';
-import { addMultipleUsersConversation, addUserConversation } from '@bot/conversations';
+import {
+  addMultipleUsersConversation,
+  addUserConversation,
+  createImageConversation,
+} from '@bot/conversations';
 import { adminMainMenu, moderatorMainMenu } from '@bot/menu';
 import { BotContextType } from '@bot/types';
 import { Composer, Middleware } from 'grammy';
@@ -41,8 +45,16 @@ composer.callbackQuery(UsersMenuActions.ADD_NEW_MULTIPLE_USERS, async (ctx) => {
 });
 
 composer.callbackQuery(CommonActions.GO_TO_CHAT, async (ctx) => {
+  await ctx.conversation.exit(createImageConversation.name);
+
   await ctx.deleteMessage();
   await ctx.reply(ctx.t('start-message'));
+});
+
+composer.callbackQuery(CommonActions.CREATE_IMAGE, async (ctx) => {
+  await ctx.deleteMessage();
+
+  await ctx.conversation.enter(createImageConversation.name);
 });
 
 export const callbackQueryComposer = (): Middleware<BotContextType> => composer;

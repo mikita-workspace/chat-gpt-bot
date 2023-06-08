@@ -113,7 +113,11 @@ info-message-reach-gpt-tokens-limit = You have used all available GPT tokens. Pl
 # Profile
 profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
 profile-user-role = Your role: { $role }
-profile-user-gpt-package = GPT limit package: { $package }
+profile-user-gpt-package = GPT limit: { $package }
 profile-user-available-messages-amount = Available number of GPT tokens: { $amount }
 profile-user-available-images-amount = Available number of GPT images: { $amount }
 profile-user-date-register = Date of registration: { $date }
+
+# Image generator
+image-generator-enter-request = Enter the query in the following format: { $gptImageQuery }.
+image-generator-incorrect-image-number = The number of images entered is incorrect. Try again!

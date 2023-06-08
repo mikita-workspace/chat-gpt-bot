@@ -1,4 +1,4 @@
-# [ChatGPT | Smart Bot](https://t.me/smart_gpt_voice_bot)
+# [Pied Piper | GPT](https://t.me/smart_gpt_voice_bot)
 
 [![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/mikita-kandratsyeu/chat-gpt-bot/ci.yml?branch=main&style=for-the-badge)](https://github.com/mikita-kandratsyeu/chat-gpt-bot/actions)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mikita-kandratsyeu/chat-gpt-bot?style=for-the-badge)](https://github.com/mikita-kandratsyeu/chat-gpt-bot/commits/main)
