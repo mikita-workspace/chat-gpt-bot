@@ -32,6 +32,8 @@ export const createImageConversation: ConversationType = async (conversation, ct
 
     const base64Images = response.map((base64Image) => base64Image.b64_json ?? '');
 
+    conversation.session.limit.amountOfGptImages += base64Images.length;
+
     // TODO: Save to base64 images to DB for User - UserImage model
 
     const imageFilesPath = await conversation.external(async () =>

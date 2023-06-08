@@ -109,6 +109,7 @@ info-message-moderator-panel-for-super-admin = Note: Please go to the Admin-pane
 info-message-node-cache = Note: Data caching is set to { $cache } minutes.
 info-message-clear-current-session = The current session for the { $username } has been cleared.
 info-message-reach-gpt-tokens-limit = You have used all available GPT tokens. Please try again after { $date }.
+info-message-reach-gpt-images-limit = You have used all available GPT images. Please try again after { $date }.
 
 # Profile
 profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
