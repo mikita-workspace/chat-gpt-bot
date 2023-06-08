@@ -1,7 +1,9 @@
 import { TTL_DEFAULT } from '@bot/constants';
 import { logger } from '@bot/services';
 import { unlink } from 'fs/promises';
+import Jimp from 'jimp';
 import NodeCache from 'node-cache';
+import { resolve as resolvePath } from 'path';
 
 export const memoryCache = new NodeCache({
   stdTTL: TTL_DEFAULT,
@@ -77,4 +79,25 @@ export const applyMixins = (derivedCtor: any, constructors: any[]) => {
       );
     });
   });
+};
+
+export const convertBase64ToFiles = async (base64Images: string[]) => {
+  try {
+    const imageFiles: string[] = [];
+
+    const promises = base64Images.map(async (base64Image, index) => {
+      const imagePath = resolvePath(__dirname, '../../assets', `image-${index}.png`);
+      const buffer = Buffer.from(base64Image, 'base64');
+
+      const image = await Jimp.read(buffer);
+      image.quality(5).write(imagePath);
+      imageFiles.push(imagePath);
+    });
+
+    return await Promise.all(promises).then(() => imageFiles);
+  } catch (error) {
+    logger.error(`utils::convertBase64ToFiles::${JSON.stringify(error.message)}`);
+
+    return [];
+  }
 };

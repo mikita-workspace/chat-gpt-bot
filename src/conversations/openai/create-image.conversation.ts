@@ -2,7 +2,7 @@ import { CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
 import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
 import { logger, openAI } from '@bot/services';
 import { ConversationType } from '@bot/types';
-import { removeFile } from '@bot/utils';
+import { convertBase64ToFiles, removeFile } from '@bot/utils';
 import { InputFile } from 'grammy';
 import { InputMediaPhoto } from 'grammy/types';
 
@@ -35,7 +35,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
     // TODO: Save to base64 images to DB for User - UserImage model
 
     const imageFilesPath = await conversation.external(async () =>
-      openAI.convertGptImagesToFile(base64Images),
+      convertBase64ToFiles(base64Images),
     );
 
     const inputMediaFiles: InputMediaPhoto[] = imageFilesPath.map((imageFilePath) => ({

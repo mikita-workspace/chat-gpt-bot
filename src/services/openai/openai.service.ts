@@ -8,9 +8,7 @@ import {
 import { logger } from '@bot/services';
 import { removeFile } from '@bot/utils';
 import { createReadStream } from 'fs';
-import Jimp from 'jimp';
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
-import { resolve as resolvePath } from 'path';
 
 class OpenAIService {
   openAI: OpenAIApi;
@@ -88,27 +86,6 @@ class OpenAIService {
       } else {
         logger.error(`openAIService::generateImage::${JSON.stringify(error.message)}`);
       }
-
-      return [];
-    }
-  }
-
-  async convertGptImagesToFile(base64Images: string[]) {
-    try {
-      const imageFiles: string[] = [];
-
-      const promises = base64Images.map(async (base64Image, index) => {
-        const imagePath = resolvePath(__dirname, '../../../assets', `image-${index}.png`);
-        const buffer = Buffer.from(base64Image, 'base64');
-
-        const image = await Jimp.read(buffer);
-        image.quality(5).write(imagePath);
-        imageFiles.push(imagePath);
-      });
-
-      return await Promise.all(promises).then(() => imageFiles);
-    } catch (error) {
-      logger.error(`openAIService::convertGptImagesToFile::${JSON.stringify(error.message)}`);
 
       return [];
     }
