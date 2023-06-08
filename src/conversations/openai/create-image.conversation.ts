@@ -1,13 +1,10 @@
-import { config } from '@bot/config';
-import {
-  ADD_USER_CSV_FORMAT,
-  CREATE_IMAGE_QUERY_FORMAT,
-  REGEXP_CSV_FILE_TYPE,
-} from '@bot/constants';
-import { getFileTelegramApiLink, mapUsersFromCsv } from '@bot/helpers';
-import { inlineAddNewMultipleUsers, inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
-import { csv, logger, mongo, openAI } from '@bot/services';
-import { ConversationType, UserModelType } from '@bot/types';
+import { CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
+import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
+import { logger, openAI } from '@bot/services';
+import { ConversationType } from '@bot/types';
+import { removeFile } from '@bot/utils';
+import { InputFile } from 'grammy';
+import { InputMediaPhoto } from 'grammy/types';
 
 export const createImageConversation: ConversationType = async (conversation, ctx) => {
   try {
@@ -29,9 +26,28 @@ export const createImageConversation: ConversationType = async (conversation, ct
       });
     }
 
-    const response = conversation.external(() =>
+    const response = await conversation.external(async () =>
       openAI.generateImage(prompt, Number(numberOfImages)),
     );
+
+    const base24Images = response.map((base24Image) => base24Image.b64_json ?? '');
+
+    // TODO: Save to DB for User - UserImages model
+
+    const imageFilesPath = await conversation.external(async () =>
+      openAI.convertGptImagesToFile(base24Images),
+    );
+
+    const inputMediaFiles: InputMediaPhoto[] = imageFilesPath.map((imageFilePath) => ({
+      type: 'photo',
+      media: new InputFile(imageFilePath),
+    }));
+
+    await ctx.replyWithMediaGroup(inputMediaFiles, {
+      reply_to_message_id: messageId,
+    });
+
+    imageFilesPath.forEach((path) => removeFile(path));
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 

@@ -48,9 +48,9 @@ export const BotCommandsWithDescription = [
 
 // Per day GPT Token limits
 export enum GPTLimits {
-  BASE = '4096/10',
-  PREMIUM = '8192/20',
-  VIP = '16384/40',
+  BASE = '4096/5',
+  PREMIUM = '8192/10',
+  VIP = '16384/20',
   SUPER_VIP = '32768/50',
 }
 
