@@ -93,13 +93,13 @@ class OpenAIService {
     }
   }
 
-  async convertGptImagesToFile(base24Images: string[]) {
+  async convertGptImagesToFile(base64Images: string[]) {
     try {
       const imageFiles: string[] = [];
 
-      const promises = base24Images.map(async (base24Image, index) => {
+      const promises = base64Images.map(async (base64Image, index) => {
         const imagePath = resolvePath(__dirname, '../../../assets', `image-${index}.png`);
-        const buffer = Buffer.from(base24Image, 'base64');
+        const buffer = Buffer.from(base64Image, 'base64');
 
         const image = await Jimp.read(buffer);
         image.quality(5).write(imagePath);

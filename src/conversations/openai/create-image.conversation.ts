@@ -30,12 +30,12 @@ export const createImageConversation: ConversationType = async (conversation, ct
       openAI.generateImage(prompt, Number(numberOfImages)),
     );
 
-    const base24Images = response.map((base24Image) => base24Image.b64_json ?? '');
+    const base64Images = response.map((base64Image) => base64Image.b64_json ?? '');
 
-    // TODO: Save to DB for User - UserImages model
+    // TODO: Save to base64 images to DB for User - UserImage model
 
     const imageFilesPath = await conversation.external(async () =>
-      openAI.convertGptImagesToFile(base24Images),
+      openAI.convertGptImagesToFile(base64Images),
     );
 
     const inputMediaFiles: InputMediaPhoto[] = imageFilesPath.map((imageFilePath) => ({
@@ -48,6 +48,8 @@ export const createImageConversation: ConversationType = async (conversation, ct
     });
 
     imageFilesPath.forEach((path) => removeFile(path));
+
+    return;
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
