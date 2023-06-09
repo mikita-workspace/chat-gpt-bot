@@ -69,7 +69,7 @@ export const getTimezoneString = (tzOffset: number) => {
   const hours = Math.abs(Math.floor(tzOffset / 60));
   const minutes = Math.abs(tzOffset % 60);
 
-  return `UTC${sign}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  return `UTC ${sign}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
 
 export const capitalize = (value: string) =>
