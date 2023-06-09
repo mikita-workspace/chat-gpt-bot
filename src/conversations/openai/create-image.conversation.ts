@@ -35,7 +35,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
 
     conversation.session.limit.amountOfGptImages += base64Images.length;
     conversation.session.custom.images.push({
-      base64: base64Images,
+      buffer: base64Images.map((base64) => Buffer.from(base64, 'base64')),
       prompt,
     });
 

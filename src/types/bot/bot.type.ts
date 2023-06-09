@@ -11,7 +11,7 @@ export type SessionMessageType = {
 };
 
 export type SessionImageType = {
-  base64: string[];
+  buffer: Buffer[];
   prompt: string;
 };
 
