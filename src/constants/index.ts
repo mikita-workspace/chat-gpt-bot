@@ -21,7 +21,7 @@ export const WEBHOOK_TIMEOUT = 60_000;
 export const GITHUB_API = 'https://api.github.com';
 
 // Bot config
-export const supportLanguageCodes = ['en', 'ru'];
+export const supportLanguageCodes = ['en', 'ru', 'be'];
 
 export enum BotCommands {
   ABOUT = 'about',
