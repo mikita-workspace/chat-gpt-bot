@@ -109,11 +109,16 @@ info-message-moderator-panel-for-super-admin = Примечание: Пожал�
 info-message-node-cache = Примечание: Установлено кэширование данных - { $cache } минут.
 info-message-clear-current-session = Текущая сессия для { $username } была очищена.
 info-message-reach-gpt-tokens-limit = Вы использовали все доступные GPT токены. Пожалуйста, повторите попытку после { $date }.
+info-message-reach-gpt-images-limit = Вы использовали все доступные GPT изображения. Пожалуйста, повторите попытку после { $date }.
 
 # Profile
 profile-user-initial-message = Привет 👋🏻, { $firstName } { $lastName }!
 profile-user-role = Ваша роль: { $role }
-profile-user-gpt-package = GPT лимит пакет: { $package }
+profile-user-gpt-package = GPT лимит: { $package }
 profile-user-available-messages-amount = Доступное количество GPT токенов: { $amount }
 profile-user-available-images-amount = Доступное количество GPT картинок: { $amount }
 profile-user-date-register = Дата регистрации: { $date }
+
+# Image generator
+image-generator-enter-request = Введите запрос в следующем формате: { $gptImageQuery }.
+image-generator-incorrect-image-number = Введено неверное количество картинок. Попробуйте еще раз!

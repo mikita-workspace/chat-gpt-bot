@@ -10,6 +10,8 @@ export enum MessageRolesGPT {
 }
 
 export const MAX_CONTEXT_GPT_TOKENS = 4096;
+export const IMAGE_SIZE_DEFAULT = '512x512';
+export const MAX_IMAGES_REQUEST = 3;
 
 // Telegram API
 export const TELEGRAM_API = 'https://api.telegram.org';
@@ -26,31 +28,33 @@ export enum BotCommands {
   ADMIN = 'admin',
   CLEAR = 'clear',
   DESCRIPTION = 'description',
+  IMAGE = 'image',
   MODERATOR = 'moderator',
   PROFILE = 'profile',
   START = 'start',
 }
 
-export const botName = 'ChatGPT | Smart Bot';
+export const botName = 'Pied Piper | GPT';
 
 export const BotCommandsWithDescription = [
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommands.CLEAR, i18nKey: 'command-clear' },
+  { command: BotCommands.IMAGE, i18nKey: 'command-image' },
   { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
   { command: BotCommands.MODERATOR, i18nKey: 'command-moderator' },
   { command: BotCommands.DESCRIPTION, i18nKey: 'command-description' },
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
 ];
 
-export const DAY_MS = 60 * 60 * 24 * 1000;
-
 // Per day GPT Token limits
 export enum GPTLimits {
-  BASE = '4096/10',
-  PREMIUM = '8192/20',
-  VIP = '16384/40',
+  BASE = '4096/5',
+  PREMIUM = '8192/10',
+  VIP = '16384/20',
   SUPER_VIP = '32768/50',
 }
+
+export const DAY_MS = 60 * 60 * 24 * 1000;
 
 // Node cache
 export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
@@ -74,6 +78,9 @@ export const addUserFormat = (userRole: UserRoles) =>
   }`;
 
 export const ADD_USER_CSV_FORMAT = '<username> | <role>';
+
+// Image
+export const CREATE_IMAGE_QUERY_FORMAT = `<prompt>;<Number of images (1-${MAX_IMAGES_REQUEST})>`;
 
 // Regexp
 export const REGEXP_USERNAME = /^[a-zA-Z0-9_]{5,32}$/;
@@ -166,6 +173,7 @@ export enum UsersMenu {
 // Menu actions
 export enum CommonActions {
   GO_TO_CHAT = 'go-to-chat-action',
+  CREATE_IMAGE = 'create-image-action',
 }
 
 export enum AdminMenuActions {

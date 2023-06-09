@@ -1,5 +1,10 @@
 import { config } from '@bot/config';
-import { modelGPT, transcriptionModelGPT } from '@bot/constants';
+import {
+  IMAGE_SIZE_DEFAULT,
+  MAX_IMAGES_REQUEST,
+  modelGPT,
+  transcriptionModelGPT,
+} from '@bot/constants';
 import { logger } from '@bot/services';
 import { removeFile } from '@bot/utils';
 import { createReadStream } from 'fs';
@@ -39,10 +44,10 @@ class OpenAIService {
 
   async transcription(filepath: string) {
     try {
-      const fileStream: unknown = createReadStream(filepath);
+      const fileStream = createReadStream(filepath);
 
       const response = await this.openAI.createTranscription(
-        fileStream as File,
+        fileStream as unknown as File,
         transcriptionModelGPT,
       );
 
@@ -58,6 +63,31 @@ class OpenAIService {
       } else {
         logger.error(`openAIService::transcription::${JSON.stringify(error.message)}`);
       }
+    }
+  }
+
+  async generateImage(prompt: string, numberOfImages: number) {
+    try {
+      const response = await this.openAI.createImage({
+        n: Math.min(MAX_IMAGES_REQUEST, numberOfImages <= 0 ? 1 : numberOfImages),
+        prompt,
+        response_format: 'b64_json',
+        size: IMAGE_SIZE_DEFAULT,
+      });
+
+      return response.data.data;
+    } catch (error) {
+      if (error.response) {
+        logger.error(
+          `openAIService::generateImage::[${error.response.status}]::${JSON.stringify(
+            error.response.data,
+          )}`,
+        );
+      } else {
+        logger.error(`openAIService::generateImage::${JSON.stringify(error.message)}`);
+      }
+
+      return [];
     }
   }
 }

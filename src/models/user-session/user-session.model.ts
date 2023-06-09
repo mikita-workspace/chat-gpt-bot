@@ -6,6 +6,7 @@ const schema = new Schema<UserSessionModelType>({
   value: {
     username: { type: String },
     messages: [],
+    images: [],
   },
 });
 

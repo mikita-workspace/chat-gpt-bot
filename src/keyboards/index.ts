@@ -30,3 +30,6 @@ export const inlineAddNewMultipleUsers = (ctx: BotContextType) =>
 
 export const inlineShareWithContacts = (ctx: BotContextType, query: string) =>
   new InlineKeyboard().switchInline(ctx.t('common-button-share'), query);
+
+export const inlineCreateImage = (ctx: BotContextType) =>
+  new InlineKeyboard().text(ctx.t('error-message-common-try-again'), CommonActions.CREATE_IMAGE);
