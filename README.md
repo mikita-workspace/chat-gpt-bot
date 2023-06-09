@@ -24,9 +24,9 @@ docker-compose down
 ## Support languages
 
 ```
-en
-ru
-by
+en: English
+ru: Russian
+be: Belarusian
 ```
 
 ## License

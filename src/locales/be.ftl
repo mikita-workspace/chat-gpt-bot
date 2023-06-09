@@ -34,7 +34,7 @@ about-message-release = Рэліз: { $release }
 admin-panel-title = Адмін-панэль для { $botName }.
 
 # Admin menu buttons
-admin-menu-button - sessions = Сесіі
+admin-menu-button-sessions = Сесіі
 admin-menu-button-conversations = Гутаркі
 admin-menu-button-users = Карыстальнікі
 admin-menu-button-loggers = Логі
@@ -45,7 +45,7 @@ admin-menu-button-go-to-menu = Перайсці ў адмін-панэль
 moderator-panel-title = Мадэратар-панэль для { $botName }.
 
 # Moderator menu buttons
-moderator-menu-button - sessions = Сесіі
+moderator-menu-button-sessions = Сесіі
 moderator-menu-button-users = Карыстальнікі
 moderator-menu-button-csv-reader = CSV Счытвальнік
 moderator-menu-button-go-to-menu = Перайсці ў Мадэратар-панэль
@@ -65,11 +65,11 @@ conversations-menu-button-delete = Выдаліць гутарку
 conversations-menu-delete-success = Гутарка для { $username } была выдаленая.
 
 # Users menu buttons
-users-menu-button-get - all = Атрымаць усіх карыстальнікаў
+users-menu-button-get-all = Атрымаць усіх карыстальнікаў
 users-menu-button-add = Дадаць карыстальніка
 users-menu-button-add-multiple = Дадаць некалькіх карыстальнікаў
-users-menu-button - change-role = Змяніць ролю
-users-menu-button - change-limits = Змяніць GPT ліміты
+users-menu-button-change-role = Змяніць ролю
+users-menu-button-change-limits = Змяніць GPT ліміты
 users-menu-button-block-unblock = Заблакаваць / разблакаваць
 users-menu-button-delete = Выдаліць карыстальніка
 
@@ -77,7 +77,7 @@ users-menu-button-delete = Выдаліць карыстальніка
 users-menu-message-add-success = Карыстальнік { $username } быў дададзены.
 users-menu-message-incorrect = Уведзена няправільнае імя карыстальніка. Паспрабуйце яшчэ раз!
 users-menu-message-exist = Карыстальнік { $username } быў ужо дададзены.
-users-menu-message - block-success = Карыстальнік { $username } быў заблакаваны
+users-menu-message-block-success = Карыстальнік { $username } быў заблакаваны
 users-menu-message-unblock-success = Карыстальнік { $username } быў разблакаваны
 users-menu-message-delete-success = Карыстальнік { $username } быў выдалены.
 users-menu-message-change-role-success = Карыстачу { $username } была прадастаўлена новая роля - { $role }.
@@ -105,14 +105,14 @@ user-gpt-limit-vip = VIP
 user-GPT-limit-super_vip = Супер VIP
 
 # Info messages
-info-message-moderator-panel-for-super - admin = Заўвага: калі ласка, перайдзіце ў адмін-панэль.
-info-message-node - cache = Заўвага: Устаноўлена кэшаванне дадзеных - { $cache } хвілін.
+info-message-moderator-panel-for-super-admin = Заўвага: калі ласка, перайдзіце ў адмін-панэль.
+info-message-node-cache = Заўвага: Устаноўлена кэшаванне дадзеных - { $cache } хвілін.
 info-message-clear-current-session = Бягучая сесія для { $username } была ачышчана.
 info-message-reach-gpt-tokens-limit = Вы выкарыстоўвалі ўсе даступныя GPT токены. Калі ласка, паспрабуйце яшчэ раз пасля { $date }.
 info-message-reach-gpt-images-limit = Вы выкарыстоўвалі ўсе даступныя GPT малюнка. Калі ласка, паспрабуйце яшчэ раз пасля { $date }.
 
 # Profile
-profile-user-initial-message = Прывітанне 👋🏻, { $firstname } { $lastName }!
+profile-user-initial-message = Прывітанне 👋🏻, { $firstName } { $lastName }!
 profile-user-role = Ваша роля: { $role }
 profile-user-gpt-package = GPT ліміт: { $package }
 profile-user-available-messages-amount = Даступнае колькасць GPT токенаў: { $amount }
