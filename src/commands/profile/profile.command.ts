@@ -2,7 +2,7 @@ import { BotCommands, GPTLimits } from '@bot/constants';
 import { inlineGoToChat } from '@bot/keyboards';
 import { mongo } from '@bot/services';
 import { BotType } from '@bot/types';
-import { getKeyByValue } from '@bot/utils';
+import { getKeyByValue, getTimezoneString } from '@bot/utils';
 
 export const profileCommand = (bot: BotType) =>
   bot.command(BotCommands.PROFILE, async (ctx) => {
@@ -12,6 +12,7 @@ export const profileCommand = (bot: BotType) =>
 
     if (user) {
       const userLimit = ctx.session.limit;
+      const timestamp = new Date(user.timestamp);
       const gptLimitPackage = getKeyByValue(
         GPTLimits,
         `${user.limit.gptTokens}/${user.limit.gptImages}`,
@@ -27,7 +28,8 @@ export const profileCommand = (bot: BotType) =>
         })}\n\r${ctx.t('profile-user-available-images-amount', {
           amount: Math.max(user.limit.gptImages - userLimit.amountOfGptImages, 0),
         })}\n\r\n\r${ctx.t('profile-user-date-register', {
-          date: new Date(user.timestamp).toLocaleString(currentLocale),
+          date: timestamp.toLocaleString(currentLocale),
+          utc: getTimezoneString(timestamp.getTimezoneOffset()),
         })}`,
         {
           reply_markup: inlineGoToChat(ctx),

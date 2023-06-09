@@ -108,8 +108,8 @@ user-GPT-limit-super_vip = Супер VIP
 info-message-moderator-panel-for-super-admin = Заўвага: калі ласка, перайдзіце ў адмін-панэль.
 info-message-node-cache = Заўвага: Устаноўлена кэшаванне дадзеных - { $cache } хвілін.
 info-message-clear-current-session = Бягучая сесія для { $username } была ачышчана.
-info-message-reach-gpt-tokens-limit = Вы выкарыстоўвалі ўсе даступныя GPT токены. Калі ласка, паспрабуйце яшчэ раз пасля { $date }.
-info-message-reach-gpt-images-limit = Вы выкарыстоўвалі ўсе даступныя GPT малюнка. Калі ласка, паспрабуйце яшчэ раз пасля { $date }.
+info-message-reach-gpt-tokens-limit = Вы выкарыстоўвалі ўсе даступныя GPT токены. Калі ласка, паспрабуйце яшчэ раз пасля { $date } { $utc }
+info-message-reach-gpt-images-limit = Вы выкарыстоўвалі ўсе даступныя GPT малюнка. Калі ласка, паспрабуйце яшчэ раз пасля { $date } { $utc }.
 
 # Profile
 profile-user-initial-message = Прывітанне 👋🏻, { $firstName } { $lastName }!
@@ -117,7 +117,7 @@ profile-user-role = Ваша роля: { $role }
 profile-user-gpt-package = GPT ліміт: { $package }
 profile-user-available-messages-amount = Даступнае колькасць GPT токенаў: { $amount }
 profile-user-available-images-amount = Даступнае колькасць GPT малюнкаў: { $amount }
-profile-user-date-register = Дата рэгістрацыі: { $date }
+profile-user-date-register = Дата рэгістрацыі: { $date } { $utc }
 
 # Image generator
 image-generator-enter-request = Увядзіце запыт у наступным фармаце: { $gptImageQuery }.

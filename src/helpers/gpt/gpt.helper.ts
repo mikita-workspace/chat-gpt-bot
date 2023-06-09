@@ -1,7 +1,7 @@
 import { MAX_CONTEXT_GPT_TOKENS, MessageRolesGPT } from '@bot/constants';
 import { logger, mongo, openAI } from '@bot/services';
 import { BotContextType, SessionMessageType } from '@bot/types';
-import { parseTimestampUTC } from '@bot/utils';
+import { getTimezoneString, parseTimestampUTC } from '@bot/utils';
 import { encode } from 'gpt-3-encoder';
 import { ChatCompletionRequestMessage } from 'openai';
 
@@ -56,8 +56,11 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
     const user = await mongo.getUser(username);
 
     if (user && usedGptTokens >= user.limit.gptTokens) {
+      const limitDate = new Date(user.limit.expire);
+
       return ctx.t('info-message-reach-gpt-tokens-limit', {
-        date: new Date(user.limit.expire).toLocaleString(currentLocale),
+        date: limitDate.toLocaleString(currentLocale),
+        utc: getTimezoneString(limitDate.getTimezoneOffset()),
       });
     }
 

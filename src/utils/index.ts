@@ -64,6 +64,14 @@ export const parseTimestampUTC = (timestamp: number | string | Date) => {
   return date.toUTCString();
 };
 
+export const getTimezoneString = (tzOffset: number) => {
+  const sign = tzOffset < 0 ? '+' : '-';
+  const hours = Math.abs(Math.floor(tzOffset / 60));
+  const minutes = Math.abs(tzOffset % 60);
+
+  return `UTC${sign}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+};
+
 export const capitalize = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 
