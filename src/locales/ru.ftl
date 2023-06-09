@@ -86,7 +86,7 @@ users-menu-message-enter-csv = Загрузите файл CSV со следую
 users-menu-message-incorrect-csv = Расширение файла не соответствует CSV. Попробуйте еще раз!
 users-menu-message-multiple-add-success = Пользователи [ { $users } ] были успешно добавлены.
 users-menu-message-multiple-add-error = Пользователи уже были добавлены. Попробуйте еще раз!
-users-menu-message-new-gpt-limits-success =  Пользователю { $username } был предоставлен новый GPT лимит пакет - { $package }.
+users-menu-message-new-gpt-limits-success =  Пользователю { $username } был предоставлен новый GPT лимит - { $package }.
 
 # User roles
 user-role-super-admin = Супер Админ

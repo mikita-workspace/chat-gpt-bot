@@ -86,7 +86,7 @@ users-menu-message-enter-csv = Load a CSV file with the following columns: { $cs
 users-menu-message-incorrect-csv = The file extension does not match the CSV. Try again!
 users-menu-message-multiple-add-success = Users [ { $users } ] were successfully added.
 users-menu-message-multiple-add-error = Users have already been added. Try again!
-users-menu-message-new-gpt-limits-success =  User { $username } has been given a new GPT limit package - { $package }.
+users-menu-message-new-gpt-limits-success =  User { $username } has been given a new GPT limit - { $package }.
 
 # User roles
 user-role-super-admin = Super Admin
