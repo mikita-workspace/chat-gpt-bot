@@ -34,10 +34,11 @@ export const createImageConversation: ConversationType = async (conversation, ct
     const base64Images = response.map((base64Image) => base64Image.b64_json ?? '');
 
     conversation.session.limit.amountOfGptImages += base64Images.length;
-    conversation.session.custom.images.push({
-      buffer: base64Images.map((base64) => Buffer.from(base64, 'base64')),
-      prompt,
-    });
+    // TODO: Disabled due to an issue on server - FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+    // conversation.session.custom.images.push({
+    //   buffer: base64Images.map((base64) => Buffer.from(base64, 'base64')),
+    //   prompt,
+    // });
 
     const imageFilesPath = await conversation.external(async () =>
       convertBase64ToFiles(base64Images, `image-${currentUsername}`),
