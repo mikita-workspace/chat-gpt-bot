@@ -26,6 +26,7 @@ docker-compose down
 ```
 en
 ru
+by
 ```
 
 ## License
