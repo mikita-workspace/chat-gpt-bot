@@ -81,12 +81,12 @@ export const applyMixins = (derivedCtor: any, constructors: any[]) => {
   });
 };
 
-export const convertBase64ToFiles = async (base64Images: string[]) => {
+export const convertBase64ToFiles = async (base64Images: string[], filename: string) => {
   try {
     const imageFiles: string[] = [];
 
     const promises = base64Images.map(async (base64Image, index) => {
-      const imagePath = resolvePath(__dirname, '../../assets', `image-${index}.png`);
+      const imagePath = resolvePath(__dirname, '../../assets', `${filename}-${index}.png`);
       const buffer = Buffer.from(base64Image, 'base64');
 
       const image = await Jimp.read(buffer);

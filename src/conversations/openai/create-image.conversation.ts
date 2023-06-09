@@ -17,6 +17,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
       message: { text, message_id: messageId },
     } = await conversation.waitFor('message:text');
 
+    const currentUsername = String(ctx.from?.username);
     const [prompt = '', numberOfImages = 1] = text?.trim().split(';');
 
     if (Number.isNaN(Number(numberOfImages))) {
@@ -39,7 +40,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
     });
 
     const imageFilesPath = await conversation.external(async () =>
-      convertBase64ToFiles(base64Images),
+      convertBase64ToFiles(base64Images, `image-${currentUsername}`),
     );
 
     const inputMediaFiles: InputMediaPhoto[] = imageFilesPath.map((imageFilePath) => ({
