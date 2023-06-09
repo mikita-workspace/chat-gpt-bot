@@ -80,7 +80,7 @@ export const addUserFormat = (userRole: UserRoles) =>
 export const ADD_USER_CSV_FORMAT = '<username> | <role>';
 
 // Image
-export const CREATE_IMAGE_QUERY_FORMAT = `<prompt>;<Number of images (1-${MAX_IMAGES_REQUEST})>`;
+export const CREATE_IMAGE_QUERY_FORMAT = `<prompt>;<1-${MAX_IMAGES_REQUEST}>`;
 
 // Regexp
 export const REGEXP_USERNAME = /^[a-zA-Z0-9_]{5,32}$/;
