@@ -2,6 +2,7 @@ import { SessionCsvIds } from '@bot/constants';
 import { SessionType, UserSessionModelType } from '@bot/types';
 
 export const createInitialCustomSessionData = (): SessionType['custom'] => ({
+  images: [],
   messages: [],
   username: null,
 });

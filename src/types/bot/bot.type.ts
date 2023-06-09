@@ -10,10 +10,16 @@ export type SessionMessageType = {
   timestamp: string;
 };
 
+export type SessionImageType = {
+  base64: string[];
+  prompt: string;
+};
+
 export type SessionType = {
   custom: {
     username: string | null;
     messages: SessionMessageType[];
+    images: SessionImageType[];
   };
   limit: {
     amountOfGptImages: number;

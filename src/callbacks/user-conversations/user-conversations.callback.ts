@@ -18,7 +18,7 @@ export const getUserConversationMessagesCallback: DynamicUsersMenuCallbackType =
       );
 
       const { filePath, filePathForReply } = await csv.createUserMessagesCsv(
-        { key: userSession.key, value: { username, messages } },
+        { key: userSession.key, value: { username, messages, images: [] } },
         true,
       );
 

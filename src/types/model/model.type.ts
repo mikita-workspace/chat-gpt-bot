@@ -1,5 +1,5 @@
 import { UserRoles } from '@bot/constants';
-import { SessionMessageType } from '@bot/types';
+import { SessionImageType, SessionMessageType } from '@bot/types';
 import { Schema } from 'mongoose';
 
 export type UserModelType = {
@@ -22,6 +22,7 @@ export type UserSessionModelType = {
   value: {
     username: string;
     messages: SessionMessageType[];
+    images: SessionImageType[];
   };
 };
 
