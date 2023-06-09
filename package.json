@@ -1,6 +1,6 @@
 {
   "name": "chat-gpt-bot",
-  "version": "1.0.4-alpha",
+  "version": "2.0.0-alpha",
   "repository": "git@github.com:mikita-kandratsyeu/chat-gpt-bot.git",
   "author": "Mikita Kandratsyeu <nickondr.production@gmail.com>",
   "license": "Apache-2.0",
