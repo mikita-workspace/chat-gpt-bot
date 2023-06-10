@@ -22,7 +22,6 @@ export type UserSessionModelType = {
   value: {
     username: string;
     messages: SessionMessageType[];
-    images: SessionImageType[];
   };
 };
 

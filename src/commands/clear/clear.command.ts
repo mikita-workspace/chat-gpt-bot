@@ -10,7 +10,6 @@ export const clearCommand = (bot: BotType) =>
     await mongo.updateUserConversation(currentUsername, ctx.session.custom.messages);
 
     ctx.session.custom.messages = [];
-    ctx.session.custom.images = [];
 
     await ctx.reply(ctx.t('info-message-clear-current-session'), {
       reply_markup: inlineGoToChat(ctx),
