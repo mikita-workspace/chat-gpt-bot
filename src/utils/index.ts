@@ -98,17 +98,19 @@ export const applyMixins = (derivedCtor: any, constructors: any[]) => {
   });
 };
 
-export const convertBase64ToFiles = async (base64Images: string[], filename: string) => {
+export const convertBase64ToFiles = async (
+  base64Images: { base64: string; filename: string }[],
+) => {
   try {
-    const imageFiles: { imagePath: string; imageInputFile: InputFile }[] = [];
+    const imageFiles: { filePath: string; filePathForReply: InputFile }[] = [];
 
-    const promises = base64Images.map(async (base64Image, index) => {
-      const imagePath = resolvePath(__dirname, '../../assets', `${filename}-${index}.png`);
-      const buffer = Buffer.from(base64Image, 'base64');
+    const promises = base64Images.map(async ({ base64, filename }) => {
+      const filePath = resolvePath(__dirname, '../../assets', `${filename}.png`);
+      const buffer = Buffer.from(base64, 'base64');
 
       const image = await Jimp.read(buffer);
-      image.quality(5).write(imagePath);
-      imageFiles.push({ imagePath, imageInputFile: new InputFile(imagePath) });
+      image.quality(5).write(filePath);
+      imageFiles.push({ filePath, filePathForReply: new InputFile(filePath) });
     });
 
     return await Promise.all(promises).then(() => imageFiles);

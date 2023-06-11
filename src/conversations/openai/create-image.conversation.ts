@@ -1,13 +1,15 @@
+import { config } from '@bot/config';
 import { CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
 import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
-import { logger, openAI } from '@bot/services';
+import { google, logger, openAI } from '@bot/services';
 import { ConversationType } from '@bot/types';
-import { convertBase64ToFiles, removeFile } from '@bot/utils';
-import { InputFile } from 'grammy';
+import { convertBase64ToFiles, generateUniqueId, removeFile } from '@bot/utils';
 import { InputMediaPhoto } from 'grammy/types';
 
 export const createImageConversation: ConversationType = async (conversation, ctx) => {
   try {
+    const currentUsername = String(ctx.from?.username);
+
     await ctx.reply(
       ctx.t('image-generator-enter-request', { gptImageQuery: CREATE_IMAGE_QUERY_FORMAT }),
       { reply_markup: inlineGoToChat(ctx) },
@@ -17,7 +19,6 @@ export const createImageConversation: ConversationType = async (conversation, ct
       message: { text, message_id: messageId },
     } = await conversation.waitFor('message:text');
 
-    const currentUsername = String(ctx.from?.username);
     const [prompt = '', numberOfImages = 1] = text?.trim().split(';');
 
     if (Number.isNaN(Number(numberOfImages))) {
@@ -27,32 +28,49 @@ export const createImageConversation: ConversationType = async (conversation, ct
       });
     }
 
-    const response = await conversation.external(async () =>
-      openAI.generateImage(prompt, Number(numberOfImages)),
-    );
-
-    const base64Images = response.map((base64Image) => base64Image.b64_json ?? '');
+    const base64Images = (
+      await conversation.external(async () => openAI.generateImage(prompt, Number(numberOfImages)))
+    ).map((base64Image) => ({
+      base64: base64Image.b64_json ?? '',
+      filename: `dalee2-${currentUsername}-${generateUniqueId()}`,
+    }));
 
     conversation.session.limit.amountOfGptImages += base64Images.length;
-    conversation.session.custom.images.push({
-      buffer: base64Images.map((base64) => Buffer.from(base64, 'base64')),
-      prompt,
-    });
 
-    const imageFilesPath = await conversation.external(async () =>
-      convertBase64ToFiles(base64Images, `image-${currentUsername}`),
-    );
+    const imageFiles = await conversation.external(async () => convertBase64ToFiles(base64Images));
 
-    const inputMediaFiles: InputMediaPhoto[] = imageFilesPath.map((imageFilePath) => ({
+    // const googleDriveFiles = imageFiles.map(({ filePath }) => ({
+    //   fileName: `dalee2-${currentUsername}-${generateUniqueId()}`,
+    //   filePath,
+    //   fileMimeType: 'image/png',
+    // }));
+
+    const inputMediaFiles: InputMediaPhoto[] = imageFiles.map(({ filePathForReply }) => ({
       type: 'photo',
-      media: new InputFile(imageFilePath),
+      media: filePathForReply,
     }));
+
+    let userFolder = (
+      await google.searchFolder(currentUsername, config.GOOGLE_DRIVE_ROOT_IMAGE_FOLDER_ID)
+    ).files?.[0];
+
+    if (!userFolder) {
+      userFolder = await google.createFolder(
+        currentUsername,
+        config.GOOGLE_DRIVE_ROOT_IMAGE_FOLDER_ID,
+      );
+    }
+
+    if (userFolder.id) {
+      // const images = await google.saveFiles(googleDriveFiles, userFolder.id);
+      // TODO: Store web links into MongoDB in separate model - UserImage
+    }
 
     await ctx.replyWithMediaGroup(inputMediaFiles, {
       reply_to_message_id: messageId,
     });
 
-    imageFilesPath.forEach((path) => removeFile(path));
+    imageFiles.forEach(({ filePath }) => removeFile(filePath));
 
     return;
   } catch (error) {
