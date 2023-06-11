@@ -12,13 +12,9 @@ Bot based on the `GrammY` and `OpenAI` libraries, providing convenient and fast 
 > **Note**: The production build uses a [Webhook](https://core.telegram.org/bots/webhooks).
 
 ```bash
-docker-compose build
+yarn build
 
-docker-compose up
-
-docker-compose stop
-
-docker-compose down
+yarn start
 ```
 
 ## Support languages
