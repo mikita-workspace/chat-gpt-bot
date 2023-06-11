@@ -25,7 +25,7 @@ export class UserSessionsMongoService {
         async () =>
           UserSessionModel.findOne({
             'value.username': username,
-          }),
+          }).exec(),
       );
 
       return userSessionMessages;

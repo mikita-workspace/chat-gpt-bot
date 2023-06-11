@@ -1,5 +1,5 @@
 import { UserRoles } from '@bot/constants';
-import { SessionImageType, SessionMessageType } from '@bot/types';
+import { SessionMessageType } from '@bot/types';
 import { Schema } from 'mongoose';
 
 export type UserModelType = {
@@ -22,7 +22,6 @@ export type UserSessionModelType = {
   value: {
     username: string;
     messages: SessionMessageType[];
-    images: SessionImageType[];
   };
 };
 
@@ -36,5 +35,13 @@ export type BotLoggerModelType = {
 export type UserConversationModelType = {
   _id: Schema.Types.ObjectId;
   messages: SessionMessageType[];
+  username: string;
+};
+
+export type UserImageModelType = {
+  images: {
+    prompt: string;
+    imageLinks: string[];
+  }[];
   username: string;
 };

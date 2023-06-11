@@ -1,7 +1,9 @@
+import { config } from '@bot/config';
 import {
   AdminMenuActions,
   CommonActions,
   ModeratorMenuActions,
+  TTL_DEFAULT,
   UsersMenuActions,
 } from '@bot/constants';
 import {
@@ -21,7 +23,12 @@ composer.callbackQuery(AdminMenuActions.GO_TO_MENU, async (ctx) => {
   await ctx.conversation.exit(addUserConversation.name);
   await ctx.conversation.exit(addMultipleUsersConversation.name);
 
-  await ctx.reply(ctx.t('admin-panel-title'), { reply_markup: adminMainMenu });
+  await ctx.reply(
+    `${ctx.t('admin-panel-title')}\n\r\n\r${ctx.t('info-message-node-cache', {
+      cache: TTL_DEFAULT / 60,
+    })}`,
+    { reply_markup: adminMainMenu },
+  );
 });
 
 composer.callbackQuery(ModeratorMenuActions.GO_TO_MENU, async (ctx) => {
@@ -29,7 +36,16 @@ composer.callbackQuery(ModeratorMenuActions.GO_TO_MENU, async (ctx) => {
 
   await ctx.conversation.exit(addUserConversation.name);
 
-  await ctx.reply(ctx.t('moderator-panel-title'), { reply_markup: moderatorMainMenu });
+  await ctx.reply(
+    `${ctx.t('moderator-panel-title')}\n\r\n\r${ctx.t('info-message-node-cache', {
+      cache: TTL_DEFAULT / 60,
+    })}\n\r${
+      config.SUPER_ADMIN_USER_ID === ctx.from?.id
+        ? ctx.t('info-message-moderator-panel-for-super-admin')
+        : ''
+    }`,
+    { reply_markup: moderatorMainMenu },
+  );
 });
 
 composer.callbackQuery(UsersMenuActions.ADD_NEW_USER, async (ctx) => {

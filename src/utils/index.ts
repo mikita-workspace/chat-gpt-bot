@@ -1,6 +1,7 @@
 import { TTL_DEFAULT } from '@bot/constants';
 import { logger } from '@bot/services';
 import { unlink } from 'fs/promises';
+import { InputFile } from 'grammy';
 import Jimp from 'jimp';
 import NodeCache from 'node-cache';
 import { resolve as resolvePath } from 'path';
@@ -75,6 +76,14 @@ export const getTimezoneString = (tzOffset: number) => {
 export const capitalize = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 
+export const generateUniqueId = () => {
+  const timestamp = Date.now().toString(36);
+  const randomChars = Math.random().toString(36).slice(2, 5);
+  const uniqueId = timestamp + randomChars;
+
+  return uniqueId;
+};
+
 // Source: https://www.typescriptlang.org/docs/handbook/mixins.html#alternative-pattern
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const applyMixins = (derivedCtor: any, constructors: any[]) => {
@@ -89,17 +98,19 @@ export const applyMixins = (derivedCtor: any, constructors: any[]) => {
   });
 };
 
-export const convertBase64ToFiles = async (base64Images: string[], filename: string) => {
+export const convertBase64ToFiles = async (
+  base64Images: { base64: string; filename: string }[],
+) => {
   try {
-    const imageFiles: string[] = [];
+    const imageFiles: { filePath: string; filePathForReply: InputFile }[] = [];
 
-    const promises = base64Images.map(async (base64Image, index) => {
-      const imagePath = resolvePath(__dirname, '../../assets', `${filename}-${index}.png`);
-      const buffer = Buffer.from(base64Image, 'base64');
+    const promises = base64Images.map(async ({ base64, filename }) => {
+      const filePath = resolvePath(__dirname, '../../assets', `${filename}.png`);
+      const buffer = Buffer.from(base64, 'base64');
 
       const image = await Jimp.read(buffer);
-      image.quality(5).write(imagePath);
-      imageFiles.push(imagePath);
+      image.quality(5).write(filePath);
+      imageFiles.push({ filePath, filePathForReply: new InputFile(filePath) });
     });
 
     return await Promise.all(promises).then(() => imageFiles);

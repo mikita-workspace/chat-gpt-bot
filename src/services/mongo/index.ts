@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 
 import { BotLoggerMongoService } from './bot-logger.mongo.service';
 import { UserConversationsMongoService } from './user-conversations.mongo.service';
+import { UserImagesService } from './user-images.mongo.service';
 import { UserSessionsMongoService } from './user-sessions.mongo.service';
 import { UsersMongoService } from './users.mongo.service';
 
@@ -25,12 +26,14 @@ class MongoService {
 interface MongoService
   extends BotLoggerMongoService,
     UserConversationsMongoService,
+    UserImagesService,
     UserSessionsMongoService,
     UsersMongoService {}
 
 applyMixins(MongoService, [
   BotLoggerMongoService,
   UserConversationsMongoService,
+  UserImagesService,
   UserSessionsMongoService,
   UsersMongoService,
 ]);
