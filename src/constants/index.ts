@@ -107,6 +107,11 @@ export enum UsersCsvIds {
   USERNAME = 'username',
 }
 
+export enum UserImagesCsvIds {
+  PROMPT = 'prompt',
+  DRIVE_LINKS = 'drive_links',
+}
+
 export enum LoggerInfoCsvIds {
   LEVEL = 'level',
   MESSAGE = 'message',
@@ -170,10 +175,14 @@ export enum UsersMenu {
   SELECT_NEW_GPT_LIMITS = 'new-limits-users-menu',
 }
 
+export enum UserImagesMenu {
+  INITIAL = 'user-images-menu',
+  GET = 'get-user-images-menu',
+}
+
 // Menu actions
 export enum CommonActions {
   GO_TO_CHAT = 'go-to-chat-action',
-  CREATE_IMAGE = 'create-image-action',
 }
 
 export enum AdminMenuActions {
@@ -187,4 +196,8 @@ export enum UsersMenuActions {
 
 export enum ModeratorMenuActions {
   GO_TO_MENU = 'go-to-moderator-menu-action',
+}
+
+export enum UserImagesMenuActions {
+  CREATE_IMAGE = 'create-image-action',
 }

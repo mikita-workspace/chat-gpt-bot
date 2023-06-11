@@ -2,6 +2,7 @@ import {
   AdminMenuActions,
   CommonActions,
   ModeratorMenuActions,
+  UserImagesMenuActions,
   UsersMenuActions,
 } from '@bot/constants';
 import { BotContextType } from '@bot/types';
@@ -32,4 +33,7 @@ export const inlineShareWithContacts = (ctx: BotContextType, query: string) =>
   new InlineKeyboard().switchInline(ctx.t('common-button-share'), query);
 
 export const inlineCreateImage = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('error-message-common-try-again'), CommonActions.CREATE_IMAGE);
+  new InlineKeyboard().text(
+    ctx.t('error-message-common-try-again'),
+    UserImagesMenuActions.CREATE_IMAGE,
+  );

@@ -4,6 +4,7 @@ import {
   ConversationsMenu,
   CSV_READER_URL,
   SessionsMenu,
+  UserImagesMenu,
   UsersMenu,
 } from '@bot/constants';
 import { BotContextType } from '@bot/types';
@@ -20,12 +21,17 @@ export const adminMainMenu = new Menu<BotContextType>(AdminMenu.INITIAL)
   )
   .row()
   .submenu((ctx) => ctx.t('admin-menu-button-users'), `${UsersMenu.INITIAL}-${AdminMenu.NAME}`)
+  .submenu(
+    (ctx) => ctx.t('admin-menu-button-images'),
+    `${UserImagesMenu.INITIAL}-${AdminMenu.NAME}`,
+  )
+  .row()
   .text(
     (ctx) => ctx.t('admin-menu-button-loggers'),
     (ctx) => downloadBotLoggerCallback(ctx),
   )
-  .row()
   .url((ctx) => ctx.t('admin-menu-button-csv-reader'), CSV_READER_URL)
+  .row()
   .text(
     (ctx) => ctx.t('common-button-go-to-chat'),
     async (ctx) => {
