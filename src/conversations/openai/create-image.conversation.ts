@@ -1,9 +1,10 @@
 import { config } from '@bot/config';
 import { CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
+import { convertBase64ToFiles } from '@bot/helpers';
 import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
 import { google, logger, mongo, openAI } from '@bot/services';
 import { ConversationType } from '@bot/types';
-import { convertBase64ToFiles, generateUniqueId, removeFile } from '@bot/utils';
+import { generateUniqueId, removeFile } from '@bot/utils';
 import { InputMediaPhoto } from 'grammy/types';
 
 export const createImageConversation: ConversationType = async (conversation, ctx) => {

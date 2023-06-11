@@ -37,6 +37,7 @@ admin-panel-title = Админ-панель для { $botName }.
 admin-menu-button-sessions = Сессии
 admin-menu-button-conversations = Беседы
 admin-menu-button-users = Пользователи
+admin-menu-button-images = Изображения
 admin-menu-button-loggers = Логи
 admin-menu-button-csv-reader = CSV Считыватель
 admin-menu-button-go-to-menu = Перейти в Админ-панель
@@ -63,6 +64,9 @@ conversations-menu-button-delete = Удалить беседу
 
 # Conversations menu messages
 conversations-menu-delete-success = Беседа для { $username } была удалена.
+
+# User images menu
+user-images-menu-button-get = Получить изображения
 
 # Users menu buttons
 users-menu-button-get-all = Получить всех пользователей

@@ -4,6 +4,7 @@ import {
   CommonActions,
   ModeratorMenuActions,
   TTL_DEFAULT,
+  UserImagesMenuActions,
   UsersMenuActions,
 } from '@bot/constants';
 import {
@@ -67,7 +68,7 @@ composer.callbackQuery(CommonActions.GO_TO_CHAT, async (ctx) => {
   await ctx.reply(ctx.t('start-message'));
 });
 
-composer.callbackQuery(CommonActions.CREATE_IMAGE, async (ctx) => {
+composer.callbackQuery(UserImagesMenuActions.CREATE_IMAGE, async (ctx) => {
   await ctx.deleteMessage();
 
   await ctx.conversation.enter(createImageConversation.name);

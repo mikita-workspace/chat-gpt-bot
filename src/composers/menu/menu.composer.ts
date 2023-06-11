@@ -9,11 +9,13 @@ import {
   deleteUserMenu,
   deleteUserSessionMenu,
   getUserConversationMenu,
+  getUserImagesMenu,
   getUserSessionMenu,
   moderatorMainMenu,
   selectNewGptLimits,
   selectNewUserRoleMenu,
   sessionsMenu,
+  userImagesMenu,
   usersMenu,
 } from '@bot/menu';
 import { BotContextType } from '@bot/types';
@@ -30,10 +32,12 @@ const composer = new Composer<BotContextType>();
   deleteUserMenu,
   deleteUserSessionMenu,
   getUserConversationMenu,
+  getUserImagesMenu,
   getUserSessionMenu,
-  selectNewUserRoleMenu,
   selectNewGptLimits,
+  selectNewUserRoleMenu,
   sessionsMenu,
+  userImagesMenu,
   usersMenu,
 ].forEach((subMenu) => adminMainMenu.register(subMenu(AdminMenu.NAME)));
 

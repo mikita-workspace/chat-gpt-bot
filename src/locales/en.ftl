@@ -37,6 +37,7 @@ admin-panel-title = Admin-panel of { $botName }.
 admin-menu-button-sessions = Sessions
 admin-menu-button-conversations = Conversations
 admin-menu-button-users = Users
+admin-menu-button-images = Images
 admin-menu-button-loggers = Logs
 admin-menu-button-csv-reader = CSV Reader
 admin-menu-button-go-to-menu = Go to Admin-panel
@@ -63,6 +64,9 @@ conversations-menu-button-delete = Delete conversation
 
 # Conversations menu messages
 conversations-menu-delete-success = Conversation for { $username } has been deleted.
+
+# User images menu
+user-images-menu-button-get = Get images
 
 # Users menu buttons
 users-menu-button-get-all = Get all users

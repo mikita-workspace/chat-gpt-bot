@@ -10,6 +10,7 @@ import { InputFile } from 'grammy';
 import { resolve as resolvePath } from 'path';
 
 import { BotLoggerCsvService } from './bot-logger.csv.service';
+import { UserImagesCsvService } from './user-images.csv.service';
 import { UserMessagesCsvService } from './user-messages.csv.service';
 import { UsersCsvService } from './users.csv.service';
 
@@ -79,8 +80,17 @@ class CsvService {
   }
 }
 
-interface CsvService extends BotLoggerCsvService, UserMessagesCsvService, UsersCsvService {}
+interface CsvService
+  extends BotLoggerCsvService,
+    UserMessagesCsvService,
+    UsersCsvService,
+    UserImagesCsvService {}
 
-applyMixins(CsvService, [BotLoggerCsvService, UserMessagesCsvService, UsersCsvService]);
+applyMixins(CsvService, [
+  BotLoggerCsvService,
+  UserMessagesCsvService,
+  UsersCsvService,
+  UserImagesCsvService,
+]);
 
 export const csv = new CsvService();
