@@ -37,3 +37,11 @@ export type UserConversationModelType = {
   messages: SessionMessageType[];
   username: string;
 };
+
+export type UserImageModelType = {
+  images: {
+    prompt: string;
+    imageLinks: string[];
+  }[];
+  username: string;
+};

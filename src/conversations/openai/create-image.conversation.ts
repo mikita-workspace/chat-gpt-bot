@@ -1,7 +1,7 @@
 import { config } from '@bot/config';
 import { CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
 import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
-import { google, logger, openAI } from '@bot/services';
+import { google, logger, mongo, openAI } from '@bot/services';
 import { ConversationType } from '@bot/types';
 import { convertBase64ToFiles, generateUniqueId, removeFile } from '@bot/utils';
 import { InputMediaPhoto } from 'grammy/types';
@@ -39,11 +39,11 @@ export const createImageConversation: ConversationType = async (conversation, ct
 
     const imageFiles = await conversation.external(async () => convertBase64ToFiles(base64Images));
 
-    // const googleDriveFiles = imageFiles.map(({ filePath }) => ({
-    //   fileName: `dalee2-${currentUsername}-${generateUniqueId()}`,
-    //   filePath,
-    //   fileMimeType: 'image/png',
-    // }));
+    const googleDriveFiles = imageFiles.map(({ filePath }) => ({
+      fileName: `dalee2-${currentUsername}-${generateUniqueId()}`,
+      filePath,
+      fileMimeType: 'image/png',
+    }));
 
     const inputMediaFiles: InputMediaPhoto[] = imageFiles.map(({ filePathForReply }) => ({
       type: 'photo',
@@ -62,8 +62,11 @@ export const createImageConversation: ConversationType = async (conversation, ct
     }
 
     if (userFolder.id) {
-      // const images = await google.saveFiles(googleDriveFiles, userFolder.id);
-      // TODO: Store web links into MongoDB in separate model - UserImage
+      const images = await google.saveFiles(googleDriveFiles, userFolder.id);
+      await mongo.setUserImages(currentUsername, {
+        prompt,
+        imageLinks: images.map(({ webViewLink }) => String(webViewLink)),
+      });
     }
 
     await ctx.replyWithMediaGroup(inputMediaFiles, {
