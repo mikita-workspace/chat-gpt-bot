@@ -64,7 +64,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
 
     if (userFolder.id) {
       const images = await google.saveFiles(googleDriveFiles, userFolder.id);
-      await mongo.setUserImages(currentUsername, {
+      await mongo.setUserImages(currentUsername, userFolder.id, {
         prompt,
         imageLinks: images.map(({ webViewLink }) => String(webViewLink)),
       });

@@ -36,16 +36,17 @@ export class UserImagesService {
 
   async setUserImages(
     username: string,
+    folderId: string,
     images: { prompt: string; imageLinks: string[] },
   ): Promise<void> {
     try {
       const userImages = await this.getUserImages(username);
 
       const updatedUserImages = !userImages
-        ? await UserImageModel.create({ username, images })
+        ? await UserImageModel.create({ username, folderId, images })
         : await UserImageModel.findOneAndUpdate(
             { username },
-            { images: [...userImages.images, images] },
+            { folderId, images: [...userImages.images, images] },
             { new: true },
           );
 
