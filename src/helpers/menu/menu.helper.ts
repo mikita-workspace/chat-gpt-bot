@@ -45,7 +45,11 @@ export const dynamicNewGptLimitsMenuRange: DynamicNewGptLimitsMenuType = async (
   return range;
 };
 
-export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback) => {
+export const dynamicUsersMenuRange: DynamicUsersMenuType = async (
+  ctx,
+  callback,
+  showCurrentUsername = false,
+) => {
   const range = new MenuRange<BotContextType>();
 
   const currentUsername = String(ctx?.from?.username);
@@ -54,7 +58,11 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (ctx, callback)
   const users = await mongo.getUsers();
 
   users
-    .filter((user) => user.username !== currentUsername)
+    .filter(
+      (user) =>
+        (showCurrentUsername && currentUserRole === UserRoles.SUPER_ADMIN) ||
+        user.username !== currentUsername,
+    )
     .filter(
       (user) =>
         currentUserRole !== UserRoles.MODERATOR ||

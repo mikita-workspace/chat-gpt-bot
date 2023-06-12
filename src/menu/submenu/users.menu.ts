@@ -103,8 +103,10 @@ export const changeUserGptLimitsMenu = (menuName: string) =>
     onMenuOutdated: false,
   })
     .dynamic(async (ctx) =>
-      dynamicUsersMenuRange(ctx, async () =>
-        ctx.menu.nav(`${UsersMenu.SELECT_NEW_GPT_LIMITS}-${menuName}`),
+      dynamicUsersMenuRange(
+        ctx,
+        async () => ctx.menu.nav(`${UsersMenu.SELECT_NEW_GPT_LIMITS}-${menuName}`),
+        true,
       ),
     )
     .text(
