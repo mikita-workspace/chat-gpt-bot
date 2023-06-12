@@ -6,17 +6,17 @@ import { parseTimestampUTC } from '@bot/utils';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   const username = String(ctx?.from?.username);
-  const sessionMessages = ctx.session.custom.messages;
+  const sessionMessages = ctx.session.user.messages;
 
   const user = await mongo.getUser(username);
 
-  ctx.session.custom.username ??= username;
+  ctx.session.user.username ??= username;
 
   const [headSessionMessages, tailSessionMessages] =
     splitSessionMessagesByTokenLimit(sessionMessages);
 
   if (tailSessionMessages.length > 0) {
-    ctx.session.custom.messages = headSessionMessages;
+    ctx.session.user.messages = headSessionMessages;
 
     await mongo.updateUserConversation(username, tailSessionMessages);
   }

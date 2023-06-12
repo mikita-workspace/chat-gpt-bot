@@ -75,6 +75,8 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
     await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::users::changeUserRoleCallback::${JSON.stringify(error.message)}`);
+  } finally {
+    ctx.session.memory.data = null;
   }
 };
 
@@ -111,6 +113,8 @@ export const changeUserGptLimitsCallback: DynamicNewGptLimitsMenuCallbackType = 
     await ctx.reply(ctx.t('error-message-common'));
 
     logger.error(`callbacks::users::changeUserGptLimitsCallback::${JSON.stringify(error.message)}`);
+  } finally {
+    ctx.session.memory.data = null;
   }
 };
 

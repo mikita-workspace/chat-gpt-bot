@@ -1,5 +1,9 @@
 import { config } from '@bot/config';
-import { createInitialCustomSessionData, createInitialLimitSessionData } from '@bot/helpers';
+import {
+  createInitialLimitSessionData,
+  createInitialMemorySessionData,
+  createInitialUserSessionData,
+} from '@bot/helpers';
 import { mongo } from '@bot/services';
 import { BotContextType, SessionType } from '@bot/types';
 import { freeStorage } from '@grammyjs/storage-free';
@@ -10,14 +14,17 @@ const composer = new Composer<BotContextType>();
 composer.use(
   session({
     type: 'multi',
-    custom: {
+    user: {
       storage: mongo.sessionAdapter,
-      initial: createInitialCustomSessionData,
+      initial: createInitialUserSessionData,
     },
     conversation: {},
     limit: {
       storage: freeStorage<SessionType['limit']>(config.TELEGRAM_TOKEN),
       initial: createInitialLimitSessionData,
+    },
+    memory: {
+      initial: createInitialMemorySessionData,
     },
   }),
 );

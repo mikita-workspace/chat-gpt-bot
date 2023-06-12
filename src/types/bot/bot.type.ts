@@ -11,13 +11,16 @@ export type SessionMessageType = {
 };
 
 export type SessionType = {
-  custom: {
+  user: {
     username: string | null;
     messages: SessionMessageType[];
   };
   limit: {
     amountOfGptImages: number;
     amountOfGptTokens: number;
+  };
+  memory: {
+    data: string | null;
   };
 };
 

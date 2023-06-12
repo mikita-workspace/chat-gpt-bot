@@ -11,16 +11,12 @@ import { MenuRange } from '@grammyjs/menu';
 
 export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
-  const selectedUser = String(ctx?.match);
+  const selectedUser = String(ctx.session.memory.data);
 
   Object.values(UserRoles)
     .filter((role) => role !== UserRoles.SUPER_ADMIN)
     .forEach((role) => {
-      range
-        .text({ text: ctx.t(`user-role-${role}`), payload: selectedUser }, async () =>
-          callback(ctx, selectedUser, role),
-        )
-        .row();
+      range.text(ctx.t(`user-role-${role}`), async () => callback(ctx, selectedUser, role)).row();
     });
 
   return range;
@@ -28,16 +24,12 @@ export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, c
 
 export const dynamicNewGptLimitsMenuRange: DynamicNewGptLimitsMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
-  const selectedUser = String(ctx?.match);
+  const selectedUser = String(ctx.session.memory.data);
 
   Object.entries(GPTLimits).forEach(([newPackage, newLimit]) => {
     range
-      .text(
-        {
-          text: `[ ${ctx.t(`user-gpt-limit-${newPackage.toLowerCase()}`)} ] ${newLimit}`,
-          payload: selectedUser,
-        },
-        async () => callback(ctx, selectedUser, newPackage, newLimit),
+      .text(`[ ${ctx.t(`user-gpt-limit-${newPackage.toLowerCase()}`)} ] ${newLimit}`, async () =>
+        callback(ctx, selectedUser, newPackage, newLimit),
       )
       .row();
   });
@@ -76,12 +68,9 @@ export const dynamicUsersMenuRange: DynamicUsersMenuType = async (
 
       range
         .text(
-          {
-            text: `[ ${username} ] ${capitalize(role)}, ${status}, ${limits.gptTokens} / ${
-              limits.gptImages
-            }`,
-            payload: username,
-          },
+          `[ ${username} ] ${capitalize(role)}, ${status}, ${limits.gptTokens} / ${
+            limits.gptImages
+          }`,
           async () => callback(ctx, username),
         )
         .row();

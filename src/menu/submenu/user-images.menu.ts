@@ -1,4 +1,4 @@
-import { getUserImagesCallback } from '@bot/callbacks';
+import { getUserImagesArchiveCallback, getUserImagesCsvCallback } from '@bot/callbacks';
 import { UserImagesMenu } from '@bot/constants';
 import { dynamicUserImagesMenuRange } from '@bot/helpers';
 import { BotContextType } from '@bot/types';
@@ -14,8 +14,30 @@ export const getUserImagesMenu = (menuName: string) =>
   new Menu<BotContextType>(`${UserImagesMenu.GET}-${menuName}`, {
     onMenuOutdated: false,
   })
-    .dynamic(async (ctx) => dynamicUserImagesMenuRange(ctx, getUserImagesCallback))
+    .dynamic(async (ctx) =>
+      dynamicUserImagesMenuRange(ctx, async (_, username) => {
+        ctx.menu.nav(`${UserImagesMenu.GET_ARCHIVE_OR_CSV}-${menuName}`);
+        ctx.session.memory.data = username;
+      }),
+    )
     .text(
       (ctx) => ctx.t('common-button-cancel'),
       (ctx) => ctx.menu.nav(`${UserImagesMenu.INITIAL}-${menuName}`),
+    );
+
+export const getArchiveOrCsvMenu = (menuName: string) =>
+  new Menu<BotContextType>(`${UserImagesMenu.GET_ARCHIVE_OR_CSV}-${menuName}`)
+    .text(
+      (ctx) => ctx.t('user-images-menu-button-get-csv'),
+      (ctx) => getUserImagesCsvCallback(ctx, String(ctx.session.memory.data)),
+    )
+    .row()
+    .text(
+      (ctx) => ctx.t('user-images-menu-button-get-archive'),
+      (ctx) => getUserImagesArchiveCallback(ctx, String(ctx.session.memory.data)),
+    )
+    .row()
+    .text(
+      (ctx) => ctx.t('common-button-cancel'),
+      (ctx) => ctx.menu.nav(`${UserImagesMenu.GET}-${menuName}`),
     );

@@ -68,7 +68,7 @@ conversations-menu-delete-success = Гутарка для { $username } была
 # User images menu
 user-images-menu-button-get = Атрымаць малюнкі
 user-images-menu-button-get-archive = Атрымаць архіў малюнкаў (на гэта спатрэбіцца час)
-user-images-menu-button-get-csv = Атрымаць CSV file
+user-images-menu-button-get-csv = Атрымаць CSV файл
 
 # Users menu buttons
 users-menu-button-get-all = Атрымаць усіх карыстальнікаў
