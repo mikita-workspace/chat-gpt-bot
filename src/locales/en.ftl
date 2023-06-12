@@ -67,6 +67,8 @@ conversations-menu-delete-success = Conversation for { $username } has been dele
 
 # User images menu
 user-images-menu-button-get = Get images
+user-images-menu-button-get-archive = Get the image archive (this will take time)
+user-images-menu-button-get-csv = Get CSV file
 
 # Users menu buttons
 users-menu-button-get-all = Get all users
