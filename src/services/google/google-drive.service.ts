@@ -1,5 +1,8 @@
 import { google, logger } from '@bot/services';
-import { createReadStream } from 'fs';
+import archiver from 'archiver';
+import { createReadStream, createWriteStream } from 'fs';
+import { InputFile } from 'grammy';
+import { resolve as resolvePath } from 'path';
 
 export class GoogleDriveService {
   async createFolder(folderName: string, parentFolderId?: string) {
@@ -64,6 +67,58 @@ export class GoogleDriveService {
       logger.error(`googleDriveService::saveFiles::${JSON.stringify(error.message)}`);
 
       return [];
+    }
+  }
+
+  async downloadFolder(folderId: string, username: string) {
+    try {
+      const filePath = resolvePath(__dirname, '../../../assets', `${username}.zip`);
+
+      const stream = createWriteStream(filePath);
+      const archive = archiver('zip', {
+        zlib: { level: 9 },
+      });
+
+      stream.on('close', function () {
+        logger.info(`googleDriveService::downloadFolder::${archive.pointer()} total bytes.`);
+        logger.info(
+          'googleDriveService::downloadFolder::archiver has been finalized and the output file descriptor has closed.',
+        );
+      });
+
+      archive.pipe(stream);
+
+      const fileList = await google.driveClient.files.list({
+        q: `'${folderId}' in parents and trashed = false`,
+      });
+
+      for (const file of fileList.data.files ?? []) {
+        const fileId = file.id;
+        const fileName = file.name;
+
+        if (fileId && fileName) {
+          const fileStream = await google.driveClient.files.get(
+            {
+              fileId,
+              alt: 'media',
+            },
+            { responseType: 'stream' },
+          );
+
+          archive.append(fileStream.data, { name: `${fileName}.png` });
+        }
+      }
+
+      archive.finalize();
+
+      return {
+        filePath,
+        filePathForReply: new InputFile(filePath),
+      };
+    } catch (error) {
+      logger.error(`googleDriveService::downloadFolder::${JSON.stringify(error.message)}`);
+
+      return {};
     }
   }
 }
