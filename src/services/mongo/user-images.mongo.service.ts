@@ -4,6 +4,20 @@ import { UserImageModelType } from '@bot/types';
 import { fetchCachedData, setValueToMemoryCache } from '@bot/utils';
 
 export class UserImagesService {
+  async getAllUserImages(): Promise<UserImageModelType[]> {
+    try {
+      const userImages = await fetchCachedData(`cached-user-images`, async () =>
+        UserImageModel.find({}).sort({ username: 1 }).exec(),
+      );
+
+      return userImages ?? [];
+    } catch (error) {
+      logger.error(`mongoService::getAllUserImages::${JSON.stringify(error.message)}`);
+
+      return [];
+    }
+  }
+
   async getUserImages(username: string): Promise<UserImageModelType | null> {
     try {
       const userImages = await fetchCachedData(`cached-user-images-${username}`, async () =>

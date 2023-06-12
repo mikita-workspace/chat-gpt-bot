@@ -117,3 +117,15 @@ export const dynamicUsersWithSessionMenuRange: DynamicUsersMenuType = async (
 
   return range;
 };
+
+export const dynamicUserImagesMenuRange: DynamicUsersMenuType = async (ctx, callback) => {
+  const range = new MenuRange<BotContextType>();
+
+  const userImages = await mongo.getAllUserImages();
+
+  userImages
+    .map(({ username }) => username)
+    .forEach((username) => range.text(username, async () => callback(ctx, username)).row());
+
+  return range;
+};
