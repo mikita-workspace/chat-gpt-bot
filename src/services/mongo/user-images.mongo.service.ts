@@ -6,7 +6,7 @@ import { fetchCachedData, setValueToMemoryCache } from '@bot/utils';
 export class UserImagesService {
   async getAllUserImages(): Promise<UserImageModelType[]> {
     try {
-      const userImages = await fetchCachedData(`cached-user-images`, async () =>
+      const userImages = await fetchCachedData('cached-user-images', async () =>
         UserImageModel.find({}).sort({ username: 1 }).exec(),
       );
 
