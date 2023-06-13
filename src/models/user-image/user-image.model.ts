@@ -3,6 +3,7 @@ import { model, Schema } from 'mongoose';
 
 const schema = new Schema<UserImageModelType>({
   images: [],
+  folderId: { type: String },
   username: { type: String, unique: true },
 });
 

@@ -43,5 +43,6 @@ export type UserImageModelType = {
     prompt: string;
     imageLinks: string[];
   }[];
+  folderId: string;
   username: string;
 };

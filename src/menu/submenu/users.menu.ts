@@ -79,9 +79,10 @@ export const changeUserRoleMenu = (menuName: string) =>
     onMenuOutdated: false,
   })
     .dynamic(async (ctx) =>
-      dynamicUsersMenuRange(ctx, async () =>
-        ctx.menu.nav(`${UsersMenu.SELECT_NEW_ROLE}-${menuName}`),
-      ),
+      dynamicUsersMenuRange(ctx, async (_, username) => {
+        ctx.menu.nav(`${UsersMenu.SELECT_NEW_ROLE}-${menuName}`);
+        ctx.session.memory.data = username;
+      }),
     )
     .text(
       (ctx) => ctx.t('common-button-cancel'),
@@ -105,7 +106,10 @@ export const changeUserGptLimitsMenu = (menuName: string) =>
     .dynamic(async (ctx) =>
       dynamicUsersMenuRange(
         ctx,
-        async () => ctx.menu.nav(`${UsersMenu.SELECT_NEW_GPT_LIMITS}-${menuName}`),
+        async (_, username) => {
+          ctx.menu.nav(`${UsersMenu.SELECT_NEW_GPT_LIMITS}-${menuName}`);
+          ctx.session.memory.data = username;
+        },
         true,
       ),
     )

@@ -176,8 +176,9 @@ export enum UsersMenu {
 }
 
 export enum UserImagesMenu {
-  INITIAL = 'user-images-menu',
   GET = 'get-user-images-menu',
+  INITIAL = 'user-images-menu',
+  GET_ARCHIVE_OR_CSV = 'get-user-images-archive-csv-menu',
 }
 
 // Menu actions

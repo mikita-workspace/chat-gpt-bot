@@ -64,26 +64,24 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
       });
     }
 
-    ctx.session.custom.messages.push({
+    ctx.session.user.messages.push({
       gptFormat: convertGPTMessage(text),
       timestamp: parseTimestampUTC(Date.now()),
     });
 
-    const response = await openAI.chat(
-      ctx.session.custom.messages.map(({ gptFormat }) => gptFormat),
-    );
+    const response = await openAI.chat(ctx.session.user.messages.map(({ gptFormat }) => gptFormat));
 
     if (!response) {
       return '';
     }
 
-    ctx.session.custom.messages.push({
+    ctx.session.user.messages.push({
       gptFormat: convertGPTMessage(response.content, MessageRolesGPT.ASSISTANT),
       timestamp: parseTimestampUTC(Date.now()),
     });
 
     ctx.session.limit.amountOfGptTokens += getAmountOfTokensForSessionMessages(
-      ctx.session.custom.messages.slice(-2),
+      ctx.session.user.messages.slice(-2),
     );
 
     return response.content;

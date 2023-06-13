@@ -13,7 +13,7 @@ import { UsersMongoService } from './users.mongo.service';
 class MongoService {
   sessions: mongoose.mongo.Collection<ISession>;
 
-  sessionAdapter: MongoDBAdapter<SessionType['custom']>;
+  sessionAdapter: MongoDBAdapter<SessionType['user']>;
 
   constructor() {
     const sessions = mongoose.connection.collection<ISession>(UserSessionModel.collection.name);
