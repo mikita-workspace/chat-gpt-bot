@@ -1,4 +1,4 @@
-import { addUserFormat, REGEXP_USERNAME, UserRoles } from '@bot/constants';
+import { addUserFormat, BotCommands, REGEXP_USERNAME, UserRoles } from '@bot/constants';
 import { inlineAddNewUser, inlineGoToAdminMenu, inlineGoToModeratorMenu } from '@bot/keyboards';
 import { logger, mongo } from '@bot/services';
 import { ConversationType } from '@bot/types';
@@ -23,6 +23,11 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
     } = await conversation.waitFor('message:text');
 
     const [username = '', role = UserRoles.USER] = text?.trim().split(';') as [string, UserRoles];
+    const botCommands = Object.values(BotCommands);
+
+    if (botCommands.includes(username.slice(1) as BotCommands)) {
+      return await ctx.reply(ctx.t('info-message-conversation-cancel', { command: username }));
+    }
 
     if (!REGEXP_USERNAME.test(username)) {
       return await ctx.reply(ctx.t('users-menu-message-incorrect', { username }), {

@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
+import { BotCommands, CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
 import { convertBase64ToFiles } from '@bot/helpers';
 import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
 import { google, logger, mongo, openAI } from '@bot/services';
@@ -21,6 +21,11 @@ export const createImageConversation: ConversationType = async (conversation, ct
     } = await conversation.waitFor('message:text');
 
     const [prompt = '', numberOfImages = 1] = text?.trim().split(';');
+    const botCommands = Object.values(BotCommands);
+
+    if (botCommands.includes(prompt.slice(1) as BotCommands)) {
+      return await ctx.reply(ctx.t('info-message-conversation-cancel', { command: prompt }));
+    }
 
     if (Number.isNaN(Number(numberOfImages))) {
       return await ctx.reply(ctx.t('image-generator-incorrect-image-number'), {
