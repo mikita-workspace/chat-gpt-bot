@@ -39,8 +39,8 @@ export const removeFile = async (path: string) => {
 export const isEmptyObject = (object: object) => Object.keys(object).length === 0;
 
 export const getKeyByValue = (object: object, value: string) => {
-  const indexOfS = Object.values(object).indexOf(value as unknown as object);
-  const key = Object.keys(object)[indexOfS];
+  const indexOfObject = Object.values(object).indexOf(value as unknown as object);
+  const key = Object.keys(object)[indexOfObject];
 
   return key;
 };

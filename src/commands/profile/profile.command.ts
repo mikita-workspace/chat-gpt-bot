@@ -13,9 +13,9 @@ export const profileCommand = (bot: BotType) =>
     if (user) {
       const userLimit = ctx.session.limit;
       const timestamp = new Date(user.timestamp);
-      const gptLimitPackage = getKeyByValue(
-        GPTLimits,
-        `${user.limit.gptTokens}/${user.limit.gptImages}`,
+      const gptLimitPackage = (
+        getKeyByValue(GPTLimits, `${user.limit.gptTokens}/${user.limit.gptImages}`) ??
+        Object.keys(GPTLimits)[0]
       ).toLowerCase();
 
       await ctx.reply(
