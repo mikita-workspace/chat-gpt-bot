@@ -44,6 +44,11 @@ class LoggerService {
               }`,
           ),
         }),
+      ],
+    });
+
+    if (process.env.NODE_ENV !== 'test') {
+      this.logger.add(
         new transports.MongoDB({
           collection: BotLoggerModel.collection.name,
           db: config.MONGODB_URI,
@@ -52,8 +57,8 @@ class LoggerService {
             useUnifiedTopology: true,
           },
         }),
-      ],
-    });
+      );
+    }
 
     if (process.env.NODE_ENV !== 'production') {
       this.logger.add(
