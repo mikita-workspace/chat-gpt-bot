@@ -14,14 +14,14 @@ export const removeValueFromMemoryCache = (key: string) => memoryCache.del(key);
 
 export const getValueFromMemoryCache = (key: string) => memoryCache.get<string>(key);
 
-export const fetchCachedData = async <T>(key: string, dataCallback: () => T) => {
+export const fetchCachedData = async <T>(key: string, callback: () => T) => {
   const cachedData = getValueFromMemoryCache(key);
 
   if (cachedData) {
     return JSON.parse(cachedData);
   }
 
-  const response = await dataCallback();
+  const response = await callback();
 
   setValueToMemoryCache(key, JSON.stringify(response));
 
@@ -62,8 +62,9 @@ export const parseTimestampUTC = (timestamp: number | string | Date) => {
   return date.toUTCString();
 };
 
-export const getTimezoneString = (tzOffset: number) => {
-  const sign = tzOffset < 0 ? '+' : '-';
+export const getTimezoneString = (offset: number) => {
+  const sign = offset <= 0 ? '+' : '-';
+  const tzOffset = Math.abs(offset);
   const hours = Math.abs(Math.floor(tzOffset / 60));
   const minutes = Math.abs(tzOffset % 60);
 

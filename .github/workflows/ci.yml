@@ -34,6 +34,11 @@ jobs:
         with:
           cmd: lint:ci
 
+      - name: Unit Tests
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: test:ci
+
       - name: Run production build
         uses: borales/actions-yarn@v4
         with:
