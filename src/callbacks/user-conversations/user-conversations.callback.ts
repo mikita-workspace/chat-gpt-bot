@@ -61,3 +61,20 @@ export const deleteUserConversationMessagesCallback: DynamicUsersMenuCallbackTyp
     );
   }
 };
+
+export const updateUserConversationMessagesCallback: DynamicUsersMenuCallbackType = async (
+  ctx,
+  username,
+) => {
+  try {
+    await mongo.updateUserConversation(username, ctx.session.user.messages);
+
+    ctx.session.user.messages = [];
+  } catch (error) {
+    logger.error(
+      `callbacks::sessions::updateUserConversationMessagesCallback::${JSON.stringify(
+        error.message,
+      )}`,
+    );
+  }
+};

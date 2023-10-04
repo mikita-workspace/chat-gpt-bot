@@ -55,6 +55,7 @@ export enum GPTLimits {
 }
 
 export const DAY_MS = 60 * 60 * 24 * 1000;
+export const TEN_MIN_MS = 60 * 10 * 1000;
 
 // Node cache
 export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
