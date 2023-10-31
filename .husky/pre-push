@@ -12,7 +12,7 @@ yarn lint
 
 echo "Hucky::Running Tests"
 
-yarn tests
+yarn test
 
 npx --no -- commitlint --edit "$1"
 
