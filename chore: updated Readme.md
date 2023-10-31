@@ -6,7 +6,7 @@
 [![Bot API](https://img.shields.io/badge/Bot%20API-6.7-blue?logo=telegram&style=for-the-badge&labelColor=000&color=3b82f6&)](https://core.telegram.org/bots/api)
 
 ## Description
-Bot based on the `GrammY` and `OpenAI` libraries, providing convenient and fast access to the cutting-edge `gpt-3.5-turbo` technology for text generation, answering questions, and solving other tasks. Expand your natural language processing capabilities and stay at the forefront of developments in this field using this bot.
+The bot, based on the `GrammY` and `OpenAI` libraries, provides convenient and fast access to the advanced `gpt-3.5-turbo` technology for generating text, answering questions and solving other tasks. Expand your natural language processing capabilities and stay at the forefront of developments in this area using this bot. The bot also has a selection of different `GPT` models, such as `GigaChat`.
 
 ## Getting Started
 > **Note**: The production build uses a [Webhook](https://core.telegram.org/bots/webhooks).
