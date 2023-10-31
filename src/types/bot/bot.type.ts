@@ -20,7 +20,10 @@ export type SessionType = {
     amountOfGptTokens: number;
   };
   memory: {
-    data: string | null;
+    userData: {
+      selectedUsername: string | null;
+    };
+    tokens: unknown;
   };
 };
 

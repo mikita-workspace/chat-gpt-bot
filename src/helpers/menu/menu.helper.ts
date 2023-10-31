@@ -11,7 +11,7 @@ import { MenuRange } from '@grammyjs/menu';
 
 export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
-  const selectedUser = String(ctx.session.memory.data);
+  const selectedUser = String(ctx.session.memory.userData.selectedUsername);
 
   Object.values(UserRoles)
     .filter((role) => role !== UserRoles.SUPER_ADMIN)
@@ -24,7 +24,7 @@ export const dynamicUserRolesMenuRange: DynamicUserRolesMenuType = async (ctx, c
 
 export const dynamicNewGptLimitsMenuRange: DynamicNewGptLimitsMenuType = async (ctx, callback) => {
   const range = new MenuRange<BotContextType>();
-  const selectedUser = String(ctx.session.memory.data);
+  const selectedUser = String(ctx.session.memory.userData.selectedUsername);
 
   Object.entries(GPTLimits).forEach(([newPackage, newLimit]) => {
     range
