@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { GPTLimits, UserRoles } from '@bot/constants';
+import { LimitsGPT, UserRoles } from '@bot/constants';
 import { UserConversationModel, UserModel } from '@bot/models';
 import { logger, mongo } from '@bot/services';
 import { MultipleUserType, UserModelType } from '@bot/types';
@@ -37,8 +37,8 @@ export class UsersMongoService {
   async setUser(username: string, role: UserRoles): Promise<void> {
     try {
       const existUserConversation = await mongo.getUserConversation(username);
-      const [gptTokensAdmin, gptImagesAdmin] = GPTLimits.SUPER_VIP.split('/');
-      const [gptTokensModerator, gptImagesModerator] = GPTLimits.PREMIUM.split('/');
+      const [gptTokensAdmin, gptImagesAdmin] = LimitsGPT.SUPER_VIP.split('/');
+      const [gptTokensModerator, gptImagesModerator] = LimitsGPT.PREMIUM.split('/');
 
       const user = new UserModel({
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,

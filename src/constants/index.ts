@@ -1,27 +1,40 @@
-// Open AI
-export const modelGPT = 'gpt-3.5-turbo';
+// GPT Models
+export enum ModelGPT {
+  GPT_3_5_TURBO = 'gpt-3.5-turbo',
+  WHISPER_1 = 'whisper-1',
+}
 
-export const transcriptionModelGPT = 'whisper-1';
-
+// GPT Roles
 export enum MessageRolesGPT {
   ASSISTANT = 'assistant',
   USER = 'user',
   SYSTEM = 'system',
 }
 
+// GPT Per day token limits
+export enum LimitsGPT {
+  BASE = '4096/5',
+  PREMIUM = '8192/10',
+  VIP = '16384/20',
+  SUPER_VIP = '32768/50',
+}
+
+// Open AI default limitations
 export const MAX_CONTEXT_GPT_TOKENS = 4096;
-export const IMAGE_SIZE_DEFAULT = '512x512';
+export const IMAGE_SIZE_DEFAULT = '256x256';
 export const MAX_IMAGES_REQUEST = 3;
 
-// Telegram API
-export const TELEGRAM_API = 'https://api.telegram.org';
+// APIs
+export enum APIs {
+  TELEGRAM = 'https://api.telegram.org',
+  GITHUB = 'https://api.github.com',
+}
+
 export const WEBHOOK_TIMEOUT = 60_000;
 
-// Github API
-export const GITHUB_API = 'https://api.github.com';
-
 // Bot config
-export const supportLanguageCodes = ['en', 'ru', 'be'];
+export const botName = 'Pied Piper | GPT';
+export const botLanguageCodes = ['en', 'ru', 'be'];
 
 export enum BotCommands {
   ABOUT = 'about',
@@ -34,8 +47,6 @@ export enum BotCommands {
   START = 'start',
 }
 
-export const botName = 'Pied Piper | GPT';
-
 export const BotCommandsWithDescription = [
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommands.CLEAR, i18nKey: 'command-clear' },
@@ -46,14 +57,7 @@ export const BotCommandsWithDescription = [
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
 ];
 
-// Per day GPT Token limits
-export enum GPTLimits {
-  BASE = '4096/5',
-  PREMIUM = '8192/10',
-  VIP = '16384/20',
-  SUPER_VIP = '32768/50',
-}
-
+// Date
 export const DAY_MS = 60 * 60 * 24 * 1000;
 export const TEN_MIN_MS = 60 * 10 * 1000;
 
@@ -68,6 +72,7 @@ export enum UserRoles {
   USER = 'user',
 }
 
+// Adding user
 export const addUserFormat = (userRole: UserRoles) =>
   '<username>' +
   `${
@@ -80,7 +85,7 @@ export const addUserFormat = (userRole: UserRoles) =>
 
 export const ADD_USER_CSV_FORMAT = '<username> | <role>';
 
-// Image
+// Generate image
 export const CREATE_IMAGE_QUERY_FORMAT = `<prompt>;<1-${MAX_IMAGES_REQUEST}>`;
 
 // Regexp

@@ -1,10 +1,5 @@
 import { config } from '@bot/config';
-import {
-  IMAGE_SIZE_DEFAULT,
-  MAX_IMAGES_REQUEST,
-  modelGPT,
-  transcriptionModelGPT,
-} from '@bot/constants';
+import { IMAGE_SIZE_DEFAULT, MAX_IMAGES_REQUEST, ModelGPT } from '@bot/constants';
 import { logger } from '@bot/services';
 import { removeFile } from '@bot/utils';
 import { createReadStream } from 'fs';
@@ -26,7 +21,7 @@ class OpenAIService {
     try {
       const response = await this.openAI.createChatCompletion({
         messages,
-        model: modelGPT,
+        model: ModelGPT.GPT_3_5_TURBO,
         top_p: 0.5,
       });
 
@@ -48,7 +43,7 @@ class OpenAIService {
 
       const response = await this.openAI.createTranscription(
         fileStream as unknown as File,
-        transcriptionModelGPT,
+        ModelGPT.WHISPER_1,
       );
 
       removeFile(filepath);

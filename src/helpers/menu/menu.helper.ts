@@ -1,4 +1,4 @@
-import { GPTLimits, UserRoles } from '@bot/constants';
+import { LimitsGPT, UserRoles } from '@bot/constants';
 import { mongo } from '@bot/services';
 import {
   BotContextType,
@@ -26,7 +26,7 @@ export const dynamicNewGptLimitsMenuRange: DynamicNewGptLimitsMenuType = async (
   const range = new MenuRange<BotContextType>();
   const selectedUser = String(ctx.session.memory.userData.selectedUsername);
 
-  Object.entries(GPTLimits).forEach(([newPackage, newLimit]) => {
+  Object.entries(LimitsGPT).forEach(([newPackage, newLimit]) => {
     range
       .text(`[ ${ctx.t(`user-gpt-limit-${newPackage.toLowerCase()}`)} ] ${newLimit}`, async () =>
         callback(ctx, selectedUser, newPackage, newLimit),

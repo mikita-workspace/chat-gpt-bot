@@ -17,7 +17,7 @@ import {
   sessionComposer,
 } from '@bot/composers';
 import { config } from '@bot/config';
-import { botName, modelGPT, supportLanguageCodes } from '@bot/constants';
+import { botLanguageCodes, botName, ModelGPT } from '@bot/constants';
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
 import { BotContextType } from '@bot/types';
@@ -37,14 +37,14 @@ export const createBot = () => {
       botName: ctx?.me?.first_name ?? botName,
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
-      model: modelGPT,
+      model: ModelGPT.GPT_3_5_TURBO,
       username: ctx?.from?.username ?? '',
     }),
     directory: path.join(__dirname, './locales'),
     useSession: true,
   });
 
-  supportLanguageCodes.forEach(async (languageCode) => {
+  botLanguageCodes.forEach(async (languageCode) => {
     await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
       language_code: languageCode,
     });

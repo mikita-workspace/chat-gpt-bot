@@ -1,4 +1,4 @@
-import { BotCommands, GPTLimits } from '@bot/constants';
+import { BotCommands, LimitsGPT } from '@bot/constants';
 import { inlineGoToChat } from '@bot/keyboards';
 import { mongo } from '@bot/services';
 import { BotType } from '@bot/types';
@@ -14,8 +14,8 @@ export const profileCommand = (bot: BotType) =>
       const userLimit = ctx.session.limit;
       const timestamp = new Date(user.timestamp);
       const gptLimitPackage = (
-        getKeyByValue(GPTLimits, `${user.limit.gptTokens}/${user.limit.gptImages}`) ??
-        Object.keys(GPTLimits)[0]
+        getKeyByValue(LimitsGPT, `${user.limit.gptTokens}/${user.limit.gptImages}`) ??
+        Object.keys(LimitsGPT)[0]
       ).toLowerCase();
 
       await ctx.reply(
