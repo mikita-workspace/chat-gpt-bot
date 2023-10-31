@@ -24,7 +24,7 @@ export const getUserImagesCsvCallback: DynamicUsersMenuCallbackType = async (ctx
       `callbacks::user-images::getUserImagesCsvCallback::${JSON.stringify(error.message)}`,
     );
   } finally {
-    ctx.session.memory.data = null;
+    ctx.session.memory.userData.selectedUsername = null;
   }
 };
 
@@ -52,6 +52,6 @@ export const getUserImagesArchiveCallback: DynamicUsersMenuCallbackType = async 
       `callbacks::user-images::getUserImagesArchiveCallback::${JSON.stringify(error.message)}`,
     );
   } finally {
-    ctx.session.memory.data = null;
+    ctx.session.memory.userData.selectedUsername = null;
   }
 };

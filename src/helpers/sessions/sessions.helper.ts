@@ -12,7 +12,10 @@ export const createInitialLimitSessionData = (): SessionType['limit'] => ({
 });
 
 export const createInitialMemorySessionData = (): SessionType['memory'] => ({
-  data: null,
+  userData: {
+    selectedUsername: null,
+  },
+  tokens: null,
 });
 
 export const mapUserMessages = (userSession: UserSessionModelType) =>
