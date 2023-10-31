@@ -26,8 +26,9 @@ export const MAX_IMAGES_REQUEST = 3;
 
 // APIs
 export enum APIs {
-  TELEGRAM = 'https://api.telegram.org',
   GITHUB = 'https://api.github.com',
+  GOOGLE_OAUTH = 'https://developers.google.com/oauthplayground',
+  TELEGRAM = 'https://api.telegram.org',
 }
 
 export const WEBHOOK_TIMEOUT = 60_000;
