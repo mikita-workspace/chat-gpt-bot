@@ -7,11 +7,7 @@ import { ChatCompletionRequestMessage } from 'openai';
 import qs from 'querystring';
 
 class GigaChatService {
-  constructor(private accessToken: string) {
-    this.accessToken = accessToken;
-  }
-
-  static async initialize(authKey: string) {
+  private async getAccessToken() {
     try {
       const secrets = await mongo.getSecrets();
 
@@ -19,13 +15,13 @@ class GigaChatService {
         secrets &&
         new Date(secrets?.gigaChatAccessToken?.expires_at as number).getTime() <= Date.now()
       ) {
-        return new GigaChatService(secrets?.gigaChatAccessToken?.access_token as string);
+        return (secrets?.gigaChatAccessToken?.access_token as string) ?? '';
       }
 
       const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         RqUID: '6f0b1291-c7f3-43c6-bb2e-9f3efb2dc98e',
-        Authorization: `Bearer ${authKey}`,
+        Authorization: `Bearer ${config.GIGA_CHAT_AUTH_TOKEN}`,
       };
 
       const response = await axios({
@@ -43,19 +39,21 @@ class GigaChatService {
 
       await mongo.setSecrets({ gigaChatAccessToken: data });
 
-      return new GigaChatService(data.access_token as string);
+      return data.access_token as string;
     } catch (error) {
       logger.error(`GigaChatService::initialize::${JSON.stringify(error.message)}`);
 
-      return new GigaChatService('');
+      return '';
     }
   }
 
   async chat(messages: ChatCompletionRequestMessage[] = []) {
     try {
+      const accessToken = await this.getAccessToken();
+
       const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
         'X-Request-ID': '79e41a5f-f180-4c7a-b2d9-393086ae20a1',
         'X-Session-ID': 'b6874da0-bf06-410b-a150-fd5f9164a0b2',
         'X-Client-ID': 'b6874da0-bf06-410b-a150-fd5f9164a0b2',
@@ -99,4 +97,4 @@ class GigaChatService {
   }
 }
 
-export const gigaChat = (async () => GigaChatService.initialize(config.GIGA_CHAT_AUTH_TOKEN))();
+export const gigaChat = new GigaChatService();
