@@ -46,3 +46,8 @@ export type UserImageModelType = {
   folderId: string;
   username: string;
 };
+
+export type SecretsModelType = {
+  gigaChatAccessToken: string;
+  googleRefreshToken: string;
+};
