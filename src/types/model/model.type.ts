@@ -3,10 +3,10 @@ import { SessionMessageType } from '@bot/types';
 import { Schema } from 'mongoose';
 
 export type UserModelType = {
+  availableGPTModels: string[];
   conversation: Schema.Types.ObjectId;
   enabled: boolean;
   limit: {
-    availableGPTModels: string[];
     gptTokens: number;
     gptImages: number;
     expire: string;

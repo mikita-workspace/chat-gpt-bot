@@ -4,11 +4,12 @@ import { UserModelType } from '@bot/types';
 export const mapUsers = (users: UserModelType[]) =>
   users.map(
     ({
+      availableGPTModels,
       username,
       role,
       enabled,
       timestamp,
-      limit: { availableGPTModels, gptTokens, gptImages, expire },
+      limit: { gptTokens, gptImages, expire },
     }) => ({
       [UsersCsvIds.USERNAME]: username,
       [UsersCsvIds.ROLE]: role,

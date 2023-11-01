@@ -6,10 +6,10 @@ import { model, Schema } from 'mongoose';
 const [gptTokens, gptImages] = LimitsGPT.BASE.split('/');
 
 const schema = new Schema<UserModelType>({
+  availableGPTModels: [ModelGPT.GPT_3_5_TURBO],
   conversation: { type: Schema.Types.ObjectId, ref: 'UserConversation', required: true },
   enabled: { type: Boolean, require: true, default: true },
   limit: {
-    availableGPTModels: { type: Array, require: true, default: [ModelGPT.GPT_3_5_TURBO] },
     gptTokens: { type: Number, require: true, default: Number(gptTokens) },
     gptImages: { type: Number, require: true, default: Number(gptImages) },
     expire: { type: String, require: true, default: parseTimestampUTC(Date.now() + DAY_MS) },

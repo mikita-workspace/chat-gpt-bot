@@ -43,8 +43,8 @@ export class UsersMongoService {
       const user = new UserModel({
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
         ...([UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(role) && {
+          availableGPTModels: [ModelGPT.GIGA_CHAT, ModelGPT.GPT_3_5_TURBO],
           limit: {
-            availableGPTModels: [ModelGPT.GIGA_CHAT, ModelGPT.GPT_3_5_TURBO],
             gptTokens: Number(gptTokensAdmin),
             gptImages: Number(gptImagesAdmin),
           },
