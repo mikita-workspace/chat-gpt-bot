@@ -1,5 +1,6 @@
 // GPT Models
 export enum ModelGPT {
+  GIGA_CHAT = 'GigaChat:latest',
   GPT_3_5_TURBO = 'gpt-3.5-turbo',
   WHISPER_1 = 'whisper-1',
 }
@@ -26,8 +27,9 @@ export const MAX_IMAGES_REQUEST = 3;
 
 // APIs
 export enum APIs {
+  GIGA_CHAT = 'https://gigachat.devices.sberbank.ru/api/v1',
+  GIGA_CHAT_OAUTH = 'https://ngw.devices.sberbank.ru:9443/api/v2/oauth',
   GITHUB = 'https://api.github.com',
-  GOOGLE_AUTH_DRIVE = 'https://www.googleapis.com/auth/drive',
   GOOGLE_OAUTH = 'https://developers.google.com/oauthplayground',
   TELEGRAM = 'https://api.telegram.org',
 }

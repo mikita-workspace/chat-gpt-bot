@@ -1,4 +1,4 @@
-import { DAY_MS, LimitsGPT } from '@bot/constants';
+import { DAY_MS, LimitsGPT, ModelGPT } from '@bot/constants';
 import { UserModelType } from '@bot/types';
 import { parseTimestampUTC } from '@bot/utils';
 import { model, Schema } from 'mongoose';
@@ -9,7 +9,7 @@ const schema = new Schema<UserModelType>({
   conversation: { type: Schema.Types.ObjectId, ref: 'UserConversation', required: true },
   enabled: { type: Boolean, require: true, default: true },
   limit: {
-    availableGPTModels: [],
+    availableGPTModels: { type: Array, require: true, default: [ModelGPT.GPT_3_5_TURBO] },
     gptTokens: { type: Number, require: true, default: Number(gptTokens) },
     gptImages: { type: Number, require: true, default: Number(gptImages) },
     expire: { type: String, require: true, default: parseTimestampUTC(Date.now() + DAY_MS) },
