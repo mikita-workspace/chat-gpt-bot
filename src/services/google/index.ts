@@ -14,6 +14,7 @@ class GoogleService {
 
   createDriveClient(clientId: string, clientSecret: string, refreshToken: string) {
     const client = new googleApi.auth.OAuth2(clientId, clientSecret, APIs.GOOGLE_OAUTH);
+
     client.setCredentials({ refresh_token: refreshToken });
 
     return googleApi.drive({

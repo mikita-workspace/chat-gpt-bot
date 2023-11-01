@@ -27,6 +27,7 @@ export const MAX_IMAGES_REQUEST = 3;
 // APIs
 export enum APIs {
   GITHUB = 'https://api.github.com',
+  GOOGLE_AUTH_DRIVE = 'https://www.googleapis.com/auth/drive',
   GOOGLE_OAUTH = 'https://developers.google.com/oauthplayground',
   TELEGRAM = 'https://api.telegram.org',
 }

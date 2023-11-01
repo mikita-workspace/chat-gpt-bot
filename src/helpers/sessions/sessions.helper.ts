@@ -15,7 +15,6 @@ export const createInitialMemorySessionData = (): SessionType['memory'] => ({
   userData: {
     selectedUsername: null,
   },
-  tokens: null,
 });
 
 export const mapUserMessages = (userSession: UserSessionModelType) =>

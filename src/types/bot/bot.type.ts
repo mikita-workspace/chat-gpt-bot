@@ -23,7 +23,6 @@ export type SessionType = {
     userData: {
       selectedUsername: string | null;
     };
-    tokens: unknown;
   };
 };
 

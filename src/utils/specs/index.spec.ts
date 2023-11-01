@@ -1,6 +1,8 @@
 import { logger } from '@bot/services';
 import {
   capitalize,
+  decrypt,
+  encrypt,
   fetchCachedData,
   generateUniqueId,
   getKeyByValue,
@@ -186,5 +188,25 @@ describe('generateUniqueId util', () => {
     expect(typeof id1).toBe('string');
     expect(typeof id2).toBe('string');
     expect(id1).not.toBe(id2);
+  });
+});
+
+describe('AES encryption', () => {
+  const text = 'abc123';
+  const object = { a: 1, b: 2 };
+  const secret = 'secret';
+
+  it('text should be encrypted and decrypted', () => {
+    const cipherText = encrypt(text, secret);
+    const decryptedText = decrypt(cipherText, secret);
+
+    expect(decryptedText).toEqual(text);
+  });
+
+  it('object should be encrypted and decrypted', () => {
+    const cipherObject = encrypt(object, secret);
+    const decryptedObject = decrypt(cipherObject, secret);
+
+    expect(decryptedObject).toMatchObject(object);
   });
 });
