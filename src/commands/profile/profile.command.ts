@@ -11,7 +11,7 @@ export const profileCommand = (bot: BotType) =>
     const user = await mongo.getUser(String(ctx.from?.username));
 
     if (user) {
-      const userLimit = ctx.session.limit;
+      const userLimit = ctx.session.settings;
       const timestamp = new Date(user.timestamp);
       const gptLimitPackage = (
         getKeyByValue(LimitsGPT, `${user.limit.gptTokens}/${user.limit.gptImages}`) ??

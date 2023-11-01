@@ -1,5 +1,5 @@
 import { DAY_MS } from '@bot/constants';
-import { createInitialLimitSessionData, splitSessionMessagesByTokenLimit } from '@bot/helpers';
+import { createInitialSettingsSessionData, splitSessionMessagesByTokenLimit } from '@bot/helpers';
 import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 import { parseTimestampUTC } from '@bot/utils';
@@ -22,7 +22,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   }
 
   if (user && new Date(user.limit.expire).getTime() <= Date.now()) {
-    ctx.session.limit = createInitialLimitSessionData();
+    ctx.session.settings = createInitialSettingsSessionData();
 
     await mongo.updateUser(username, {
       limit: {

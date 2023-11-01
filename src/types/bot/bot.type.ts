@@ -15,9 +15,10 @@ export type SessionType = {
     username: string | null;
     messages: SessionMessageType[];
   };
-  limit: {
+  settings: {
     amountOfGptImages: number;
     amountOfGptTokens: number;
+    selectedGPTModel: string;
   };
   memory: {
     userData: {

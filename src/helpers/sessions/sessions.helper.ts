@@ -1,4 +1,4 @@
-import { SessionCsvIds } from '@bot/constants';
+import { ModelGPT, SessionCsvIds } from '@bot/constants';
 import { SessionType, UserSessionModelType } from '@bot/types';
 
 export const createInitialUserSessionData = (): SessionType['user'] => ({
@@ -6,9 +6,10 @@ export const createInitialUserSessionData = (): SessionType['user'] => ({
   username: null,
 });
 
-export const createInitialLimitSessionData = (): SessionType['limit'] => ({
+export const createInitialSettingsSessionData = (): SessionType['settings'] => ({
   amountOfGptImages: 0,
   amountOfGptTokens: 0,
+  selectedGPTModel: ModelGPT.GPT_3_5_TURBO,
 });
 
 export const createInitialMemorySessionData = (): SessionType['memory'] => ({

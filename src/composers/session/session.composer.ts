@@ -1,7 +1,7 @@
 import { config } from '@bot/config';
 import {
-  createInitialLimitSessionData,
   createInitialMemorySessionData,
+  createInitialSettingsSessionData,
   createInitialUserSessionData,
 } from '@bot/helpers';
 import { mongo } from '@bot/services';
@@ -19,9 +19,9 @@ composer.use(
       initial: createInitialUserSessionData,
     },
     conversation: {},
-    limit: {
-      storage: freeStorage<SessionType['limit']>(config.TELEGRAM_TOKEN),
-      initial: createInitialLimitSessionData,
+    settings: {
+      storage: freeStorage<SessionType['settings']>(config.TELEGRAM_TOKEN),
+      initial: createInitialSettingsSessionData,
     },
     memory: {
       initial: createInitialMemorySessionData,

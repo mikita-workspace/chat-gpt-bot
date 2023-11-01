@@ -6,6 +6,7 @@ export type UserModelType = {
   conversation: Schema.Types.ObjectId;
   enabled: boolean;
   limit: {
+    availableGPTModels: string[];
     gptTokens: number;
     gptImages: number;
     expire: string;

@@ -41,7 +41,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
       filename: `dalee2-${currentUsername}-${generateUniqueId()}`,
     }));
 
-    conversation.session.limit.amountOfGptImages += base64Images.length;
+    conversation.session.settings.amountOfGptImages += base64Images.length;
 
     const imageFiles = await conversation.external(async () => convertBase64ToFiles(base64Images));
 

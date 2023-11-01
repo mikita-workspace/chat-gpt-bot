@@ -9,6 +9,7 @@ const schema = new Schema<UserModelType>({
   conversation: { type: Schema.Types.ObjectId, ref: 'UserConversation', required: true },
   enabled: { type: Boolean, require: true, default: true },
   limit: {
+    availableGPTModels: [],
     gptTokens: { type: Number, require: true, default: Number(gptTokens) },
     gptImages: { type: Number, require: true, default: Number(gptImages) },
     expire: { type: String, require: true, default: parseTimestampUTC(Date.now() + DAY_MS) },

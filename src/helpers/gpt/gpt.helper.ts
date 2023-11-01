@@ -50,7 +50,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
   try {
     const username = String(ctx?.from?.username);
 
-    const usedGptTokens = ctx.session.limit.amountOfGptTokens;
+    const usedGptTokens = ctx.session.settings.amountOfGptTokens;
     const currentLocale = await ctx.i18n.getLocale();
 
     const user = await mongo.getUser(username);
@@ -80,7 +80,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
       timestamp: parseTimestampUTC(Date.now()),
     });
 
-    ctx.session.limit.amountOfGptTokens += getAmountOfTokensForSessionMessages(
+    ctx.session.settings.amountOfGptTokens += getAmountOfTokensForSessionMessages(
       ctx.session.user.messages.slice(-2),
     );
 
