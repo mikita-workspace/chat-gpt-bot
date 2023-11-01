@@ -29,8 +29,4 @@ interface GoogleService extends GoogleDriveService {}
 
 applyMixins(GoogleService, [GoogleDriveService]);
 
-export const google = new GoogleService(
-  config.GOOGLE_CLIENT_ID,
-  config.GOOGLE_CLIENT_SECRET,
-  config.GOOGLE_DRIVE_REFRESH_TOKEN,
-);
+export const google = new GoogleService(config.GOOGLE_CLIENT_ID, config.GOOGLE_CLIENT_SECRET, '');

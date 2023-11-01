@@ -5,6 +5,7 @@ import { ISession, MongoDBAdapter } from '@grammyjs/storage-mongodb';
 import mongoose from 'mongoose';
 
 import { BotLoggerMongoService } from './bot-logger.mongo.service';
+import { SecretsMongoService } from './secrets.mongo.service';
 import { UserConversationsMongoService } from './user-conversations.mongo.service';
 import { UserImagesService } from './user-images.mongo.service';
 import { UserSessionsMongoService } from './user-sessions.mongo.service';
@@ -25,6 +26,7 @@ class MongoService {
 
 interface MongoService
   extends BotLoggerMongoService,
+    SecretsMongoService,
     UserConversationsMongoService,
     UserImagesService,
     UserSessionsMongoService,
@@ -32,6 +34,7 @@ interface MongoService
 
 applyMixins(MongoService, [
   BotLoggerMongoService,
+  SecretsMongoService,
   UserConversationsMongoService,
   UserImagesService,
   UserSessionsMongoService,
