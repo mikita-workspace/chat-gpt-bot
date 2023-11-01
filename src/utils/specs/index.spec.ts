@@ -1,3 +1,4 @@
+import { DAY_MS } from '@bot/constants';
 import { logger } from '@bot/services';
 import {
   capitalize,
@@ -8,6 +9,7 @@ import {
   getKeyByValue,
   getTimezoneString,
   isEmptyObject,
+  isExpiredDate,
   memoryCache,
   parseTimestampUTC,
   removeValueFromMemoryCache,
@@ -165,6 +167,16 @@ describe('getTimezoneString util', () => {
 
   it('returns the correctly formatted timezone string for a zero offset', () => {
     expect(getTimezoneString(0)).toEqual('UTC +00:00');
+  });
+});
+
+describe('isExpiredDate util', () => {
+  it('returns True if passed date is expired', () => {
+    expect(isExpiredDate(Date.now() - DAY_MS)).toEqual(true);
+  });
+
+  it('returns False if passed date is not expired', () => {
+    expect(isExpiredDate(Date.now() + DAY_MS)).toEqual(false);
   });
 });
 

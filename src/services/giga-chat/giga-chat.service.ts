@@ -1,6 +1,7 @@
 import { config } from '@bot/config';
 import { APIs, ModelGPT } from '@bot/constants';
 import { logger, mongo } from '@bot/services';
+import { isExpiredDate } from '@bot/utils';
 import axios from 'axios';
 import https from 'https';
 import { ChatCompletionRequestMessage } from 'openai';
@@ -11,10 +12,7 @@ class GigaChatService {
     try {
       const secrets = await mongo.getSecrets();
 
-      if (
-        secrets &&
-        new Date(secrets?.gigaChatAccessToken?.expires_at as number).getTime() <= Date.now()
-      ) {
+      if (secrets && !isExpiredDate(secrets?.gigaChatAccessToken?.expires_at as number)) {
         return (secrets?.gigaChatAccessToken?.access_token as string) ?? '';
       }
 
@@ -82,7 +80,7 @@ class GigaChatService {
         url: `${APIs.GIGA_CHAT}/chat/completions`,
       });
 
-      return response.data.choices[0].message;
+      return { message: response.data.choices[0].message, usage: response.data.usage };
     } catch (error) {
       if (error.response) {
         logger.error(

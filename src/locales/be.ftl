@@ -120,6 +120,7 @@ info-message-conversation-cancel = Увод дадзеных быў адмене
 
 # Profile
 profile-user-initial-message = Прывітанне 👋🏻, { $firstName } { $lastName }!
+profile-user-current-gpt-model = GPT мадэль на дадзены момант: { $gptModel }
 profile-user-role = Ваша роля: { $role }
 profile-user-gpt-package = GPT ліміт: { $package }
 profile-user-available-messages-amount = Даступнае колькасць GPT токенаў: { $amount }

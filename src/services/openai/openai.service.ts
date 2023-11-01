@@ -25,7 +25,7 @@ class OpenAIService {
         top_p: 0.5,
       });
 
-      return response.data.choices[0].message;
+      return { message: response.data.choices[0].message, usage: response.data.usage };
     } catch (error) {
       if (error.response) {
         logger.error(

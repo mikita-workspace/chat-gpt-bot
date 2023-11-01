@@ -120,6 +120,7 @@ info-message-conversation-cancel = The data entry has been canceled. Please run 
 
 # Profile
 profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
+profile-user-current-gpt-model = Current GPT model: { $gptModel }
 profile-user-role = Your role: { $role }
 profile-user-gpt-package = GPT limit: { $package }
 profile-user-available-messages-amount = Available number of GPT tokens: { $amount }

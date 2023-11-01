@@ -1,4 +1,4 @@
-import { MessageRolesGPT } from '@bot/constants';
+import { MessageRolesGPT, ModelGPT } from '@bot/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
 import { I18nFlavor } from '@grammyjs/i18n';
@@ -18,7 +18,7 @@ export type SessionType = {
   settings: {
     amountOfGptImages: number;
     amountOfGptTokens: number;
-    selectedGPTModel: string;
+    selectedGPTModel: `${ModelGPT}`;
   };
   memory: {
     userData: {

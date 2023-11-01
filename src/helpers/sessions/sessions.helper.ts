@@ -9,7 +9,7 @@ export const createInitialUserSessionData = (): SessionType['user'] => ({
 export const createInitialSettingsSessionData = (): SessionType['settings'] => ({
   amountOfGptImages: 0,
   amountOfGptTokens: 0,
-  selectedGPTModel: ModelGPT.GPT_3_5_TURBO,
+  selectedGPTModel: ModelGPT.GIGA_CHAT,
 });
 
 export const createInitialMemorySessionData = (): SessionType['memory'] => ({

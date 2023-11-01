@@ -1,9 +1,15 @@
-import { MAX_CONTEXT_GPT_TOKENS, MessageRolesGPT } from '@bot/constants';
-import { logger, mongo, openAI } from '@bot/services';
+import { MAX_CONTEXT_GPT_TOKENS, MessageRolesGPT, ModelGPT } from '@bot/constants';
+import { gigaChat, logger, mongo, openAI } from '@bot/services';
 import { BotContextType, SessionMessageType } from '@bot/types';
 import { getTimezoneString, parseTimestampUTC } from '@bot/utils';
 import { encode } from 'gpt-3-encoder';
 import { ChatCompletionRequestMessage } from 'openai';
+
+export const gptModelRunning = {
+  [ModelGPT.GIGA_CHAT]: gigaChat,
+  [ModelGPT.GPT_3_5_TURBO]: openAI,
+  [ModelGPT.WHISPER_1]: openAI,
+};
 
 export const splitSessionMessagesByTokenLimit = (
   messages: SessionMessageType[],
@@ -35,9 +41,6 @@ export const splitSessionMessagesByTokenLimit = (
   return [headMessages.reverse(), tailMessages.reverse()];
 };
 
-export const getAmountOfTokensForSessionMessages = (messages: SessionMessageType[]) =>
-  encode(messages.map((msg) => msg.gptFormat.content).join('')).length;
-
 export const convertGPTMessage = (
   content: ChatCompletionRequestMessage['content'],
   role = MessageRolesGPT.USER,
@@ -51,6 +54,8 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
     const username = String(ctx?.from?.username);
 
     const usedGptTokens = ctx.session.settings.amountOfGptTokens;
+    const selectedGPTModel = ctx.session.settings.selectedGPTModel;
+
     const currentLocale = await ctx.i18n.getLocale();
 
     const user = await mongo.getUser(username);
@@ -69,22 +74,24 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
       timestamp: parseTimestampUTC(Date.now()),
     });
 
-    const response = await openAI.chat(ctx.session.user.messages.map(({ gptFormat }) => gptFormat));
+    const response = await gptModelRunning[selectedGPTModel].chat(
+      ctx.session.user.messages.map(({ gptFormat }) => gptFormat),
+    );
 
     if (!response) {
       return '';
     }
 
+    const { message, usage } = response ?? {};
+
     ctx.session.user.messages.push({
-      gptFormat: convertGPTMessage(response.content, MessageRolesGPT.ASSISTANT),
+      gptFormat: convertGPTMessage(message.content, MessageRolesGPT.ASSISTANT),
       timestamp: parseTimestampUTC(Date.now()),
     });
 
-    ctx.session.settings.amountOfGptTokens += getAmountOfTokensForSessionMessages(
-      ctx.session.user.messages.slice(-2),
-    );
+    ctx.session.settings.amountOfGptTokens += usage.total_tokens;
 
-    return response.content;
+    return message.content;
   } catch (error) {
     logger.error(`helper::getGPTMessage::${JSON.stringify(error.message)}`);
   }

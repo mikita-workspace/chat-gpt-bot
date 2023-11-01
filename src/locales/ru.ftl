@@ -120,6 +120,7 @@ info-message-conversation-cancel = Ввод данных был отменен. 
 
 # Profile
 profile-user-initial-message = Привет 👋🏻, { $firstName } { $lastName }!
+profile-user-current-gpt-model = Текущая GPT модель: { $gptModel }
 profile-user-role = Ваша роль: { $role }
 profile-user-gpt-package = GPT лимит: { $package }
 profile-user-available-messages-amount = Доступное количество GPT токенов: { $amount }

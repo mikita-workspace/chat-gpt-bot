@@ -14,10 +14,10 @@ export enum MessageRolesGPT {
 
 // GPT Per day token limits
 export enum LimitsGPT {
-  BASE = '4096/5',
-  PREMIUM = '8192/10',
-  VIP = '16384/20',
-  SUPER_VIP = '32768/50',
+  BASE = '8192/5',
+  PREMIUM = '16384/10',
+  VIP = '32768/20',
+  SUPER_VIP = '65536/50',
 }
 
 // Open AI default limitations

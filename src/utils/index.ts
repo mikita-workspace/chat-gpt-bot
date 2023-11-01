@@ -72,6 +72,9 @@ export const getTimezoneString = (offset: number) => {
   return `UTC ${sign}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
 
+export const isExpiredDate = (expiredAt: number | string) =>
+  new Date(expiredAt).getTime() <= Date.now();
+
 export const capitalize = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 
