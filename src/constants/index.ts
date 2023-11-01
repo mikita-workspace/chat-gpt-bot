@@ -111,6 +111,7 @@ export enum UsersCsvIds {
   ENABLED = 'enabled',
   EXPIRE = 'expire',
   GPT_IMAGES = 'gptImages',
+  GPT_MODELS = 'gptModels',
   GPT_TOKENS = 'gptTokens',
   ROLE = 'role',
   TIMESTAMP = 'timestamp',
