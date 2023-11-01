@@ -54,6 +54,6 @@ export type SecretsModelType = {
 };
 
 export type SecretsType = {
-  gigaChatAccessToken: { [key: string]: string | number };
-  googleRefreshToken: string;
+  gigaChatAccessToken?: { [key: string]: string | number };
+  googleRefreshToken?: string;
 };
