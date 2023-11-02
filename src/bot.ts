@@ -1,6 +1,7 @@
 import {
   aboutCommand,
   adminCommand,
+  changeModelCommand,
   clearCommand,
   descriptionCommand,
   imageCommand,
@@ -77,12 +78,13 @@ export const createBot = () => {
   [
     aboutCommand,
     adminCommand,
+    changeModelCommand,
     clearCommand,
     descriptionCommand,
+    imageCommand,
     moderatorCommand,
     profileCommand,
     startCommand,
-    imageCommand,
     textCommand,
     voiceCommand,
   ].forEach((handle) => handle(bot));

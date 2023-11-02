@@ -1,5 +1,6 @@
 // GPT Models
 export enum ModelGPT {
+  GIGA_CHAT = 'GigaChat:latest',
   GPT_3_5_TURBO = 'gpt-3.5-turbo',
   WHISPER_1 = 'whisper-1',
 }
@@ -13,10 +14,10 @@ export enum MessageRolesGPT {
 
 // GPT Per day token limits
 export enum LimitsGPT {
-  BASE = '4096/5',
-  PREMIUM = '8192/10',
-  VIP = '16384/20',
-  SUPER_VIP = '32768/50',
+  BASE = '8192/5',
+  PREMIUM = '16384/10',
+  VIP = '32768/20',
+  SUPER_VIP = '65536/50',
 }
 
 // Open AI default limitations
@@ -26,8 +27,11 @@ export const MAX_IMAGES_REQUEST = 3;
 
 // APIs
 export enum APIs {
-  TELEGRAM = 'https://api.telegram.org',
+  GIGA_CHAT = 'https://gigachat.devices.sberbank.ru/api/v1',
+  GIGA_CHAT_OAUTH = 'https://ngw.devices.sberbank.ru:9443/api/v2/oauth',
   GITHUB = 'https://api.github.com',
+  GOOGLE_OAUTH = 'https://developers.google.com/oauthplayground',
+  TELEGRAM = 'https://api.telegram.org',
 }
 
 export const WEBHOOK_TIMEOUT = 60_000;
@@ -39,6 +43,7 @@ export const botLanguageCodes = ['en', 'ru', 'be'];
 export enum BotCommands {
   ABOUT = 'about',
   ADMIN = 'admin',
+  CHANGE_MODEL = 'change',
   CLEAR = 'clear',
   DESCRIPTION = 'description',
   IMAGE = 'image',
@@ -49,6 +54,7 @@ export enum BotCommands {
 
 export const BotCommandsWithDescription = [
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
   { command: BotCommands.CLEAR, i18nKey: 'command-clear' },
   { command: BotCommands.IMAGE, i18nKey: 'command-image' },
   { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
@@ -107,6 +113,7 @@ export enum UsersCsvIds {
   ENABLED = 'enabled',
   EXPIRE = 'expire',
   GPT_IMAGES = 'gptImages',
+  GPT_MODELS = 'gptModels',
   GPT_TOKENS = 'gptTokens',
   ROLE = 'role',
   TIMESTAMP = 'timestamp',
@@ -201,10 +208,10 @@ export enum UsersMenuActions {
   ADD_NEW_MULTIPLE_USERS = 'add-multiple-users-action',
 }
 
-export enum ModeratorMenuActions {
-  GO_TO_MENU = 'go-to-moderator-menu-action',
-}
-
 export enum UserImagesMenuActions {
   CREATE_IMAGE = 'create-image-action',
+}
+
+export enum ModeratorMenuActions {
+  GO_TO_MENU = 'go-to-moderator-menu-action',
 }

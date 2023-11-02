@@ -1,4 +1,4 @@
-import { DAY_MS, LimitsGPT } from '@bot/constants';
+import { DAY_MS, LimitsGPT, ModelGPT } from '@bot/constants';
 import { UserModelType } from '@bot/types';
 import { parseTimestampUTC } from '@bot/utils';
 import { model, Schema } from 'mongoose';
@@ -6,6 +6,7 @@ import { model, Schema } from 'mongoose';
 const [gptTokens, gptImages] = LimitsGPT.BASE.split('/');
 
 const schema = new Schema<UserModelType>({
+  availableGPTModels: [ModelGPT.GPT_3_5_TURBO],
   conversation: { type: Schema.Types.ObjectId, ref: 'UserConversation', required: true },
   enabled: { type: Boolean, require: true, default: true },
   limit: {

@@ -491,10 +491,10 @@
   dependencies:
     bottleneck "^2.0.0"
 
-"@grammyjs/types@3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@grammyjs/types/-/types-3.1.1.tgz#dd80c018ffaf44bd89c56160edb3d9e86b84251f"
-  integrity sha512-nTNYvk+Al/nXZAMTEzPYEyW6pfgYgNuf/gxfx17kCxjHpAYhV+pcmROuD9eOBDLaBDh/hZJkQTIY6S3CfTAC0Q==
+"@grammyjs/types@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@grammyjs/types/-/types-3.3.0.tgz#04cf44943c789635a8e7dcd37846a962d57fb14f"
+  integrity sha512-18Qb12jXiIptqZAlboJMvFxNxydLskUjvE5PbU8ergKQlNIr8jRvYoHDm4t/x3qEfpf+FNhGw23lyZfgEE6e/g==
 
 "@grammyjs/types@^2.8.2":
   version "2.12.1"
@@ -1155,6 +1155,11 @@
   integrity sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==
   dependencies:
     "@types/node" "*"
+
+"@types/crypto-js@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@types/crypto-js/-/crypto-js-4.1.3.tgz#7f2fa22857ae2b5d3221edcba9644f67f8ea984c"
+  integrity sha512-YP1sYYayLe7Eg5oXyLLvOLfxBfZ5Fgpz6sVWkpB18wDMywCLPWmqzRz+9gyuOoLF0fzDTTFwlyNbx7koONUwqA==
 
 "@types/express-serve-static-core@^4.17.33":
   version "4.17.35"
@@ -2186,6 +2191,11 @@ cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+crypto-js@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
+  integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
+
 csv-parser@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/csv-parser/-/csv-parser-3.0.0.tgz#b88a6256d79e090a97a1b56451f9327b01d710e7"
@@ -3155,14 +3165,14 @@ graceful-fs@^4.2.0, graceful-fs@^4.2.9:
   integrity sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==
 
 grammy@^1.16.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/grammy/-/grammy-1.16.0.tgz#8ab5a9abf44bafe13610fbb54ed402044cff3293"
-  integrity sha512-qy9ZWBpV3CsbXjcxX2c2gJtpRIpaIeGweb51Od1cg0G8CapZTS3Y8gTUzd0OgDSy+2kUvuliTHPjs+843Ltc2g==
+  version "1.19.2"
+  resolved "https://registry.yarnpkg.com/grammy/-/grammy-1.19.2.tgz#9cf960f2191acc2e0dd4d6360df864b29f2b0126"
+  integrity sha512-bvDWesJgLn65MOsWhShVTVG1bSnh6Yo3OtUwoFzTG21CdPt6r8nzPWcuBSzxMDUQyv8I1c0TXH7zIxXFxiH4sw==
   dependencies:
-    "@grammyjs/types" "3.1.1"
+    "@grammyjs/types" "3.3.0"
     abort-controller "^3.0.0"
     debug "^4.3.4"
-    node-fetch "^2.6.9"
+    node-fetch "^2.7.0"
 
 grapheme-splitter@^1.0.4:
   version "1.0.4"
@@ -4455,10 +4465,10 @@ node-fetch@^2.6.1, node-fetch@^2.6.6, node-fetch@^2.6.7:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-fetch@^2.6.9:
-  version "2.6.9"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.9.tgz#7c7f744b5cc6eb5fd404e0c7a9fec630a55657e6"
-  integrity sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==
+node-fetch@^2.7.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
+  integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -5694,9 +5704,9 @@ typed-array-length@^1.0.4:
     is-typed-array "^1.1.9"
 
 typescript@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
-  integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
+  integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"

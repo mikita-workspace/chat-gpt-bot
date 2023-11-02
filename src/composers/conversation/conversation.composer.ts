@@ -1,6 +1,7 @@
 import {
   addMultipleUsersConversation,
   addUserConversation,
+  changeGptModelConversation,
   createImageConversation,
 } from '@bot/conversations';
 import { BotContextType } from '@bot/types';
@@ -14,5 +15,6 @@ composer.use(conversations());
 composer.use(createConversation(addUserConversation));
 composer.use(createConversation(addMultipleUsersConversation));
 composer.use(createConversation(createImageConversation));
+composer.use(createConversation(changeGptModelConversation));
 
 export const conversationComposer = (): Middleware<BotContextType> => composer;

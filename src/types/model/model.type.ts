@@ -3,6 +3,7 @@ import { SessionMessageType } from '@bot/types';
 import { Schema } from 'mongoose';
 
 export type UserModelType = {
+  availableGPTModels: string[];
   conversation: Schema.Types.ObjectId;
   enabled: boolean;
   limit: {
@@ -45,4 +46,14 @@ export type UserImageModelType = {
   }[];
   folderId: string;
   username: string;
+};
+
+export type SecretsModelType = {
+  gigaChatAccessToken: string;
+  googleRefreshToken: string;
+};
+
+export type SecretsType = {
+  gigaChatAccessToken?: { [key: string]: string | number };
+  googleRefreshToken?: string;
 };

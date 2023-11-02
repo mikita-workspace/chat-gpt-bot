@@ -10,6 +10,7 @@ import {
 import {
   addMultipleUsersConversation,
   addUserConversation,
+  changeGptModelConversation,
   createImageConversation,
 } from '@bot/conversations';
 import { adminMainMenu, moderatorMainMenu } from '@bot/menu';
@@ -63,6 +64,7 @@ composer.callbackQuery(UsersMenuActions.ADD_NEW_MULTIPLE_USERS, async (ctx) => {
 
 composer.callbackQuery(CommonActions.GO_TO_CHAT, async (ctx) => {
   await ctx.conversation.exit(createImageConversation.name);
+  await ctx.conversation.exit(changeGptModelConversation.name);
 
   await ctx.deleteMessage();
   await ctx.reply(ctx.t('start-message'));

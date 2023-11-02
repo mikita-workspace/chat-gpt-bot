@@ -6,7 +6,7 @@ import {
   UsersMenuActions,
 } from '@bot/constants';
 import { BotContextType } from '@bot/types';
-import { InlineKeyboard } from 'grammy';
+import { InlineKeyboard, Keyboard } from 'grammy';
 
 export const inlineGoToChat = (ctx: BotContextType) =>
   new InlineKeyboard().text(ctx.t('common-button-go-to-chat'), CommonActions.GO_TO_CHAT);
@@ -37,3 +37,9 @@ export const inlineCreateImage = (ctx: BotContextType) =>
     ctx.t('error-message-common-try-again'),
     UserImagesMenuActions.CREATE_IMAGE,
   );
+
+export const customKeyboard = (labels: string[]) => {
+  const buttonRows = labels.map((label) => [Keyboard.text(label)]);
+
+  return Keyboard.from(buttonRows).resized();
+};

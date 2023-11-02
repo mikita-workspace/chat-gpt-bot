@@ -13,6 +13,7 @@ export class UsersCsvService {
       { id: UsersCsvIds.GPT_TOKENS, title: UsersCsvIds.GPT_TOKENS },
       { id: UsersCsvIds.GPT_IMAGES, title: UsersCsvIds.GPT_IMAGES },
       { id: UsersCsvIds.EXPIRE, title: UsersCsvIds.EXPIRE },
+      { id: UsersCsvIds.GPT_MODELS, title: UsersCsvIds.GPT_MODELS },
     ];
 
     return csv.csvWriter('users', usersHeader, mapUsers(users));

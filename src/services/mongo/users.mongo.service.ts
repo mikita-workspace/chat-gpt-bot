@@ -1,5 +1,5 @@
 import { config } from '@bot/config';
-import { LimitsGPT, UserRoles } from '@bot/constants';
+import { LimitsGPT, ModelGPT, UserRoles } from '@bot/constants';
 import { UserConversationModel, UserModel } from '@bot/models';
 import { logger, mongo } from '@bot/services';
 import { MultipleUserType, UserModelType } from '@bot/types';
@@ -43,6 +43,7 @@ export class UsersMongoService {
       const user = new UserModel({
         role: username === config.SUPER_ADMIN_USERNAME ? UserRoles.SUPER_ADMIN : role,
         ...([UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(role) && {
+          availableGPTModels: [ModelGPT.GIGA_CHAT, ModelGPT.GPT_3_5_TURBO],
           limit: {
             gptTokens: Number(gptTokensAdmin),
             gptImages: Number(gptImagesAdmin),

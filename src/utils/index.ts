@@ -1,5 +1,6 @@
 import { TTL_DEFAULT } from '@bot/constants';
 import { logger } from '@bot/services';
+import CryptoJS from 'crypto-js';
 import { unlink } from 'fs/promises';
 import NodeCache from 'node-cache';
 
@@ -71,6 +72,9 @@ export const getTimezoneString = (offset: number) => {
   return `UTC ${sign}${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 };
 
+export const isExpiredDate = (expiredAt: number | string) =>
+  new Date(expiredAt).getTime() <= Date.now();
+
 export const capitalize = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 
@@ -94,4 +98,13 @@ export const applyMixins = (derivedCtor: any, constructors: any[]) => {
       );
     });
   });
+};
+
+export const encrypt = <T>(data: T, secret: string) =>
+  CryptoJS.AES.encrypt(JSON.stringify(data), secret).toString();
+
+export const decrypt = (cipherText: string, secret: string) => {
+  const bytes = CryptoJS.AES.decrypt(cipherText, secret);
+
+  return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 };

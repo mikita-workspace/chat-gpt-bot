@@ -6,6 +6,7 @@ command-image = Сгенерировать картинку через DALL·E 2
 command-clear = Очистить текущую сессию
 command-description = Описание
 command-about = О боте
+command-change-model = Изменить GPT модель
 
 # Errors messages
 error-message-common = Что-то пошло не так. Попробуйте еще раз!
@@ -14,6 +15,8 @@ error-message-auth = У вашей учетной записи ({ $username }) �
 error-message-auth-empty = У вашей учетной записи нет разрешения на использование этого бота. Пожалуйста, свяжитесь с администратором.
 error-message-auth-admin = У вашей учетной записи ({ $username }) нет разрешения на использование Админ-панели. Пожалуйста, свяжитесь с администратором.
 error-message-auth-moderator = У вашей учетной записи ({ $username }) нет разрешения на использование Модератор-панели. Пожалуйста, свяжитесь с администратором.
+error-message-change-gpt-model = Вы не выбрали GPT модель. Текущая модель - { $gptModel }.
+error-message-support-gpt-model = Выбранная GPT модель не поддерживает голосовой ввод.
 
 # Common buttons
 common-button-go-to-chat = Перейти в чат
@@ -120,6 +123,7 @@ info-message-conversation-cancel = Ввод данных был отменен. 
 
 # Profile
 profile-user-initial-message = Привет 👋🏻, { $firstName } { $lastName }!
+profile-user-current-gpt-model = Текущая GPT модель: { $gptModel }
 profile-user-role = Ваша роль: { $role }
 profile-user-gpt-package = GPT лимит: { $package }
 profile-user-available-messages-amount = Доступное количество GPT токенов: { $amount }
@@ -129,3 +133,7 @@ profile-user-date-register = Дата регистрации: { $date } { $utc }
 # Image generator
 image-generator-enter-request = Введите запрос в следующем формате: { $gptImageQuery }.
 image-generator-incorrect-image-number = Введено неверное количество картинок. Попробуйте еще раз!
+
+# Change GPT model
+gpt-model-change-success = GPT модель была изменена: { $prevGptModel } -> { $currentGptModel }.
+gpt-model-change-title = Выберете доступную GPT модель
