@@ -2,24 +2,26 @@ import { ModelGPT } from '@bot/constants';
 import { customKeyboard } from '@bot/keyboards';
 import { logger, mongo } from '@bot/services';
 import { ConversationType } from '@bot/types';
+import { mapGptModels } from 'helpers';
 
 export const changeGptModelConversation: ConversationType = async (conversation, ctx) => {
   try {
     const availableGPTModels = (
       await conversation.external(() => mongo.getUser(String(ctx.from?.username)))
     )?.availableGPTModels ?? [ModelGPT.GPT_3_5_TURBO];
+    const mappedGptModels = mapGptModels(availableGPTModels);
 
     const currentGptModel = conversation.session.settings.selectedGPTModel;
 
     await ctx.reply(ctx.t('gpt-model-change-title'), {
-      reply_markup: customKeyboard(availableGPTModels),
+      reply_markup: customKeyboard(mappedGptModels),
     });
 
     const {
       message: { text },
     } = await conversation.waitFor('message:text');
 
-    if (![ModelGPT.GIGA_CHAT, ModelGPT.GPT_3_5_TURBO].includes(text as ModelGPT)) {
+    if (!mappedGptModels.includes(text)) {
       return await ctx.reply(
         ctx.t('error-message-change-gpt-model', { gptModel: currentGptModel }),
         {
@@ -28,10 +30,16 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       );
     }
 
-    conversation.session.settings.selectedGPTModel = text as ModelGPT;
+    // TODO: Refactor it
+    const newGptModel = text.split('[')[1].slice(0, -1);
+
+    conversation.session.settings.selectedGPTModel = newGptModel as ModelGPT;
 
     return await ctx.reply(
-      ctx.t('gpt-model-change-success', { prevGptModel: currentGptModel, currentGptModel: text }),
+      ctx.t('gpt-model-change-success', {
+        prevGptModel: currentGptModel,
+        currentGptModel: newGptModel,
+      }),
       {
         reply_markup: { remove_keyboard: true },
       },

@@ -96,3 +96,16 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
     logger.error(`helper::getGPTMessage::${JSON.stringify(error.message)}`);
   }
 };
+
+export const mapGptModels = <T>(models: T[]) =>
+  models.reduce<string[]>((acc, currentModel) => {
+    if (currentModel === ModelGPT.GIGA_CHAT) {
+      acc.push(`🇷🇺 Sber::Text [${currentModel}]`);
+    }
+
+    if (currentModel === ModelGPT.GPT_3_5_TURBO) {
+      acc.push(`🇺🇸 OpenAI::Text&Voice [${currentModel}]`);
+    }
+
+    return acc;
+  }, []);

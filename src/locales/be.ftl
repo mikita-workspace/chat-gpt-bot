@@ -16,6 +16,7 @@ error-message-auth-empty = Ваш уліковы запіс не мае дазв
 error-message-auth-admin = Ваш уліковы запіс ({ $username }) не мае дазволу на выкарыстанне адмін-панэлі. Калі ласка, звяжыцеся з адміністратарам.
 error-message-auth-moderator = У вашага ўліковага запісу ({ $username }) няма дазволу на выкарыстанне Мадэратар-панэлі. Калі ласка, звяжыцеся з адміністратарам.
 error-message-change-gpt-model = Вы не абралі мадэль GPT. Мадэль на дадзены момант: - { $gptModel }.
+error-message-support-gpt-model = абраная GPT мадэль не падтрымлівае галасавы ўвод.
 
 # Common buttons
 common-button-go-to-chat = Перайсці ў чат

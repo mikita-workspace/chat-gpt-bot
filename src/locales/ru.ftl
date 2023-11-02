@@ -16,6 +16,7 @@ error-message-auth-empty = У вашей учетной записи нет ра
 error-message-auth-admin = У вашей учетной записи ({ $username }) нет разрешения на использование Админ-панели. Пожалуйста, свяжитесь с администратором.
 error-message-auth-moderator = У вашей учетной записи ({ $username }) нет разрешения на использование Модератор-панели. Пожалуйста, свяжитесь с администратором.
 error-message-change-gpt-model = Вы не выбрали GPT модель. Текущая модель - { $gptModel }.
+error-message-support-gpt-model = Выбранная GPT модель не поддерживает голосовой ввод.
 
 # Common buttons
 common-button-go-to-chat = Перейти в чат

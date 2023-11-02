@@ -16,6 +16,7 @@ error-message-auth-empty = Your account does not have permission to use this bot
 error-message-auth-admin = Your account ({ $username }) does not have permission to use Admin-panel. Please contact administrator.
 error-message-auth-moderator = Your account ({ $username }) does not have permission to use Moderator-panel. Please contact administrator.
 error-message-change-gpt-model = You have not selected the GPT model. The current model is { $gptModel }.
+error-message-support-gpt-model = The selected GPT model does not support voice input.
 
 # Common buttons
 common-button-go-to-chat = Go to chat
