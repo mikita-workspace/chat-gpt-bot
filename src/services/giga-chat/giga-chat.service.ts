@@ -37,6 +37,8 @@ class GigaChatService {
 
       await mongo.setSecrets({ gigaChatAccessToken: data });
 
+      logger.info('GigaChatService::getAccessToken::Access token received');
+
       return data.access_token as string;
     } catch (error) {
       logger.error(`GigaChatService::initialize::${JSON.stringify(error.message)}`);
