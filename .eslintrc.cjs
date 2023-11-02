@@ -15,6 +15,7 @@ module.exports = {
     es6: true,
     node: true,
   },
+  ignorePatterns: ['**/scripts/*.js'],
   rules: {
     'no-var': 'error',
     'no-debugger': 'off',

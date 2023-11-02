@@ -1,7 +1,7 @@
 /**
  * Update MongoDB script
  */
-import { connect, connection, disconnect } from 'mongoose';
+const { connect, connection, disconnect } = require('mongoose');
 
 const MONGODB_URI = 'mongodb://localhost:27017/store-local';
 
