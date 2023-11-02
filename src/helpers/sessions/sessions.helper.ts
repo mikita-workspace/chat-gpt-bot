@@ -6,10 +6,12 @@ export const createInitialUserSessionData = (): SessionType['user'] => ({
   username: null,
 });
 
-export const createInitialSettingsSessionData = (): SessionType['settings'] => ({
+export const createInitialSettingsSessionData = (
+  selectedGPTModel: `${ModelGPT}` = ModelGPT.GPT_3_5_TURBO,
+): SessionType['settings'] => ({
   amountOfGptImages: 0,
   amountOfGptTokens: 0,
-  selectedGPTModel: ModelGPT.GIGA_CHAT,
+  selectedGPTModel,
 });
 
 export const createInitialMemorySessionData = (): SessionType['memory'] => ({

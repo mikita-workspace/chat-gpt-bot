@@ -43,6 +43,7 @@ export const botLanguageCodes = ['en', 'ru', 'be'];
 export enum BotCommands {
   ABOUT = 'about',
   ADMIN = 'admin',
+  CHANGE_MODEL = 'change',
   CLEAR = 'clear',
   DESCRIPTION = 'description',
   IMAGE = 'image',
@@ -53,6 +54,7 @@ export enum BotCommands {
 
 export const BotCommandsWithDescription = [
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
   { command: BotCommands.CLEAR, i18nKey: 'command-clear' },
   { command: BotCommands.IMAGE, i18nKey: 'command-image' },
   { command: BotCommands.ADMIN, i18nKey: 'command-admin' },
@@ -206,10 +208,10 @@ export enum UsersMenuActions {
   ADD_NEW_MULTIPLE_USERS = 'add-multiple-users-action',
 }
 
-export enum ModeratorMenuActions {
-  GO_TO_MENU = 'go-to-moderator-menu-action',
-}
-
 export enum UserImagesMenuActions {
   CREATE_IMAGE = 'create-image-action',
+}
+
+export enum ModeratorMenuActions {
+  GO_TO_MENU = 'go-to-moderator-menu-action',
 }

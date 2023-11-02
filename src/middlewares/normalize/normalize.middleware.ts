@@ -22,7 +22,9 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   }
 
   if (user && isExpiredDate(user.limit.expire)) {
-    ctx.session.settings = createInitialSettingsSessionData();
+    const selectedGPTModel = ctx.session.settings.selectedGPTModel;
+
+    ctx.session.settings = createInitialSettingsSessionData(selectedGPTModel);
 
     await mongo.updateUser(username, {
       limit: {

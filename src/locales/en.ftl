@@ -6,6 +6,7 @@ command-image = Generate an image via DALL·E 2
 command-clear = Clear current session
 command-description = Description
 command-about = About the bot
+command-change-model = Change GPT model
 
 # Errors messages
 error-message-common = Something went wrong. Try again!
@@ -14,6 +15,7 @@ error-message-auth = Your account ({ $username }) does not have permission to us
 error-message-auth-empty = Your account does not have permission to use this bot. Please contact administrator.
 error-message-auth-admin = Your account ({ $username }) does not have permission to use Admin-panel. Please contact administrator.
 error-message-auth-moderator = Your account ({ $username }) does not have permission to use Moderator-panel. Please contact administrator.
+error-message-change-gpt-model = You have not selected the GPT model. The current model is { $gptModel }.
 
 # Common buttons
 common-button-go-to-chat = Go to chat
@@ -130,3 +132,7 @@ profile-user-date-register = Date of registration: { $date } { $utc }
 # Image generator
 image-generator-enter-request = Enter the query in the following format: { $gptImageQuery }.
 image-generator-incorrect-image-number = The number of images entered is incorrect. Try again!
+
+# Change GPT model
+gpt-model-change-success = The GPT model has been changed: { $prevGptModel } -> { $currentGptModel }.
+gpt-model-change-title = Select an available GPT model
