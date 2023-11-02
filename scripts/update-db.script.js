@@ -3,11 +3,9 @@
  */
 const { connect, connection, disconnect } = require('mongoose');
 
-const MONGODB_URI = 'mongodb://localhost:27017/store-local';
-
 (async () => {
   try {
-    await connect(MONGODB_URI);
+    await connect(process.env.MONGODB_URI);
 
     const users = connection.collection('users');
 
@@ -19,7 +17,7 @@ const MONGODB_URI = 'mongodb://localhost:27017/store-local';
     );
 
     // eslint-disable-next-line no-console
-    console.info(`MongoDB (${MONGODB_URI}) has been updated successfully!`);
+    console.info(`MongoDB (${process.env.MONGODB_URI}) has been updated successfully!`);
   } finally {
     disconnect();
   }
