@@ -1,8 +1,10 @@
 {
   "name": "chat-gpt-bot",
-  "version": "2.0.3",
-  "repository": "git@github.com:mikita-kandratsyeu/chat-gpt-bot.git",
+  "version": "3.0.0",
+  "repository": "git@github.com:mikita-workspace/chat-gpt-bot.git",
+  "description": "NovaChat | GPT Client",
   "author": "Mikita Kandratsyeu <nickondr.production@gmail.com>",
+  "private": true,
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc && tsc-alias -p tsconfig.build.json && copyfiles -u 1 -e \"**/*.ts\" \"./src/locales/**/*.ftl\" \"./build\" --flatten",
