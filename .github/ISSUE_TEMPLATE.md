@@ -13,4 +13,3 @@
 
   - Version:
   - Platform:
-  - Subsystem:
