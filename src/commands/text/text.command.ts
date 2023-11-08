@@ -14,7 +14,7 @@ export const textCommand = (bot: BotType) => {
 
       const currentTimestamp = Date.now();
       const lastMessageTimestamp = Math.min(
-        ...ctx.session.user.messages.map(({ timestamp }) => new Date(timestamp).getTime()),
+        ...ctx.session.client.messages.map(({ timestamp }) => new Date(timestamp).getTime()),
       );
 
       if (Math.abs(currentTimestamp - lastMessageTimestamp) >= TEN_MIN_MS) {

@@ -1,6 +1,6 @@
 import { DAY_MS, LimitsGPT, ModelGPT } from '@bot/constants';
 import { UserModelType } from '@bot/types';
-import { parseTimestampUTC } from '@bot/utils';
+import { getTimestampUnix } from '@bot/utils';
 import { model, Schema } from 'mongoose';
 
 const [gptTokens, gptImages] = LimitsGPT.BASE.split('/');
@@ -12,10 +12,10 @@ const schema = new Schema<UserModelType>({
   limit: {
     gptTokens: { type: Number, require: true, default: Number(gptTokens) },
     gptImages: { type: Number, require: true, default: Number(gptImages) },
-    expire: { type: String, require: true, default: parseTimestampUTC(Date.now() + DAY_MS) },
+    expire: { type: String, require: true, default: getTimestampUnix(Date.now() + DAY_MS) },
   },
   role: { type: String, required: true },
-  timestamp: { type: String, require: true, default: parseTimestampUTC(Date.now()) },
+  timestamp: { type: Number, require: true, default: getTimestampUnix(Date.now()) },
   username: { type: String, required: true, unique: true },
 });
 

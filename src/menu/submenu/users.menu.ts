@@ -80,8 +80,8 @@ export const changeUserRoleMenu = (menuName: string) =>
   })
     .dynamic(async (ctx) =>
       dynamicUsersMenuRange(ctx, async (_, username) => {
-        ctx.menu.nav(`${UsersMenu.SELECT_NEW_ROLE}-${menuName}`);
-        ctx.session.memory.userData.selectedUsername = username;
+        // ctx.menu.nav(`${UsersMenu.SELECT_NEW_ROLE}-${menuName}`);
+        // ctx.session.memory.userData.selectedUsername = username;
       }),
     )
     .text(
@@ -108,7 +108,7 @@ export const changeUserGptLimitsMenu = (menuName: string) =>
         ctx,
         async (_, username) => {
           ctx.menu.nav(`${UsersMenu.SELECT_NEW_GPT_LIMITS}-${menuName}`);
-          ctx.session.memory.userData.selectedUsername = username;
+          // ctx.session.memory.userData.selectedUsername = username;
         },
         true,
       ),

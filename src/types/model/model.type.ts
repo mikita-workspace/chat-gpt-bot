@@ -12,7 +12,7 @@ export type UserModelType = {
     expire: string;
   };
   role: UserRoles;
-  timestamp: string;
+  timestamp: number;
   username: string;
 };
 

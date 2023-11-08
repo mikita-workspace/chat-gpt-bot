@@ -1,23 +1,14 @@
 import { ModelGPT, SessionCsvIds } from '@bot/constants';
 import { SessionType, UserSessionModelType } from '@bot/types';
 
-export const createInitialUserSessionData = (): SessionType['user'] => ({
+export const createInitialClientSessionData = (): SessionType['client'] => ({
   messages: [],
   username: null,
-});
-
-export const createInitialSettingsSessionData = (
-  selectedGPTModel: `${ModelGPT}` = ModelGPT.GPT_3_5_TURBO,
-): SessionType['settings'] => ({
-  amountOfGptImages: 0,
-  amountOfGptTokens: 0,
-  selectedGPTModel,
-});
-
-export const createInitialMemorySessionData = (): SessionType['memory'] => ({
-  userData: {
-    selectedUsername: null,
+  rate: {
+    dalleImages: 0,
+    gptTokens: 0,
   },
+  selectedGptModel: ModelGPT.GPT_3_5_TURBO,
 });
 
 export const mapUserMessages = (userSession: UserSessionModelType) =>

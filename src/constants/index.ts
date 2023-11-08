@@ -37,8 +37,13 @@ export enum APIs {
 export const WEBHOOK_TIMEOUT = 60_000;
 
 // Bot config
-export const botName = 'Pied Piper | GPT';
-export const botLanguageCodes = ['en', 'ru', 'be'];
+export const botName = 'NovaChat | GPT';
+
+export enum BotLanguageCodes {
+  BELORUSSIAN = 'be',
+  ENGLISH = 'en',
+  RUSSIAN = 'ru',
+}
 
 export enum BotCommands {
   ABOUT = 'about',
@@ -194,7 +199,7 @@ export enum UserImagesMenu {
   GET_ARCHIVE_OR_CSV = 'get-user-images-archive-csv-menu',
 }
 
-// Menu actions
+// Actions
 export enum CommonActions {
   GO_TO_CHAT = 'go-to-chat-action',
 }
@@ -214,4 +219,8 @@ export enum UserImagesMenuActions {
 
 export enum ModeratorMenuActions {
   GO_TO_MENU = 'go-to-moderator-menu-action',
+}
+
+export enum AuthActions {
+  GET_AUTH = 'get_auth_action',
 }

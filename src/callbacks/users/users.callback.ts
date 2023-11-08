@@ -8,7 +8,7 @@ import {
   DynamicUserRolesMenuCallbackType,
   DynamicUsersMenuCallbackType,
 } from '@bot/types';
-import { parseTimestampUTC, removeFile } from '@bot/utils';
+import { getTimestampUnix, removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.deleteMessage();
@@ -76,7 +76,7 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
 
     logger.error(`callbacks::users::changeUserRoleCallback::${JSON.stringify(error.message)}`);
   } finally {
-    ctx.session.memory.userData.selectedUsername = null;
+    // ctx.session.memory.userData.selectedUsername = null;
   }
 };
 
@@ -93,7 +93,7 @@ export const changeUserGptLimitsCallback: DynamicNewGptLimitsMenuCallbackType = 
       limit: {
         gptTokens: Number(gptTokens),
         gptImages: Number(gptImages),
-        expire: parseTimestampUTC(Date.now() + DAY_MS),
+        expire: 'test',
       },
     });
 
@@ -114,7 +114,7 @@ export const changeUserGptLimitsCallback: DynamicNewGptLimitsMenuCallbackType = 
 
     logger.error(`callbacks::users::changeUserGptLimitsCallback::${JSON.stringify(error.message)}`);
   } finally {
-    ctx.session.memory.userData.selectedUsername = null;
+    // ctx.session.memory.userData.selectedUsername = null;
   }
 };
 

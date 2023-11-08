@@ -11,7 +11,7 @@ export const profileCommand = (bot: BotType) =>
     const user = await mongo.getUser(String(ctx.from?.username));
 
     if (user) {
-      const userSettings = ctx.session.settings;
+      const client = ctx.session.client;
 
       const timestamp = new Date(user.timestamp);
       const gptLimitPackage = (
@@ -23,13 +23,13 @@ export const profileCommand = (bot: BotType) =>
         `${ctx.t('profile-user-initial-message')}\n\r\n\r${ctx.t('profile-user-role', {
           role: ctx.t(`user-role-${user?.role}`),
         })}\n\r${ctx.t('profile-user-current-gpt-model', {
-          gptModel: userSettings.selectedGPTModel,
+          gptModel: client.selectedGptModel,
         })}\n\r${ctx.t('profile-user-gpt-package', {
           package: ctx.t(`user-gpt-limit-${gptLimitPackage}`),
         })}\n\r\n\r${ctx.t('profile-user-available-messages-amount', {
-          amount: Math.max(user.limit.gptTokens - userSettings.amountOfGptTokens, 0),
+          amount: Math.max(user.limit.gptTokens - client.rate.gptTokens, 0),
         })}\n\r${ctx.t('profile-user-available-images-amount', {
-          amount: Math.max(user.limit.gptImages - userSettings.amountOfGptImages, 0),
+          amount: Math.max(user.limit.gptImages - client.rate.dalleImages, 0),
         })}\n\r\n\r${ctx.t('profile-user-date-register', {
           date: timestamp.toLocaleString(currentLocale),
           utc: getTimezoneString(timestamp.getTimezoneOffset()),

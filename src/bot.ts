@@ -18,7 +18,7 @@ import {
   sessionComposer,
 } from '@bot/composers';
 import { config } from '@bot/config';
-import { botLanguageCodes, botName, ModelGPT } from '@bot/constants';
+import { BotLanguageCodes, botName, ModelGPT } from '@bot/constants';
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
 import { BotContextType } from '@bot/types';
@@ -45,23 +45,25 @@ export const createBot = () => {
     useSession: true,
   });
 
-  botLanguageCodes.forEach(async (languageCode) => {
-    await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
-      language_code: languageCode,
-    });
+  // Object.values(BotLanguageCodes).forEach(async (languageCode) => {
+  //   await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
+  //     language_code: languageCode,
+  //   });
 
-    await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
-      language_code: languageCode,
-    });
-  });
+  //   await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
+  //     language_code: languageCode,
+  //   });
+  // });
 
-  bot.api.config.use(apiThrottler());
+  // bot.api.config.use(apiThrottler());
 
-  bot.use(rateLimit());
+  // bot.use(rateLimit());
 
-  bot.use(hydrate());
+  // bot.use(hydrate());
 
   bot.use(i18n);
+
+  bot.use(callbackQueryComposer());
 
   bot.use(auth());
 
@@ -73,20 +75,18 @@ export const createBot = () => {
 
   bot.use(menuComposer());
 
-  bot.use(callbackQueryComposer());
-
   [
-    aboutCommand,
-    adminCommand,
-    changeModelCommand,
-    clearCommand,
-    descriptionCommand,
-    imageCommand,
-    moderatorCommand,
-    profileCommand,
+    // aboutCommand,
+    // adminCommand,
+    // changeModelCommand,
+    // clearCommand,
+    // descriptionCommand,
+    // imageCommand,
+    // moderatorCommand,
+    // profileCommand,
     startCommand,
-    textCommand,
-    voiceCommand,
+    // textCommand,
+    // voiceCommand,
   ].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);

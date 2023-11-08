@@ -1,5 +1,6 @@
 import {
   AdminMenuActions,
+  AuthActions,
   CommonActions,
   ModeratorMenuActions,
   UserImagesMenuActions,
@@ -43,3 +44,6 @@ export const customKeyboard = (labels: string[]) => {
 
   return Keyboard.from(buttonRows).resized();
 };
+
+export const inlineAuthButton = (ctx: BotContextType) =>
+  new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);

@@ -7,11 +7,11 @@ import {
   fetchCachedData,
   generateUniqueId,
   getKeyByValue,
+  getTimestampUnix,
   getTimezoneString,
   isEmptyObject,
   isExpiredDate,
   memoryCache,
-  parseTimestampUTC,
   removeValueFromMemoryCache,
   setValueToMemoryCache,
   uniqBy,
@@ -20,7 +20,7 @@ import { Logger } from 'winston';
 
 jest.spyOn(logger, 'error').mockReturnValue({} as unknown as Logger);
 
-describe('memory cache utils', () => {
+describe('util >> memory cache', () => {
   const key = 'testKey';
   const value = 'testValue';
 
@@ -74,7 +74,7 @@ describe('memory cache utils', () => {
   });
 });
 
-describe('isEmptyObject util', () => {
+describe('util >> isEmptyObject', () => {
   it('should return true for empty object', () => {
     const emptyObject = {};
     expect(isEmptyObject(emptyObject)).toBe(true);
@@ -86,7 +86,7 @@ describe('isEmptyObject util', () => {
   });
 });
 
-describe('getKeyByValue util', () => {
+describe('util >> getKeyByValue', () => {
   const object = { x: '1', y: '2', z: '3' };
 
   it('returns "x" when the value is 1', () => {
@@ -102,7 +102,7 @@ describe('getKeyByValue util', () => {
   });
 });
 
-describe('uniqBy util', () => {
+describe('util >> uniqBy', () => {
   it('should return an array with unique objects based on the given key', () => {
     const arr = [
       { id: 1, name: 'Jack' },
@@ -123,21 +123,22 @@ describe('uniqBy util', () => {
   });
 });
 
-describe('parseTimestampUTC util', () => {
+describe('util >> getTimestampUnix', () => {
   it('should return a string in UTC format', () => {
     const input = new Date('2021-08-31T13:45:00Z');
     const expectedOutput = 'Tue, 31 Aug 2021 13:45:00 GMT';
 
-    const output = parseTimestampUTC(input);
+    const output = getTimestampUnix(input);
 
     expect(output).toBe(expectedOutput);
   });
 
+  // TODO: Refactor test
   it('should return a string in UTC format when passed a timestamp as string', () => {
     const input = '2021-08-31T13:45:00Z';
     const expectedOutput = 'Tue, 31 Aug 2021 13:45:00 GMT';
 
-    const output = parseTimestampUTC(input);
+    const output = getTimestampUnix(input);
 
     expect(output).toBe(expectedOutput);
   });
@@ -146,13 +147,13 @@ describe('parseTimestampUTC util', () => {
     const input = 1630433100000; // Equals to '2021-08-31T13:45:00Z'
     const expectedOutput = 'Tue, 31 Aug 2021 18:05:00 GMT';
 
-    const output = parseTimestampUTC(input);
+    const output = getTimestampUnix(input);
 
     expect(output).toBe(expectedOutput);
   });
 });
 
-describe('getTimezoneString util', () => {
+describe('util >> getTimezoneString', () => {
   it('returns the correctly formatted timezone string for a positive offset', () => {
     expect(getTimezoneString(90)).toEqual('UTC -01:30');
     expect(getTimezoneString(240)).toEqual('UTC -04:00');
@@ -170,7 +171,7 @@ describe('getTimezoneString util', () => {
   });
 });
 
-describe('isExpiredDate util', () => {
+describe('util >> isExpiredDate', () => {
   it('returns True if passed date is expired', () => {
     expect(isExpiredDate(Date.now() - DAY_MS)).toEqual(true);
   });
@@ -180,7 +181,7 @@ describe('isExpiredDate util', () => {
   });
 });
 
-describe('capitalize util', () => {
+describe('util >> capitalize', () => {
   it('should capitalize the first character', () => {
     const result = capitalize('hello');
     expect(result.charAt(0)).toEqual('H');
@@ -192,7 +193,7 @@ describe('capitalize util', () => {
   });
 });
 
-describe('generateUniqueId util', () => {
+describe('util >> generateUniqueId', () => {
   it('generates a unique ID', () => {
     const id1 = generateUniqueId();
     const id2 = generateUniqueId();
@@ -203,7 +204,7 @@ describe('generateUniqueId util', () => {
   });
 });
 
-describe('AES encryption', () => {
+describe('util >> AES encryption', () => {
   const text = 'abc123';
   const object = { a: 1, b: 2 };
   const secret = 'secret';

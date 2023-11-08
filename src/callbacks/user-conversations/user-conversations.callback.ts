@@ -67,9 +67,9 @@ export const updateUserConversationMessagesCallback: DynamicUsersMenuCallbackTyp
   username,
 ) => {
   try {
-    await mongo.updateUserConversation(username, ctx.session.user.messages);
+    await mongo.updateUserConversation(username, ctx.session.client.messages);
 
-    ctx.session.user.messages = [];
+    ctx.session.client.messages = [];
   } catch (error) {
     logger.error(
       `callbacks::sessions::updateUserConversationMessagesCallback::${JSON.stringify(
