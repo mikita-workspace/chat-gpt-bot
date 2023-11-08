@@ -8,7 +8,7 @@ export const imageCommand = (bot: BotType) =>
   bot.command(BotCommands.IMAGE, async (ctx) => {
     const username = String(ctx?.from?.username);
 
-    const usedGptImages = ctx.session.settings.amountOfGptImages;
+    const usedGptImages = ctx.session.client.rate.dalleImages;
     const currentLocale = await ctx.i18n.getLocale();
 
     const user = await mongo.getUser(username);

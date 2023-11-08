@@ -76,7 +76,7 @@ export const changeUserRoleCallback: DynamicUserRolesMenuCallbackType = async (
 
     logger.error(`callbacks::users::changeUserRoleCallback::${JSON.stringify(error.message)}`);
   } finally {
-    ctx.session.memory.userData.selectedUsername = null;
+    // ctx.session.memory.userData.selectedUsername = null;
   }
 };
 
@@ -114,7 +114,7 @@ export const changeUserGptLimitsCallback: DynamicNewGptLimitsMenuCallbackType = 
 
     logger.error(`callbacks::users::changeUserGptLimitsCallback::${JSON.stringify(error.message)}`);
   } finally {
-    ctx.session.memory.userData.selectedUsername = null;
+    // ctx.session.memory.userData.selectedUsername = null;
   }
 };
 

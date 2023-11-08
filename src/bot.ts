@@ -45,15 +45,15 @@ export const createBot = () => {
     useSession: true,
   });
 
-  Object.values(BotLanguageCodes).forEach(async (languageCode) => {
-    await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
-      language_code: languageCode,
-    });
+  // Object.values(BotLanguageCodes).forEach(async (languageCode) => {
+  //   await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
+  //     language_code: languageCode,
+  //   });
 
-    await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
-      language_code: languageCode,
-    });
-  });
+  //   await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
+  //     language_code: languageCode,
+  //   });
+  // });
 
   // bot.api.config.use(apiThrottler());
 

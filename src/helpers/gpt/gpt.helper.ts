@@ -53,8 +53,8 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
   try {
     const username = String(ctx?.from?.username);
 
-    const usedGptTokens = ctx.session.settings.amountOfGptTokens;
-    const selectedGPTModel = ctx.session.settings.selectedGPTModel;
+    const usedGptTokens = ctx.session.client.rate.gptTokens;
+    const selectedGPTModel = ctx.session.client.selectedGptModel;
 
     const currentLocale = await ctx.i18n.getLocale();
 
@@ -69,13 +69,13 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
       });
     }
 
-    ctx.session.user.messages.push({
+    ctx.session.client.messages.push({
       gptFormat: convertGPTMessage(text),
       timestamp: getTimestampUnix(Date.now()),
     });
 
     const response = await gptModelRunning[selectedGPTModel].chat(
-      ctx.session.user.messages.map(({ gptFormat }) => gptFormat),
+      ctx.session.client.messages.map(({ gptFormat }) => gptFormat),
     );
 
     if (!response) {
@@ -84,12 +84,12 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
 
     const { message, usage } = response ?? {};
 
-    ctx.session.user.messages.push({
+    ctx.session.client.messages.push({
       gptFormat: convertGPTMessage(message.content, MessageRolesGPT.ASSISTANT),
       timestamp: getTimestampUnix(Date.now()),
     });
 
-    ctx.session.settings.amountOfGptTokens += usage.total_tokens;
+    ctx.session.client.rate.gptTokens += usage.total_tokens;
 
     return message.content;
   } catch (error) {

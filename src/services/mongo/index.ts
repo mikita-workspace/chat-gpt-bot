@@ -14,7 +14,7 @@ import { UsersMongoService } from './users.mongo.service';
 class MongoService {
   sessions: mongoose.mongo.Collection<ISession>;
 
-  sessionAdapter: MongoDBAdapter<SessionType['user']>;
+  sessionAdapter: MongoDBAdapter<SessionType['client']>;
 
   constructor() {
     const sessions = mongoose.connection.collection<ISession>(UserSessionModel.collection.name);

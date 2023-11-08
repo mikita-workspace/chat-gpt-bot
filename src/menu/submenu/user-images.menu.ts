@@ -17,7 +17,7 @@ export const getUserImagesMenu = (menuName: string) =>
     .dynamic(async (ctx) =>
       dynamicUserImagesMenuRange(ctx, async (_, username) => {
         ctx.menu.nav(`${UserImagesMenu.GET_ARCHIVE_OR_CSV}-${menuName}`);
-        ctx.session.memory.userData.selectedUsername = username;
+        // ctx.session.client.userData.selectedUsername = username;
       }),
     )
     .text(
@@ -29,13 +29,12 @@ export const getArchiveOrCsvMenu = (menuName: string) =>
   new Menu<BotContextType>(`${UserImagesMenu.GET_ARCHIVE_OR_CSV}-${menuName}`)
     .text(
       (ctx) => ctx.t('user-images-menu-button-get-csv'),
-      (ctx) => getUserImagesCsvCallback(ctx, String(ctx.session.memory.userData.selectedUsername)),
+      (ctx) => getUserImagesCsvCallback(ctx, ''),
     )
     .row()
     .text(
       (ctx) => ctx.t('user-images-menu-button-get-archive'),
-      (ctx) =>
-        getUserImagesArchiveCallback(ctx, String(ctx.session.memory.userData.selectedUsername)),
+      (ctx) => getUserImagesArchiveCallback(ctx, ''),
     )
     .row()
     .text(

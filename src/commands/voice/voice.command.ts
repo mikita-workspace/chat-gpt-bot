@@ -8,7 +8,7 @@ import { BotType } from '@bot/types';
 export const voiceCommand = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {
     try {
-      const currentGptModel = ctx.session.settings.selectedGPTModel;
+      const currentGptModel = ctx.session.client.selectedGptModel;
 
       if (currentGptModel === ModelGPT.GIGA_CHAT) {
         return await ctx.reply(ctx.t('error-message-support-gpt-model'));

@@ -11,7 +11,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     )?.availableGPTModels ?? [ModelGPT.GPT_3_5_TURBO];
     const mappedGptModels = mapGptModels(availableGPTModels);
 
-    const currentGptModel = conversation.session.settings.selectedGPTModel;
+    const currentGptModel = conversation.session.client.selectedGptModel;
 
     await ctx.reply(ctx.t('gpt-model-change-title'), {
       reply_markup: customKeyboard(mappedGptModels),
@@ -33,7 +33,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     // TODO: Refactor it
     const newGptModel = text.split('[')[1].slice(0, -1);
 
-    conversation.session.settings.selectedGPTModel = newGptModel as ModelGPT;
+    conversation.session.client.selectedGptModel = newGptModel as ModelGPT;
 
     return await ctx.reply(
       ctx.t('gpt-model-change-success', {

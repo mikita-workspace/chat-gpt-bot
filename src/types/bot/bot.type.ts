@@ -11,19 +11,14 @@ export type SessionMessageType = {
 };
 
 export type SessionType = {
-  user: {
+  client: {
     username: string | null;
     messages: SessionMessageType[];
-  };
-  settings: {
-    amountOfGptImages: number;
-    amountOfGptTokens: number;
-    selectedGPTModel: `${ModelGPT}`;
-  };
-  memory: {
-    userData: {
-      selectedUsername: string | null;
+    rate: {
+      dalleImages: number;
+      gptTokens: number;
     };
+    selectedGptModel: `${ModelGPT}`;
   };
 };
 
