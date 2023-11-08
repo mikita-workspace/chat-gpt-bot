@@ -2,7 +2,7 @@ import { DAY_MS } from '@bot/constants';
 import { createInitialSettingsSessionData, splitSessionMessagesByTokenLimit } from '@bot/helpers';
 import { mongo } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
-import { isExpiredDate, parseTimestampUTC } from '@bot/utils';
+import { getTimestampUnix, isExpiredDate } from '@bot/utils';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   const username = String(ctx?.from?.username);
@@ -29,7 +29,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
     await mongo.updateUser(username, {
       limit: {
         ...user.limit,
-        expire: parseTimestampUTC(Date.now() + DAY_MS),
+        expire: 'test',
       },
     });
   }

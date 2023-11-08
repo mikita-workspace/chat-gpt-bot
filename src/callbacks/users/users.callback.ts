@@ -8,7 +8,7 @@ import {
   DynamicUserRolesMenuCallbackType,
   DynamicUsersMenuCallbackType,
 } from '@bot/types';
-import { parseTimestampUTC, removeFile } from '@bot/utils';
+import { getTimestampUnix, removeFile } from '@bot/utils';
 
 export const addUserInitialCallback = async (ctx: BotContextType) => {
   await ctx.deleteMessage();
@@ -93,7 +93,7 @@ export const changeUserGptLimitsCallback: DynamicNewGptLimitsMenuCallbackType = 
       limit: {
         gptTokens: Number(gptTokens),
         gptImages: Number(gptImages),
-        expire: parseTimestampUTC(Date.now() + DAY_MS),
+        expire: 'test',
       },
     });
 

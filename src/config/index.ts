@@ -6,6 +6,7 @@ dotenv.config({
 });
 
 export const config = {
+  CHAT_GPT_API_HOST: process.env.CHAT_GPT_API_HOST ?? '',
   GIGA_CHAT_AUTH_TOKEN: process.env.GIGA_CHAT_AUTH_TOKEN ?? '',
   GITHUB_REPO: process.env.GITHUB_REPO ?? '',
   GITHUB_TOKEN: process.env.GITHUB_TOKEN ?? '',

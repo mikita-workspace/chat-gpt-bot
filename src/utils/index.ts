@@ -1,6 +1,7 @@
 import { TTL_DEFAULT } from '@bot/constants';
 import { logger } from '@bot/services';
 import CryptoJS from 'crypto-js';
+import { compareAsc, getUnixTime } from 'date-fns';
 import { unlink } from 'fs/promises';
 import NodeCache from 'node-cache';
 
@@ -57,10 +58,10 @@ export const uniqBy = <T>(arr: T[], key: keyof T): T[] =>
     ),
   );
 
-export const parseTimestampUTC = (timestamp: number | string | Date) => {
+export const getTimestampUnix = (timestamp: number | string | Date) => {
   const date = new Date(timestamp);
 
-  return date.toUTCString();
+  return getUnixTime(date);
 };
 
 export const getTimezoneString = (offset: number) => {
@@ -73,7 +74,7 @@ export const getTimezoneString = (offset: number) => {
 };
 
 export const isExpiredDate = (expiredAt: number | string) =>
-  new Date(expiredAt).getTime() <= Date.now();
+  compareAsc(new Date(), new Date(expiredAt)) > 0;
 
 export const capitalize = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();

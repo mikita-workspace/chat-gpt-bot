@@ -1,7 +1,7 @@
 import { MAX_CONTEXT_GPT_TOKENS, MessageRolesGPT, ModelGPT } from '@bot/constants';
 import { gigaChat, logger, mongo, openAI } from '@bot/services';
 import { BotContextType, SessionMessageType } from '@bot/types';
-import { getTimezoneString, parseTimestampUTC } from '@bot/utils';
+import { getTimestampUnix, getTimezoneString } from '@bot/utils';
 import { encode } from 'gpt-3-encoder';
 import { ChatCompletionRequestMessage } from 'openai';
 
@@ -71,7 +71,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
 
     ctx.session.user.messages.push({
       gptFormat: convertGPTMessage(text),
-      timestamp: parseTimestampUTC(Date.now()),
+      timestamp: getTimestampUnix(Date.now()),
     });
 
     const response = await gptModelRunning[selectedGPTModel].chat(
@@ -86,7 +86,7 @@ export const getGPTAnswer = async (ctx: BotContextType, text: string) => {
 
     ctx.session.user.messages.push({
       gptFormat: convertGPTMessage(message.content, MessageRolesGPT.ASSISTANT),
-      timestamp: parseTimestampUTC(Date.now()),
+      timestamp: getTimestampUnix(Date.now()),
     });
 
     ctx.session.settings.amountOfGptTokens += usage.total_tokens;

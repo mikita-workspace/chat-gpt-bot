@@ -7,7 +7,7 @@ import { Bot, Context, SessionFlavor } from 'grammy';
 
 export type SessionMessageType = {
   gptFormat: { content: string; role: `${MessageRolesGPT}` };
-  timestamp: string;
+  timestamp: number;
 };
 
 export type SessionType = {

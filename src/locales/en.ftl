@@ -1,3 +1,4 @@
+## -------- OLD --------
 # Commands
 command-profile = Profile
 command-admin = Admin-panel
@@ -9,7 +10,6 @@ command-about = About the bot
 command-change-model = Change GPT model
 
 # Errors messages
-error-message-common = Something went wrong. Try again!
 error-message-common-try-again = Try again
 error-message-auth = Your account ({ $username }) does not have permission to use this bot. Please contact administrator.
 error-message-auth-empty = Your account does not have permission to use this bot. Please contact administrator.
@@ -137,3 +137,18 @@ image-generator-incorrect-image-number = The number of images entered is incorre
 # Change GPT model
 gpt-model-change-success = The GPT model has been changed: { $prevGptModel } -> { $currentGptModel }.
 gpt-model-change-title = Select an available GPT model
+## -------- OLD --------
+
+# Auth
+auth-authorization = It looks like your account is not authorized. Please click the authorization button.
+auth-success = Thank you for authorization! After approval, { $botName } bot will be available to you.
+auth-button = Authorization
+auth-approval = Your account is awaiting confirmation by the administrator. Thank you for your patience!
+auth-block = Your account has been blocked.
+auth-error = Access is denied.
+
+# Support
+support-contact = If you have any questions, click /support.
+
+# Errors messages
+error-message-common = Something went wrong. Try again!
