@@ -8,7 +8,7 @@ import { webhookCallback } from 'grammy';
 import mongoose from 'mongoose';
 
 const botInitialize = async () => {
-  await mongoose.connect(config.MONGODB_URI);
+  // await mongoose.connect(config.MONGODB_URI);
 
   const bot = createBot();
 
