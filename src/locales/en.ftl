@@ -143,7 +143,7 @@ gpt-model-change-title = Select an available GPT model
 auth-authorization = It looks like your account is not authorized. Please click the authorization button.
 auth-success = Thank you for authorization! After approval, { $botName } bot will be available to you.
 auth-button = Authorization
-auth-approval = Your account is awaiting confirmation by the administrator. Thank you for your patience!
+auth-approval = We are still working on setting up the bot for you. Thank you for your patience!
 auth-block = Your account has been blocked.
 auth-error = Access is denied.
 
