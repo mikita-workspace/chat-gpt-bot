@@ -1,3 +1,5 @@
+import { MessageRolesGPT } from '@bot/api/gpt/constants';
+
 export type GptModelsResponse = {
   model: string;
   title: string;
@@ -9,7 +11,7 @@ export type GptModelsResponse = {
 export type ChatCompletionResponse = {
   message: {
     content: string;
-    role: string;
+    role: `${MessageRolesGPT}`;
   };
   usage: {
     completion_tokens: number;

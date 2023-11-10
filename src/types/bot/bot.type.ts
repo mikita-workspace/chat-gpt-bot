@@ -5,20 +5,13 @@ import { I18nFlavor } from '@grammyjs/i18n';
 import { MenuFlavor } from '@grammyjs/menu';
 import { Bot, Context, SessionFlavor } from 'grammy';
 
-export type SessionMessageType = {
-  gptFormat: { content: string; role: `${MessageRolesGPT}` };
-  timestamp: number;
-};
+export type SessionMessageType = { content: string; role: `${MessageRolesGPT}` };
 
 export type SessionType = {
   client: {
-    username: string | null;
     messages: SessionMessageType[];
-    rate: {
-      dalleImages: number;
-      gptTokens: number;
-    };
     selectedGptModel: `${ModelGPT}`;
+    username: string | null;
   };
 };
 

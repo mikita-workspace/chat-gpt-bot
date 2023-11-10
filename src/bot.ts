@@ -21,6 +21,7 @@ import { config } from '@bot/config';
 import { BotLanguageCodes, botName, ModelGPT } from '@bot/constants';
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
+import { voiceModule } from '@bot/modules/voice';
 import { BotContextType } from '@bot/types';
 import { hydrate } from '@grammyjs/hydrate';
 import { I18n } from '@grammyjs/i18n';
@@ -75,19 +76,21 @@ export const createBot = () => {
 
   bot.use(menuComposer());
 
-  [
-    // aboutCommand,
-    // adminCommand,
-    // changeModelCommand,
-    // clearCommand,
-    // descriptionCommand,
-    // imageCommand,
-    // moderatorCommand,
-    // profileCommand,
-    startCommand,
-    // textCommand,
-    // voiceCommand,
-  ].forEach((handle) => handle(bot));
+  // [
+  //   // aboutCommand,
+  //   // adminCommand,
+  //   // changeModelCommand,
+  //   // clearCommand,
+  //   // descriptionCommand,
+  //   // imageCommand,
+  //   // moderatorCommand,
+  //   // profileCommand,
+  //   startCommand,
+  //   // textCommand,
+  //   voiceCommand,
+  // ].forEach((handle) => handle(bot));
+
+  [startCommand, voiceModule].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);
 

@@ -139,6 +139,10 @@ gpt-model-change-success = The GPT model has been changed: { $prevGptModel } -> 
 gpt-model-change-title = Select an available GPT model
 ## -------- OLD --------
 
+# Errors messages
+error-message-common = Something went wrong. Try again!
+error-message-gpt = Your message could not be processed. Try again!
+
 # Auth
 auth-authorization = It looks like your account is not authorized. Please click the authorization button.
 auth-success = Thank you for authorization! After approval, { $botName } bot will be available to you.
@@ -150,5 +154,6 @@ auth-error = Access is denied.
 # Support
 support-contact = If you have any questions, click /support.
 
-# Errors messages
-error-message-common = Something went wrong. Try again!
+# Vote
+vote-like = 👍
+vote-dislike = 👎

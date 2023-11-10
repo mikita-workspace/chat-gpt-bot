@@ -17,6 +17,8 @@ export class UserMessagesCsvService {
       includesConversation ? 'conversation' : 'session'
     }`;
 
-    return csv.csvWriter(filename, userMessagesHeader, mapUserMessages(userSession));
+    return [];
+
+    // return csv.csvWriter(filename, userMessagesHeader, mapUserMessages(userSession));
   }
 }

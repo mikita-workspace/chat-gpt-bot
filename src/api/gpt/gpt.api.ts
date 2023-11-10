@@ -1,9 +1,8 @@
+import { ChatCompletionResponse, GptModelsResponse } from '@bot/api/gpt/types';
 import { config } from '@bot/config';
 import { logger } from '@bot/services';
 import { fetchCachedData } from '@bot/utils';
 import axios from 'axios';
-
-import { ChatCompletionResponse, GptModelsResponse } from './types/gpt.types';
 
 export const getGptModels = async (): Promise<GptModelsResponse[]> => {
   try {

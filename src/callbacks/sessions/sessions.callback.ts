@@ -13,20 +13,20 @@ export const getUserSessionMessagesCallback: DynamicUsersMenuCallbackType = asyn
     const currentUserRole =
       (await mongo.getUser(String(ctx?.from?.username)))?.role ?? UserRoles.USER;
 
-    if (userSession) {
-      const { filePath, filePathForReply } = await csv.createUserMessagesCsv(userSession);
+    // if (userSession) {
+    //   const { filePath, filePathForReply } = await csv.createUserMessagesCsv(userSession);
 
-      if (filePath && filePathForReply) {
-        await ctx.deleteMessage();
-        await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: [UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(currentUserRole)
-            ? inlineGoToAdminMenu(ctx)
-            : inlineGoToModeratorMenu(ctx),
-        });
+    //   if (filePath && filePathForReply) {
+    //     await ctx.deleteMessage();
+    //     await ctx.replyWithDocument(filePathForReply, {
+    //       reply_markup: [UserRoles.ADMIN, UserRoles.SUPER_ADMIN].includes(currentUserRole)
+    //         ? inlineGoToAdminMenu(ctx)
+    //         : inlineGoToModeratorMenu(ctx),
+    //     });
 
-        await removeFile(filePath);
-      }
-    }
+    //     await removeFile(filePath);
+    //   }
+    // }
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
