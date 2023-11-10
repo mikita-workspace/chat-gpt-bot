@@ -1,14 +1,4 @@
 ## -------- OLD --------
-# Commands
-command-profile = Profile
-command-admin = Admin-panel
-command-moderator = Moderator-panel
-command-image = Generate an image via DALL·E 2
-command-clear = Clear current session
-command-description = Description
-command-about = About the bot
-command-change-model = Change GPT model
-
 # Errors messages
 error-message-common-try-again = Try again
 error-message-auth = Your account ({ $username }) does not have permission to use this bot. Please contact administrator.
@@ -122,7 +112,7 @@ info-message-reach-gpt-images-limit = You have used all available GPT images. Pl
 info-message-conversation-cancel = The data entry has been canceled. Please run the command { $command } again!
 
 # Profile
-profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
+profile-user-initial-message = Hey 👋, { $firstName } { $lastName }!
 profile-user-current-gpt-model = Current GPT model: { $gptModel }
 profile-user-role = Your role: { $role }
 profile-user-gpt-package = GPT limit: { $package }
@@ -138,6 +128,14 @@ image-generator-incorrect-image-number = The number of images entered is incorre
 gpt-model-change-success = The GPT model has been changed: { $prevGptModel } -> { $currentGptModel }.
 gpt-model-change-title = Select an available GPT model
 ## -------- OLD --------
+
+# Commands
+command-profile = Profile
+command-image = Generate an image via DALL·E 2
+command-restart = New dialog
+command-about = About me
+command-change-model = Change GPT model
+command-support = Write to support
 
 # Errors messages
 error-message-common = Something went wrong. Try again!

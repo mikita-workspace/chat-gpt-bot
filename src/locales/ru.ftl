@@ -1,14 +1,4 @@
 ## -------- OLD --------
-# Commands
-command-profile = Профиль
-command-admin = Админ-панель
-command-moderator = Модератор-панель
-command-image = Сгенерировать картинку через DALL·E 2
-command-clear = Очистить текущую сессию
-command-description = Описание
-command-about = О боте
-command-change-model = Изменить GPT модель
-
 error-message-common-try-again = Попробовать еще раз
 error-message-auth = У вашей учетной записи ({ $username }) нет разрешения на использование этого бота. Пожалуйста, свяжитесь с администратором.
 error-message-auth-empty = У вашей учетной записи нет разрешения на использование этого бота. Пожалуйста, свяжитесь с администратором.
@@ -121,7 +111,7 @@ info-message-reach-gpt-images-limit = Вы использовали все до�
 info-message-conversation-cancel = Ввод данных был отменен. Пожалуйста, выполните команду { $command } еще раз!
 
 # Profile
-profile-user-initial-message = Привет 👋🏻, { $firstName } { $lastName }!
+profile-user-initial-message = Привет 👋, { $firstName } { $lastName }!
 profile-user-current-gpt-model = Текущая GPT модель: { $gptModel }
 profile-user-role = Ваша роль: { $role }
 profile-user-gpt-package = GPT лимит: { $package }
@@ -137,6 +127,13 @@ image-generator-incorrect-image-number = Введено неверное кол�
 gpt-model-change-success = GPT модель была изменена: { $prevGptModel } -> { $currentGptModel }.
 gpt-model-change-title = Выберете доступную GPT модель
 ## -------- OLD --------
+# Commands
+command-profile = Профиль
+command-image = Сгенерировать картинку через DALL·E 2
+command-restart = Новый диалог
+command-about = Обо мне
+command-change-model = Изменить GPT модель
+command-support = Написать в поддержку
 
 # Errors messages
 error-message-common = Что-то пошло не так. Попробуйте еще раз!
