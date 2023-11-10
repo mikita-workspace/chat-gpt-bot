@@ -1,8 +1,7 @@
-export type ClientStateResponse = {
-  blockReason: string;
-  isApproved: string;
-  isBlocked: string;
-  updatedAt: number;
+export type ClientAvailabilityResponse = {
+  models: string[];
+  rate: { dalleImages: number; expiresAt: number; gptTokens: number };
+  state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: number };
 };
 
 export type ClientResponse = {

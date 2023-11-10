@@ -1,13 +1,5 @@
-import {
-  aboutCommand,
-  adminCommand,
-  changeModelCommand,
-  descriptionCommand,
-  imageCommand,
-  moderatorCommand,
-  profileCommand,
-  startCommand,
-} from '@bot/commands';
+import { BotLanguageCodes } from '@bot/common/constants';
+import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/common/helpers';
 import {
   callbackQueryComposer,
   conversationComposer,
@@ -15,10 +7,10 @@ import {
   sessionComposer,
 } from '@bot/composers';
 import { config } from '@bot/config';
-import { BotLanguageCodes, botName, ModelGPT } from '@bot/constants';
-import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/helpers';
+import { botName, ModelGPT } from '@bot/constants';
 import { auth, normalize } from '@bot/middlewares';
-import { restartModule } from '@bot/modules/restart/restart.module';
+import { changeModule } from '@bot/modules/change';
+import { restartModule } from '@bot/modules/restart';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
 import { BotContextType } from '@bot/types';
@@ -75,7 +67,7 @@ export const createBot = () => {
 
   bot.use(menuComposer());
 
-  [startCommand, restartModule, textModule, voiceModule].forEach((handle) => handle(bot));
+  [restartModule, changeModule, textModule, voiceModule].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);
 

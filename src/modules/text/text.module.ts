@@ -1,5 +1,5 @@
 import { getGptContent } from '@bot/common/helpers';
-import { inlineVoteButton } from '@bot/common/keyboards';
+// import { inlineVoteButton } from '@bot/keyboards';
 import { logger } from '@bot/services';
 import { BotType } from '@bot/types';
 
@@ -19,7 +19,8 @@ export const textModule = (bot: BotType) => {
       if (gptContent) {
         return await ctx.reply(gptContent, {
           reply_to_message_id: messageId,
-          reply_markup: inlineVoteButton(ctx),
+          // TODO: https://app.asana.com/0/1205877070000801/1205877070000835/f
+          // reply_markup: inlineVoteButton(ctx),
         });
       }
 

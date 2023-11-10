@@ -1,5 +1,4 @@
 import { LoggerInfoCsvIds } from '@bot/constants';
-import { mapBotLoggerInfo } from '@bot/helpers';
 import { csv } from '@bot/services';
 import { BotLoggerModelType } from '@bot/types';
 
@@ -12,6 +11,8 @@ export class BotLoggerCsvService {
       { id: LoggerInfoCsvIds.MESSAGE, title: LoggerInfoCsvIds.MESSAGE },
     ];
 
-    return csv.csvWriter('bot-logger-info', loggerHeader, mapBotLoggerInfo(loggerInfo));
+    return null;
+
+    // return csv.csvWriter('bot-logger-info', loggerHeader, mapBotLoggerInfo(loggerInfo));
   }
 }

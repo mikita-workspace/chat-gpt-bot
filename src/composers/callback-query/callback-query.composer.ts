@@ -1,9 +1,9 @@
 import { createClient } from '@bot/api/clients';
+import { BotLanguageCodes } from '@bot/common/constants';
 import { config } from '@bot/config';
 import {
   AdminMenuActions,
   AuthActions,
-  BotLanguageCodes,
   botName,
   CommonActions,
   ModeratorMenuActions,

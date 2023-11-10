@@ -1,7 +1,4 @@
-import { LoggerInfoCsvIds } from '@bot/constants';
 import { logger } from '@bot/services';
-import { BotLoggerModelType } from '@bot/types';
-import { getTimestampUnix } from '@bot/utils';
 import { BotError, GrammyError, HttpError } from 'grammy';
 
 export const handleBotError = (error: BotError) => {
@@ -18,14 +15,6 @@ export const handleBotError = (error: BotError) => {
     logger.error(`handleBotError::unknown error::${error.message}`);
   }
 };
-
-export const mapBotLoggerInfo = (botLoggerInfo: BotLoggerModelType[]) =>
-  botLoggerInfo.map(({ timestamp, level, message, meta: { username } }) => ({
-    [LoggerInfoCsvIds.TIMESTAMP]: getTimestampUnix(timestamp),
-    [LoggerInfoCsvIds.LEVEL]: level,
-    [LoggerInfoCsvIds.USERNAME]: username,
-    [LoggerInfoCsvIds.MESSAGE]: message,
-  }));
 
 export const handleTimeoutError = () => {
   logger.error(`handleTimeoutError::error::Webhook timeout has been reached`);

@@ -1,6 +1,6 @@
+import { AuthActions, VoteActions } from '@bot/common/constants';
 import {
   AdminMenuActions,
-  AuthActions,
   CommonActions,
   ModeratorMenuActions,
   UserImagesMenuActions,
@@ -21,15 +21,6 @@ export const inlineGoToModeratorMenu = (ctx: BotContextType) =>
     ModeratorMenuActions.GO_TO_MENU,
   );
 
-export const inlineAddNewUser = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('error-message-common-try-again'), UsersMenuActions.ADD_NEW_USER);
-
-export const inlineAddNewMultipleUsers = (ctx: BotContextType) =>
-  new InlineKeyboard().text(
-    ctx.t('error-message-common-try-again'),
-    UsersMenuActions.ADD_NEW_MULTIPLE_USERS,
-  );
-
 export const inlineShareWithContacts = (ctx: BotContextType, query: string) =>
   new InlineKeyboard().switchInline(ctx.t('common-button-share'), query);
 
@@ -39,11 +30,21 @@ export const inlineCreateImage = (ctx: BotContextType) =>
     UserImagesMenuActions.CREATE_IMAGE,
   );
 
+export const inlineAuthButton = (ctx: BotContextType) =>
+  new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);
+
+export const inlineVoteButton = (ctx: BotContextType) => {
+  const voteLabels = [
+    [ctx.t('vote-like'), VoteActions.LIKE],
+    [ctx.t('vote-dislike'), VoteActions.DISLIKE],
+  ];
+  const voteRow = voteLabels.map(([label, data]) => InlineKeyboard.text(label, data));
+
+  return InlineKeyboard.from([voteRow]);
+};
+
 export const customKeyboard = (labels: string[]) => {
   const buttonRows = labels.map((label) => [Keyboard.text(label)]);
 
   return Keyboard.from(buttonRows).resized();
 };
-
-export const inlineAuthButton = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);

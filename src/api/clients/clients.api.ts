@@ -1,6 +1,6 @@
-import { ClientResponse, ClientStateResponse } from '@bot/api/clients/types';
+import { ClientAvailabilityResponse, ClientResponse } from '@bot/api/clients/types';
+import { BotLanguageCodes } from '@bot/common/constants';
 import { config } from '@bot/config';
-import { BotLanguageCodes } from '@bot/constants';
 import { logger } from '@bot/services';
 import { fetchCachedData } from '@bot/utils';
 import axios, { HttpStatusCode } from 'axios';
@@ -27,10 +27,10 @@ export const createClient = async (
 
 export const getClientAvailability = async (
   telegramId: number,
-): Promise<ClientStateResponse | null> => {
+): Promise<ClientAvailabilityResponse | null> => {
   try {
-    const clientState = await fetchCachedData('cached-client-availability', async () => {
-      const response = await axios<ClientStateResponse>({
+    const clientAvailability = await fetchCachedData('cached-client-availability', async () => {
+      const response = await axios<ClientAvailabilityResponse>({
         method: 'get',
         url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/availability/${telegramId}`,
       });
@@ -38,7 +38,7 @@ export const getClientAvailability = async (
       return response.data;
     });
 
-    return clientState;
+    return clientAvailability;
   } catch (error) {
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
       logger.error(

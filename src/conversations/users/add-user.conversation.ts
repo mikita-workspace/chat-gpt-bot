@@ -1,5 +1,5 @@
 import { addUserFormat, BotCommands, REGEXP_USERNAME, UserRoles } from '@bot/constants';
-import { inlineAddNewUser, inlineGoToAdminMenu, inlineGoToModeratorMenu } from '@bot/keyboards';
+import { inlineGoToAdminMenu, inlineGoToModeratorMenu } from '@bot/keyboards';
 import { logger, mongo } from '@bot/services';
 import { ConversationType } from '@bot/types';
 
@@ -32,7 +32,7 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
     if (!REGEXP_USERNAME.test(username)) {
       return await ctx.reply(ctx.t('users-menu-message-incorrect', { username }), {
         reply_to_message_id: messageId,
-        reply_markup: inlineAddNewUser(ctx),
+        // reply_markup: inlineAddNewUser(ctx),
       });
     }
 
@@ -41,7 +41,7 @@ export const addUserConversation: ConversationType = async (conversation, ctx) =
     if (hasUserInDb) {
       return await ctx.reply(ctx.t('users-menu-message-exist', { username }), {
         reply_to_message_id: messageId,
-        reply_markup: inlineAddNewUser(ctx),
+        // reply_markup: inlineAddNewUser(ctx),
       });
     }
 

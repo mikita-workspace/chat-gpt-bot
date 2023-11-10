@@ -1,7 +1,7 @@
 import { getClientAvailability } from '@bot/api/clients';
+import { inlineAuthButton } from '@bot/keyboards';
 import { logger } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
-import { inlineAuthButton } from 'keyboards';
 
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   try {
@@ -22,7 +22,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
       return;
     }
 
-    const { isApproved, isBlocked } = availability;
+    const { isApproved, isBlocked } = availability.state;
 
     if (isApproved && !isBlocked) {
       return await next();

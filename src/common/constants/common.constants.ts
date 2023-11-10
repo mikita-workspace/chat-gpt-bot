@@ -1,3 +1,11 @@
+export const botName = 'NovaChat | GPT';
+
+export enum BotLanguageCodes {
+  BELORUSSIAN = 'be',
+  ENGLISH = 'en',
+  RUSSIAN = 'ru',
+}
+
 export enum BotCommands {
   ABOUT = 'about',
   CHANGE_MODEL = 'change',
@@ -16,6 +24,10 @@ export const BotCommandsWithDescription = [
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
   { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
 ];
+
+// Node cache
+export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
+export const TTL_CONFIG_CACHE_DEFAULT = process.env.NODE_ENV !== 'production' ? 600 : 6000;
 
 export enum AuthActions {
   GET_AUTH = 'get_auth_action',

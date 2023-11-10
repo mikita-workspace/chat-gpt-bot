@@ -17,9 +17,6 @@ common-button-share = Share
 # Start
 start-message = Waiting for a text or voice message...
 
-# Description
-description-message = Hi there 👋🏻, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on the { $model } architecture and possess extensive knowledge in various areas such as science, technology, arts, sports, health, and more. I can answer users' questions, help solve problems, and also engage in casual conversation on any topic. My interface allows for both text and voice input.
-
 # About
 about-message-release = Release: { $release }
 
@@ -124,9 +121,6 @@ profile-user-date-register = Date of registration: { $date } { $utc }
 image-generator-enter-request = Enter the query in the following format: { $gptImageQuery }.
 image-generator-incorrect-image-number = The number of images entered is incorrect. Try again!
 
-# Change GPT model
-gpt-model-change-success = The GPT model has been changed: { $prevGptModel } -> { $currentGptModel }.
-gpt-model-change-title = Select an available GPT model
 ## -------- OLD --------
 
 # Commands
@@ -136,6 +130,9 @@ command-restart = New dialog
 command-about = About me
 command-change-model = Change GPT model
 command-support = Write to support
+
+# Description
+description-message = Hi there 👋, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on various GPT models and have extensive knowledge in various fields such as science, technology, art, sports, healthcare and more. I can answer on questions, help solve problems, and also engage in a casual conversation on any topic. My interface allows both text and voice input.
 
 # Errors messages
 error-message-common = Something went wrong. Try again!
@@ -158,3 +155,7 @@ vote-dislike = 👎
 
 # Restart
 restart-message = Let's start with a clean slate 😊
+
+# Change GPT model
+gpt-model-change-success = The GPT model has been changed: { $prevModel } -> { $currentModel }.
+gpt-model-change-title = Select an available GPT model

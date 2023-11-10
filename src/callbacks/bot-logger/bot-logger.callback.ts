@@ -7,18 +7,18 @@ export const downloadBotLoggerCallback = async (ctx: BotContextType) => {
   try {
     const loggerInfo = await mongo.getBotLoggerInfo();
 
-    if (loggerInfo) {
-      const { filePath, filePathForReply } = await csv.createBotLoggerCsv(loggerInfo);
+    // if (loggerInfo) {
+    //   const { filePath, filePathForReply } = await csv.createBotLoggerCsv(loggerInfo);
 
-      if (filePath && filePathForReply) {
-        await ctx.deleteMessage();
-        await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: inlineGoToAdminMenu(ctx),
-        });
+    //   if (filePath && filePathForReply) {
+    //     await ctx.deleteMessage();
+    //     await ctx.replyWithDocument(filePathForReply, {
+    //       reply_markup: inlineGoToAdminMenu(ctx),
+    //     });
 
-        await removeFile(filePath);
-      }
-    }
+    //     await removeFile(filePath);
+    //   }
+    // }
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 

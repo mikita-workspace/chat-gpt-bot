@@ -1,4 +1,5 @@
 import { ChatCompletionResponse, GptModelsResponse } from '@bot/api/gpt/types';
+import { TTL_CONFIG_CACHE_DEFAULT } from '@bot/common/constants';
 import { config } from '@bot/config';
 import { logger } from '@bot/services';
 import { fetchCachedData } from '@bot/utils';
@@ -6,14 +7,18 @@ import axios from 'axios';
 
 export const getGptModels = async (): Promise<GptModelsResponse[]> => {
   try {
-    const data = await fetchCachedData('cached-gpt-models', async () => {
-      const response = await axios<GptModelsResponse[]>({
-        method: 'get',
-        url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/models`,
-      });
+    const data = await fetchCachedData(
+      'cached-gpt-models',
+      async () => {
+        const response = await axios<GptModelsResponse[]>({
+          method: 'get',
+          url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/models`,
+        });
 
-      return response.data;
-    });
+        return response.data;
+      },
+      TTL_CONFIG_CACHE_DEFAULT,
+    );
 
     return data;
   } catch (error) {

@@ -16,7 +16,7 @@ export const removeValueFromMemoryCache = (key: string) => memoryCache.del(key);
 
 export const getValueFromMemoryCache = (key: string) => memoryCache.get<string>(key);
 
-export const fetchCachedData = async <T>(key: string, callback: () => T) => {
+export const fetchCachedData = async <T>(key: string, callback: () => T, expires = TTL_DEFAULT) => {
   const cachedData = getValueFromMemoryCache(key);
 
   if (cachedData) {
@@ -25,7 +25,7 @@ export const fetchCachedData = async <T>(key: string, callback: () => T) => {
 
   const response = await callback();
 
-  setValueToMemoryCache(key, JSON.stringify(response));
+  setValueToMemoryCache(key, JSON.stringify(response), expires);
 
   return response;
 };

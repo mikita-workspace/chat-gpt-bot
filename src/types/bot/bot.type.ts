@@ -1,3 +1,4 @@
+import { ClientAvailabilityResponse } from '@bot/api/clients/types';
 import { MessageRolesGPT, ModelGPT } from '@bot/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
@@ -10,8 +11,10 @@ export type SessionMessageType = { content: string; role: `${MessageRolesGPT}` }
 export type SessionType = {
   client: {
     messages: SessionMessageType[];
+    models: ClientAvailabilityResponse['models'];
     selectedGptModel: `${ModelGPT}`;
     username: string | null;
+    rate: ClientAvailabilityResponse['rate'] | null;
   };
 };
 

@@ -1,11 +1,11 @@
 import { createBot } from '@bot/bot';
+import { handleTimeoutError } from '@bot/common/helpers';
 import { config } from '@bot/config';
 import { botName, WEBHOOK_TIMEOUT } from '@bot/constants';
-import { handleTimeoutError } from '@bot/helpers';
 import { run } from '@grammyjs/runner';
 import express from 'express';
 import { webhookCallback } from 'grammy';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 
 const botInitialize = async () => {
   // await mongoose.connect(config.MONGODB_URI);

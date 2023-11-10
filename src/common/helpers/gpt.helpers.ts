@@ -23,11 +23,14 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   }
 
   const content = chatCompletionResponse.message.content;
+  const clientRate = chatCompletionResponse.clientRate;
 
   ctx.session.client.messages.push({
     content,
     role: MessageRolesGPT.ASSISTANT,
   });
+
+  ctx.session.client.rate = clientRate;
 
   return content;
 };
