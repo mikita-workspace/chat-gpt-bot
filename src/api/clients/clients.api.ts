@@ -9,7 +9,7 @@ export const createClient = async (
   telegramId: number,
   username = '',
   languageCode = BotLanguageCodes.ENGLISH,
-): Promise<ClientResponse | null> => {
+) => {
   try {
     const response = await axios<ClientResponse>({
       method: 'post',
