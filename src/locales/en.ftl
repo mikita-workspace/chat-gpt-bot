@@ -157,3 +157,6 @@ support-contact = If you have any questions, click /support.
 # Vote
 vote-like = 👍
 vote-dislike = 👎
+
+# Restart
+restart-message = Let's start with a clean slate 😊

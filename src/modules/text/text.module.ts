@@ -6,9 +6,9 @@ import { BotType } from '@bot/types';
 export const textModule = (bot: BotType) => {
   bot.on('message:text', async (ctx) => {
     try {
-      const messageId = Number(ctx.message.message_id);
+      const messageId = Number(ctx.message?.message_id);
 
-      const text = String(ctx?.message?.text);
+      const text = String(ctx.message?.text);
 
       if (!text) {
         return await ctx.reply(ctx.t('error-message-gpt'), { reply_to_message_id: messageId });

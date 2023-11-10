@@ -7,8 +7,8 @@ import { BotType } from '@bot/types';
 export const voiceModule = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {
     try {
-      const telegramId = Number(ctx.message.from.id);
-      const messageId = Number(ctx.message.message_id);
+      const telegramId = Number(ctx.message?.from.id);
+      const messageId = Number(ctx.message?.message_id);
 
       const voicePathApi = (await ctx.getFile()).file_path ?? '';
       const clientTranscription = await transcription(voicePathApi, telegramId);

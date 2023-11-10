@@ -2,7 +2,6 @@ import {
   aboutCommand,
   adminCommand,
   changeModelCommand,
-  clearCommand,
   descriptionCommand,
   imageCommand,
   moderatorCommand,
@@ -19,6 +18,7 @@ import { config } from '@bot/config';
 import { BotLanguageCodes, botName, ModelGPT } from '@bot/constants';
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/helpers';
 import { auth, normalize } from '@bot/middlewares';
+import { restartModule } from '@bot/modules/restart/restart.module';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
 import { BotContextType } from '@bot/types';
@@ -27,7 +27,7 @@ import { I18n } from '@grammyjs/i18n';
 import { limit as rateLimit } from '@grammyjs/ratelimiter';
 import { apiThrottler } from '@grammyjs/transformer-throttler';
 import { Bot } from 'grammy';
-import path from 'path';
+import * as path from 'path';
 
 export const createBot = () => {
   const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);
@@ -75,21 +75,7 @@ export const createBot = () => {
 
   bot.use(menuComposer());
 
-  // [
-  //   // aboutCommand,
-  //   // adminCommand,
-  //   // changeModelCommand,
-  //   // clearCommand,
-  //   // descriptionCommand,
-  //   // imageCommand,
-  //   // moderatorCommand,
-  //   // profileCommand,
-  //   startCommand,
-  //   // textCommand,
-  //   voiceCommand,
-  // ].forEach((handle) => handle(bot));
-
-  [startCommand, textModule, voiceModule].forEach((handle) => handle(bot));
+  [startCommand, restartModule, textModule, voiceModule].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);
 

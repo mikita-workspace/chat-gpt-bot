@@ -156,3 +156,6 @@ support-contact = Если у вас возникли какие-либо воп
 # Vote
 vote-like = 👍
 vote-dislike = 👎
+
+# Restart
+restart-message = Начнем с чистого листа 😊
