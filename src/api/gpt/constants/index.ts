@@ -9,3 +9,7 @@ export enum MessageRolesGPT {
   USER = 'user',
   SYSTEM = 'system',
 }
+
+export const MAX_CONTEXT_TOKENS = 4096;
+export const IMAGE_SIZE_DEFAULT = '256x256';
+export const MAX_IMAGES_REQUEST = 3;

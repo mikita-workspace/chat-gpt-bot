@@ -7,5 +7,3 @@ export * from './image/image.command';
 export * from './moderator/moderator.command';
 export * from './profile/profile.command';
 export * from './start/start.command';
-export * from './text/text.command';
-export * from './voice/voice.command';

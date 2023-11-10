@@ -1,7 +1,6 @@
 import { MAX_CONTEXT_GPT_TOKENS, MessageRolesGPT, ModelGPT } from '@bot/constants';
 import { gigaChat, logger, mongo, openAI } from '@bot/services';
 import { BotContextType, SessionMessageType } from '@bot/types';
-import { getTimestampUnix, getTimezoneString } from '@bot/utils';
 import { encode } from 'gpt-3-encoder';
 import { ChatCompletionRequestMessage } from 'openai';
 

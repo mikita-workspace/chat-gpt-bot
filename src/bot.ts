@@ -8,8 +8,6 @@ import {
   moderatorCommand,
   profileCommand,
   startCommand,
-  textCommand,
-  voiceCommand,
 } from '@bot/commands';
 import {
   callbackQueryComposer,

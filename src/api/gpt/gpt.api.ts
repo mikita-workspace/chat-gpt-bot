@@ -26,6 +26,7 @@ export const getGptModels = async (): Promise<GptModelsResponse[]> => {
 export const chatCompletion = async (
   model: string,
   messages: ChatCompletionResponse['message'][],
+  telegramId: number,
 ) => {
   try {
     const response = await axios<ChatCompletionResponse>({
@@ -33,6 +34,7 @@ export const chatCompletion = async (
       data: {
         model,
         messages,
+        telegramId,
       },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/chatCompletions`,
     });
