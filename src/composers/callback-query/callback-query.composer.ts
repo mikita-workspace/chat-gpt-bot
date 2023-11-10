@@ -82,9 +82,9 @@ composer.callbackQuery(UserImagesMenuActions.CREATE_IMAGE, async (ctx) => {
 });
 
 composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
+  const telegramId = Number(ctx?.from?.id);
   const username = ctx?.from?.username;
   const languageCode = ctx?.from?.language_code as BotLanguageCodes;
-  const telegramId = Number(ctx?.from?.id);
 
   const client = await createClient(telegramId, username, languageCode);
 

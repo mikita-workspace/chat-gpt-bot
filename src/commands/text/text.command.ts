@@ -12,14 +12,14 @@ export const textCommand = (bot: BotType) => {
       const text = String(ctx?.message?.text);
       const username = String(ctx?.from?.username);
 
-      const currentTimestamp = Date.now();
-      const lastMessageTimestamp = Math.min(
-        ...ctx.session.client.messages.map(({ timestamp }) => new Date(timestamp).getTime()),
-      );
+      // const currentTimestamp = Date.now();
+      // const lastMessageTimestamp = Math.min(
+      //   ...ctx.session.client.messages.map(({ timestamp }) => new Date(timestamp).getTime()),
+      // );
 
-      if (Math.abs(currentTimestamp - lastMessageTimestamp) >= TEN_MIN_MS) {
-        updateUserConversationMessagesCallback(ctx, username);
-      }
+      // if (Math.abs(currentTimestamp - lastMessageTimestamp) >= TEN_MIN_MS) {
+      //   updateUserConversationMessagesCallback(ctx, username);
+      // }
 
       const gptAnswer = (await getGPTAnswer(ctx, text)) ?? '';
 

@@ -45,23 +45,24 @@ export class UserConversationsMongoService {
     try {
       const userConversation = await this.getUserConversation(username);
 
-      const updatedUserConversation = await UserConversationModel.findOneAndUpdate(
-        { username },
-        {
-          messages: uniqBy(
-            [...(messages ?? []), ...(userConversation?.messages ?? [])],
-            'timestamp',
-          ),
-        },
-        { new: true },
-      );
+      // const updatedUserConversation = await UserConversationModel.findOneAndUpdate(
+      //   { username },
+      //   {
+      //     messages: uniqBy(
+      //       [...(messages ?? []), ...(userConversation?.messages ?? [])],
+      //       'timestamp',
+      //     ),
+      //   },
+      //   { new: true },
+      // );
 
-      setValueToMemoryCache(
-        `cached-user-conversation-${username}`,
-        JSON.stringify(updatedUserConversation),
-      );
+      // setValueToMemoryCache(
+      //   `cached-user-conversation-${username}`,
+      //   JSON.stringify(updatedUserConversation),
+      // );
 
-      return updatedUserConversation;
+      // return updatedUserConversation;
+      return null;
     } catch (error) {
       logger.error(`mongoService::updateUserConversation::${JSON.stringify(error.message)}`);
 

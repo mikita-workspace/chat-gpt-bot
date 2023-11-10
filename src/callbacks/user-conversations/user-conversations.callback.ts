@@ -12,24 +12,25 @@ export const getUserConversationMessagesCallback: DynamicUsersMenuCallbackType =
     const userConversation = await mongo.getUserConversation(username);
 
     if (userSession) {
-      const messages = uniqBy(
-        [...(userConversation?.messages ?? []), ...(userSession?.value?.messages ?? [])],
-        'timestamp',
-      );
+      // const messages = uniqBy(
+      //   [...(userConversation?.messages ?? []), ...(userSession?.value?.messages ?? [])],
+      //   'timestamp',
+      // );
+      const messages = [];
 
-      const { filePath, filePathForReply } = await csv.createUserMessagesCsv(
-        { key: userSession.key, value: { username, messages } },
-        true,
-      );
+      // const { filePath, filePathForReply } = await csv.createUserMessagesCsv(
+      //   { key: userSession.key, value: { username, messages } },
+      //   true,
+      // );
 
-      if (filePath && filePathForReply) {
-        await ctx.deleteMessage();
-        await ctx.replyWithDocument(filePathForReply, {
-          reply_markup: inlineGoToAdminMenu(ctx),
-        });
+      // if (filePath && filePathForReply) {
+      //   await ctx.deleteMessage();
+      //   await ctx.replyWithDocument(filePathForReply, {
+      //     reply_markup: inlineGoToAdminMenu(ctx),
+      //   });
 
-        await removeFile(filePath);
-      }
+      //   await removeFile(filePath);
+      // }
     }
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
