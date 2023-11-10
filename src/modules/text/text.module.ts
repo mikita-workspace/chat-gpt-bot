@@ -1,24 +1,21 @@
-import { transcription } from '@bot/api/gpt';
 import { gptMessage } from '@bot/common/helpers';
 import { inlineVoteButton } from '@bot/common/keyboards';
 import { logger } from '@bot/services';
 import { BotType } from '@bot/types';
 
-export const voiceModule = (bot: BotType) => {
-  bot.on('message:voice', async (ctx) => {
+export const textModule = (bot: BotType) => {
+  bot.on('message:text', async (ctx) => {
     try {
-      const telegramId = Number(ctx.message.from.id);
       const messageId = Number(ctx.message.message_id);
       const selectedGptModel = ctx.session.client.selectedGptModel;
 
-      const voicePathApi = (await ctx.getFile()).file_path ?? '';
-      const clientTranscription = await transcription(voicePathApi, telegramId);
+      const text = String(ctx?.message?.text);
 
-      if (!clientTranscription) {
+      if (!text) {
         return await ctx.reply(ctx.t('error-message-gpt'), { reply_to_message_id: messageId });
       }
 
-      const gptContent = await gptMessage(ctx, clientTranscription, selectedGptModel);
+      const gptContent = await gptMessage(ctx, text, selectedGptModel);
 
       if (gptContent) {
         return await ctx.reply(gptContent, {
@@ -32,7 +29,7 @@ export const voiceModule = (bot: BotType) => {
       await ctx.reply(ctx.t('error-message-common'));
 
       logger.error(
-        `src/modules/voice/voice.module.ts::voiceModule::${JSON.stringify(error.message)}`,
+        `src/modules/text/text.module.ts::textController::${JSON.stringify(error.message)}`,
       );
     }
   });

@@ -12,7 +12,7 @@ export const textCommand = (bot: BotType) => {
       const text = String(ctx?.message?.text);
       const username = String(ctx?.from?.username);
 
-      const currentTimestamp = Date.now();
+      // const currentTimestamp = Date.now();
       // const lastMessageTimestamp = Math.min(
       //   ...ctx.session.client.messages.map(({ timestamp }) => new Date(timestamp).getTime()),
       // );
