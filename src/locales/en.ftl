@@ -129,6 +129,7 @@ command-support = Write to support
 
 # Start
 start-message = I'm expecting a text or voice message...
+start-description = Let's start chatting 🙃! What do you want to ask?
 
 # Description
 description-message = Hi there 👋, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on various GPT models and have extensive knowledge in various fields such as science, technology, art, sports, healthcare and more. I can answer on questions, help solve problems, and also engage in a casual conversation on any topic. My interface allows both text and voice input.
@@ -156,7 +157,7 @@ vote-dislike = 👎
 restart-message = Let's start with a clean slate 😊
 
 # Change GPT model
-gpt-model-change-success = The GPT model has been changed: { $prevModel } -> { $currentModel }.
+gpt-model-change-success = The GPT model has been changed:
 gpt-model-change-title = Select an available GPT model
 
 # Profile

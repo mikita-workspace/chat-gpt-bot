@@ -41,12 +41,12 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     };
 
     return await ctx.reply(
-      ctx.t('gpt-model-change-success', {
-        prevModel: selectedGpt.title,
-        currentModel: newSelectedGptTitle,
-      }),
+      `${ctx.t('gpt-model-change-success')} <b><s>${
+        selectedGpt.title
+      }</s> ${newSelectedGptTitle}</b>`,
       {
         reply_markup: { remove_keyboard: true },
+        parse_mode: 'HTML',
       },
     );
   } catch (error) {

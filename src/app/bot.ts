@@ -15,6 +15,7 @@ import { auth, normalize } from '@bot/middlewares';
 import { changeModule } from '@bot/modules/change';
 import { profileModule } from '@bot/modules/profile';
 import { restartModule } from '@bot/modules/restart';
+import { startModule } from '@bot/modules/start';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,21 +44,21 @@ export const createBot = () => {
   });
 
   // TODO: Will be enable in release-3.0.1
-  // Object.values(BotLanguageCodes).forEach(async (languageCode) => {
-  //   await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
-  //     language_code: languageCode,
-  //   });
+  Object.values(BotLanguageCodes).forEach(async (languageCode) => {
+    await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
+      language_code: languageCode,
+    });
 
-  //   await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
-  //     language_code: languageCode,
-  //   });
-  // });
+    await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
+      language_code: languageCode,
+    });
+  });
 
-  // bot.api.config.use(apiThrottler());
+  bot.api.config.use(apiThrottler());
 
-  // bot.use(rateLimit());
+  bot.use(rateLimit());
 
-  // bot.use(hydrate());
+  bot.use(hydrate());
 
   bot.use(i18n);
 
@@ -73,8 +74,8 @@ export const createBot = () => {
 
   bot.use(normalize());
 
-  [restartModule, changeModule, profileModule, textModule, voiceModule].forEach((handle) =>
-    handle(bot),
+  [startModule, restartModule, changeModule, profileModule, textModule, voiceModule].forEach(
+    (handle) => handle(bot),
   );
 
   bot.catch(handleBotError);
