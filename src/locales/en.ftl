@@ -14,9 +14,6 @@ common-button-go-back = ⬅️ Go back
 common-button-cancel = Cancel
 common-button-share = Share
 
-# Start
-start-message = Waiting for a text or voice message...
-
 # About
 about-message-release = Release: { $release }
 
@@ -122,7 +119,6 @@ image-generator-enter-request = Enter the query in the following format: { $gptI
 image-generator-incorrect-image-number = The number of images entered is incorrect. Try again!
 
 ## -------- OLD --------
-
 # Commands
 command-profile = Profile
 command-image = Generate an image via DALL·E 2
@@ -130,6 +126,9 @@ command-restart = New dialog
 command-about = About me
 command-change-model = Change GPT model
 command-support = Write to support
+
+# Start
+start-message = I'm expecting a text or voice message...
 
 # Description
 description-message = Hi there 👋, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on various GPT models and have extensive knowledge in various fields such as science, technology, art, sports, healthcare and more. I can answer on questions, help solve problems, and also engage in a casual conversation on any topic. My interface allows both text and voice input.

@@ -1,6 +1,7 @@
 import { BotType } from '@bot/app/types';
 import { BotCommands } from '@bot/common/constants';
 import { expiresInDays } from '@bot/common/utils';
+import { inlineGoToChat } from '@bot/keyboards';
 
 export const profileModule = (bot: BotType) =>
   bot.command(BotCommands.PROFILE, async (ctx) => {
@@ -26,5 +27,5 @@ export const profileModule = (bot: BotType) =>
       { expiresIn: expiresInDays(rate?.expiresAt || 0) },
     )}</b>`;
 
-    return ctx.reply(profileMessageHtml, { parse_mode: 'HTML' });
+    return ctx.reply(profileMessageHtml, { parse_mode: 'HTML', reply_markup: inlineGoToChat(ctx) });
   });

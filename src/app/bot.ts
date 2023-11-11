@@ -4,7 +4,12 @@ import { BotContextType } from '@bot/app/types';
 import { BotLanguageCodes, botName } from '@bot/common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/common/helpers';
-import { callbackQueryComposer, conversationComposer, sessionComposer } from '@bot/composers';
+import {
+  authQueryComposer,
+  callbackQueryComposer,
+  conversationComposer,
+  sessionComposer,
+} from '@bot/composers';
 import { config } from '@bot/config';
 import { auth, normalize } from '@bot/middlewares';
 import { changeModule } from '@bot/modules/change';
@@ -57,15 +62,17 @@ export const createBot = () => {
 
   bot.use(i18n);
 
-  bot.use(callbackQueryComposer());
+  bot.use(authQueryComposer());
 
   bot.use(auth());
 
   bot.use(sessionComposer());
 
-  bot.use(normalize());
-
   bot.use(conversationComposer());
+
+  bot.use(callbackQueryComposer());
+
+  bot.use(normalize());
 
   [restartModule, changeModule, profileModule, textModule, voiceModule].forEach((handle) =>
     handle(bot),
