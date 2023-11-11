@@ -1,13 +1,14 @@
-import { createBot } from '@bot/bot';
+import { createBot } from '@bot/app';
+import { WEBHOOK_TIMEOUT } from '@bot/common/constants';
+import { handleTimeoutError } from '@bot/common/helpers';
 import { config } from '@bot/config';
-import { botName, WEBHOOK_TIMEOUT } from '@bot/constants';
-import { handleTimeoutError } from '@bot/helpers';
 import { run } from '@grammyjs/runner';
 import express from 'express';
 import { webhookCallback } from 'grammy';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 
 const botInitialize = async () => {
+  // TODO: will be enabled after full code refactoring
   // await mongoose.connect(config.MONGODB_URI);
 
   const bot = createBot();
@@ -22,7 +23,7 @@ const botInitialize = async () => {
 
     app.listen(config.PORT, () => {
       // eslint-disable-next-line no-console
-      console.info(`${botName} listening on port ${config.PORT}`);
+      console.info(`Bot listening on port ${config.PORT}`);
     });
   } else {
     // Use Long Polling for development

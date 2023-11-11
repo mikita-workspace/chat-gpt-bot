@@ -1,29 +1,31 @@
 import { transcription } from '@bot/api/gpt';
-import { gptMessage } from '@bot/common/helpers';
-import { inlineVoteButton } from '@bot/common/keyboards';
-import { logger } from '@bot/services';
-import { BotType } from '@bot/types';
+import { BotType } from '@bot/app/types';
+import { getGptContent } from '@bot/common/helpers';
+// import { inlineVoteButton } from '@bot/keyboards';
+import { Logger } from '@bot/services';
 
 export const voiceModule = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {
     try {
-      const telegramId = Number(ctx.message.from.id);
-      const messageId = Number(ctx.message.message_id);
-      const selectedGptModel = ctx.session.client.selectedGptModel;
+      const telegramId = Number(ctx.message?.from.id);
+      const messageId = Number(ctx.message?.message_id);
+
+      const selectedGpt = ctx.session.client.selectedGpt;
 
       const voicePathApi = (await ctx.getFile()).file_path ?? '';
-      const clientTranscription = await transcription(voicePathApi, telegramId);
+      const clientTranscription = await transcription(voicePathApi, telegramId, selectedGpt.model);
 
       if (!clientTranscription) {
         return await ctx.reply(ctx.t('error-message-gpt'), { reply_to_message_id: messageId });
       }
 
-      const gptContent = await gptMessage(ctx, clientTranscription, selectedGptModel);
+      const gptContent = await getGptContent(ctx, clientTranscription);
 
       if (gptContent) {
         return await ctx.reply(gptContent, {
           reply_to_message_id: messageId,
-          reply_markup: inlineVoteButton(ctx),
+          // TODO: https://app.asana.com/0/1205877070000801/1205877070000835/f
+          // reply_markup: inlineVoteButton(ctx),
         });
       }
 
@@ -31,7 +33,7 @@ export const voiceModule = (bot: BotType) => {
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 
-      logger.error(
+      Logger.error(
         `src/modules/voice/voice.module.ts::voiceModule::${JSON.stringify(error.message)}`,
       );
     }

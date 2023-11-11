@@ -1,14 +1,4 @@
 ## -------- OLD --------
-# Commands
-command-profile = Profile
-command-admin = Admin-panel
-command-moderator = Moderator-panel
-command-image = Generate an image via DALL·E 2
-command-clear = Clear current session
-command-description = Description
-command-about = About the bot
-command-change-model = Change GPT model
-
 # Errors messages
 error-message-common-try-again = Try again
 error-message-auth = Your account ({ $username }) does not have permission to use this bot. Please contact administrator.
@@ -23,12 +13,6 @@ common-button-go-to-chat = Go to chat
 common-button-go-back = ⬅️ Go back
 common-button-cancel = Cancel
 common-button-share = Share
-
-# Start
-start-message = Waiting for a text or voice message...
-
-# Description
-description-message = Hi there 👋🏻, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on the { $model } architecture and possess extensive knowledge in various areas such as science, technology, arts, sports, health, and more. I can answer users' questions, help solve problems, and also engage in casual conversation on any topic. My interface allows for both text and voice input.
 
 # About
 about-message-release = Release: { $release }
@@ -122,7 +106,7 @@ info-message-reach-gpt-images-limit = You have used all available GPT images. Pl
 info-message-conversation-cancel = The data entry has been canceled. Please run the command { $command } again!
 
 # Profile
-profile-user-initial-message = Hey 👋🏻, { $firstName } { $lastName }!
+profile-user-initial-message = Hey 👋, { $firstName } { $lastName }!
 profile-user-current-gpt-model = Current GPT model: { $gptModel }
 profile-user-role = Your role: { $role }
 profile-user-gpt-package = GPT limit: { $package }
@@ -134,10 +118,21 @@ profile-user-date-register = Date of registration: { $date } { $utc }
 image-generator-enter-request = Enter the query in the following format: { $gptImageQuery }.
 image-generator-incorrect-image-number = The number of images entered is incorrect. Try again!
 
-# Change GPT model
-gpt-model-change-success = The GPT model has been changed: { $prevGptModel } -> { $currentGptModel }.
-gpt-model-change-title = Select an available GPT model
 ## -------- OLD --------
+# Commands
+command-profile = Profile
+command-image = Generate an image via DALL·E 2
+command-restart = New dialog
+command-about = About me
+command-change-model = Change GPT model
+command-support = Write to support
+
+# Start
+start-message = I'm expecting a text or voice message...
+start-description = Let's start chatting 🙃! What do you want to ask?
+
+# Description
+description-message = Hi there 👋, I'm { $botName }, an intelligent bot capable of responding to various user requests, including voice input. I'm built on various GPT models and have extensive knowledge in various fields such as science, technology, art, sports, healthcare and more. I can answer on questions, help solve problems, and also engage in a casual conversation on any topic. My interface allows both text and voice input.
 
 # Errors messages
 error-message-common = Something went wrong. Try again!
@@ -157,3 +152,20 @@ support-contact = If you have any questions, click /support.
 # Vote
 vote-like = 👍
 vote-dislike = 👎
+
+# Restart
+restart-message = Let's start with a clean slate 😊
+
+# Change GPT model
+gpt-model-change-success = The GPT model has been changed:
+gpt-model-change-title = Select an available GPT model
+
+# Profile
+profile-client-initial-message = Hey 👋, { $firstname } { $lastname }!
+profile-client-select-model = Selected GPT model:
+profile-client-rate = Rate:
+profile-client-available-messages = GPT tokens:
+profile-client-available-images = GPT images:
+profile-client-date-expires = Available tokens will be updated in { $expiresIn } days
+profile-client-incognito = Incognito
+profile-client-unavailable-info = Your tokens will appear here when you write any message to the 🤖 GPT bot.

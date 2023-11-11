@@ -1,34 +1,14 @@
+import { BotContextType } from '@bot/app/types';
 import {
-  AdminMenuActions,
   AuthActions,
   CommonActions,
-  ModeratorMenuActions,
   UserImagesMenuActions,
-  UsersMenuActions,
-} from '@bot/constants';
-import { BotContextType } from '@bot/types';
+  VoteActions,
+} from '@bot/common/constants';
 import { InlineKeyboard, Keyboard } from 'grammy';
 
 export const inlineGoToChat = (ctx: BotContextType) =>
   new InlineKeyboard().text(ctx.t('common-button-go-to-chat'), CommonActions.GO_TO_CHAT);
-
-export const inlineGoToAdminMenu = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('admin-menu-button-go-to-menu'), AdminMenuActions.GO_TO_MENU);
-
-export const inlineGoToModeratorMenu = (ctx: BotContextType) =>
-  new InlineKeyboard().text(
-    ctx.t('moderator-menu-button-go-to-menu'),
-    ModeratorMenuActions.GO_TO_MENU,
-  );
-
-export const inlineAddNewUser = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('error-message-common-try-again'), UsersMenuActions.ADD_NEW_USER);
-
-export const inlineAddNewMultipleUsers = (ctx: BotContextType) =>
-  new InlineKeyboard().text(
-    ctx.t('error-message-common-try-again'),
-    UsersMenuActions.ADD_NEW_MULTIPLE_USERS,
-  );
 
 export const inlineShareWithContacts = (ctx: BotContextType, query: string) =>
   new InlineKeyboard().switchInline(ctx.t('common-button-share'), query);
@@ -39,11 +19,21 @@ export const inlineCreateImage = (ctx: BotContextType) =>
     UserImagesMenuActions.CREATE_IMAGE,
   );
 
+export const inlineAuthButton = (ctx: BotContextType) =>
+  new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);
+
+export const inlineVoteButton = (ctx: BotContextType) => {
+  const voteLabels = [
+    [ctx.t('vote-like'), VoteActions.LIKE],
+    [ctx.t('vote-dislike'), VoteActions.DISLIKE],
+  ];
+  const voteRow = voteLabels.map(([label, data]) => InlineKeyboard.text(label, data));
+
+  return InlineKeyboard.from([voteRow]);
+};
+
 export const customKeyboard = (labels: string[]) => {
   const buttonRows = labels.map((label) => [Keyboard.text(label)]);
 
   return Keyboard.from(buttonRows).resized();
 };
-
-export const inlineAuthButton = (ctx: BotContextType) =>
-  new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);

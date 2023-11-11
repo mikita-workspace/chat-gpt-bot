@@ -1,25 +1,29 @@
-import { ClientResponse, ClientStateResponse } from '@bot/api/clients/types';
+import { ClientAvailabilityResponse, ClientResponse } from '@bot/api/clients/types';
+import { BotLanguageCodes } from '@bot/common/constants';
+import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
-import { BotLanguageCodes } from '@bot/constants';
-import { logger } from '@bot/services';
-import { fetchCachedData } from '@bot/utils';
+import { Logger } from '@bot/services';
 import axios, { HttpStatusCode } from 'axios';
 
 export const createClient = async (
   telegramId: number,
-  username = '',
+  metadata: {
+    firstname?: string;
+    lastname?: string;
+    username?: string;
+  },
   languageCode = BotLanguageCodes.ENGLISH,
 ) => {
   try {
     const response = await axios<ClientResponse>({
       method: 'post',
-      data: { languageCode, telegramId, username },
+      data: { languageCode, telegramId, metadata },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/clients`,
     });
 
     return response.data;
   } catch (error) {
-    logger.error(`src/api/clients/clients.api.ts::createClient::${JSON.stringify(error.message)}`);
+    Logger.error(`src/api/clients/clients.api.ts::createClient::${JSON.stringify(error.message)}`);
 
     return null;
   }
@@ -27,10 +31,10 @@ export const createClient = async (
 
 export const getClientAvailability = async (
   telegramId: number,
-): Promise<ClientStateResponse | null> => {
+): Promise<ClientAvailabilityResponse | null> => {
   try {
-    const clientState = await fetchCachedData('cached-client-availability', async () => {
-      const response = await axios<ClientStateResponse>({
+    const clientAvailability = await fetchCachedData('cached-client-availability', async () => {
+      const response = await axios<ClientAvailabilityResponse>({
         method: 'get',
         url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/availability/${telegramId}`,
       });
@@ -38,10 +42,10 @@ export const getClientAvailability = async (
       return response.data;
     });
 
-    return clientState;
+    return clientAvailability;
   } catch (error) {
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
-      logger.error(
+      Logger.error(
         `src/api/clients/clients.api.ts::getClientAvailability::${JSON.stringify(error.message)}`,
       );
     }
