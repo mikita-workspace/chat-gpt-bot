@@ -52,13 +52,14 @@ export const chatCompletion = async (
   }
 };
 
-export const transcription = async (voicePathApi: string, telegramId: number) => {
+export const transcription = async (voicePathApi: string, telegramId: number, model: string) => {
   try {
     const response = await axios<string>({
       method: 'post',
       data: {
         voicePathApi,
         telegramId,
+        model,
       },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/transcriptions`,
     });

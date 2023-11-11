@@ -10,8 +10,10 @@ export const voiceModule = (bot: BotType) => {
       const telegramId = Number(ctx.message?.from.id);
       const messageId = Number(ctx.message?.message_id);
 
+      const selectedGptModel = ctx.session.client.selectedGptModel;
+
       const voicePathApi = (await ctx.getFile()).file_path ?? '';
-      const clientTranscription = await transcription(voicePathApi, telegramId);
+      const clientTranscription = await transcription(voicePathApi, telegramId, selectedGptModel);
 
       if (!clientTranscription) {
         return await ctx.reply(ctx.t('error-message-gpt'), { reply_to_message_id: messageId });
