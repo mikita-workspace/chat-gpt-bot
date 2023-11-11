@@ -22,9 +22,29 @@ composer.callbackQuery(UserImagesMenuActions.CREATE_IMAGE, async (ctx) => {
 
 composer.callbackQuery([FeedbackActions.LIKE, FeedbackActions.DISLIKE], async (ctx) => {
   const callbackData = ctx.callbackQuery.data;
-  const action = callbackData.slice(0, callbackData.indexOf('-')).trim();
+  const callbackUpdateMessage = ctx.update.callback_query.message;
 
-  console.log(action);
+  // const action = callbackData.slice(0, callbackData.indexOf('-')).trim();
+
+  const positiveFeedback = [
+    ctx.t('feedback-like-response-first'),
+    ctx.t('feedback-like-response-second'),
+  ][Math.floor(Math.random() * 2)];
+
+  const clientMessage = callbackUpdateMessage?.text;
+  const messageId = Number(callbackUpdateMessage?.reply_to_message?.message_id);
+
+  await ctx.deleteMessage();
+
+  if (clientMessage && messageId) {
+    await ctx.reply(clientMessage, { reply_to_message_id: messageId });
+  }
+
+  if (callbackData === FeedbackActions.LIKE) {
+    return ctx.reply(positiveFeedback);
+  }
+
+  return ctx.reply(ctx.t('feedback-like-response-dislike'));
 });
 
 export const callbackQueryComposer = (): Middleware<BotContextType> => composer;

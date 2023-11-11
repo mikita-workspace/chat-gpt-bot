@@ -53,3 +53,5 @@ export const getClientAvailability = async (
     return null;
   }
 };
+
+export const giveFeedback = async () => {};
