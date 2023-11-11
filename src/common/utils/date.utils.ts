@@ -6,7 +6,7 @@ import {
   getUnixTime,
 } from 'date-fns';
 
-export const getTimestampUnix = (timestamp: number | string | Date) => {
+export const getTimestampUnix = (timestamp: number | string | Date = Date.now()) => {
   const date = new Date(timestamp);
 
   return getUnixTime(date);

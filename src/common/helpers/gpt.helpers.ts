@@ -1,6 +1,7 @@
 import { chatCompletion } from '@bot/api/gpt';
 import { MAX_CONTEXT_TOKENS, MessageRolesGPT } from '@bot/api/gpt/constants';
 import { BotContextType, SessionMessageType } from '@bot/app/types';
+import { getTimestampUnix } from '@bot/common/utils';
 import { encode } from 'gpt-3-encoder';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {
@@ -31,6 +32,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   });
 
   ctx.session.client.rate = clientRate;
+  ctx.session.client.lastMessageTimestamp = getTimestampUnix();
 
   return content;
 };
