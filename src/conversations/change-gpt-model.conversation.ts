@@ -11,7 +11,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       .filter(({ model }) => clientModels.includes(model))
       .map(({ model, title, creator }) => [model, title, creator]);
 
-    const selectedGptModel = conversation.session.client.selectedGptModel;
+    const selectedGpt = conversation.session.client.selectedGpt;
 
     const inlineModels = availableModels.map((model) => `${model[1]} (${model[0]}) by ${model[2]}`);
 
@@ -25,21 +25,25 @@ export const changeGptModelConversation: ConversationType = async (conversation,
 
     if (!inlineModels.includes(text)) {
       return await ctx.reply(
-        ctx.t('error-message-change-gpt-model', { gptModel: selectedGptModel }),
+        ctx.t('error-message-change-gpt-model', { gptModel: selectedGpt.model }),
         {
           reply_markup: { remove_keyboard: true },
         },
       );
     }
 
-    const newSelectedGptModel = text.slice(text.indexOf('(') + 1, text.indexOf(')'));
+    const newSelectedGptModel = text.slice(text.indexOf('(') + 1, text.indexOf(')')).trim();
+    const newSelectedGptTitle = text.slice(0, text.indexOf('(')).trim();
 
-    conversation.session.client.selectedGptModel = newSelectedGptModel as ModelGPT;
+    conversation.session.client.selectedGpt = {
+      model: newSelectedGptModel as ModelGPT,
+      title: newSelectedGptTitle,
+    };
 
     return await ctx.reply(
       ctx.t('gpt-model-change-success', {
-        prevModel: selectedGptModel,
-        currentModel: newSelectedGptModel,
+        prevModel: selectedGpt.title,
+        currentModel: newSelectedGptTitle,
       }),
       {
         reply_markup: { remove_keyboard: true },

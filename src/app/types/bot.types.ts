@@ -18,7 +18,10 @@ export type SessionType = {
     };
     models: ClientAvailabilityResponse['models'];
     rate: ClientAvailabilityResponse['rate'] | null;
-    selectedGptModel: `${ModelGPT}`;
+    selectedGpt: {
+      model: `${ModelGPT}`;
+      title: string;
+    };
   };
 };
 

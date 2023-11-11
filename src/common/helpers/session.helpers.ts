@@ -10,5 +10,8 @@ export const createInitialClientSessionData = (): SessionType['client'] => ({
   },
   models: [],
   rate: null,
-  selectedGptModel: ModelGPT.GPT_3_5_TURBO,
+  selectedGpt: {
+    model: ModelGPT.GPT_3_5_TURBO,
+    title: '',
+  },
 });
