@@ -107,15 +107,6 @@ info-message-reach-gpt-tokens-limit = Вы использовали все до�
 info-message-reach-gpt-images-limit = Вы использовали все доступные GPT изображения. Пожалуйста, повторите попытку после { $date } { $utc }.
 info-message-conversation-cancel = Ввод данных был отменен. Пожалуйста, выполните команду { $command } еще раз!
 
-# Profile
-profile-user-initial-message = Привет 👋, { $firstName } { $lastName }!
-profile-user-current-gpt-model = Текущая GPT модель: { $gptModel }
-profile-user-role = Ваша роль: { $role }
-profile-user-gpt-package = GPT лимит: { $package }
-profile-user-available-messages-amount = Доступное количество GPT токенов: { $amount }
-profile-user-available-images-amount = Доступное количество GPT картинок: { $amount }
-profile-user-date-register = Дата регистрации: { $date } { $utc }
-
 # Image generator
 image-generator-enter-request = Введите запрос в следующем формате: { $gptImageQuery }.
 image-generator-incorrect-image-number = Введено неверное количество картинок. Попробуйте еще раз!
@@ -124,7 +115,7 @@ image-generator-incorrect-image-number = Введено неверное кол�
 
 # Commands
 command-profile = Профиль
-command-image = Сгенерировать картинку через DALL·E 2
+command-image = Сгенерировать изображение через DALL·E 2
 command-restart = Новый диалог
 command-about = Обо мне
 command-change-model = Изменить GPT модель
@@ -158,3 +149,11 @@ restart-message = Начнем с чистого листа 😊
 # Change GPT model
 gpt-model-change-success = GPT модель была изменена: { $prevModel } -> { $currentModel }.
 gpt-model-change-title = Выберете доступную GPT модель
+
+# Profile
+profile-client-initial-message = Привет 👋, { $firstName } { $lastName }!
+profile-client-select-model = Выбраная GPT модель:
+profile-client-rate = Тариф:
+profile-client-available-messages = GPT токены:
+profile-client-available-images = GPT изображения:
+profile-client-date-expires = Доступные токены будут обновлены через { $expiresIn } дней

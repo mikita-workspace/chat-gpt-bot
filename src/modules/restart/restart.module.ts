@@ -7,7 +7,7 @@ export const restartModule = (bot: BotType) =>
 
     ctx.session.client.messages = [];
 
-    await ctx.reply(ctx.t('restart-message'), {
+    return ctx.reply(ctx.t('restart-message'), {
       reply_to_message_id: messageId,
     });
   });

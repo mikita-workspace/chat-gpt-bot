@@ -4,5 +4,5 @@ import { changeGptModelConversation } from '@bot/conversations';
 
 export const changeModule = (bot: BotType) =>
   bot.command(BotCommands.CHANGE_MODEL, async (ctx) => {
-    await ctx.conversation.enter(changeGptModelConversation.name);
+    return ctx.conversation.enter(changeGptModelConversation.name);
   });

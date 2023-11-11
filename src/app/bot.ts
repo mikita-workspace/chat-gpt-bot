@@ -8,6 +8,7 @@ import { callbackQueryComposer, conversationComposer, sessionComposer } from '@b
 import { config } from '@bot/config';
 import { auth, normalize } from '@bot/middlewares';
 import { changeModule } from '@bot/modules/change';
+import { profileModule } from '@bot/modules/profile';
 import { restartModule } from '@bot/modules/restart';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
@@ -33,7 +34,7 @@ export const createBot = () => {
       model: ModelGPT.GPT_3_5_TURBO,
       username: ctx?.from?.username ?? '',
     }),
-    directory: path.join(__dirname, './locales'),
+    directory: path.join(__dirname, '../locales'),
     useSession: true,
   });
 
@@ -66,7 +67,9 @@ export const createBot = () => {
 
   bot.use(conversationComposer());
 
-  [restartModule, changeModule, textModule, voiceModule].forEach((handle) => handle(bot));
+  [restartModule, changeModule, profileModule, textModule, voiceModule].forEach((handle) =>
+    handle(bot),
+  );
 
   bot.catch(handleBotError);
 

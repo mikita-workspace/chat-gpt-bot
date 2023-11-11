@@ -159,3 +159,11 @@ restart-message = Let's start with a clean slate 😊
 # Change GPT model
 gpt-model-change-success = The GPT model has been changed: { $prevModel } -> { $currentModel }.
 gpt-model-change-title = Select an available GPT model
+
+# Profile
+profile-client-initial-message = Hey 👋, { $firstname } { $lastname }!
+profile-client-select-model = Selected GPT model:
+profile-client-rate = Rate:
+profile-client-available-messages = GPT tokens:
+profile-client-available-images = GPT images:
+profile-client-date-expires = Available tokens will be updated in { $expiresIn } days

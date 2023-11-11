@@ -4,15 +4,17 @@ import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
 import { GrammyMiddlewareFn } from '@bot/middlewares/types';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
-  const username = String(ctx?.from?.username);
   const telegramId = Number(ctx?.from?.id);
-
   const sessionMessages = ctx.session.client.messages;
 
   const availability = await getClientAvailability(telegramId);
 
   if (availability) {
-    ctx.session.client.username ??= username;
+    ctx.session.client.metadata = {
+      firstname: ctx?.from?.first_name ?? null,
+      lastname: ctx?.from?.last_name ?? null,
+      username: ctx?.from?.username ?? null,
+    };
     ctx.session.client.models = availability.models;
   }
 

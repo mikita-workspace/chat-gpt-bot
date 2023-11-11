@@ -7,13 +7,17 @@ import axios, { HttpStatusCode } from 'axios';
 
 export const createClient = async (
   telegramId: number,
-  username = '',
+  metadata: {
+    firstname?: string;
+    lastname?: string;
+    username?: string;
+  },
   languageCode = BotLanguageCodes.ENGLISH,
 ) => {
   try {
     const response = await axios<ClientResponse>({
       method: 'post',
-      data: { languageCode, telegramId, username },
+      data: { languageCode, telegramId, metadata },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/clients`,
     });
 

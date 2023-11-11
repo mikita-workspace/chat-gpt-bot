@@ -37,8 +37,8 @@ export const chatCompletion = async (
     const response = await axios<ChatCompletionResponse>({
       method: 'post',
       data: {
-        model,
         messages,
+        model,
         telegramId,
       },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/chatCompletions`,

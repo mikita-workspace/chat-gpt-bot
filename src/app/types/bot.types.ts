@@ -11,10 +11,14 @@ export type SessionMessageType = { content: string; role: `${MessageRolesGPT}` }
 export type SessionType = {
   client: {
     messages: SessionMessageType[];
+    metadata: {
+      username: string | null;
+      firstname: string | null;
+      lastname: string | null;
+    };
     models: ClientAvailabilityResponse['models'];
-    selectedGptModel: `${ModelGPT}`;
-    username: string | null;
     rate: ClientAvailabilityResponse['rate'] | null;
+    selectedGptModel: `${ModelGPT}`;
   };
 };
 

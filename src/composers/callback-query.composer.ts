@@ -24,10 +24,14 @@ composer.callbackQuery(UserImagesMenuActions.CREATE_IMAGE, async (ctx) => {
 
 composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
   const telegramId = Number(ctx?.from?.id);
-  const username = ctx?.from?.username;
+  const metadata = {
+    firstname: ctx?.from?.first_name,
+    lastname: ctx?.from?.last_name,
+    username: ctx?.from?.username,
+  };
   const languageCode = ctx?.from?.language_code as BotLanguageCodes;
 
-  const client = await createClient(telegramId, username, languageCode);
+  const client = await createClient(telegramId, metadata, languageCode);
 
   await ctx.deleteMessage();
 
