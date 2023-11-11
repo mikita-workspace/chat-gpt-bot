@@ -1,9 +1,9 @@
 import 'winston-mongodb';
 
+import { winstonConfig } from '@bot/common/constants';
+import { getTimestampUnix } from '@bot/common/utils';
 import { config } from '@bot/config';
-import { winstonConfig } from '@bot/constants';
 import { BotLoggerModel } from '@bot/models';
-import { getTimestampUnix } from '@bot/utils';
 import { addColors, createLogger, format, Logger, transports } from 'winston';
 
 class LoggerService {
@@ -48,18 +48,18 @@ class LoggerService {
     });
 
     // NOTE: Logger with mongoDB does not work on test environment for unit testing
-    // if (process.env.NODE_ENV !== 'test') {
-    //   this.logger.add(
-    //     new transports.MongoDB({
-    //       collection: BotLoggerModel.collection.name,
-    //       db: config.MONGODB_URI,
-    //       format: format.metadata(),
-    //       options: {
-    //         useUnifiedTopology: true,
-    //       },
-    //     }),
-    //   );
-    // }
+    if (process.env.NODE_ENV !== 'test') {
+      this.logger.add(
+        new transports.MongoDB({
+          collection: BotLoggerModel.collection.name,
+          db: config.MONGODB_URI,
+          format: format.metadata(),
+          options: {
+            useUnifiedTopology: true,
+          },
+        }),
+      );
+    }
 
     if (process.env.NODE_ENV !== 'production') {
       this.logger.add(

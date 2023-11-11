@@ -1,8 +1,8 @@
 import { ClientAvailabilityResponse, ClientResponse } from '@bot/api/clients/types';
 import { BotLanguageCodes } from '@bot/common/constants';
+import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
-import { logger } from '@bot/services';
-import { fetchCachedData } from '@bot/utils';
+import { Logger } from '@bot/services';
 import axios, { HttpStatusCode } from 'axios';
 
 export const createClient = async (
@@ -19,7 +19,7 @@ export const createClient = async (
 
     return response.data;
   } catch (error) {
-    logger.error(`src/api/clients/clients.api.ts::createClient::${JSON.stringify(error.message)}`);
+    Logger.error(`src/api/clients/clients.api.ts::createClient::${JSON.stringify(error.message)}`);
 
     return null;
   }
@@ -41,7 +41,7 @@ export const getClientAvailability = async (
     return clientAvailability;
   } catch (error) {
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
-      logger.error(
+      Logger.error(
         `src/api/clients/clients.api.ts::getClientAvailability::${JSON.stringify(error.message)}`,
       );
     }

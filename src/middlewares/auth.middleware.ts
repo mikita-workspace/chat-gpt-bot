@@ -1,6 +1,6 @@
 import { getClientAvailability } from '@bot/api/clients';
 import { inlineAuthButton } from '@bot/keyboards';
-import { logger } from '@bot/services';
+import { Logger } from '@bot/services';
 import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
 
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
@@ -9,7 +9,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
     const telegramId = Number(ctx?.from?.id);
     const messageId = Number(ctx?.message?.message_id);
 
-    logger.defaultMeta = { username: `${telegramId}${username ? `-${username}` : ''}` };
+    Logger.defaultMeta = { username: `${telegramId}${username ? `-${username}` : ''}` };
 
     const availability = await getClientAvailability(telegramId);
 
@@ -42,7 +42,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
 
     await ctx.reply(`${ctx.t('auth-error')} ${ctx.t('support-contact')}`);
   } catch (error) {
-    logger.error(`src/middlewares/auth/auth.middleware.ts::auth::${JSON.stringify(error.message)}`);
+    Logger.error(`src/middlewares/auth/auth.middleware.ts::auth::${JSON.stringify(error.message)}`);
 
     return;
   }

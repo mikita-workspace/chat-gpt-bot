@@ -1,7 +1,7 @@
 import { transcription } from '@bot/api/gpt';
 import { getGptContent } from '@bot/common/helpers';
 // import { inlineVoteButton } from '@bot/keyboards';
-import { logger } from '@bot/services';
+import { Logger } from '@bot/services';
 import { BotType } from '@bot/types';
 
 export const voiceModule = (bot: BotType) => {
@@ -31,7 +31,7 @@ export const voiceModule = (bot: BotType) => {
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 
-      logger.error(
+      Logger.error(
         `src/modules/voice/voice.module.ts::voiceModule::${JSON.stringify(error.message)}`,
       );
     }

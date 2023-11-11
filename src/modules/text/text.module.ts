@@ -1,6 +1,6 @@
 import { getGptContent } from '@bot/common/helpers';
 // import { inlineVoteButton } from '@bot/keyboards';
-import { logger } from '@bot/services';
+import { Logger } from '@bot/services';
 import { BotType } from '@bot/types';
 
 export const textModule = (bot: BotType) => {
@@ -28,7 +28,7 @@ export const textModule = (bot: BotType) => {
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 
-      logger.error(
+      Logger.error(
         `src/modules/text/text.module.ts::textController::${JSON.stringify(error.message)}`,
       );
     }

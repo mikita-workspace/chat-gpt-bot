@@ -85,7 +85,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(`conversations::createImageConversation::${JSON.stringify(error.message)}`);
+    Logger.error(`conversations::createImageConversation::${JSON.stringify(error.message)}`);
 
     return;
   }

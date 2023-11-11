@@ -1,7 +1,8 @@
 export const botName = 'NovaChat | GPT';
 
 export enum BotLanguageCodes {
-  BELORUSSIAN = 'be',
+  // TODO: Wiil be enabled later
+  // BELORUSSIAN = 'be',
   ENGLISH = 'en',
   RUSSIAN = 'ru',
 }
@@ -29,6 +30,34 @@ export const BotCommandsWithDescription = [
 export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
 export const TTL_CONFIG_CACHE_DEFAULT = process.env.NODE_ENV !== 'production' ? 600 : 6000;
 
+export const WEBHOOK_TIMEOUT = 60_000;
+
+// Winston logger
+export const winstonConfig = {
+  levels: {
+    error: 0,
+    debug: 1,
+    warn: 2,
+    data: 3,
+    info: 4,
+    verbose: 5,
+    silly: 6,
+  },
+  colors: {
+    error: 'red',
+    debug: 'blue',
+    warn: 'yellow',
+    data: 'magenta',
+    info: 'green',
+    verbose: 'cyan',
+    silly: 'grey',
+  },
+};
+
+export enum CommonActions {
+  GO_TO_CHAT = 'go-to-chat-action',
+}
+
 export enum AuthActions {
   GET_AUTH = 'get_auth_action',
 }
@@ -36,4 +65,8 @@ export enum AuthActions {
 export enum VoteActions {
   LIKE = 'like-vote-action',
   DISLIKE = 'dislike-vote-action',
+}
+
+export enum UserImagesMenuActions {
+  CREATE_IMAGE = 'create-image-action',
 }

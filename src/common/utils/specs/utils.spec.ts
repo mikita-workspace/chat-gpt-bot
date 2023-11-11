@@ -1,21 +1,19 @@
-import { DAY_MS } from '@bot/constants';
-import { logger } from '@bot/services';
 import {
   capitalize,
   decrypt,
   encrypt,
   fetchCachedData,
-  generateUniqueId,
   getKeyByValue,
   getTimestampUnix,
-  getTimezoneString,
   isEmptyObject,
   isExpiredDate,
   memoryCache,
   removeValueFromMemoryCache,
   setValueToMemoryCache,
   uniqBy,
-} from '@bot/utils';
+} from '@bot/common/utils';
+import { DAY_MS } from '@bot/constants';
+import { Logger } from '@bot/services';
 import { Logger } from 'winston';
 
 jest.spyOn(logger, 'error').mockReturnValue({} as unknown as Logger);
@@ -153,24 +151,6 @@ describe('util >> getTimestampUnix', () => {
   });
 });
 
-describe('util >> getTimezoneString', () => {
-  it('returns the correctly formatted timezone string for a positive offset', () => {
-    expect(getTimezoneString(90)).toEqual('UTC -01:30');
-    expect(getTimezoneString(240)).toEqual('UTC -04:00');
-    expect(getTimezoneString(300)).toEqual('UTC -05:00');
-  });
-
-  it('returns the correctly formatted timezone string for a negative offset', () => {
-    expect(getTimezoneString(-90)).toEqual('UTC +01:30');
-    expect(getTimezoneString(-240)).toEqual('UTC +04:00');
-    expect(getTimezoneString(-300)).toEqual('UTC +05:00');
-  });
-
-  it('returns the correctly formatted timezone string for a zero offset', () => {
-    expect(getTimezoneString(0)).toEqual('UTC +00:00');
-  });
-});
-
 describe('util >> isExpiredDate', () => {
   it('returns True if passed date is expired', () => {
     expect(isExpiredDate(Date.now() - DAY_MS)).toEqual(true);
@@ -190,17 +170,6 @@ describe('util >> capitalize', () => {
   it('should make the rest of the characters lowercase', () => {
     const result = capitalize('HeLLo');
     expect(result).toEqual('Hello');
-  });
-});
-
-describe('util >> generateUniqueId', () => {
-  it('generates a unique ID', () => {
-    const id1 = generateUniqueId();
-    const id2 = generateUniqueId();
-
-    expect(typeof id1).toBe('string');
-    expect(typeof id2).toBe('string');
-    expect(id1).not.toBe(id2);
   });
 });
 

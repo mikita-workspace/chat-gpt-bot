@@ -1,4 +1,3 @@
-export * from './callback-query/callback-query.composer';
-export * from './conversation/conversation.composer';
-export * from './menu/menu.composer';
-export * from './session/session.composer';
+export * from './callback-query.composer';
+export * from './conversation.composer';
+export * from './session.composer';

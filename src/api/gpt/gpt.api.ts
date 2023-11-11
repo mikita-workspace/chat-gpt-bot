@@ -1,7 +1,7 @@
 import { ChatCompletionResponse, GptModelsResponse } from '@bot/api/gpt/types';
 import { TTL_CONFIG_CACHE_DEFAULT } from '@bot/common/constants';
 import { config } from '@bot/config';
-import { logger } from '@bot/services';
+import { Logger } from '@bot/services';
 import { fetchCachedData } from '@bot/utils';
 import axios from 'axios';
 
@@ -22,7 +22,7 @@ export const getGptModels = async (): Promise<GptModelsResponse[]> => {
 
     return data;
   } catch (error) {
-    logger.error(`src/api/gpt/gpt.api.ts::getGptModels::${JSON.stringify(error.message)}`);
+    Logger.error(`src/api/gpt/gpt.api.ts::getGptModels::${JSON.stringify(error.message)}`);
 
     return [];
   }
@@ -46,7 +46,7 @@ export const chatCompletion = async (
 
     return response.data;
   } catch (error) {
-    logger.error(`src/api/gpt/gpt.api.ts::chatCompletion::${JSON.stringify(error.message)}`);
+    Logger.error(`src/api/gpt/gpt.api.ts::chatCompletion::${JSON.stringify(error.message)}`);
 
     return null;
   }
@@ -65,7 +65,7 @@ export const transcription = async (voicePathApi: string, telegramId: number) =>
 
     return response.data;
   } catch (error) {
-    logger.error(`src/api/gpt/gpt.api.ts::transcription::${JSON.stringify(error.message)}`);
+    Logger.error(`src/api/gpt/gpt.api.ts::transcription::${JSON.stringify(error.message)}`);
 
     return null;
   }

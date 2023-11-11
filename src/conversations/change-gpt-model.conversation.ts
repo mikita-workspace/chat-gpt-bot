@@ -1,7 +1,7 @@
 import { getGptModels } from '@bot/api/gpt';
 import { ModelGPT } from '@bot/api/gpt/constants';
 import { customKeyboard } from '@bot/keyboards';
-import { logger } from '@bot/services';
+import { Logger } from '@bot/services';
 import { ConversationType } from '@bot/types';
 
 export const changeGptModelConversation: ConversationType = async (conversation, ctx) => {
@@ -48,7 +48,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    logger.error(
+    Logger.error(
       `src/conversations/change-gpt-model.conversation.ts::changeGptModelConversation::${JSON.stringify(
         error.message,
       )}`,

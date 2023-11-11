@@ -1,2 +1,2 @@
-export * from './auth/auth.middleware';
-export * from './normalize/normalize.middleware';
+export * from './auth.middleware';
+export * from './normalize.middleware';
