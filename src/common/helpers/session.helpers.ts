@@ -4,9 +4,9 @@ import { SessionType } from '@bot/app/types';
 export const createInitialClientSessionData = (): SessionType['client'] => ({
   messages: [],
   metadata: {
-    firstname: null,
-    lastname: null,
-    username: null,
+    firstname: '',
+    lastname: '',
+    username: '',
   },
   models: [],
   rate: null,

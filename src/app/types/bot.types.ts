@@ -12,9 +12,9 @@ export type SessionType = {
   client: {
     messages: SessionMessageType[];
     metadata: {
-      username: string | null;
-      firstname: string | null;
-      lastname: string | null;
+      username: string;
+      firstname: string;
+      lastname: string;
     };
     models: ClientAvailabilityResponse['models'];
     rate: ClientAvailabilityResponse['rate'] | null;

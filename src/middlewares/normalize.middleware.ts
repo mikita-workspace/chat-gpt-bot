@@ -11,9 +11,9 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
 
   if (availability) {
     ctx.session.client.metadata = {
-      firstname: ctx?.from?.first_name ?? null,
-      lastname: ctx?.from?.last_name ?? null,
-      username: ctx?.from?.username ?? null,
+      firstname: ctx?.from?.first_name || '',
+      lastname: ctx?.from?.last_name || '',
+      username: ctx?.from?.username || '',
     };
     ctx.session.client.models = availability.models;
   }
