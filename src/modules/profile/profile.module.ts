@@ -12,19 +12,24 @@ export const profileModule = (bot: BotType) =>
     const selectedGpt = ctx.session.client.selectedGpt;
 
     const profileMessageHtml = `<b>${ctx.t('profile-client-initial-message', {
-      firstname: metadata.firstname || '',
+      firstname: metadata.firstname || ctx.t('profile-client-incognito'),
       lastname: metadata.lastname || '',
-    })}</b>\n\r<a href="tg://user?id=${telegramId}">@${metadata.username}</a>\n\r\n\r${ctx.t(
-      'profile-client-rate',
-    )}<b> ${rate?.name}</b>\n\r${ctx.t('profile-client-select-model')}<b> ${
-      selectedGpt.title
-    }</b>\n\r\n\r${ctx.t('profile-client-available-messages')}<b><tg-spoiler> ${
-      rate?.gptTokens
-    }</tg-spoiler></b>\n\r${ctx.t('profile-client-available-images')}<b><tg-spoiler> ${
-      rate?.dalleImages
-    }</tg-spoiler></b>\n\r\n\r<b>${ctx.t('profile-client-date-expires', {
-      expiresIn: expiresInDays(rate?.expiresAt || 0),
-    })}</b>`;
+    })}</b>\n\r<a href="tg://user?id=${telegramId}">@${metadata.username}</a>\n\r\n\r${
+      Boolean(rate)
+        ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r${ctx.t(
+            'profile-client-select-model',
+          )}<b> ${selectedGpt.title}</b>\n\r\n\r${ctx.t(
+            'profile-client-available-messages',
+          )}<b><tg-spoiler> ${rate?.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
+            'profile-client-available-images',
+          )}<b><tg-spoiler> ${rate?.dalleImages}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
+            'profile-client-date-expires',
+            {
+              expiresIn: expiresInDays(rate?.expiresAt || 0),
+            },
+          )}</b>`
+        : `<b>${ctx.t('profile-client-unavailable-info')}</b>`
+    }`;
 
     return ctx.reply(profileMessageHtml, { parse_mode: 'HTML', reply_markup: inlineGoToChat(ctx) });
   });

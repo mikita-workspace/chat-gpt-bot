@@ -3,9 +3,12 @@ import { BotContextType } from '@bot/app/types';
 import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
 import { GrammyMiddlewareFn } from '@bot/middlewares/types';
 import { ONE_HOUR_MS } from 'common/constants';
+import { createInitialClientSessionData } from 'common/helpers';
 import { differenceInMilliseconds, fromUnixTime } from 'date-fns';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
+  ctx.session.client = createInitialClientSessionData();
+  console.log(ctx.session.client);
   const telegramId = Number(ctx?.from?.id);
 
   const sessionMessages = ctx.session.client.messages;

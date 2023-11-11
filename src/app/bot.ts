@@ -33,7 +33,6 @@ export const createBot = () => {
   const i18n = new I18n<BotContextType>({
     defaultLocale: 'en',
     globalTranslationContext: (ctx) => ({
-      botName: ctx?.me?.first_name ?? botName,
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
       model: ModelGPT.GPT_3_5_TURBO,

@@ -157,3 +157,5 @@ profile-client-rate = Тариф:
 profile-client-available-messages = GPT токены:
 profile-client-available-images = GPT изображения:
 profile-client-date-expires = Доступные токены будут обновлены через { $expiresIn } дней
+profile-client-incognito = Инкогнито
+profile-client-unavailable-info = Ваши токены появятся здесь, когда вы напишете любое сообщение 🤖 GPT-боту.

@@ -1,5 +1,5 @@
 import { createBot } from '@bot/app';
-import { botName, WEBHOOK_TIMEOUT } from '@bot/common/constants';
+import { WEBHOOK_TIMEOUT } from '@bot/common/constants';
 import { handleTimeoutError } from '@bot/common/helpers';
 import { config } from '@bot/config';
 import { run } from '@grammyjs/runner';
@@ -23,7 +23,7 @@ const botInitialize = async () => {
 
     app.listen(config.PORT, () => {
       // eslint-disable-next-line no-console
-      console.info(`${botName} listening on port ${config.PORT}`);
+      console.info(`Bot listening on port ${config.PORT}`);
     });
   } else {
     // Use Long Polling for development
