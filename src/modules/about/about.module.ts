@@ -13,7 +13,7 @@ export const aboutModule = (bot: BotType) =>
 
     const profileMessageHtml = `${ctx.t('description-message', { botName })}\n\r\n\r<b>${ctx.t(
       'about-gpt-model',
-    )} <code>${gpt.title} (${gpt.model})</code></b>\n\r<b>${ctx.t('about-speech-model')} <code>${
+    )}<code> ${gpt.title} (${gpt.model})</code></b>\n\r<b>${ctx.t('about-speech-model')}<code> ${
       speech.title
     } (${speech.model})</code></b>\n\r<code>${release}</code>`;
 
