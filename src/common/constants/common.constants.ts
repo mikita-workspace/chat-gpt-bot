@@ -64,9 +64,9 @@ export enum AuthActions {
   GET_AUTH = 'get_auth_action',
 }
 
-export enum VoteActions {
-  LIKE = 'like-vote-action',
-  DISLIKE = 'dislike-vote-action',
+export enum FeedbackActions {
+  LIKE = 'like-feedback-action',
+  DISLIKE = 'dislike-feedback-action',
 }
 
 export enum UserImagesMenuActions {

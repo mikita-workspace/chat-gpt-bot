@@ -32,9 +32,9 @@ auth-error = Доступ запрещен.
 # Support
 support-contact = Если у вас возникли какие-либо вопросы, нажмите /support.
 
-# Vote
-vote-like = 👍
-vote-dislike = 👎
+# Feedback
+feedback-like = 👍
+feedback-dislike = 👎
 
 # Restart
 restart-message = Начнем с чистого листа 😊

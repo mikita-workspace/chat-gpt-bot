@@ -1,7 +1,7 @@
 import { transcription } from '@bot/api/gpt';
 import { BotType } from '@bot/app/types';
 import { getGptContent } from '@bot/common/helpers';
-// import { inlineVoteButton } from '@bot/keyboards';
+import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
 export const voiceModule = (bot: BotType) => {
@@ -28,8 +28,7 @@ export const voiceModule = (bot: BotType) => {
       if (gptContent) {
         return await ctx.reply(gptContent, {
           reply_to_message_id: messageId,
-          // TODO: https://app.asana.com/0/1205877070000801/1205877070000835/f
-          // reply_markup: inlineVoteButton(ctx),
+          reply_markup: inlineFeedback(ctx),
         });
       }
 

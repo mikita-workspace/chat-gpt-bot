@@ -32,9 +32,9 @@ auth-error = Access is denied.
 # Support
 support-contact = If you have any questions, click /support.
 
-# Vote
-vote-like = 👍
-vote-dislike = 👎
+# Feedback
+feedback-like = 👍
+feedback-dislike = 👎
 
 # Restart
 restart-message = Let's start with a clean slate 😊

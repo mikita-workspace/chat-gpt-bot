@@ -2,8 +2,8 @@ import { BotContextType } from '@bot/app/types';
 import {
   AuthActions,
   CommonActions,
+  FeedbackActions,
   UserImagesMenuActions,
-  VoteActions,
 } from '@bot/common/constants';
 import { InlineKeyboard, Keyboard } from 'grammy';
 
@@ -22,14 +22,14 @@ export const inlineCreateImage = (ctx: BotContextType) =>
 export const inlineAuthButton = (ctx: BotContextType) =>
   new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);
 
-export const inlineVoteButton = (ctx: BotContextType) => {
-  const voteLabels = [
-    [ctx.t('vote-like'), VoteActions.LIKE],
-    [ctx.t('vote-dislike'), VoteActions.DISLIKE],
+export const inlineFeedback = (ctx: BotContextType) => {
+  const feedbackLabels = [
+    [ctx.t('feedback-like'), FeedbackActions.LIKE],
+    [ctx.t('feedback-dislike'), FeedbackActions.DISLIKE],
   ];
-  const voteRow = voteLabels.map(([label, data]) => InlineKeyboard.text(label, data));
+  const feedbackRow = feedbackLabels.map(([label, data]) => InlineKeyboard.text(label, data));
 
-  return InlineKeyboard.from([voteRow]);
+  return InlineKeyboard.from([feedbackRow]);
 };
 
 export const customKeyboard = (labels: string[]) => {
