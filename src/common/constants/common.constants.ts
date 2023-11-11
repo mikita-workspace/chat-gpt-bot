@@ -20,10 +20,12 @@ export enum BotCommands {
 export const BotCommandsWithDescription = [
   { command: BotCommands.RESTART, i18nKey: 'command-restart' },
   { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
-  { command: BotCommands.IMAGE, i18nKey: 'command-image' },
+  // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000847/f
+  // { command: BotCommands.IMAGE, i18nKey: 'command-image' },
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
-  { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
+  // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000832/f
+  // { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
 ];
 
 // Node cache
