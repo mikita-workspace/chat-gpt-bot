@@ -15,17 +15,17 @@ export const profileModule = (bot: BotType) =>
       firstname: metadata.firstname || ctx.t('profile-client-incognito'),
       lastname: metadata.lastname || '',
     })}</b>\n\r<a href="tg://user?id=${telegramId}">@${metadata.username}</a>\n\r\n\r${
-      Boolean(rate)
+      rate
         ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r${ctx.t(
             'profile-client-select-model',
           )}<b> ${selectedGpt.title}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
-          )}<b><tg-spoiler> ${rate?.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
+          )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
-          )}<b><tg-spoiler> ${rate?.dalleImages}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
+          )}<b><tg-spoiler> ${rate.dalleImages}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
             'profile-client-date-expires',
             {
-              expiresIn: expiresInDays(rate?.expiresAt || 0),
+              expiresIn: expiresInDays(rate.expiresAt),
             },
           )}</b>`
         : `<b>${ctx.t('profile-client-unavailable-info')}</b>`
