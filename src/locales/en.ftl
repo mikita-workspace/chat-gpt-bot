@@ -6,8 +6,11 @@ command-about = About me
 command-change-model = Change GPT model
 command-support = Write to support
 
+# Common buttons
+common-button-go-to-chat = Go to chat
+
 # Start
-start-message = 💬 I'm expecting a text or voice message...
+start-message = 💭 I'm expecting a text or voice message...
 start-description = Let's start chatting 🙃! What do you want to ask?
 
 # Description
@@ -35,6 +38,13 @@ support-contact = If you have any questions, click /support.
 # Feedback
 feedback-like = 👍
 feedback-dislike = 👎
+feedback-like-response-first = Thank you for your feedback! I'm very pleased 😊.
+feedback-like-response-second = Thank you for your feedback! Glad I could help 😊.
+feedback-like-response-dislike = If you don't like my answer, give me another chance and click /restart. I'll think about it better 🤔.
+
+# Loader
+loader-message-start = Great request,
+loader-message-end = 💬 I read it, thinking about the answer...
 
 # Restart
 restart-message = Let's start with a clean slate 😊
