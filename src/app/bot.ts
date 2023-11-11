@@ -19,6 +19,7 @@ import { restartModule } from '@bot/modules/restart';
 import { startModule } from '@bot/modules/start';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
+import { autoRetry } from '@grammyjs/auto-retry';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { hydrate } from '@grammyjs/hydrate';
 import { I18n } from '@grammyjs/i18n';
@@ -55,11 +56,13 @@ export const createBot = () => {
   //   });
   // });
 
+  bot.api.config.use(autoRetry());
+
   // bot.api.config.use(apiThrottler());
 
   // bot.use(rateLimit());
 
-  // bot.use(hydrate());
+  bot.use(hydrate());
 
   bot.use(i18n);
 

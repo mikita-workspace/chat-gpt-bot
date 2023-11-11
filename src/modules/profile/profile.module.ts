@@ -14,7 +14,9 @@ export const profileModule = (bot: BotType) =>
     const profileMessageHtml = `<b>${ctx.t('profile-client-initial-message', {
       firstname: metadata.firstname || ctx.t('profile-client-incognito'),
       lastname: metadata.lastname || '',
-    })}</b>\n\r<a href="tg://user?id=${telegramId}">@${metadata.username}</a>\n\r\n\r${
+    })}</b>\n\r<a href="tg://user?id=${telegramId}">@${
+      metadata.username || 'username'
+    }</a>\n\r\n\r${
       rate
         ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
