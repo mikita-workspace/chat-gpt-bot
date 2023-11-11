@@ -1,4 +1,4 @@
-import { ModelGPT } from '@bot/api/gpt/constants';
+import { MODEL_GPT_DEFAULT } from '@bot/api/gpt/constants';
 import { BotContextType } from '@bot/app/types';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { BotLanguageCodes, botName } from '@bot/common/constants';
@@ -36,7 +36,7 @@ export const createBot = () => {
     globalTranslationContext: (ctx) => ({
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
-      model: ModelGPT.GPT_3_5_TURBO,
+      model: MODEL_GPT_DEFAULT,
       username: ctx?.from?.username ?? '',
     }),
     directory: path.join(__dirname, '../locales'),

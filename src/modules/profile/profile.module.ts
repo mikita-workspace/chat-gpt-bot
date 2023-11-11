@@ -9,7 +9,7 @@ export const profileModule = (bot: BotType) =>
 
     const metadata = ctx.session.client.metadata;
     const rate = ctx.session.client.rate;
-    const selectedGpt = ctx.session.client.selectedGpt;
+    const { gpt: selectedGptModel } = ctx.session.client.selectedModel;
 
     const profileMessageHtml = `<b>${ctx.t('profile-client-initial-message', {
       firstname: metadata.firstname || ctx.t('profile-client-incognito'),
@@ -18,7 +18,7 @@ export const profileModule = (bot: BotType) =>
       rate
         ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r${ctx.t(
             'profile-client-select-model',
-          )}<b> ${selectedGpt.title}</b>\n\r\n\r${ctx.t(
+          )}<b> ${selectedGptModel.title}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
           )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',

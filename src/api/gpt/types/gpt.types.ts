@@ -1,11 +1,11 @@
-import { MessageRolesGPT } from '@bot/api/gpt/constants';
+import { MessageRolesGPT, TypeGPT } from '@bot/api/gpt/constants';
 
 export type GptModelsResponse = {
   model: string;
   title: string;
   description: string;
   creator: string;
-  input: string[];
+  type: `${TypeGPT}`;
 };
 
 export type ChatCompletionResponse = {

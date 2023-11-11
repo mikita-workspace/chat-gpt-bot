@@ -1,6 +1,9 @@
-export enum ModelGPT {
-  GIGA_CHAT = 'GigaChat:latest',
-  GPT_3_5_TURBO = 'gpt-3.5-turbo-1106',
+export const MODEL_GPT_DEFAULT = 'gpt-3.5-turbo-1106';
+export const MODEL_SPEECH_DEFAULT = 'whisper-1';
+
+export enum TypeGPT {
+  TEXT = 'text',
+  SPEECH = 'voice',
 }
 
 export enum MessageRolesGPT {

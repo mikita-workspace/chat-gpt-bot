@@ -1,31 +1,49 @@
 import { getGptModels } from '@bot/api/gpt';
-import { ModelGPT } from '@bot/api/gpt/constants';
+import { TypeGPT } from '@bot/api/gpt/constants';
+import { GptModelsResponse } from '@bot/api/gpt/types';
 import { ConversationType } from '@bot/conversations/types';
 import { customKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
 export const changeGptModelConversation: ConversationType = async (conversation, ctx) => {
   try {
-    const clientModels = conversation.session.client.models;
-    const availableModels = (await conversation.external(() => getGptModels()))
-      .filter(({ model }) => clientModels.includes(model))
-      .map(({ model, title, creator }) => [model, title, creator]);
+    const telegramId = Number(ctx?.from?.id);
 
-    const selectedGpt = conversation.session.client.selectedGpt;
+    const [clientGptModels, clientSpeechModels] = (
+      await conversation.external(() => getGptModels(telegramId))
+    ).reduce<[GptModelsResponse[], GptModelsResponse[]]>(
+      ([gptModels, speechModels], model) => {
+        if (model.type === TypeGPT.TEXT) {
+          gptModels.push(model);
+        }
 
-    const inlineModels = availableModels.map((model) => `${model[1]} (${model[0]}) by ${model[2]}`);
+        if (model.type === TypeGPT.SPEECH) {
+          speechModels.push(model);
+        }
+
+        return [gptModels, speechModels];
+      },
+      [[], []],
+    );
+
+    const inlineClientGptModels = clientGptModels.map(
+      ({ title, model, creator }) => `${title} (${model}) by ${creator}`,
+    );
+
+    const { gpt: selectedGptModel, speech: selectedSpeechModel } =
+      conversation.session.client.selectedModel;
 
     await ctx.reply(ctx.t('gpt-model-change-title'), {
-      reply_markup: customKeyboard(inlineModels),
+      reply_markup: customKeyboard(inlineClientGptModels),
     });
 
     const {
       message: { text },
     } = await conversation.waitFor('message:text');
 
-    if (!inlineModels.includes(text)) {
+    if (!inlineClientGptModels.includes(text)) {
       return await ctx.reply(
-        ctx.t('error-message-change-gpt-model', { gptModel: selectedGpt.model }),
+        ctx.t('error-message-change-gpt-model', { gptModel: selectedGptModel.title }),
         {
           reply_markup: { remove_keyboard: true },
         },
@@ -34,15 +52,26 @@ export const changeGptModelConversation: ConversationType = async (conversation,
 
     const newSelectedGptModel = text.slice(text.indexOf('(') + 1, text.indexOf(')')).trim();
     const newSelectedGptTitle = text.slice(0, text.indexOf('(')).trim();
+    const newSelectedGptCreator = text.slice(text.indexOf('by') + 2).trim();
 
-    conversation.session.client.selectedGpt = {
-      model: newSelectedGptModel as ModelGPT,
-      title: newSelectedGptTitle,
+    const newSelectedSpeechModel = clientSpeechModels.find(
+      ({ creator }) => creator === newSelectedGptCreator,
+    );
+
+    conversation.session.client.selectedModel = {
+      gpt: {
+        model: newSelectedGptModel,
+        title: newSelectedGptTitle,
+      },
+      speech: {
+        model: newSelectedSpeechModel?.model || selectedSpeechModel.model,
+        title: newSelectedSpeechModel?.title || selectedSpeechModel.title,
+      },
     };
 
     return await ctx.reply(
       `${ctx.t('gpt-model-change-success')} <b><s>${
-        selectedGpt.title
+        selectedGptModel.title
       }</s> ${newSelectedGptTitle}</b>`,
       {
         reply_markup: { remove_keyboard: true },

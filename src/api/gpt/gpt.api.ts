@@ -5,13 +5,16 @@ import { config } from '@bot/config';
 import { Logger } from '@bot/services';
 import axios from 'axios';
 
-export const getGptModels = async (): Promise<GptModelsResponse[]> => {
+export const getGptModels = async (telegramId: number): Promise<GptModelsResponse[]> => {
   try {
     const data = await fetchCachedData(
       'cached-gpt-models',
       async () => {
         const response = await axios<GptModelsResponse[]>({
           method: 'get',
+          data: {
+            telegramId,
+          },
           url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/models`,
         });
 
@@ -29,9 +32,9 @@ export const getGptModels = async (): Promise<GptModelsResponse[]> => {
 };
 
 export const chatCompletion = async (
-  model: string,
   messages: ChatCompletionResponse['message'][],
   telegramId: number,
+  model: string,
 ) => {
   try {
     const response = await axios<ChatCompletionResponse>({
