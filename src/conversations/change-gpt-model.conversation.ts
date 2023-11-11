@@ -1,5 +1,5 @@
 import { getGptModels } from '@bot/api/gpt';
-import { TypeGPT } from '@bot/api/gpt/constants';
+import { TITLE_SPEECH_NONE, TypeGPT } from '@bot/api/gpt/constants';
 import { GptModelsResponse } from '@bot/api/gpt/types';
 import { ConversationType } from '@bot/conversations/types';
 import { customKeyboard } from '@bot/keyboards';
@@ -50,13 +50,16 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       );
     }
 
-    const newSelectedGptModel = text.slice(text.indexOf('(') + 1, text.indexOf(')')).trim();
-    const newSelectedGptTitle = text.slice(0, text.indexOf('(')).trim();
     const newSelectedGptCreator = text.slice(text.indexOf('by') + 2).trim();
-
     const newSelectedSpeechModel = clientSpeechModels.find(
       ({ creator }) => creator === newSelectedGptCreator,
     );
+
+    const newSelectedGptModel = text.slice(text.indexOf('(') + 1, text.indexOf(')')).trim();
+    const newSelectedGptTitle = text.slice(0, text.indexOf('(')).trim();
+
+    const newSelectedSpeechModelModel = newSelectedSpeechModel?.model || selectedSpeechModel.model;
+    const newSelectedSpeechModelTitle = newSelectedSpeechModel?.title || selectedSpeechModel.title;
 
     conversation.session.client.selectedModel = {
       gpt: {
@@ -64,15 +67,15 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         title: newSelectedGptTitle,
       },
       speech: {
-        model: newSelectedSpeechModel?.model || selectedSpeechModel.model,
-        title: newSelectedSpeechModel?.title || selectedSpeechModel.title,
+        model: newSelectedSpeechModelModel,
+        title: newSelectedSpeechModelTitle,
       },
     };
 
     return await ctx.reply(
-      `${ctx.t('gpt-model-change-success')} <b><s>${
-        selectedGptModel.title
-      }</s> ${newSelectedGptTitle}</b>`,
+      `${ctx.t('gpt-model-change-success')} <b><s>${selectedGptModel.title} / ${
+        selectedSpeechModel.title
+      }</s> ${newSelectedGptTitle} / ${newSelectedSpeechModelTitle || TITLE_SPEECH_NONE}</b>`,
       {
         reply_markup: { remove_keyboard: true },
         parse_mode: 'HTML',

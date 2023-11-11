@@ -1,9 +1,10 @@
 export const MODEL_GPT_DEFAULT = 'gpt-3.5-turbo-1106';
 export const MODEL_SPEECH_DEFAULT = 'whisper-1';
+export const TITLE_SPEECH_NONE = 'None';
 
 export enum TypeGPT {
   TEXT = 'text',
-  SPEECH = 'voice',
+  SPEECH = 'speech',
 }
 
 export enum MessageRolesGPT {
