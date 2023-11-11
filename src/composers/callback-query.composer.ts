@@ -1,8 +1,6 @@
-import { createClient } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
-import { BotLanguageCodes } from '@bot/common/constants';
-import { AuthActions, botName, CommonActions, UserImagesMenuActions } from '@bot/common/constants';
-import { removeValueFromMemoryCache } from '@bot/common/utils';
+import { FeedbackActions } from '@bot/common/constants';
+import { CommonActions, UserImagesMenuActions } from '@bot/common/constants';
 import { changeGptModelConversation, createImageConversation } from '@bot/conversations';
 import { Composer, Middleware } from 'grammy';
 
@@ -22,26 +20,11 @@ composer.callbackQuery(UserImagesMenuActions.CREATE_IMAGE, async (ctx) => {
   await ctx.conversation.enter(createImageConversation.name);
 });
 
-composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
-  const telegramId = Number(ctx?.from?.id);
-  const metadata = {
-    firstname: ctx?.from?.first_name,
-    lastname: ctx?.from?.last_name,
-    username: ctx?.from?.username,
-  };
-  const languageCode = ctx?.from?.language_code as BotLanguageCodes;
+composer.callbackQuery([FeedbackActions.LIKE, FeedbackActions.DISLIKE], async (ctx) => {
+  const callbackData = ctx.callbackQuery.data;
+  const action = callbackData.slice(0, callbackData.indexOf('-')).trim();
 
-  const client = await createClient(telegramId, metadata, languageCode);
-
-  await ctx.deleteMessage();
-
-  if (client) {
-    removeValueFromMemoryCache('cached-client-availability');
-
-    return ctx.reply(ctx.t('auth-success', { botName }));
-  }
-
-  return ctx.reply(ctx.t('error-message-common'));
+  console.log(action);
 });
 
 export const callbackQueryComposer = (): Middleware<BotContextType> => composer;

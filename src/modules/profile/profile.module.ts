@@ -6,6 +6,7 @@ import { inlineGoToChat } from '@bot/keyboards';
 export const profileModule = (bot: BotType) =>
   bot.command(BotCommands.PROFILE, async (ctx) => {
     const telegramId = Number(ctx.message?.from?.id);
+    const messageId = Number(ctx.message?.message_id);
 
     const metadata = ctx.session.client.metadata;
     const rate = ctx.session.client.rate;
@@ -28,5 +29,9 @@ export const profileModule = (bot: BotType) =>
         : `<b>${ctx.t('profile-client-unavailable-info')}</b>`
     }`;
 
-    return ctx.reply(profileMessageHtml, { parse_mode: 'HTML', reply_markup: inlineGoToChat(ctx) });
+    return ctx.reply(profileMessageHtml, {
+      parse_mode: 'HTML',
+      reply_markup: inlineGoToChat(ctx),
+      reply_to_message_id: messageId,
+    });
   });

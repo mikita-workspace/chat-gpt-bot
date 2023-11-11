@@ -4,6 +4,8 @@ import { inlineGoToChat } from '@bot/keyboards';
 
 export const aboutModule = (bot: BotType) =>
   bot.command(BotCommands.ABOUT, async (ctx) => {
+    const messageId = Number(ctx.message?.message_id);
+
     const { gpt, speech } = ctx.session.client.selectedModel;
 
     // TODO: Get this value from github
@@ -18,5 +20,6 @@ export const aboutModule = (bot: BotType) =>
     return ctx.reply(profileMessageHtml, {
       parse_mode: 'HTML',
       reply_markup: inlineGoToChat(ctx),
+      reply_to_message_id: messageId,
     });
   });
