@@ -122,28 +122,27 @@ describe('util >> uniqBy', () => {
 });
 
 describe('util >> getTimestampUnix', () => {
-  it('should return a string in UTC format', () => {
+  it('should return a number in Unix format', () => {
     const input = new Date('2021-08-31T13:45:00Z');
-    const expectedOutput = 'Tue, 31 Aug 2021 13:45:00 GMT';
+    const expectedOutput = 1630417500;
 
     const output = getTimestampUnix(input);
 
     expect(output).toBe(expectedOutput);
   });
 
-  // TODO: Refactor test
-  it('should return a string in UTC format when passed a timestamp as string', () => {
+  it('should return a number in Unix format when passed a timestamp as string', () => {
     const input = '2021-08-31T13:45:00Z';
-    const expectedOutput = 'Tue, 31 Aug 2021 13:45:00 GMT';
+    const expectedOutput = 1630417500;
 
     const output = getTimestampUnix(input);
 
     expect(output).toBe(expectedOutput);
   });
 
-  it('should return a string in UTC format when passed a timestamp as number', () => {
-    const input = 1630433100000; // Equals to '2021-08-31T13:45:00Z'
-    const expectedOutput = 'Tue, 31 Aug 2021 18:05:00 GMT';
+  it('should return a string in Unix format when passed a timestamp as number', () => {
+    const input = 1630433100000;
+    const expectedOutput = 1630433100;
 
     const output = getTimestampUnix(input);
 
@@ -153,11 +152,11 @@ describe('util >> getTimestampUnix', () => {
 
 describe('util >> isExpiredDate', () => {
   it('returns True if passed date is expired', () => {
-    expect(isExpiredDate(Date.now() - DAY_MS)).toEqual(true);
+    expect(isExpiredDate(getTimestampUnix(new Date()) - DAY_MS)).toEqual(true);
   });
 
   it('returns False if passed date is not expired', () => {
-    expect(isExpiredDate(Date.now() + DAY_MS)).toEqual(false);
+    expect(isExpiredDate(getTimestampUnix(new Date()) + DAY_MS)).toEqual(false);
   });
 });
 
