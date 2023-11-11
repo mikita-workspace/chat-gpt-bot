@@ -38,9 +38,9 @@ support-contact = If you have any questions, click /support.
 # Feedback
 feedback-like = 👍
 feedback-dislike = 👎
-feedback-like-response-first = Thank you for your feedback! I'm very pleased 😊.
-feedback-like-response-second = Thank you for your feedback! Glad I could help 😊.
-feedback-like-response-dislike = If you don't like my answer, give me another chance and click /restart. I'll think about it better 🤔.
+feedback-like-response-first = Thank you for your feedback! I'm very pleased 😊
+feedback-like-response-second = Thank you for your feedback! Glad I could help 😊
+feedback-like-response-dislike = If you don't like my answer, give me another chance and click /restart. I'll think about it better 🤔
 
 # Loader
 loader-message-start = Great request,
