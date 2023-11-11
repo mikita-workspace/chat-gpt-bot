@@ -9,16 +9,13 @@ export const profileModule = (bot: BotType) =>
 
     const metadata = ctx.session.client.metadata;
     const rate = ctx.session.client.rate;
-    const { gpt: selectedGptModel } = ctx.session.client.selectedModel;
 
     const profileMessageHtml = `<b>${ctx.t('profile-client-initial-message', {
       firstname: metadata.firstname || ctx.t('profile-client-incognito'),
       lastname: metadata.lastname || '',
     })}</b>\n\r<a href="tg://user?id=${telegramId}">@${metadata.username}</a>\n\r\n\r${
       rate
-        ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r${ctx.t(
-            'profile-client-select-model',
-          )}<b> ${selectedGptModel.title}</b>\n\r\n\r${ctx.t(
+        ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
           )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',

@@ -33,6 +33,10 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     const { gpt: selectedGptModel, speech: selectedSpeechModel } =
       conversation.session.client.selectedModel;
 
+    if (!inlineClientGptModels.length) {
+      return await ctx.reply(ctx.t('error-message-common'));
+    }
+
     await ctx.reply(ctx.t('gpt-model-change-title'), {
       reply_markup: customKeyboard(inlineClientGptModels),
     });
