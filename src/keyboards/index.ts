@@ -1,10 +1,10 @@
+import { BotContextType } from '@bot/app/types';
 import {
   AuthActions,
   CommonActions,
   UserImagesMenuActions,
   VoteActions,
 } from '@bot/common/constants';
-import { BotContextType } from '@bot/types';
 import { InlineKeyboard, Keyboard } from 'grammy';
 
 export const inlineGoToChat = (ctx: BotContextType) =>

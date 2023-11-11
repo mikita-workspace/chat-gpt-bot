@@ -1,6 +1,6 @@
 import { chatCompletion } from '@bot/api/gpt';
 import { MAX_CONTEXT_TOKENS, MessageRolesGPT } from '@bot/api/gpt/constants';
-import { BotContextType, SessionMessageType } from '@bot/types';
+import { BotContextType, SessionMessageType } from '@bot/app/types';
 import { encode } from 'gpt-3-encoder';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {

@@ -1,7 +1,7 @@
+import { BotType } from '@bot/app/types';
 import { getGptContent } from '@bot/common/helpers';
 // import { inlineVoteButton } from '@bot/keyboards';
 import { Logger } from '@bot/services';
-import { BotType } from '@bot/types';
 
 export const textModule = (bot: BotType) => {
   bot.on('message:text', async (ctx) => {

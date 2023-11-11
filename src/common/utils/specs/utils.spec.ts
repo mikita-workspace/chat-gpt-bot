@@ -1,3 +1,4 @@
+import { DAY_MS } from '@bot/common/constants';
 import {
   capitalize,
   decrypt,
@@ -12,11 +13,10 @@ import {
   setValueToMemoryCache,
   uniqBy,
 } from '@bot/common/utils';
-import { DAY_MS } from '@bot/constants';
 import { Logger } from '@bot/services';
-import { Logger } from 'winston';
+import { Logger as WinstonLogger } from 'winston';
 
-jest.spyOn(logger, 'error').mockReturnValue({} as unknown as Logger);
+jest.spyOn(Logger, 'error').mockReturnValue({} as unknown as WinstonLogger);
 
 describe('util >> memory cache', () => {
   const key = 'testKey';

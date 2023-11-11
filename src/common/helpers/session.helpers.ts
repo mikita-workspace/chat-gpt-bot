@@ -1,5 +1,5 @@
 import { ModelGPT } from '@bot/api/gpt/constants';
-import { SessionType } from '@bot/types';
+import { SessionType } from '@bot/app/types';
 
 export const createInitialClientSessionData = (): SessionType['client'] => ({
   messages: [],

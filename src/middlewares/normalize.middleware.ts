@@ -1,6 +1,7 @@
 import { getClientAvailability } from '@bot/api/clients';
+import { BotContextType } from '@bot/app/types';
 import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
-import { BotContextType, GrammyMiddlewareFn } from '@bot/types';
+import { GrammyMiddlewareFn } from '@bot/middlewares/types';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   const username = String(ctx?.from?.username);

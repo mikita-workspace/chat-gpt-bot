@@ -1,5 +1,5 @@
 import { ClientAvailabilityResponse } from '@bot/api/clients/types';
-import { MessageRolesGPT, ModelGPT } from '@bot/constants';
+import { MessageRolesGPT, ModelGPT } from '@bot/api/gpt/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
 import { I18nFlavor } from '@grammyjs/i18n';

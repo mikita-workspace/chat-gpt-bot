@@ -1,7 +1,7 @@
-import { createBot } from '@bot/bot';
+import { createBot } from '@bot/app';
+import { botName, WEBHOOK_TIMEOUT } from '@bot/common/constants';
 import { handleTimeoutError } from '@bot/common/helpers';
 import { config } from '@bot/config';
-import { botName, WEBHOOK_TIMEOUT } from '@bot/constants';
 import { run } from '@grammyjs/runner';
 import express from 'express';
 import { webhookCallback } from 'grammy';

@@ -1,5 +1,5 @@
+import { BotContextType } from '@bot/app/types';
 import { BotCommandsWithDescription, botName } from '@bot/common/constants';
-import { BotContextType } from '@bot/types';
 import { I18n } from '@grammyjs/i18n';
 
 export const mapBotCommands = (i18n: I18n<BotContextType>, languageCode = 'en') =>

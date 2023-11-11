@@ -1,4 +1,4 @@
-import { BotContextType } from '@bot/types';
+import { BotContextType } from '@bot/app/types';
 import { Conversation } from '@grammyjs/conversations';
 
 export type ConversationType = (

@@ -1,9 +1,9 @@
 import { createClient } from '@bot/api/clients';
+import { BotContextType } from '@bot/app/types';
 import { BotLanguageCodes } from '@bot/common/constants';
 import { AuthActions, botName, CommonActions, UserImagesMenuActions } from '@bot/common/constants';
 import { removeValueFromMemoryCache } from '@bot/common/utils';
 import { changeGptModelConversation, createImageConversation } from '@bot/conversations';
-import { BotContextType } from '@bot/types';
 import { Composer, Middleware } from 'grammy';
 
 const composer = new Composer<BotContextType>();

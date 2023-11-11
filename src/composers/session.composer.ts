@@ -1,6 +1,6 @@
+import { BotContextType, SessionType } from '@bot/app/types';
 import { createInitialClientSessionData } from '@bot/common/helpers';
 import { config } from '@bot/config';
-import { BotContextType, SessionType } from '@bot/types';
 import { freeStorage } from '@grammyjs/storage-free';
 import { Composer, Middleware, session } from 'grammy';
 

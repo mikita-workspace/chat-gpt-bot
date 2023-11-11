@@ -1,8 +1,8 @@
 import { getGptModels } from '@bot/api/gpt';
 import { ModelGPT } from '@bot/api/gpt/constants';
+import { ConversationType } from '@bot/conversations/types';
 import { customKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
-import { ConversationType } from '@bot/types';
 
 export const changeGptModelConversation: ConversationType = async (conversation, ctx) => {
   try {

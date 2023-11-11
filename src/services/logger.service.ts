@@ -3,7 +3,7 @@ import 'winston-mongodb';
 import { winstonConfig } from '@bot/common/constants';
 import { getTimestampUnix } from '@bot/common/utils';
 import { config } from '@bot/config';
-import { BotLoggerModel } from '@bot/models';
+import { ClientLoggerModel } from '@bot/models';
 import { addColors, createLogger, format, Logger, transports } from 'winston';
 
 class LoggerService {
@@ -51,7 +51,7 @@ class LoggerService {
     if (process.env.NODE_ENV !== 'test') {
       this.logger.add(
         new transports.MongoDB({
-          collection: BotLoggerModel.collection.name,
+          collection: ClientLoggerModel.collection.name,
           db: config.MONGODB_URI,
           format: format.metadata(),
           options: {

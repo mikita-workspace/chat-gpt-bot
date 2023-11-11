@@ -1,5 +1,5 @@
+import { BotType } from '@bot/app/types';
 import { BotCommands } from '@bot/common/constants';
-import { BotType } from '@bot/types';
 
 export const restartModule = (bot: BotType) =>
   bot.command(BotCommands.RESTART, async (ctx) => {

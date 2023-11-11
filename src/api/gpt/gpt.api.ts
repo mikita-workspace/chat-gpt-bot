@@ -1,8 +1,8 @@
 import { ChatCompletionResponse, GptModelsResponse } from '@bot/api/gpt/types';
 import { TTL_CONFIG_CACHE_DEFAULT } from '@bot/common/constants';
+import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
-import { fetchCachedData } from '@bot/utils';
 import axios from 'axios';
 
 export const getGptModels = async (): Promise<GptModelsResponse[]> => {

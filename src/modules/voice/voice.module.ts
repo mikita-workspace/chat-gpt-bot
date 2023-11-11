@@ -1,8 +1,8 @@
 import { transcription } from '@bot/api/gpt';
+import { BotType } from '@bot/app/types';
 import { getGptContent } from '@bot/common/helpers';
 // import { inlineVoteButton } from '@bot/keyboards';
 import { Logger } from '@bot/services';
-import { BotType } from '@bot/types';
 
 export const voiceModule = (bot: BotType) => {
   bot.on('message:voice', async (ctx) => {

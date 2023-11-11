@@ -1,1 +1,1 @@
-export * from './bot-Logger.model';
+export * from './client-logger.model';
