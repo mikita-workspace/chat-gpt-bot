@@ -1,7 +1,7 @@
 import { transcription } from '@bot/api/gpt';
 import { BotType } from '@bot/app/types';
 import { getGptContent, gptLoader } from '@bot/common/helpers';
-import { expiresInFormat } from '@bot/common/utils';
+import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -14,7 +14,7 @@ export const voiceModule = (bot: BotType) => {
 
       const rate = ctx.session.client.rate;
 
-      if (rate && !rate.gptTokens) {
+      if (rate && !isExpiredDate(rate.expiresAt) && !rate.gptTokens) {
         return await ctx.reply(
           `${ctx.t('usage-token-limit', {
             expiresIn: expiresInFormat(rate.expiresAt, locale),

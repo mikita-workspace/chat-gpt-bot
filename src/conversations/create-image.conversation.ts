@@ -1,7 +1,7 @@
 import { generateImages } from '@bot/api/gpt';
 import { MAX_IMAGES_REQUEST, MODEL_IMAGE_DEFAULT } from '@bot/api/gpt/constants';
 import { BotCommands } from '@bot/common/constants';
-import { expiresInFormat, getTimestampUnix } from '@bot/common/utils';
+import { expiresInFormat, getTimestampUnix, isExpiredDate } from '@bot/common/utils';
 import { ConversationType } from '@bot/conversations/types';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
@@ -16,7 +16,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
     const { image } = ctx.session.client.selectedModel;
     const rate = ctx.session.client.rate;
 
-    if (rate && !rate.images) {
+    if (rate && !isExpiredDate(rate.expiresAt) && !rate.images) {
       return await ctx.reply(
         `${ctx.t('usage-image-limit', {
           expiresIn: expiresInFormat(rate.expiresAt, locale),
