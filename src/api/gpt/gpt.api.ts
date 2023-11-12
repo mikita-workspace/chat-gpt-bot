@@ -33,6 +33,7 @@ export const getGptModels = async (telegramId: number): Promise<GptModelsRespons
 
 export const chatCompletion = async (
   messages: ChatCompletionResponse['message'][],
+  messageId: number,
   telegramId: number,
   model: string,
 ) => {
@@ -41,6 +42,7 @@ export const chatCompletion = async (
       method: 'post',
       data: {
         messages,
+        messageId,
         model,
         telegramId,
       },

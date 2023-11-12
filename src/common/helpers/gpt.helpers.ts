@@ -6,6 +6,8 @@ import { encode } from 'gpt-3-encoder';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {
   const telegramId = Number(ctx.message?.from?.id);
+  const messageId = Number(ctx.message?.message_id);
+
   const { gpt } = ctx.session.client.selectedModel;
 
   ctx.session.client.messages.push({
@@ -15,6 +17,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
 
   const chatCompletionResponse = await chatCompletion(
     ctx.session.client.messages,
+    messageId,
     telegramId,
     gpt.model,
   );

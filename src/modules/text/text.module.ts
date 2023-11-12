@@ -7,10 +7,9 @@ export const textModule = (bot: BotType) => {
   bot.on('message:text', async (ctx) => {
     try {
       const messageId = Number(ctx.message?.message_id);
+      const text = String(ctx.message?.text);
 
       const startMessage = await gptLoader(ctx, messageId);
-
-      const text = String(ctx.message?.text);
 
       if (!text) {
         return await startMessage.editText(ctx.t('error-message-gpt'), {
