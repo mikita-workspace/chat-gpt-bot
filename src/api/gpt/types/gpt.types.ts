@@ -9,7 +9,7 @@ export type GptModelResponse = {
 };
 
 export type ChatCompletionResponse = {
-  clientRate: { dalleImages: number; expiresAt: number; gptTokens: number; name: string };
+  clientRate: { images: number; expiresAt: number; gptTokens: number; name: string };
   message: {
     content: string;
     role: `${MessageRolesGPT}`;

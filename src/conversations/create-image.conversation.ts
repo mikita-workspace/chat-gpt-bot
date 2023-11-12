@@ -37,7 +37,7 @@ export const createImageConversation: ConversationType = async (conversation, ct
   //     base64: base64Image.b64_json ?? '',
   //     filename: `dalee2-${currentUsername}-${generateUniqueId()}`,
   //   }));
-  //   // conversation.session.client.rate.dalleImages += base64Images.length;
+  //   // conversation.session.client.rate.images += base64Images.length;
   //   const imageFiles = await conversation.external(async () => convertBase64ToFiles(base64Images));
   //   const googleDriveFiles = imageFiles.map(({ filePath }) => ({
   //     fileName: `dalee2-${currentUsername}-${generateUniqueId()}`,

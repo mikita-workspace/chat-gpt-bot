@@ -1,6 +1,6 @@
 # Commands
 command-profile = Профиль
-command-image = Сгенерировать изображение через DALL·E 2
+command-image = Сгенерировать изображение
 command-restart = Новый диалог
 command-about = Обо мне
 command-change-model = Изменить GPT модель

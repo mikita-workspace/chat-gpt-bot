@@ -23,7 +23,7 @@ export const profileModule = (bot: BotType) =>
             'profile-client-available-messages',
           )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
-          )}<b><tg-spoiler> ${rate.dalleImages}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
+          )}<b><tg-spoiler> ${rate.images}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
             'profile-client-date-expires',
             {
               expiresIn: expiresInFormat(rate.expiresAt, locale),

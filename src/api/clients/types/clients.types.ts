@@ -2,7 +2,7 @@ import { ChatCompletionResponse } from '@bot/api/gpt/types';
 
 export type ClientAvailabilityResponse = {
   models: string[];
-  rate: { dalleImages: number; expiresAt: number; gptTokens: number; name: string };
+  rate: { images: number; expiresAt: number; gptTokens: number; name: string };
   state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: number };
 };
 
