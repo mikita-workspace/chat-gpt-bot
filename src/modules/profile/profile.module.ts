@@ -1,12 +1,13 @@
 import { BotType } from '@bot/app/types';
 import { BotCommands } from '@bot/common/constants';
-import { expiresInDays } from '@bot/common/utils';
+import { expiresInFormat } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
 
 export const profileModule = (bot: BotType) =>
   bot.command(BotCommands.PROFILE, async (ctx) => {
     const telegramId = Number(ctx.message?.from?.id);
     const messageId = Number(ctx.message?.message_id);
+    const locale = String(ctx.from?.language_code);
 
     const metadata = ctx.session.client.metadata;
     const rate = ctx.session.client.rate;
@@ -25,9 +26,9 @@ export const profileModule = (bot: BotType) =>
           )}<b><tg-spoiler> ${rate.dalleImages}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
             'profile-client-date-expires',
             {
-              expiresIn: expiresInDays(rate.expiresAt),
+              expiresIn: expiresInFormat(rate.expiresAt, locale),
             },
-          )}</b>`
+          )}.</b>`
         : `<b>${ctx.t('profile-client-unavailable-info')}</b>`
     }`;
 

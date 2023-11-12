@@ -14,11 +14,13 @@ start-message = 💭 I'm expecting a text or voice message...
 start-description = Let's start chatting 🙃! What do you want to ask?
 
 # Description
-description-message = Hi 👋, this is { $botName }! I'm intelligent bot capable of responding to various user requests, including voice input. I'm built on various GPT models and have extensive knowledge in various fields such as science, technology, art, sports, healthcare and more. I can answer on questions, help solve problems, and also engage in a casual conversation on any topic. My interface allows both text and voice input.
+description-message-start = Hi 👋, this is { $botName }!
+description-message-body = I'm intelligent bot capable of responding to various user requests, including voice input. I'm built on various GPT models and have extensive knowledge in various fields such as science, technology, art, sports, healthcare and more. I can answer on questions, help solve problems, and also engage in a casual conversation on any topic. My interface allows both text and voice input.
 
 # About
 about-gpt-model = GPT model:
 about-speech-model = Speech model:
+about-release = Releases:
 
 # Errors messages
 error-message-common = Your request could not be processed 😔. Try again!
@@ -60,6 +62,6 @@ profile-client-select-model = Selected GPT model:
 profile-client-rate = Rate:
 profile-client-available-messages = GPT tokens:
 profile-client-available-images = GPT images:
-profile-client-date-expires = Available tokens will be updated in { $expiresIn } days
+profile-client-date-expires = Available tokens will be updated { $expiresIn }
 profile-client-incognito = Incognito
 profile-client-unavailable-info = 🤖 Your tokens will appear here when you write any message to the bot.

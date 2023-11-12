@@ -3,7 +3,7 @@ import {
   ClientFeedbackResponse,
   ClientResponse,
 } from '@bot/api/clients/types';
-import { BotLanguageCodes } from '@bot/common/constants';
+import { LocaleCodes } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
@@ -16,7 +16,7 @@ export const createClient = async (
     lastname?: string;
     username?: string;
   },
-  languageCode = BotLanguageCodes.ENGLISH,
+  languageCode = LocaleCodes.ENGLISH,
 ) => {
   try {
     const response = await axios<ClientResponse>({

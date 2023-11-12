@@ -1,7 +1,7 @@
 import { MODEL_GPT_DEFAULT } from '@bot/api/gpt/constants';
 import { BotContextType } from '@bot/app/types';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { BotLanguageCodes } from '@bot/common/constants';
+import { LocaleCodes } from '@bot/common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/common/helpers';
 import {

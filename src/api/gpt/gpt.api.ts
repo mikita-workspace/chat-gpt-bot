@@ -1,16 +1,16 @@
-import { ChatCompletionResponse, GptModelsResponse } from '@bot/api/gpt/types';
+import { ChatCompletionResponse, GptModelResponse } from '@bot/api/gpt/types';
 import { TTL_CONFIG_CACHE_DEFAULT } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
 import axios from 'axios';
 
-export const getGptModels = async (telegramId: number): Promise<GptModelsResponse[]> => {
+export const getGptModels = async (telegramId: number): Promise<GptModelResponse[]> => {
   try {
     const data = await fetchCachedData(
       'cached-gpt-models',
       async () => {
-        const response = await axios<GptModelsResponse[]>({
+        const response = await axios<GptModelResponse[]>({
           method: 'get',
           data: {
             telegramId,

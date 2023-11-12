@@ -1,6 +1,6 @@
 import { getGptModels } from '@bot/api/gpt';
 import { TITLE_SPEECH_NONE, TypeGPT } from '@bot/api/gpt/constants';
-import { GptModelsResponse } from '@bot/api/gpt/types';
+import { GptModelResponse } from '@bot/api/gpt/types';
 import { ConversationType } from '@bot/conversations/types';
 import { customKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
@@ -11,7 +11,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
 
     const [clientGptModels, clientSpeechModels] = (
       await conversation.external(() => getGptModels(telegramId))
-    ).reduce<[GptModelsResponse[], GptModelsResponse[]]>(
+    ).reduce<[GptModelResponse[], GptModelResponse[]]>(
       ([gptModels, speechModels], model) => {
         if (model.type === TypeGPT.TEXT) {
           gptModels.push(model);

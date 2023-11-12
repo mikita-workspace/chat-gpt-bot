@@ -1,6 +1,6 @@
 import { MessageRolesGPT, TypeGPT } from '@bot/api/gpt/constants';
 
-export type GptModelsResponse = {
+export type GptModelResponse = {
   model: string;
   title: string;
   description: string;
