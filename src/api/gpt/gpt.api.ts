@@ -103,7 +103,6 @@ export const generateImages = async (
 
     return response.data;
   } catch (error) {
-    console.log(error);
     Logger.error(`src/api/gpt/gpt.api.ts::generateImages::${JSON.stringify(error.message)}`);
 
     return null;
