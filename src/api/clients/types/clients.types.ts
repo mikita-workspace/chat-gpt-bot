@@ -1,3 +1,5 @@
+import { ChatCompletionResponse } from '@bot/api/gpt/types';
+
 export type ClientAvailabilityResponse = {
   models: string[];
   rate: { dalleImages: number; expiresAt: number; gptTokens: number; name: string };
@@ -8,4 +10,12 @@ export type ClientResponse = {
   createdAt: number;
   telegramId: number;
   username: string;
+};
+
+export type ClientFeedbackResponse = {
+  createdAt: number;
+  feedback: string;
+  messageId: number;
+  messages: ChatCompletionResponse['message'][];
+  updatedAt: number;
 };

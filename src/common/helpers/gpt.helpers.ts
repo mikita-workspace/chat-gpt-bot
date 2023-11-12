@@ -6,7 +6,9 @@ import { encode } from 'gpt-3-encoder';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {
   const telegramId = Number(ctx.message?.from?.id);
-  const selectedGpt = ctx.session.client.selectedGpt;
+  const messageId = Number(ctx.message?.message_id);
+
+  const { gpt } = ctx.session.client.selectedModel;
 
   ctx.session.client.messages.push({
     content: text,
@@ -14,9 +16,10 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   });
 
   const chatCompletionResponse = await chatCompletion(
-    selectedGpt.model,
     ctx.session.client.messages,
+    messageId,
     telegramId,
+    gpt.model,
   );
 
   if (!chatCompletionResponse) {
@@ -63,4 +66,16 @@ export const splitMessagesByTokenLimit = (
     );
 
   return [headMessages.reverse(), tailMessages.reverse()];
+};
+
+export const gptLoader = async (ctx: BotContextType, messageId: number) => {
+  const telegramId = Number(ctx.message?.from?.id);
+  const username = ctx?.from?.username || 'username';
+
+  return ctx.reply(
+    `${ctx.t('loader-message-start')}<a href="${telegramId}"> @${username}</a>!\n\r${ctx.t(
+      'loader-message-end',
+    )}`,
+    { parse_mode: 'HTML', reply_to_message_id: messageId },
+  );
 };

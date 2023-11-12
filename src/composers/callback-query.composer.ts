@@ -1,8 +1,7 @@
-import { createClient } from '@bot/api/clients';
+import { giveClientFeedback } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
-import { BotLanguageCodes } from '@bot/common/constants';
-import { AuthActions, botName, CommonActions, UserImagesMenuActions } from '@bot/common/constants';
-import { removeValueFromMemoryCache } from '@bot/common/utils';
+import { FeedbackActions } from '@bot/common/constants';
+import { CommonActions, UserImagesMenuActions } from '@bot/common/constants';
 import { changeGptModelConversation, createImageConversation } from '@bot/conversations';
 import { Composer, Middleware } from 'grammy';
 
@@ -22,26 +21,35 @@ composer.callbackQuery(UserImagesMenuActions.CREATE_IMAGE, async (ctx) => {
   await ctx.conversation.enter(createImageConversation.name);
 });
 
-composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
-  const telegramId = Number(ctx?.from?.id);
-  const metadata = {
-    firstname: ctx?.from?.first_name,
-    lastname: ctx?.from?.last_name,
-    username: ctx?.from?.username,
-  };
-  const languageCode = ctx?.from?.language_code as BotLanguageCodes;
+composer.callbackQuery([FeedbackActions.LIKE, FeedbackActions.DISLIKE], async (ctx) => {
+  const callbackData = ctx.callbackQuery.data;
+  const callbackUpdateMessage = ctx.update.callback_query.message;
 
-  const client = await createClient(telegramId, metadata, languageCode);
+  const telegramId = Number(ctx?.from?.id);
+  const messageId = Number(callbackUpdateMessage?.reply_to_message?.message_id);
+
+  const feedback = callbackData.slice(0, callbackData.indexOf('-')).trim();
+
+  const positiveFeedback = [
+    ctx.t('feedback-like-response-first'),
+    ctx.t('feedback-like-response-second'),
+  ][Math.floor(Math.random() * 2)];
+
+  const clientMessage = callbackUpdateMessage?.text;
+
+  await giveClientFeedback(telegramId, messageId, feedback);
 
   await ctx.deleteMessage();
 
-  if (client) {
-    removeValueFromMemoryCache('cached-client-availability');
-
-    return ctx.reply(ctx.t('auth-success', { botName }));
+  if (clientMessage && messageId) {
+    await ctx.reply(clientMessage, { reply_to_message_id: messageId });
   }
 
-  return ctx.reply(ctx.t('error-message-common'));
+  if (callbackData === FeedbackActions.LIKE) {
+    return ctx.reply(positiveFeedback);
+  }
+
+  return ctx.reply(ctx.t('feedback-like-response-dislike'));
 });
 
 export const callbackQueryComposer = (): Middleware<BotContextType> => composer;

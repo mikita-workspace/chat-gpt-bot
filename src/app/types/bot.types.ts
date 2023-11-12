@@ -1,5 +1,5 @@
 import { ClientAvailabilityResponse } from '@bot/api/clients/types';
-import { MessageRolesGPT, ModelGPT } from '@bot/api/gpt/constants';
+import { MessageRolesGPT } from '@bot/api/gpt/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
 import { I18nFlavor } from '@grammyjs/i18n';
@@ -17,11 +17,16 @@ export type SessionType = {
       firstname: string;
       lastname: string;
     };
-    models: ClientAvailabilityResponse['models'];
     rate: ClientAvailabilityResponse['rate'] | null;
-    selectedGpt: {
-      model: `${ModelGPT}`;
-      title: string;
+    selectedModel: {
+      speech: {
+        model: string;
+        title: string;
+      };
+      gpt: {
+        model: string;
+        title: string;
+      };
     };
   };
 };

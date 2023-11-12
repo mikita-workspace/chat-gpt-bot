@@ -9,4 +9,7 @@ export const mapBotCommands = (i18n: I18n<BotContextType>, languageCode = 'en') 
   }));
 
 export const mapBotDescription = (i18n: I18n<BotContextType>, languageCode = 'en') =>
-  i18n.t(languageCode, 'description-message', { botName });
+  `${i18n.t(languageCode, 'description-message-start', { botName })}\n\r${i18n.t(
+    languageCode,
+    'description-message-body',
+  )}`;

@@ -1,4 +1,3 @@
-import { getClientAvailability } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
 import { GrammyMiddlewareFn } from '@bot/middlewares/types';
@@ -6,16 +5,8 @@ import { ONE_HOUR_MS } from 'common/constants';
 import { differenceInMilliseconds, fromUnixTime } from 'date-fns';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
-  const telegramId = Number(ctx?.from?.id);
-
   const sessionMessages = ctx.session.client.messages;
   const lastMessageTimestamp = ctx.session.client.lastMessageTimestamp;
-
-  const availability = await getClientAvailability(telegramId);
-
-  if (availability) {
-    ctx.session.client.models = availability.models;
-  }
 
   ctx.session.client.metadata = {
     firstname: ctx?.from?.first_name || '',

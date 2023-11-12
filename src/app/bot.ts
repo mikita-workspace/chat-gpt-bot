@@ -1,7 +1,7 @@
-import { ModelGPT } from '@bot/api/gpt/constants';
+import { MODEL_GPT_DEFAULT } from '@bot/api/gpt/constants';
 import { BotContextType } from '@bot/app/types';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { BotLanguageCodes, botName } from '@bot/common/constants';
+import { LocaleCodes } from '@bot/common/constants';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/common/helpers';
 import {
@@ -12,12 +12,14 @@ import {
 } from '@bot/composers';
 import { config } from '@bot/config';
 import { auth, normalize } from '@bot/middlewares';
+import { aboutModule } from '@bot/modules/about';
 import { changeModule } from '@bot/modules/change';
 import { profileModule } from '@bot/modules/profile';
 import { restartModule } from '@bot/modules/restart';
 import { startModule } from '@bot/modules/start';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
+import { autoRetry } from '@grammyjs/auto-retry';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { hydrate } from '@grammyjs/hydrate';
 import { I18n } from '@grammyjs/i18n';
@@ -36,7 +38,7 @@ export const createBot = () => {
     globalTranslationContext: (ctx) => ({
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
-      model: ModelGPT.GPT_3_5_TURBO,
+      model: MODEL_GPT_DEFAULT,
       username: ctx?.from?.username ?? '',
     }),
     directory: path.join(__dirname, '../locales'),
@@ -44,19 +46,21 @@ export const createBot = () => {
   });
 
   // TODO: Will be enable in release-3.0.1
-  Object.values(BotLanguageCodes).forEach(async (languageCode) => {
-    await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
-      language_code: languageCode,
-    });
+  // Object.values(BotLanguageCodes).forEach(async (languageCode) => {
+  //   await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
+  //     language_code: languageCode,
+  //   });
 
-    await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
-      language_code: languageCode,
-    });
-  });
+  //   await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
+  //     language_code: languageCode,
+  //   });
+  // });
 
-  bot.api.config.use(apiThrottler());
+  bot.api.config.use(autoRetry());
 
-  bot.use(rateLimit());
+  // bot.api.config.use(apiThrottler());
+
+  // bot.use(rateLimit());
 
   bot.use(hydrate());
 
@@ -74,9 +78,15 @@ export const createBot = () => {
 
   bot.use(normalize());
 
-  [startModule, restartModule, changeModule, profileModule, textModule, voiceModule].forEach(
-    (handle) => handle(bot),
-  );
+  [
+    aboutModule,
+    changeModule,
+    profileModule,
+    restartModule,
+    startModule,
+    textModule,
+    voiceModule,
+  ].forEach((handle) => handle(bot));
 
   bot.catch(handleBotError);
 

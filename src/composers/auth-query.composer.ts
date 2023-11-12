@@ -1,6 +1,6 @@
 import { createClient } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
-import { BotLanguageCodes } from '@bot/common/constants';
+import { LocaleCodes } from '@bot/common/constants';
 import { AuthActions, botName } from '@bot/common/constants';
 import { removeValueFromMemoryCache } from '@bot/common/utils';
 import { Composer, Middleware } from 'grammy';
@@ -14,7 +14,7 @@ composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
     lastname: ctx?.from?.last_name,
     username: ctx?.from?.username,
   };
-  const languageCode = ctx?.from?.language_code as BotLanguageCodes;
+  const languageCode = ctx?.from?.language_code as LocaleCodes;
 
   const client = await createClient(telegramId, metadata, languageCode);
 

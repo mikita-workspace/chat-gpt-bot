@@ -1,5 +1,9 @@
-import { ClientAvailabilityResponse, ClientResponse } from '@bot/api/clients/types';
-import { BotLanguageCodes } from '@bot/common/constants';
+import {
+  ClientAvailabilityResponse,
+  ClientFeedbackResponse,
+  ClientResponse,
+} from '@bot/api/clients/types';
+import { LocaleCodes } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
@@ -12,7 +16,7 @@ export const createClient = async (
     lastname?: string;
     username?: string;
   },
-  languageCode = BotLanguageCodes.ENGLISH,
+  languageCode = LocaleCodes.ENGLISH,
 ) => {
   try {
     const response = await axios<ClientResponse>({
@@ -47,6 +51,30 @@ export const getClientAvailability = async (
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
       Logger.error(
         `src/api/clients/clients.api.ts::getClientAvailability::${JSON.stringify(error.message)}`,
+      );
+    }
+
+    return null;
+  }
+};
+
+export const giveClientFeedback = async (
+  telegramId: number,
+  messageId: number,
+  feedback: string,
+) => {
+  try {
+    const response = await axios<ClientFeedbackResponse>({
+      method: 'post',
+      data: { telegramId, messageId, feedback },
+      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/feedback`,
+    });
+
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status !== HttpStatusCode.NotFound) {
+      Logger.error(
+        `src/api/clients/clients.api.ts::giveClientFeedback::${JSON.stringify(error.message)}`,
       );
     }
 

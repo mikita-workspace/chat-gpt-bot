@@ -10,7 +10,7 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
     const telegramId = Number(ctx?.from?.id);
     const messageId = Number(ctx?.message?.message_id);
 
-    Logger.defaultMeta = { username: `${telegramId}${username ? `-${username}` : ''}` };
+    Logger.defaultMeta = { username, telegramId };
 
     const availability = await getClientAvailability(telegramId);
 

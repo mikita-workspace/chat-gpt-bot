@@ -1,12 +1,5 @@
 export const botName = 'NovaChat | GPT';
 
-export enum BotLanguageCodes {
-  // TODO: Wiil be enabled later
-  // BELORUSSIAN = 'be',
-  ENGLISH = 'en',
-  RUSSIAN = 'ru',
-}
-
 export enum BotCommands {
   ABOUT = 'about',
   CHANGE_MODEL = 'change',
@@ -27,6 +20,12 @@ export const BotCommandsWithDescription = [
   // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000832/f
   // { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
 ];
+
+export enum LocaleCodes {
+  BELORUSSIAN = 'be',
+  ENGLISH = 'en',
+  RUSSIAN = 'ru',
+}
 
 // Node cache
 export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
@@ -64,9 +63,9 @@ export enum AuthActions {
   GET_AUTH = 'get_auth_action',
 }
 
-export enum VoteActions {
-  LIKE = 'like-vote-action',
-  DISLIKE = 'dislike-vote-action',
+export enum FeedbackActions {
+  LIKE = 'like-feedback-action',
+  DISLIKE = 'dislike-feedback-action',
 }
 
 export enum UserImagesMenuActions {
