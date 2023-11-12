@@ -35,7 +35,8 @@ composer.callbackQuery(
     const telegramId = Number(ctx?.from?.id);
     const messageId = Number(callbackUpdateMessage?.reply_to_message?.message_id);
 
-    const [feedback, isImageGenerator] = callbackData.split('-');
+    const [feedback, image] = callbackData.split('-');
+    const isImageGenerator = image === 'image';
 
     const positiveFeedback = [
       ctx.t('feedback-like-response-first'),

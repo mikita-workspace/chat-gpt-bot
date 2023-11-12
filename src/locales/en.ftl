@@ -11,7 +11,7 @@ common-button-go-to-chat = Go to chat
 
 # Start
 start-message = 💭 I'm expecting a text or voice message...
-start-description = Let's start chatting 🙃! What do you want to ask?
+start-description = Let's chatting 🙃! What do you want to ask?
 
 # Description
 description-message-start = Hi 👋, this is { $botName }!
@@ -27,6 +27,7 @@ about-release = Releases:
 error-message-common = Your request could not be processed 😔. Try again!
 error-message-gpt = Your message could not be processed. Try again!
 error-message-change-gpt-model = You have not selected the GPT model. Try again!
+error-message-common-try-again = Try again
 
 # Auth
 auth-authorization = It looks like your account is not authorized. Please press the authorization button.
@@ -73,4 +74,4 @@ profile-client-unavailable-info = 🤖 Your tokens will appear here when you wri
 image-generate = 🖼️ Describe what kind of picture you would like to generate:
 image-amount = 🤔 Specify the number of images you want to get (from 1 to { $max }):
 image-empty-input = 😬 Oops! It looks like you want to move to another section. Press { $command } again!
-image-feedback = 🤖 Did you like the result?
+image-feedback = Did you like the result?
