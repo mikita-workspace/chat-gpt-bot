@@ -17,16 +17,16 @@ export const createInitialClientSessionData = (): SessionType['client'] => ({
   rate: null,
   selectedModel: {
     gpt: {
-      model: MODEL_GPT_DEFAULT,
-      title: '',
+      model: MODEL_GPT_DEFAULT.model,
+      title: MODEL_GPT_DEFAULT.title,
     },
     speech: {
-      model: MODEL_SPEECH_DEFAULT,
-      title: '',
+      model: MODEL_SPEECH_DEFAULT.model,
+      title: MODEL_SPEECH_DEFAULT.title,
     },
     image: {
-      model: MODEL_IMAGE_DEFAULT,
-      title: '',
+      model: MODEL_IMAGE_DEFAULT.model,
+      title: MODEL_IMAGE_DEFAULT.title,
     },
   },
 });

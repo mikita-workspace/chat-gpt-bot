@@ -21,35 +21,49 @@ composer.callbackQuery(ClientImagesMenuActions.GENERATE_IMAGE, async (ctx) => {
   await ctx.conversation.enter(generateImageConversation.name);
 });
 
-composer.callbackQuery([FeedbackActions.LIKE, FeedbackActions.DISLIKE], async (ctx) => {
-  const callbackData = ctx.callbackQuery.data;
-  const callbackUpdateMessage = ctx.update.callback_query.message;
+composer.callbackQuery(
+  [
+    FeedbackActions.DISLIKE,
+    FeedbackActions.DISLIKE_IMAGE,
+    FeedbackActions.LIKE,
+    FeedbackActions.LIKE_IMAGE,
+  ],
+  async (ctx) => {
+    const callbackData = ctx.callbackQuery.data as FeedbackActions;
+    const callbackUpdateMessage = ctx.update.callback_query.message;
 
-  const telegramId = Number(ctx?.from?.id);
-  const messageId = Number(callbackUpdateMessage?.reply_to_message?.message_id);
+    const telegramId = Number(ctx?.from?.id);
+    const messageId = Number(callbackUpdateMessage?.reply_to_message?.message_id);
 
-  const feedback = callbackData.slice(0, callbackData.indexOf('-')).trim();
+    const [feedback, isImageGenerator] = callbackData.split('-');
 
-  const positiveFeedback = [
-    ctx.t('feedback-like-response-first'),
-    ctx.t('feedback-like-response-second'),
-  ][Math.floor(Math.random() * 2)];
+    const positiveFeedback = [
+      ctx.t('feedback-like-response-first'),
+      ctx.t('feedback-like-response-second'),
+    ][Math.floor(Math.random() * 2)];
 
-  const clientMessage = callbackUpdateMessage?.text;
+    const clientMessage = callbackUpdateMessage?.text;
 
-  await giveClientFeedback(telegramId, messageId, feedback);
+    await giveClientFeedback(telegramId, messageId, feedback);
 
-  await ctx.deleteMessage();
+    await ctx.deleteMessage();
 
-  if (clientMessage && messageId) {
-    await ctx.reply(clientMessage, { reply_to_message_id: messageId });
-  }
+    if (clientMessage && messageId && !isImageGenerator) {
+      await ctx.reply(clientMessage, { reply_to_message_id: messageId });
+    }
 
-  if (callbackData === FeedbackActions.LIKE) {
-    return ctx.reply(positiveFeedback);
-  }
+    if ([FeedbackActions.LIKE, FeedbackActions.LIKE_IMAGE].includes(callbackData)) {
+      return ctx.reply(positiveFeedback);
+    }
 
-  return ctx.reply(ctx.t('feedback-like-response-dislike'));
-});
+    return ctx.reply(
+      ctx.t(
+        isImageGenerator
+          ? 'feedback-like-response-image-dislike'
+          : 'feedback-like-response-dislike',
+      ),
+    );
+  },
+);
 
 export const callbackQueryComposer = (): Middleware<BotContextType> => composer;

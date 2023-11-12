@@ -72,6 +72,7 @@ export const giveClientFeedback = async (
 
     return response.data;
   } catch (error) {
+    console.log(error);
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
       Logger.error(
         `src/api/clients/clients.api.ts::giveClientFeedback::${JSON.stringify(error.message)}`,

@@ -22,10 +22,17 @@ export const inlineCreateImage = (ctx: BotContextType) =>
 export const inlineAuthButton = (ctx: BotContextType) =>
   new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);
 
-export const inlineFeedback = (ctx: BotContextType) => {
+export const inlineFeedback = (ctx: BotContextType, options?: { isImageGenerator?: boolean }) => {
   const feedbackLabels = [
-    [ctx.t('feedback-like'), FeedbackActions.LIKE],
-    [ctx.t('feedback-dislike'), FeedbackActions.DISLIKE],
+    ...(options?.isImageGenerator
+      ? [
+          [ctx.t('feedback-like'), FeedbackActions.LIKE_IMAGE],
+          [ctx.t('feedback-dislike'), FeedbackActions.DISLIKE_IMAGE],
+        ]
+      : [
+          [ctx.t('feedback-like'), FeedbackActions.LIKE],
+          [ctx.t('feedback-dislike'), FeedbackActions.DISLIKE],
+        ]),
   ];
   const feedbackRow = feedbackLabels.map(([label, data]) => InlineKeyboard.text(label, data));
 

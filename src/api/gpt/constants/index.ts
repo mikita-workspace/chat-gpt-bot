@@ -1,6 +1,6 @@
-export const MODEL_GPT_DEFAULT = 'gpt-3.5-turbo-1106';
-export const MODEL_SPEECH_DEFAULT = 'whisper-1';
-export const MODEL_IMAGE_DEFAULT = 'dall-e-3';
+export const MODEL_GPT_DEFAULT = { title: 'GPT-3.5 Turbo', model: 'gpt-3.5-turbo-1106' };
+export const MODEL_SPEECH_DEFAULT = { title: 'Whisper', model: 'whisper-1' };
+export const MODEL_IMAGE_DEFAULT = { title: 'DALL·E 3', model: 'dall-e-3' };
 
 export const TITLE_NONE = 'None';
 
@@ -17,5 +17,4 @@ export enum MessageRolesGPT {
 }
 
 export const MAX_CONTEXT_TOKENS = 4096;
-export const IMAGE_SIZE_DEFAULT = '256x256';
 export const MAX_IMAGES_REQUEST = 3;

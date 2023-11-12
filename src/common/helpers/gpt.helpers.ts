@@ -68,13 +68,17 @@ export const splitMessagesByTokenLimit = (
   return [headMessages.reverse(), tailMessages.reverse()];
 };
 
-export const gptLoader = async (ctx: BotContextType, messageId: number) => {
+export const gptLoader = async (
+  ctx: BotContextType,
+  messageId: number,
+  options?: { isImageGenerator?: boolean },
+) => {
   const telegramId = Number(ctx.message?.from?.id);
   const username = ctx?.from?.username || 'username';
 
   return ctx.reply(
     `${ctx.t('loader-message-start')}<a href="${telegramId}"> @${username}</a>!\n\r${ctx.t(
-      'loader-message-end',
+      options?.isImageGenerator ? 'loader-message-image-end' : 'loader-message-end',
     )}`,
     { parse_mode: 'HTML', reply_to_message_id: messageId },
   );
