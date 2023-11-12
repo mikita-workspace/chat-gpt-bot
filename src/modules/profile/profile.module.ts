@@ -28,7 +28,7 @@ export const profileModule = (bot: BotType) =>
             {
               expiresIn: expiresInFormat(rate.expiresAt, locale),
             },
-          )}.</b>`
+          )}</b>`
         : `<b>${ctx.t('profile-client-unavailable-info')}</b>`
     }`;
 

@@ -1,6 +1,7 @@
 import { transcription } from '@bot/api/gpt';
 import { BotType } from '@bot/app/types';
 import { getGptContent, gptLoader } from '@bot/common/helpers';
+import { expiresInFormat } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -9,6 +10,18 @@ export const voiceModule = (bot: BotType) => {
     try {
       const telegramId = Number(ctx.message?.from.id);
       const messageId = Number(ctx.message?.message_id);
+      const locale = String(ctx.from?.language_code);
+
+      const rate = ctx.session.client.rate;
+
+      if (rate && !rate.gptTokens) {
+        return await ctx.reply(
+          `${ctx.t('usage-token-limit', {
+            expiresIn: expiresInFormat(rate.expiresAt, locale),
+          })} ${ctx.t('support-contact')}`,
+          { reply_to_message_id: messageId },
+        );
+      }
 
       const startMessage = await gptLoader(ctx, messageId);
 

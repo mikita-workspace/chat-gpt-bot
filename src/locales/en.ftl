@@ -66,7 +66,7 @@ profile-client-select-model = Selected GPT model:
 profile-client-rate = Rate:
 profile-client-available-messages = GPT tokens:
 profile-client-available-images = GPT images:
-profile-client-date-expires = Available tokens will be updated { $expiresIn }
+profile-client-date-expires = Available tokens will be updated { $expiresIn }.
 profile-client-incognito = Incognito
 profile-client-unavailable-info = 🤖 Your tokens will appear here when you write any message to the bot.
 
@@ -75,3 +75,6 @@ image-generate = 🖼️ Describe what kind of picture you would like to generat
 image-amount = 🤔 Specify the number of images you want to get (from 1 to { $max }):
 image-empty-input = 😬 Oops! It looks like you want to move to another section. Press { $command } again!
 image-feedback = Did you like the result?
+
+usage-token-limit = You have used up all the tokens. Try again { $expiresIn }.
+usage-image-limit = You have used up all the images. Try again { $expiresIn }.
