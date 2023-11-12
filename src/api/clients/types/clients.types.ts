@@ -1,8 +1,10 @@
 import { ChatCompletionResponse } from '@bot/api/gpt/types';
 
+export type ClientRate = { images: number; expiresAt: number; gptTokens: number; name: string };
+
 export type ClientAvailabilityResponse = {
   models: string[];
-  rate: { images: number; expiresAt: number; gptTokens: number; name: string };
+  rate: ClientRate;
   state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: number };
 };
 

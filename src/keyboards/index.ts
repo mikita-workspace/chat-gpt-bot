@@ -1,9 +1,9 @@
 import { BotContextType } from '@bot/app/types';
 import {
   AuthActions,
+  ClientImagesMenuActions,
   CommonActions,
   FeedbackActions,
-  UserImagesMenuActions,
 } from '@bot/common/constants';
 import { InlineKeyboard, Keyboard } from 'grammy';
 
@@ -16,7 +16,7 @@ export const inlineShareWithContacts = (ctx: BotContextType, query: string) =>
 export const inlineCreateImage = (ctx: BotContextType) =>
   new InlineKeyboard().text(
     ctx.t('error-message-common-try-again'),
-    UserImagesMenuActions.CREATE_IMAGE,
+    ClientImagesMenuActions.GENERATE_IMAGE,
   );
 
 export const inlineAuthButton = (ctx: BotContextType) =>

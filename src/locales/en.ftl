@@ -20,6 +20,7 @@ description-message-body = I'm intelligent bot capable of responding to various 
 # About
 about-gpt-model = GPT model:
 about-speech-model = Speech model:
+about-image-model = Image model:
 about-release = Releases:
 
 # Errors messages

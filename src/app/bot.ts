@@ -14,6 +14,7 @@ import { config } from '@bot/config';
 import { auth, normalize } from '@bot/middlewares';
 import { aboutModule } from '@bot/modules/about';
 import { changeModule } from '@bot/modules/change';
+import { imageModule } from '@bot/modules/image';
 import { profileModule } from '@bot/modules/profile';
 import { restartModule } from '@bot/modules/restart';
 import { startModule } from '@bot/modules/start';
@@ -46,15 +47,15 @@ export const createBot = () => {
   });
 
   // TODO: Will be enable in release-3.0.1
-  // Object.values(BotLanguageCodes).forEach(async (languageCode) => {
-  //   await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
-  //     language_code: languageCode,
-  //   });
+  Object.values(LocaleCodes).forEach(async (languageCode) => {
+    await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
+      language_code: languageCode,
+    });
 
-  //   await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
-  //     language_code: languageCode,
-  //   });
-  // });
+    await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
+      language_code: languageCode,
+    });
+  });
 
   bot.api.config.use(autoRetry());
 
@@ -68,7 +69,7 @@ export const createBot = () => {
 
   bot.use(authQueryComposer());
 
-  bot.use(auth());
+  // bot.use(auth());
 
   bot.use(sessionComposer());
 
@@ -81,6 +82,7 @@ export const createBot = () => {
   [
     aboutModule,
     changeModule,
+    imageModule,
     profileModule,
     restartModule,
     startModule,

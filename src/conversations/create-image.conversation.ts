@@ -1,16 +1,52 @@
-// import { ConversationType } from '@bot/app/types';
-// import { config } from '@bot/config';
-// import { BotCommands, CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
-// import { convertBase64ToFiles } from '@bot/helpers';
-// import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
-// import { google, logger, mongo, openAI } from '@bot/services';
-// import { generateUniqueId, removeFile } from '@bot/utils';
-// import { InputMediaPhoto } from 'grammy/types';
-
+import { generateImages } from '@bot/api/gpt';
 import { ConversationType } from '@bot/conversations/types';
+import { Logger } from '@bot/services';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const createImageConversation: ConversationType = async (conversation, ctx) => {
+export const generateImageConversation: ConversationType = async (conversation, ctx) => {
+  try {
+    const telegramId = Number(ctx?.from?.id);
+    const messageId = Number(ctx.message?.message_id);
+
+    const { image } = ctx.session.client.selectedModel;
+
+    await ctx.reply('Опишите, какую картинку вы хотите сгенерировать');
+
+    const {
+      message: { text: prompt },
+    } = await conversation.waitFor('message:text');
+
+    await ctx.reply('Укажите количество изображений (от 1 до 3)');
+
+    const {
+      message: { text: amount },
+    } = await conversation.waitFor('message:text');
+
+    const response = await generateImages(telegramId, messageId, image.model, {
+      amount: Number(amount) || 1,
+      prompt,
+    });
+
+    if (response) {
+      await ctx.replyWithMediaGroup(
+        response?.images.map((img) => ({ type: 'photo', media: img.url })),
+        {
+          reply_to_message_id: messageId,
+        },
+      );
+    }
+
+    return;
+  } catch (error) {
+    await ctx.reply(ctx.t('error-message-common'));
+
+    Logger.error(
+      `src/conversations/create-image.conversation.ts::generateImageConversation::${JSON.stringify(
+        error.message,
+      )}`,
+    );
+
+    return;
+  }
   // try {
   //   const currentUsername = String(ctx.from?.username);
   //   await ctx.reply(
@@ -64,9 +100,9 @@ export const createImageConversation: ConversationType = async (conversation, ct
   //       imageLinks: images.map(({ webViewLink }) => String(webViewLink)),
   //     });
   //   }
-  //   await ctx.replyWithMediaGroup(inputMediaFiles, {
-  //     reply_to_message_id: messageId,
-  //   });
+  // await ctx.replyWithMediaGroup(inputMediaFiles, {
+  //   reply_to_message_id: messageId,
+  // });
   //   imageFiles.forEach(({ filePath }) => removeFile(filePath));
   //   return;
   // } catch (error) {

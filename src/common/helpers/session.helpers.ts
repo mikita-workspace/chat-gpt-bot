@@ -1,4 +1,8 @@
-import { MODEL_GPT_DEFAULT, MODEL_SPEECH_DEFAULT } from '@bot/api/gpt/constants';
+import {
+  MODEL_GPT_DEFAULT,
+  MODEL_IMAGE_DEFAULT,
+  MODEL_SPEECH_DEFAULT,
+} from '@bot/api/gpt/constants';
 import { SessionType } from '@bot/app/types';
 import { getTimestampUnix } from '@bot/common/utils';
 
@@ -18,6 +22,10 @@ export const createInitialClientSessionData = (): SessionType['client'] => ({
     },
     speech: {
       model: MODEL_SPEECH_DEFAULT,
+      title: '',
+    },
+    image: {
+      model: MODEL_IMAGE_DEFAULT,
       title: '',
     },
   },

@@ -20,6 +20,7 @@ description-message-body = Я интеллектуальный бот, спос�
 # About
 about-gpt-model = GPT модель:
 about-speech-model = Speech модель:
+about-image-model = Image модель:
 about-releases = Релизы:
 
 # Errors messages

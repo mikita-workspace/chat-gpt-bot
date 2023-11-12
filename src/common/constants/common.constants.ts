@@ -67,6 +67,6 @@ export enum FeedbackActions {
   DISLIKE = 'dislike-feedback-action',
 }
 
-export enum UserImagesMenuActions {
-  CREATE_IMAGE = 'create-image-action',
+export enum ClientImagesMenuActions {
+  GENERATE_IMAGE = 'generate-image-action',
 }
