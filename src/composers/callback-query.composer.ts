@@ -1,3 +1,4 @@
+import { giveClientFeedback } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { FeedbackActions } from '@bot/common/constants';
 import { CommonActions, UserImagesMenuActions } from '@bot/common/constants';
@@ -24,7 +25,10 @@ composer.callbackQuery([FeedbackActions.LIKE, FeedbackActions.DISLIKE], async (c
   const callbackData = ctx.callbackQuery.data;
   const callbackUpdateMessage = ctx.update.callback_query.message;
 
-  // const action = callbackData.slice(0, callbackData.indexOf('-')).trim();
+  const telegramId = Number(ctx?.from?.id);
+  const messageId = Number(callbackUpdateMessage?.reply_to_message?.message_id);
+
+  const feedback = callbackData.slice(0, callbackData.indexOf('-')).trim();
 
   const positiveFeedback = [
     ctx.t('feedback-like-response-first'),
@@ -32,7 +36,8 @@ composer.callbackQuery([FeedbackActions.LIKE, FeedbackActions.DISLIKE], async (c
   ][Math.floor(Math.random() * 2)];
 
   const clientMessage = callbackUpdateMessage?.text;
-  const messageId = Number(callbackUpdateMessage?.reply_to_message?.message_id);
+
+  await giveClientFeedback(telegramId, messageId, feedback);
 
   await ctx.deleteMessage();
 

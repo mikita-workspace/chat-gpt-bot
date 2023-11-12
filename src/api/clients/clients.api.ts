@@ -1,4 +1,8 @@
-import { ClientAvailabilityResponse, ClientResponse } from '@bot/api/clients/types';
+import {
+  ClientAvailabilityResponse,
+  ClientFeedbackResponse,
+  ClientResponse,
+} from '@bot/api/clients/types';
 import { BotLanguageCodes } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
@@ -54,4 +58,26 @@ export const getClientAvailability = async (
   }
 };
 
-export const giveFeedback = async () => {};
+export const giveClientFeedback = async (
+  telegramId: number,
+  messageId: number,
+  feedback: string,
+) => {
+  try {
+    const response = await axios<ClientFeedbackResponse>({
+      method: 'post',
+      data: { telegramId, messageId, feedback },
+      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/feedback`,
+    });
+
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status !== HttpStatusCode.NotFound) {
+      Logger.error(
+        `src/api/clients/clients.api.ts::giveClientFeedback::${JSON.stringify(error.message)}`,
+      );
+    }
+
+    return null;
+  }
+};

@@ -23,6 +23,7 @@ about-speech-model = Speech model:
 # Errors messages
 error-message-common = Your request could not be processed 😔. Try again!
 error-message-gpt = Your message could not be processed. Try again!
+error-message-change-gpt-model = You have not selected the GPT model. Try again!
 
 # Auth
 auth-authorization = It looks like your account is not authorized. Please click the authorization button.
@@ -50,8 +51,8 @@ loader-message-end = 💬 I read it, thinking about the answer...
 restart-message = Let's start with a clean slate 😊
 
 # Change GPT model
-gpt-model-change-success = The GPT model has been changed:
-gpt-model-change-title = Select an available GPT model
+gpt-model-change-success = The GPT model has been changed.
+gpt-model-change-title = Select an available GPT model:
 
 # Profile
 profile-client-initial-message = Hey 👋, { $firstname } { $lastname }!

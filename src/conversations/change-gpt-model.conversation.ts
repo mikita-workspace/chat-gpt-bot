@@ -46,12 +46,9 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     } = await conversation.waitFor('message:text');
 
     if (!inlineClientGptModels.includes(text)) {
-      return await ctx.reply(
-        ctx.t('error-message-change-gpt-model', { gptModel: selectedGptModel.title }),
-        {
-          reply_markup: { remove_keyboard: true },
-        },
-      );
+      return await ctx.reply(ctx.t('error-message-change-gpt-model'), {
+        reply_markup: { remove_keyboard: true },
+      });
     }
 
     const newSelectedGptCreator = text.slice(text.indexOf('by') + 2).trim();
@@ -77,9 +74,9 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     };
 
     return await ctx.reply(
-      `${ctx.t('gpt-model-change-success')} <b><s>${selectedGptModel.title} / ${
+      `${ctx.t('gpt-model-change-success')}\n\r<b><s>${selectedGptModel.title} / ${
         selectedSpeechModel.title
-      }</s> ${newSelectedGptTitle} / ${newSelectedSpeechModelTitle || TITLE_SPEECH_NONE}</b>`,
+      }</s> ${newSelectedGptTitle} / ${newSelectedSpeechModelTitle || TITLE_SPEECH_NONE}</b>.`,
       {
         reply_markup: { remove_keyboard: true },
         parse_mode: 'HTML',
