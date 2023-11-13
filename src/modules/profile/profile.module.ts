@@ -19,7 +19,7 @@ export const profileModule = (bot: BotType) =>
       metadata.username || 'username'
     }</a>\n\r\n\r${
       rate
-        ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r\n\r${ctx.t(
+        ? `${ctx.t('profile-client-rate')}<b> ${rate.name} ${rate.symbol}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
           )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
