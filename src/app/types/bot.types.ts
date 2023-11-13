@@ -1,4 +1,4 @@
-import { ClientAvailabilityResponse } from '@bot/api/clients/types';
+import { ClientRate } from '@bot/api/clients/types';
 import { MessageRolesGPT } from '@bot/api/gpt/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
@@ -17,7 +17,7 @@ export type SessionType = {
       firstname: string;
       lastname: string;
     };
-    rate: ClientAvailabilityResponse['rate'] | null;
+    rate: ClientRate | null;
     selectedModel: {
       speech: {
         model: string;
@@ -26,6 +26,11 @@ export type SessionType = {
       gpt: {
         model: string;
         title: string;
+      };
+      image: {
+        model: string;
+        title: string;
+        max: number;
       };
     };
   };

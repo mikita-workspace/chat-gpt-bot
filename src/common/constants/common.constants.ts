@@ -12,10 +12,9 @@ export enum BotCommands {
 
 export const BotCommandsWithDescription = [
   { command: BotCommands.RESTART, i18nKey: 'command-restart' },
-  { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
-  // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000847/f
-  // { command: BotCommands.IMAGE, i18nKey: 'command-image' },
+  { command: BotCommands.IMAGE, i18nKey: 'command-image' },
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
   // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000832/f
   // { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
@@ -64,10 +63,12 @@ export enum AuthActions {
 }
 
 export enum FeedbackActions {
-  LIKE = 'like-feedback-action',
   DISLIKE = 'dislike-feedback-action',
+  DISLIKE_IMAGE = 'dislike-image-feedback-action',
+  LIKE = 'like-feedback-action',
+  LIKE_IMAGE = 'like-image-feedback-action',
 }
 
-export enum UserImagesMenuActions {
-  CREATE_IMAGE = 'create-image-action',
+export enum ClientImagesMenuActions {
+  GENERATE_IMAGE = 'generate-image-action',
 }

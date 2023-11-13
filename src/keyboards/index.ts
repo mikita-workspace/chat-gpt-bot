@@ -1,10 +1,5 @@
 import { BotContextType } from '@bot/app/types';
-import {
-  AuthActions,
-  CommonActions,
-  FeedbackActions,
-  UserImagesMenuActions,
-} from '@bot/common/constants';
+import { AuthActions, CommonActions, FeedbackActions } from '@bot/common/constants';
 import { InlineKeyboard, Keyboard } from 'grammy';
 
 export const inlineGoToChat = (ctx: BotContextType) =>
@@ -13,19 +8,20 @@ export const inlineGoToChat = (ctx: BotContextType) =>
 export const inlineShareWithContacts = (ctx: BotContextType, query: string) =>
   new InlineKeyboard().switchInline(ctx.t('common-button-share'), query);
 
-export const inlineCreateImage = (ctx: BotContextType) =>
-  new InlineKeyboard().text(
-    ctx.t('error-message-common-try-again'),
-    UserImagesMenuActions.CREATE_IMAGE,
-  );
-
 export const inlineAuthButton = (ctx: BotContextType) =>
   new InlineKeyboard().text(ctx.t('auth-button'), AuthActions.GET_AUTH);
 
-export const inlineFeedback = (ctx: BotContextType) => {
+export const inlineFeedback = (ctx: BotContextType, options?: { isImageGenerator?: boolean }) => {
   const feedbackLabels = [
-    [ctx.t('feedback-like'), FeedbackActions.LIKE],
-    [ctx.t('feedback-dislike'), FeedbackActions.DISLIKE],
+    ...(options?.isImageGenerator
+      ? [
+          [ctx.t('feedback-like'), FeedbackActions.LIKE_IMAGE],
+          [ctx.t('feedback-dislike'), FeedbackActions.DISLIKE_IMAGE],
+        ]
+      : [
+          [ctx.t('feedback-like'), FeedbackActions.LIKE],
+          [ctx.t('feedback-dislike'), FeedbackActions.DISLIKE],
+        ]),
   ];
   const feedbackRow = feedbackLabels.map(([label, data]) => InlineKeyboard.text(label, data));
 

@@ -1,15 +1,17 @@
 import { MessageRolesGPT, TypeGPT } from '@bot/api/gpt/constants';
+import { ClientRate } from 'api/clients/types';
 
 export type GptModelResponse = {
+  creator: string;
+  description: string;
+  max?: number;
   model: string;
   title: string;
-  description: string;
-  creator: string;
   type: `${TypeGPT}`;
 };
 
 export type ChatCompletionResponse = {
-  clientRate: { dalleImages: number; expiresAt: number; gptTokens: number; name: string };
+  clientRate: ClientRate;
   message: {
     content: string;
     role: `${MessageRolesGPT}`;
@@ -19,4 +21,15 @@ export type ChatCompletionResponse = {
     prompt_tokens: number;
     total_tokens: number;
   };
+};
+
+export type GenerateImagesResponse = {
+  clientRate: ClientRate;
+  images: {
+    bytes: number | null;
+    height: number;
+    url: string;
+    width: number;
+  }[];
+  revisedPrompt: string[];
 };

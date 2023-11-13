@@ -14,6 +14,7 @@ import { config } from '@bot/config';
 import { auth, normalize } from '@bot/middlewares';
 import { aboutModule } from '@bot/modules/about';
 import { changeModule } from '@bot/modules/change';
+import { imageModule } from '@bot/modules/image';
 import { profileModule } from '@bot/modules/profile';
 import { restartModule } from '@bot/modules/restart';
 import { startModule } from '@bot/modules/start';
@@ -38,7 +39,7 @@ export const createBot = () => {
     globalTranslationContext: (ctx) => ({
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
-      model: MODEL_GPT_DEFAULT,
+      model: MODEL_GPT_DEFAULT.model,
       username: ctx?.from?.username ?? '',
     }),
     directory: path.join(__dirname, '../locales'),
@@ -46,7 +47,7 @@ export const createBot = () => {
   });
 
   // TODO: Will be enable in release-3.0.1
-  // Object.values(BotLanguageCodes).forEach(async (languageCode) => {
+  // Object.values(LocaleCodes).forEach(async (languageCode) => {
   //   await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
   //     language_code: languageCode,
   //   });
@@ -81,6 +82,7 @@ export const createBot = () => {
   [
     aboutModule,
     changeModule,
+    imageModule,
     profileModule,
     restartModule,
     startModule,

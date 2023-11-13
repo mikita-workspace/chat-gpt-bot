@@ -1,77 +1,95 @@
-// import { ConversationType } from '@bot/app/types';
-// import { config } from '@bot/config';
-// import { BotCommands, CREATE_IMAGE_QUERY_FORMAT } from '@bot/constants';
-// import { convertBase64ToFiles } from '@bot/helpers';
-// import { inlineCreateImage, inlineGoToChat } from '@bot/keyboards';
-// import { google, logger, mongo, openAI } from '@bot/services';
-// import { generateUniqueId, removeFile } from '@bot/utils';
-// import { InputMediaPhoto } from 'grammy/types';
-
+import { generateImages } from '@bot/api/gpt';
+import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
+import { BotCommands } from '@bot/common/constants';
+import { expiresInFormat, getTimestampUnix, isExpiredDate } from '@bot/common/utils';
 import { ConversationType } from '@bot/conversations/types';
+import { inlineFeedback } from '@bot/keyboards';
+import { Logger } from '@bot/services';
+import { gptLoader } from 'common/helpers';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const createImageConversation: ConversationType = async (conversation, ctx) => {
-  // try {
-  //   const currentUsername = String(ctx.from?.username);
-  //   await ctx.reply(
-  //     ctx.t('image-generator-enter-request', { gptImageQuery: CREATE_IMAGE_QUERY_FORMAT }),
-  //     { reply_markup: inlineGoToChat(ctx) },
-  //   );
-  //   const {
-  //     message: { text, message_id: messageId },
-  //   } = await conversation.waitFor('message:text');
-  //   const [prompt = '', numberOfImages = 1] = text?.trim().split(';');
-  //   const botCommands = Object.values(BotCommands);
-  //   if (botCommands.includes(prompt.slice(1) as BotCommands)) {
-  //     return await ctx.reply(ctx.t('info-message-conversation-cancel', { command: prompt }));
-  //   }
-  //   if (Number.isNaN(Number(numberOfImages))) {
-  //     return await ctx.reply(ctx.t('image-generator-incorrect-image-number'), {
-  //       reply_to_message_id: messageId,
-  //       reply_markup: inlineCreateImage(ctx),
-  //     });
-  //   }
-  //   const base64Images = (
-  //     await conversation.external(async () => openAI.generateImage(prompt, Number(numberOfImages)))
-  //   ).map((base64Image) => ({
-  //     base64: base64Image.b64_json ?? '',
-  //     filename: `dalee2-${currentUsername}-${generateUniqueId()}`,
-  //   }));
-  //   // conversation.session.client.rate.dalleImages += base64Images.length;
-  //   const imageFiles = await conversation.external(async () => convertBase64ToFiles(base64Images));
-  //   const googleDriveFiles = imageFiles.map(({ filePath }) => ({
-  //     fileName: `dalee2-${currentUsername}-${generateUniqueId()}`,
-  //     filePath,
-  //     fileMimeType: 'image/png',
-  //   }));
-  //   const inputMediaFiles: InputMediaPhoto[] = imageFiles.map(({ filePathForReply }) => ({
-  //     type: 'photo',
-  //     media: filePathForReply,
-  //   }));
-  //   let userFolder = (
-  //     await google.searchFolder(currentUsername, config.GOOGLE_DRIVE_ROOT_IMAGE_FOLDER_ID)
-  //   ).files?.[0];
-  //   if (!userFolder) {
-  //     userFolder = await google.createFolder(
-  //       currentUsername,
-  //       config.GOOGLE_DRIVE_ROOT_IMAGE_FOLDER_ID,
-  //     );
-  //   }
-  //   if (userFolder.id) {
-  //     const images = await google.saveFiles(googleDriveFiles, userFolder.id);
-  //     await mongo.setUserImages(currentUsername, userFolder.id, {
-  //       prompt,
-  //       imageLinks: images.map(({ webViewLink }) => String(webViewLink)),
-  //     });
-  //   }
-  //   await ctx.replyWithMediaGroup(inputMediaFiles, {
-  //     reply_to_message_id: messageId,
-  //   });
-  //   imageFiles.forEach(({ filePath }) => removeFile(filePath));
-  //   return;
-  // } catch (error) {
-  //   await ctx.reply(ctx.t('error-message-common'));
-  //   Logger.error(`conversations::createImageConversation::${JSON.stringify(error.message)}`);
-  //   return;
-  // }
+export const generateImageConversation: ConversationType = async (conversation, ctx) => {
+  try {
+    const telegramId = Number(ctx?.from?.id);
+    const messageId = Number(ctx?.message?.message_id);
+    const locale = String(ctx.from?.language_code);
+
+    const { image } = ctx.session.client.selectedModel;
+    const rate = ctx.session.client.rate;
+
+    if (rate && !isExpiredDate(rate.expiresAt) && !rate.images) {
+      return await ctx.reply(
+        `${ctx.t('usage-image-limit', {
+          expiresIn: expiresInFormat(rate.expiresAt, locale),
+        })} ${ctx.t('support-contact')}`,
+        { reply_to_message_id: messageId },
+      );
+    }
+
+    await ctx.reply(ctx.t('image-generate'));
+
+    const {
+      message: { text: prompt },
+    } = await conversation.waitFor('message:text');
+
+    if (Object.values(BotCommands).includes(prompt.slice(1) as BotCommands)) {
+      return await ctx.reply(ctx.t('image-empty-input', { command: prompt }));
+    }
+
+    let amountOfImages = 1;
+
+    if (image.max > 1) {
+      await ctx.reply(ctx.t('image-amount', { max: MAX_IMAGES_REQUEST }));
+
+      const {
+        message: { text: amount },
+      } = await conversation.waitFor('message:text');
+
+      amountOfImages = Number(amount) || 1;
+    }
+
+    const startMessage = await gptLoader(ctx, messageId, { isImageGenerator: true });
+
+    const response = await conversation.external(() =>
+      generateImages(telegramId, messageId, image.model, {
+        amount: Math.min(amountOfImages, MAX_IMAGES_REQUEST),
+        prompt,
+      }),
+    );
+
+    await startMessage.delete();
+
+    if (!response) {
+      return await ctx.reply(ctx.t('error-message-common'), {
+        reply_to_message_id: messageId,
+      });
+    }
+
+    conversation.session.client.rate = response.clientRate;
+    ctx.session.client.lastMessageTimestamp = getTimestampUnix();
+
+    await ctx.replyWithMediaGroup(
+      response.images.map((img) => ({ type: 'photo', media: img.url })),
+    );
+
+    return await ctx.reply(
+      `<b>Prompt: </b>${prompt}\n\r<b>Revised prompt (original): </b>${
+        response.revisedPrompt
+      }\n\r\n\r<b>${ctx.t('image-feedback')}</b>`,
+      {
+        reply_markup: inlineFeedback(ctx, { isImageGenerator: true }),
+        reply_to_message_id: messageId,
+        parse_mode: 'HTML',
+      },
+    );
+  } catch (error) {
+    await ctx.reply(ctx.t('error-message-common'));
+
+    Logger.error(
+      `src/conversations/create-image.conversation.ts::generateImageConversation::${JSON.stringify(
+        error.message,
+      )}`,
+    );
+
+    return;
+  }
 };

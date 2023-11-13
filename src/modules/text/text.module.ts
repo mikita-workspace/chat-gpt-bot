@@ -1,5 +1,6 @@
 import { BotType } from '@bot/app/types';
 import { getGptContent, gptLoader } from '@bot/common/helpers';
+import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -8,6 +9,18 @@ export const textModule = (bot: BotType) => {
     try {
       const messageId = Number(ctx.message?.message_id);
       const text = String(ctx.message?.text);
+      const locale = String(ctx.from?.language_code);
+
+      const rate = ctx.session.client.rate;
+
+      if (rate && !isExpiredDate(rate.expiresAt) && !rate.gptTokens) {
+        return await ctx.reply(
+          `${ctx.t('usage-token-limit', {
+            expiresIn: expiresInFormat(rate.expiresAt, locale),
+          })} ${ctx.t('support-contact')}`,
+          { reply_to_message_id: messageId },
+        );
+      }
 
       const startMessage = await gptLoader(ctx, messageId);
 

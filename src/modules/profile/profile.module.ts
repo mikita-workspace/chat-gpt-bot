@@ -19,16 +19,16 @@ export const profileModule = (bot: BotType) =>
       metadata.username || 'username'
     }</a>\n\r\n\r${
       rate
-        ? `${ctx.t('profile-client-rate')}<b> ${rate?.name}</b>\n\r\n\r${ctx.t(
+        ? `${ctx.t('profile-client-rate')}<b> ${rate.name} ${rate.symbol}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
           )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
-          )}<b><tg-spoiler> ${rate.dalleImages}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
+          )}<b><tg-spoiler> ${rate.images}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
             'profile-client-date-expires',
             {
               expiresIn: expiresInFormat(rate.expiresAt, locale),
             },
-          )}.</b>`
+          )}</b>`
         : `<b>${ctx.t('profile-client-unavailable-info')}</b>`
     }`;
 

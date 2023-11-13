@@ -1,5 +1,5 @@
 import { getGptModels } from '@bot/api/gpt';
-import { TITLE_SPEECH_NONE, TypeGPT } from '@bot/api/gpt/constants';
+import { TypeGPT } from '@bot/api/gpt/constants';
 import { GptModelResponse } from '@bot/api/gpt/types';
 import { ConversationType } from '@bot/conversations/types';
 import { customKeyboard } from '@bot/keyboards';
@@ -8,11 +8,12 @@ import { Logger } from '@bot/services';
 export const changeGptModelConversation: ConversationType = async (conversation, ctx) => {
   try {
     const telegramId = Number(ctx?.from?.id);
+    const messageId = Number(ctx.message?.message_id);
 
-    const [clientGptModels, clientSpeechModels] = (
+    const [clientGptModels, clientSpeechModels, clientImageModels] = (
       await conversation.external(() => getGptModels(telegramId))
-    ).reduce<[GptModelResponse[], GptModelResponse[]]>(
-      ([gptModels, speechModels], model) => {
+    ).reduce<[GptModelResponse[], GptModelResponse[], GptModelResponse[]]>(
+      ([gptModels, speechModels, imageModels], model) => {
         if (model.type === TypeGPT.TEXT) {
           gptModels.push(model);
         }
@@ -21,21 +22,28 @@ export const changeGptModelConversation: ConversationType = async (conversation,
           speechModels.push(model);
         }
 
-        return [gptModels, speechModels];
+        if (model.type === TypeGPT.IMAGE) {
+          speechModels.push(model);
+        }
+
+        return [gptModels, speechModels, imageModels];
       },
-      [[], []],
+      [[], [], []],
     );
 
     const inlineClientGptModels = clientGptModels.map(
-      ({ title, model, creator }) => `${title} (${model}) by ${creator}`,
+      ({ title, creator }) => `${title} by ${creator}`,
     );
 
-    const { gpt: selectedGptModel, speech: selectedSpeechModel } =
-      conversation.session.client.selectedModel;
-
     if (!inlineClientGptModels.length) {
-      return await ctx.reply(ctx.t('error-message-common'));
+      return await ctx.reply(ctx.t('error-message-common'), { reply_to_message_id: messageId });
     }
+
+    const {
+      gpt: selectedGptModel,
+      image: selectedImageModel,
+      speech: selectedSpeechModel,
+    } = conversation.session.client.selectedModel;
 
     await ctx.reply(ctx.t('gpt-model-change-title'), {
       reply_markup: customKeyboard(inlineClientGptModels),
@@ -51,32 +59,38 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       });
     }
 
-    const newSelectedGptCreator = text.slice(text.indexOf('by') + 2).trim();
-    const newSelectedSpeechModel = clientSpeechModels.find(
-      ({ creator }) => creator === newSelectedGptCreator,
-    );
+    const gptCreator = text.slice(text.indexOf('by') + 2).trim();
 
-    const newSelectedGptModel = text.slice(text.indexOf('(') + 1, text.indexOf(')')).trim();
-    const newSelectedGptTitle = text.slice(0, text.indexOf('(')).trim();
-
-    const newSelectedSpeechModelModel = newSelectedSpeechModel?.model || selectedSpeechModel.model;
-    const newSelectedSpeechModelTitle = newSelectedSpeechModel?.title || selectedSpeechModel.title;
+    const newGptModel = clientGptModels.find(({ creator }) => creator === gptCreator);
+    const newSpeechModel = clientSpeechModels.find(({ creator }) => creator === gptCreator);
+    const newImageModel = clientImageModels.find(({ creator }) => creator === gptCreator);
 
     conversation.session.client.selectedModel = {
       gpt: {
-        model: newSelectedGptModel,
-        title: newSelectedGptTitle,
+        model: newGptModel?.model || selectedGptModel.model,
+        title: newGptModel?.title || selectedGptModel.title,
       },
       speech: {
-        model: newSelectedSpeechModelModel,
-        title: newSelectedSpeechModelTitle,
+        model: newSpeechModel?.model || selectedSpeechModel.model,
+        title: newSpeechModel?.title || selectedSpeechModel.title,
+      },
+      image: {
+        max: newImageModel?.max || selectedImageModel.max,
+        model: newImageModel?.model || selectedImageModel.model,
+        title: newImageModel?.title || selectedImageModel.title,
       },
     };
 
+    const changedModels = conversation.session.client.selectedModel;
+
     return await ctx.reply(
-      `${ctx.t('gpt-model-change-success')}\n\r<b><s>${selectedGptModel.title} / ${
+      `${ctx.t('gpt-model-change-success')}\n\r\n\r<b>${ctx.t('about-gpt-model')}</b> <s>${
+        selectedGptModel.title
+      }</s> ${changedModels.gpt.title}\n\r<b>${ctx.t('about-speech-model')}</b> <s>${
         selectedSpeechModel.title
-      }</s> ${newSelectedGptTitle} / ${newSelectedSpeechModelTitle || TITLE_SPEECH_NONE}</b>.`,
+      }</s> ${changedModels.speech.title}\n\r<b>${ctx.t('about-image-model')}</b> <s>${
+        selectedImageModel.title
+      }</s> ${changedModels.image.title}`,
       {
         reply_markup: { remove_keyboard: true },
         parse_mode: 'HTML',
