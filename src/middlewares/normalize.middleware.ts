@@ -20,7 +20,9 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   };
 
   if (rate && isExpiredDate(rate.expiresAt)) {
-    await updateClientRate(telegramId);
+    const updatedClientRate = await updateClientRate(telegramId);
+
+    ctx.session.client.rate = updatedClientRate;
   }
 
   const [headSessionMessages, tailSessionMessages] = splitMessagesByTokenLimit(sessionMessages);

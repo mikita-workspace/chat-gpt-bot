@@ -90,7 +90,7 @@ export const updateClientRate = async (telegramId: number) => {
       data: {
         telegramId,
       },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/clientRate`,
+      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/clientRate`,
     });
 
     return response.data;
