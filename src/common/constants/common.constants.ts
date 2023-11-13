@@ -62,13 +62,13 @@ export enum AuthActions {
   GET_AUTH = 'get_auth_action',
 }
 
+export enum ClientImagesMenuActions {
+  GENERATE_IMAGE = 'generate-image-action',
+}
+
 export enum FeedbackActions {
   DISLIKE = 'dislike-feedback-action',
   DISLIKE_IMAGE = 'dislike-image-feedback-action',
   LIKE = 'like-feedback-action',
   LIKE_IMAGE = 'like-image-feedback-action',
-}
-
-export enum ClientImagesMenuActions {
-  GENERATE_IMAGE = 'generate-image-action',
 }

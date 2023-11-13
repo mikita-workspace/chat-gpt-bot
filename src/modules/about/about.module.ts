@@ -26,7 +26,7 @@ export const aboutModule = (bot: BotType) =>
       .join('');
 
     const profileMessageHtml = `${ctx.t('description-message-start', {
-      botName,
+      botName: `<b>${botName}</b>`,
     })}\n\r${ctx.t('description-message-body')}\n\r\n\r<b>${ctx.t('about-gpt-model')}</b> ${
       gpt.title
     } (<code>${gpt.model}</code>)\n\r<b>${ctx.t('about-speech-model')}</b> ${speech.title} (<code>${

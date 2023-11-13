@@ -18,7 +18,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
           gptModels.push(model);
         }
 
-        if (model.type === TypeGPT.SPEECH) {
+        if (model.type === TypeGPT.AUDIO) {
           speechModels.push(model);
         }
 

@@ -27,9 +27,10 @@ export const voiceModule = (bot: BotType) => {
 
       const { speech: selectedSpeechModel } = ctx.session.client.selectedModel;
 
-      const voicePathApi = (await ctx.getFile()).file_path ?? '';
+      const filename = (await ctx.getFile()).file_path ?? '';
+
       const clientTranscription = await transcription(
-        voicePathApi,
+        filename,
         telegramId,
         selectedSpeechModel.model,
       );
@@ -40,7 +41,7 @@ export const voiceModule = (bot: BotType) => {
         });
       }
 
-      const gptContent = await getGptContent(ctx, clientTranscription);
+      const gptContent = await getGptContent(ctx, clientTranscription.text);
 
       if (gptContent) {
         return await startMessage.editText(gptContent, {
@@ -53,7 +54,6 @@ export const voiceModule = (bot: BotType) => {
         reply_to_message_id: messageId,
       });
     } catch (error) {
-      await ctx.deleteMessage();
       await ctx.reply(ctx.t('error-message-common'));
 
       Logger.error(

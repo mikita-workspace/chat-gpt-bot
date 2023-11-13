@@ -43,7 +43,6 @@ export const textModule = (bot: BotType) => {
         reply_to_message_id: messageId,
       });
     } catch (error) {
-      await ctx.deleteMessage();
       await ctx.reply(ctx.t('error-message-common'));
 
       Logger.error(

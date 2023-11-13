@@ -2,11 +2,9 @@ export const MODEL_GPT_DEFAULT = { title: 'GPT-3.5 Turbo', model: 'gpt-3.5-turbo
 export const MODEL_SPEECH_DEFAULT = { title: 'Whisper', model: 'whisper-1' };
 export const MODEL_IMAGE_DEFAULT = { title: 'DALL·E 3', model: 'dall-e-3', max: 1 };
 
-export const TITLE_NONE = 'None';
-
 export enum TypeGPT {
+  AUDIO = 'audio',
   IMAGE = 'image',
-  SPEECH = 'speech',
   TEXT = 'text',
 }
 
