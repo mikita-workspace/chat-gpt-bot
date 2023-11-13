@@ -2,6 +2,7 @@ import {
   ChatCompletionResponse,
   GenerateImagesResponse,
   GptModelResponse,
+  TranscriptionResponse,
 } from '@bot/api/gpt/types';
 import { TTL_CONFIG_CACHE_DEFAULT } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
@@ -61,12 +62,12 @@ export const chatCompletion = async (
   }
 };
 
-export const transcription = async (voicePathApi: string, telegramId: number, model: string) => {
+export const transcription = async (filename: string, telegramId: number, model: string) => {
   try {
-    const response = await axios<string>({
+    const response = await axios<TranscriptionResponse>({
       method: 'post',
       data: {
-        voicePathApi,
+        filename,
         telegramId,
         model,
       },

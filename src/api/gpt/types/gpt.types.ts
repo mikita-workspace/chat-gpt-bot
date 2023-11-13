@@ -23,6 +23,8 @@ export type ChatCompletionResponse = {
   };
 };
 
+export type TranscriptionResponse = { text: string };
+
 export type GenerateImagesResponse = {
   clientRate: ClientRate;
   images: {
