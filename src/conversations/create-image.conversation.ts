@@ -1,5 +1,5 @@
 import { generateImages } from '@bot/api/gpt';
-import { MAX_IMAGES_REQUEST, MODEL_IMAGE_DEFAULT } from '@bot/api/gpt/constants';
+import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
 import { BotCommands } from '@bot/common/constants';
 import { expiresInFormat, getTimestampUnix, isExpiredDate } from '@bot/common/utils';
 import { ConversationType } from '@bot/conversations/types';
@@ -37,9 +37,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
 
     let amountOfImages = 1;
 
-    // NOTE: dal-ee-3 model support only n = 1
-    // TODO: get max values from GptModels schema in DB
-    if (image.model !== MODEL_IMAGE_DEFAULT.model) {
+    if (image.max > 1) {
       await ctx.reply(ctx.t('image-amount', { max: MAX_IMAGES_REQUEST }));
 
       const {

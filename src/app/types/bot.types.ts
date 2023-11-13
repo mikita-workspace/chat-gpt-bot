@@ -30,6 +30,7 @@ export type SessionType = {
       image: {
         model: string;
         title: string;
+        max: number;
       };
     };
   };

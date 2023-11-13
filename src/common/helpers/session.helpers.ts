@@ -25,6 +25,7 @@ export const createInitialClientSessionData = (): SessionType['client'] => ({
       title: MODEL_SPEECH_DEFAULT.title,
     },
     image: {
+      max: MODEL_IMAGE_DEFAULT.max,
       model: MODEL_IMAGE_DEFAULT.model,
       title: MODEL_IMAGE_DEFAULT.title,
     },

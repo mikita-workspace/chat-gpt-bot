@@ -75,6 +75,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         title: newSpeechModel?.title || selectedSpeechModel.title,
       },
       image: {
+        max: newImageModel?.max || selectedImageModel.max,
         model: newImageModel?.model || selectedImageModel.model,
         title: newImageModel?.title || selectedImageModel.title,
       },
