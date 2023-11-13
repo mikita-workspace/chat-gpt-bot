@@ -1,6 +1,7 @@
 import {
   ClientAvailabilityResponse,
   ClientFeedbackResponse,
+  ClientRate,
   ClientResponse,
 } from '@bot/api/clients/types';
 import { LocaleCodes } from '@bot/common/constants';
@@ -77,6 +78,26 @@ export const giveClientFeedback = async (
         `src/api/clients/clients.api.ts::giveClientFeedback::${JSON.stringify(error.message)}`,
       );
     }
+
+    return null;
+  }
+};
+
+export const updateClientRate = async (telegramId: number) => {
+  try {
+    const response = await axios<ClientRate>({
+      method: 'post',
+      data: {
+        telegramId,
+      },
+      url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/clientRate`,
+    });
+
+    return response.data;
+  } catch (error) {
+    Logger.error(
+      `src/api/clients/clients.api.ts::updateClientRate::${JSON.stringify(error.message)}`,
+    );
 
     return null;
   }

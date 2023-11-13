@@ -38,6 +38,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
     let amountOfImages = 1;
 
     // NOTE: dal-ee-3 model support only n = 1
+    // TODO: get max values from GptModels schema in DB
     if (image.model !== MODEL_IMAGE_DEFAULT.model) {
       await ctx.reply(ctx.t('image-amount', { max: MAX_IMAGES_REQUEST }));
 
@@ -71,8 +72,11 @@ export const generateImageConversation: ConversationType = async (conversation, 
     await ctx.replyWithMediaGroup(
       response.images.map((img) => ({ type: 'photo', media: img.url })),
     );
+
     return await ctx.reply(
-      `💭 ${response.revisedPrompt}\n\r\n\r<b>${ctx.t('image-feedback')}</b>`,
+      `<b>Prompt: </b>${prompt}\n\r<b>Revised prompt (original): </b>${
+        response.revisedPrompt
+      }\n\r\n\r<b>${ctx.t('image-feedback')}</b>`,
       {
         reply_markup: inlineFeedback(ctx, { isImageGenerator: true }),
         reply_to_message_id: messageId,

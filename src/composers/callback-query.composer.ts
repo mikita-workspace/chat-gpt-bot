@@ -49,7 +49,7 @@ composer.callbackQuery(
 
     await ctx.deleteMessage();
 
-    if (clientMessage && messageId && !isImageGenerator) {
+    if (clientMessage && messageId) {
       await ctx.reply(clientMessage, { reply_to_message_id: messageId });
     }
 

@@ -5,9 +5,9 @@ export const MODEL_IMAGE_DEFAULT = { title: 'DALL·E 3', model: 'dall-e-3' };
 export const TITLE_NONE = 'None';
 
 export enum TypeGPT {
-  TEXT = 'text',
-  SPEECH = 'speech',
   IMAGE = 'image',
+  SPEECH = 'speech',
+  TEXT = 'text',
 }
 
 export enum MessageRolesGPT {
