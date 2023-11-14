@@ -23,7 +23,7 @@ export const voiceModule = (bot: BotType) => {
         );
       }
 
-      const startMessage = await gptLoader(ctx, messageId);
+      const message = await gptLoader(ctx, messageId);
 
       const { speech: selectedSpeechModel } = ctx.session.client.selectedModel;
 
@@ -36,7 +36,7 @@ export const voiceModule = (bot: BotType) => {
       );
 
       if (!clientTranscription) {
-        return await startMessage.editText(ctx.t('error-message-gpt'), {
+        return await message.editText(ctx.t('error-message-gpt'), {
           reply_to_message_id: messageId,
         });
       }
@@ -44,13 +44,13 @@ export const voiceModule = (bot: BotType) => {
       const gptContent = await getGptContent(ctx, clientTranscription.text);
 
       if (gptContent) {
-        return await startMessage.editText(gptContent, {
+        return await message.editText(gptContent, {
           reply_to_message_id: messageId,
           reply_markup: inlineFeedback(ctx),
         });
       }
 
-      return await startMessage.editText(ctx.t('error-message-gpt'), {
+      return await message.editText(ctx.t('error-message-gpt'), {
         reply_to_message_id: messageId,
       });
     } catch (error) {
