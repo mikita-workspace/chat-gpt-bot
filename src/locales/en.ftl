@@ -78,3 +78,6 @@ image-feedback = Did you like the result?
 
 usage-token-limit = You have used up all the tokens. Try again { $expiresIn }.
 usage-image-limit = You have used up all the images. Try again { $expiresIn }.
+
+# Unavailable section
+unavailable-section = 👷 This section is under development.

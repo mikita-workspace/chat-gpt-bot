@@ -16,8 +16,7 @@ export const BotCommandsWithDescription = [
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
-  // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000832/f
-  // { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
+  { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
 ];
 
 export enum LocaleCodes {
