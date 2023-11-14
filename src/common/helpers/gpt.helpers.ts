@@ -44,7 +44,6 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   }
 
   if (clientRate.name !== currentRateName) {
-    console.log('test');
     removeValueFromMemoryCache('cached-gpt-models');
   }
 
