@@ -16,8 +16,7 @@ export const BotCommandsWithDescription = [
   { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
   { command: BotCommands.ABOUT, i18nKey: 'command-about' },
-  // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000832/f
-  // { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
+  { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
 ];
 
 export enum LocaleCodes {
@@ -25,10 +24,6 @@ export enum LocaleCodes {
   ENGLISH = 'en',
   RUSSIAN = 'ru',
 }
-
-// Node cache
-export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
-export const TTL_CONFIG_CACHE_DEFAULT = process.env.NODE_ENV !== 'production' ? 600 : 6000;
 
 export const WEBHOOK_TIMEOUT = 60_000;
 

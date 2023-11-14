@@ -18,6 +18,7 @@ import { imageModule } from '@bot/modules/image';
 import { profileModule } from '@bot/modules/profile';
 import { restartModule } from '@bot/modules/restart';
 import { startModule } from '@bot/modules/start';
+import { supportModule } from '@bot/modules/support';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
 import { autoRetry } from '@grammyjs/auto-retry';
@@ -86,6 +87,7 @@ export const createBot = () => {
     profileModule,
     restartModule,
     startModule,
+    supportModule,
     textModule,
     voiceModule,
   ].forEach((handle) => handle(bot));

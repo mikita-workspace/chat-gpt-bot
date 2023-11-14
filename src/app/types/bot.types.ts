@@ -34,6 +34,9 @@ export type SessionType = {
       };
     };
   };
+  store: {
+    data: unknown;
+  };
 };
 
 export type BotContextType = HydrateFlavor<

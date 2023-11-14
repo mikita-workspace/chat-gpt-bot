@@ -11,7 +11,7 @@ common-button-go-to-chat = Go to chat
 
 # Start
 start-message = 💭 I'm expecting a text or voice message...
-start-description = Let's chatting 🙃! What do you want to ask?
+start-description = 🙃 Let's chatting! What do you want to ask?
 
 # Description
 description-message-start = Hi 👋, this is { $botName }!
@@ -26,7 +26,7 @@ about-release = Releases:
 # Errors messages
 error-message-common = Your request could not be processed 😔. Try again!
 error-message-gpt = Your message could not be processed. Try again!
-error-message-change-gpt-model = You have not selected the GPT model. Try again!
+error-message-change-gpt-model = 😬 Oops! It looks like you want to move to another section. Press { $command } again!
 error-message-common-try-again = Try again
 
 # Auth
@@ -78,3 +78,6 @@ image-feedback = Did you like the result?
 
 usage-token-limit = You have used up all the tokens. Try again { $expiresIn }.
 usage-image-limit = You have used up all the images. Try again { $expiresIn }.
+
+# Unavailable section
+unavailable-section = 👷 This section is under development.

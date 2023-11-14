@@ -1,5 +1,7 @@
-import { TTL_DEFAULT } from '@bot/common/constants';
+import { config } from '@bot/config';
 import NodeCache from 'node-cache';
+
+const TTL_DEFAULT = config.TTL_CACHE;
 
 export const memoryCache = new NodeCache({
   stdTTL: TTL_DEFAULT,

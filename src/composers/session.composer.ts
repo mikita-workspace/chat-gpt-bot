@@ -1,5 +1,5 @@
 import { BotContextType, SessionType } from '@bot/app/types';
-import { createInitialClientSessionData } from '@bot/common/helpers';
+import { createInitialClientSession, createInitialStoreSession } from '@bot/common/helpers';
 import { config } from '@bot/config';
 import { freeStorage } from '@grammyjs/storage-free';
 import { Composer, Middleware, session } from 'grammy';
@@ -11,7 +11,10 @@ composer.use(
     type: 'multi',
     client: {
       storage: freeStorage<SessionType['client']>(config.TELEGRAM_TOKEN),
-      initial: createInitialClientSessionData,
+      initial: createInitialClientSession,
+    },
+    store: {
+      initial: createInitialStoreSession,
     },
     conversation: {},
   }),

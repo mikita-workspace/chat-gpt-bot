@@ -13,8 +13,8 @@ export const generateImageConversation: ConversationType = async (conversation, 
     const messageId = Number(ctx?.message?.message_id);
     const locale = String(ctx.from?.language_code);
 
-    const { image } = ctx.session.client.selectedModel;
-    const rate = ctx.session.client.rate;
+    const { image } = conversation.session.client.selectedModel;
+    const rate = conversation.session.client.rate;
 
     if (rate && !isExpiredDate(rate.expiresAt) && !rate.images) {
       return await ctx.reply(
@@ -47,7 +47,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
       amountOfImages = Number(amount) || 1;
     }
 
-    const startMessage = await gptLoader(ctx, messageId, { isImageGenerator: true });
+    const message = await gptLoader(ctx, messageId, { isImageGenerator: true });
 
     const response = await conversation.external(() =>
       generateImages(telegramId, messageId, image.model, {
@@ -56,7 +56,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
       }),
     );
 
-    await startMessage.delete();
+    await message.delete();
 
     if (!response) {
       return await ctx.reply(ctx.t('error-message-common'), {
@@ -64,23 +64,24 @@ export const generateImageConversation: ConversationType = async (conversation, 
       });
     }
 
+    const aiMessage = `<b>Prompt: </b>${prompt}${
+      response.revisedPrompt ? `\n\r<b>Revised prompt: </b>${response.revisedPrompt}` : ''
+    }`;
+
+    conversation.session.store.data = aiMessage;
     conversation.session.client.rate = response.clientRate;
-    ctx.session.client.lastMessageTimestamp = getTimestampUnix();
+    conversation.session.client.lastMessageTimestamp = getTimestampUnix();
 
     await ctx.replyWithMediaGroup(
       response.images.map((img) => ({ type: 'photo', media: img.url })),
     );
 
-    return await ctx.reply(
-      `<b>Prompt: </b>${prompt}\n\r<b>Revised prompt (original): </b>${
-        response.revisedPrompt
-      }\n\r\n\r<b>${ctx.t('image-feedback')}</b>`,
-      {
-        reply_markup: inlineFeedback(ctx, { isImageGenerator: true }),
-        reply_to_message_id: messageId,
-        parse_mode: 'HTML',
-      },
-    );
+    return await ctx.reply(`${aiMessage}\n\r\n\r<b>${ctx.t('image-feedback')}</b>`, {
+      disable_web_page_preview: true,
+      parse_mode: 'HTML',
+      reply_markup: inlineFeedback(ctx, { isImageGenerator: true }),
+      reply_to_message_id: messageId,
+    });
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 

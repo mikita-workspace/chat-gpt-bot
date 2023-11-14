@@ -4,7 +4,6 @@ import {
   GptModelResponse,
   TranscriptionResponse,
 } from '@bot/api/gpt/types';
-import { TTL_CONFIG_CACHE_DEFAULT } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
@@ -12,21 +11,17 @@ import axios from 'axios';
 
 export const getGptModels = async (telegramId: number): Promise<GptModelResponse[]> => {
   try {
-    const data = await fetchCachedData(
-      'cached-gpt-models',
-      async () => {
-        const response = await axios<GptModelResponse[]>({
-          method: 'get',
-          data: {
-            telegramId,
-          },
-          url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/models`,
-        });
+    const data = await fetchCachedData('cached-gpt-models', async () => {
+      const response = await axios<GptModelResponse[]>({
+        method: 'get',
+        data: {
+          telegramId,
+        },
+        url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/models`,
+      });
 
-        return response.data;
-      },
-      TTL_CONFIG_CACHE_DEFAULT,
-    );
+      return response.data;
+    });
 
     return data;
   } catch (error) {
@@ -88,6 +83,8 @@ export const generateImages = async (
   model: string,
   query: { amount: number; prompt: string },
 ) => {
+  const useCloudinary = config.USE_CLOUDINARY === 'true';
+
   try {
     const response = await axios<GenerateImagesResponse>({
       method: 'post',
@@ -95,8 +92,7 @@ export const generateImages = async (
         telegramId,
         messageId,
         model,
-        // TODO: should be app config. Will be implemented later
-        useCloudinary: false,
+        useCloudinary,
         ...query,
       },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/generateImages`,

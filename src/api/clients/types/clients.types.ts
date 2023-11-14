@@ -9,7 +9,6 @@ export type ClientRate = {
 };
 
 export type ClientAvailabilityResponse = {
-  models: string[];
   rate: ClientRate;
   state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: number };
 };

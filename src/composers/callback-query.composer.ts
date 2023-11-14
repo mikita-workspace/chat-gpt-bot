@@ -43,15 +43,25 @@ composer.callbackQuery(
       ctx.t('feedback-like-response-second'),
     ][Math.floor(Math.random() * 2)];
 
-    const clientMessage = callbackUpdateMessage?.text;
+    const storeData = typeof ctx.session.store.data === 'string' ? ctx.session.store.data : '';
+
+    const clientMessage = isImageGenerator
+      ? storeData || callbackUpdateMessage?.text?.split(ctx.t('image-feedback'))[0]
+      : callbackUpdateMessage?.text;
 
     await giveClientFeedback(telegramId, messageId, feedback);
 
     await ctx.deleteMessage();
 
     if (clientMessage && messageId) {
-      await ctx.reply(clientMessage, { reply_to_message_id: messageId });
+      await ctx.reply(clientMessage, {
+        disable_web_page_preview: true,
+        parse_mode: 'HTML',
+        reply_to_message_id: messageId,
+      });
     }
+
+    ctx.session.store.data = null;
 
     if ([FeedbackActions.LIKE, FeedbackActions.LIKE_IMAGE].includes(callbackData)) {
       return ctx.reply(positiveFeedback);
