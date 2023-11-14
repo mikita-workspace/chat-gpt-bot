@@ -36,6 +36,7 @@ export const aboutModule = (bot: BotType) =>
     }</code>)\n\r\n\r<b>${ctx.t('about-releases')}</b>\n\r${releasesHtml}`;
 
     return ctx.reply(profileMessageHtml, {
+      disable_web_page_preview: true,
       parse_mode: 'HTML',
       reply_markup: inlineGoToChat(ctx),
       reply_to_message_id: messageId,

@@ -11,7 +11,7 @@ common-button-go-to-chat = Go to chat
 
 # Start
 start-message = 💭 I'm expecting a text or voice message...
-start-description = Let's chatting 🙃! What do you want to ask?
+start-description = 🙃 Let's chatting! What do you want to ask?
 
 # Description
 description-message-start = Hi 👋, this is { $botName }!
