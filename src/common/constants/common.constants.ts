@@ -26,10 +26,6 @@ export enum LocaleCodes {
   RUSSIAN = 'ru',
 }
 
-// Node cache
-export const TTL_DEFAULT = process.env.NODE_ENV !== 'production' ? 60 : 600;
-export const TTL_CONFIG_CACHE_DEFAULT = process.env.NODE_ENV !== 'production' ? 600 : 6000;
-
 export const WEBHOOK_TIMEOUT = 60_000;
 
 // Winston logger

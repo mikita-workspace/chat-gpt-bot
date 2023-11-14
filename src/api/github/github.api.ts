@@ -1,5 +1,4 @@
 import { GithubReleaseResponse } from '@bot/api/github/types';
-import { TTL_CONFIG_CACHE_DEFAULT } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
@@ -17,7 +16,7 @@ export const getGithubReleases = async (): Promise<GithubReleaseResponse[]> => {
 
         return response.data;
       },
-      TTL_CONFIG_CACHE_DEFAULT,
+      config.TTL_CONFIG_CACHE,
     );
 
     return data;
