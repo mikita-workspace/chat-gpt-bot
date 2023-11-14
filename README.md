@@ -14,8 +14,18 @@ yarn start
 ```
 ## Support GPT models
 ```
-gpt-3.5-turbo
-GigaChat:latest
+Text:
+gpt-3.5-turbo-1106
+gpt-4-1106-preview (only for approved users)
+GigaChat:latest (only for approved users)
+
+Audio:
+whisper-1
+general (only for approved users)
+
+Image:
+dall-e-2
+dall-e-3 (only for approved users)
 ```
 ## Support languages
 ```
@@ -25,3 +35,4 @@ be: Belarusian
 ```
 ## License
 Distributed under the [Apache License 2.0](LICENSE).
+
