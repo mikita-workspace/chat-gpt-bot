@@ -15,17 +15,17 @@ yarn start
 ## Support GPT models
 ```
 Text:
-gpt-3.5-turbo-1106
-gpt-4-1106-preview (only for approved users)
-GigaChat:latest (only for approved users)
+gpt-3.5-turbo-1106 (Base)
+gpt-4-1106-preview (Promo & Premium)
+GigaChat:latest (Premium)
 
 Audio:
-whisper-1
-general (only for approved users)
+whisper-1 (Base)
+general (Premium)
 
 Image:
-dall-e-2
-dall-e-3 (only for approved users)
+dall-e-2 (Base)
+dall-e-3 (Promo & Premium)
 ```
 ## Support languages
 ```
