@@ -1,6 +1,7 @@
 import { getGptModels } from '@bot/api/gpt';
-import { TypeGPT } from '@bot/api/gpt/constants';
+import { MODEL_IMAGE_DEFAULT, MODEL_SPEECH_DEFAULT, TypeGPT } from '@bot/api/gpt/constants';
 import { GptModelResponse } from '@bot/api/gpt/types';
+import { BotCommands } from '@bot/common/constants';
 import { ConversationType } from '@bot/conversations/types';
 import { customKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
@@ -23,7 +24,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         }
 
         if (model.type === TypeGPT.IMAGE) {
-          speechModels.push(model);
+          imageModels.push(model);
         }
 
         return [gptModels, speechModels, imageModels];
@@ -31,9 +32,9 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       [[], [], []],
     );
 
-    const inlineClientGptModels = clientGptModels.map(
-      ({ title, creator }) => `${title} by ${creator}`,
-    );
+    const inlineClientGptModels = clientGptModels
+      .map(({ title, creator }) => `${title} by ${creator}`)
+      .sort();
 
     if (!inlineClientGptModels.length) {
       return await ctx.reply(ctx.t('error-message-common'), { reply_to_message_id: messageId });
@@ -53,17 +54,27 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       message: { text },
     } = await conversation.waitFor('message:text');
 
-    if (!inlineClientGptModels.includes(text)) {
-      return await ctx.reply(ctx.t('error-message-change-gpt-model'), {
+    if (Object.values(BotCommands).includes(text.slice(1) as BotCommands)) {
+      return await ctx.reply(ctx.t('error-message-change-gpt-model', { command: text }), {
         reply_markup: { remove_keyboard: true },
       });
     }
 
-    const gptCreator = text.slice(text.indexOf('by') + 2).trim();
+    const [head, tail] = text.split('by');
 
-    const newGptModel = clientGptModels.find(({ creator }) => creator === gptCreator);
-    const newSpeechModel = clientSpeechModels.find(({ creator }) => creator === gptCreator);
-    const newImageModel = clientImageModels.find(({ creator }) => creator === gptCreator);
+    const gptTitle = head.trim();
+    const gptCreator = tail.trim();
+
+    const newGptModel = clientGptModels.find(
+      ({ creator, title }) => creator === gptCreator && title === gptTitle,
+    );
+
+    const newSpeechModel = clientSpeechModels.find(({ associated }) =>
+      associated.includes(newGptModel?.model || ''),
+    );
+    const newImageModel = clientImageModels.find(({ associated }) =>
+      associated.includes(newGptModel?.model || ''),
+    );
 
     conversation.session.client.selectedModel = {
       gpt: {
@@ -71,13 +82,13 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         title: newGptModel?.title || selectedGptModel.title,
       },
       speech: {
-        model: newSpeechModel?.model || selectedSpeechModel.model,
-        title: newSpeechModel?.title || selectedSpeechModel.title,
+        model: newSpeechModel?.model || MODEL_SPEECH_DEFAULT.model,
+        title: newSpeechModel?.title || MODEL_SPEECH_DEFAULT.title,
       },
       image: {
-        max: newImageModel?.max || selectedImageModel.max,
-        model: newImageModel?.model || selectedImageModel.model,
-        title: newImageModel?.title || selectedImageModel.title,
+        max: newImageModel?.max || MODEL_IMAGE_DEFAULT.max,
+        model: newImageModel?.model || MODEL_IMAGE_DEFAULT.model,
+        title: newImageModel?.title || MODEL_IMAGE_DEFAULT.title,
       },
     };
 

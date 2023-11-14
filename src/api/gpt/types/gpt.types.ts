@@ -2,6 +2,7 @@ import { MessageRolesGPT, TypeGPT } from '@bot/api/gpt/constants';
 import { ClientRate } from 'api/clients/types';
 
 export type GptModelResponse = {
+  associated: string[];
   creator: string;
   description: string;
   max?: number;

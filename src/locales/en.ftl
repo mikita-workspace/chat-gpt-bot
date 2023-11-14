@@ -26,7 +26,7 @@ about-release = Releases:
 # Errors messages
 error-message-common = Your request could not be processed 😔. Try again!
 error-message-gpt = Your message could not be processed. Try again!
-error-message-change-gpt-model = You have not selected the GPT model. Try again!
+error-message-change-gpt-model = 😬 Oops! It looks like you want to move to another section. Press { $command } again!
 error-message-common-try-again = Try again
 
 # Auth
