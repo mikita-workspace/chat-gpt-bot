@@ -48,21 +48,21 @@ export const createBot = () => {
   });
 
   // TODO: Will be enable in release-3.0.1
-  // Object.values(LocaleCodes).forEach(async (languageCode) => {
-  //   await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
-  //     language_code: languageCode,
-  //   });
+  Object.values(LocaleCodes).forEach(async (languageCode) => {
+    await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
+      language_code: languageCode,
+    });
 
-  //   await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
-  //     language_code: languageCode,
-  //   });
-  // });
+    await bot.api.setMyCommands(mapBotCommands(i18n, languageCode), {
+      language_code: languageCode,
+    });
+  });
 
   bot.api.config.use(autoRetry());
 
-  // bot.api.config.use(apiThrottler());
+  bot.api.config.use(apiThrottler());
 
-  // bot.use(rateLimit());
+  bot.use(rateLimit());
 
   bot.use(hydrate());
 

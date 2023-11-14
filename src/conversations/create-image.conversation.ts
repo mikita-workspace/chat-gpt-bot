@@ -44,6 +44,10 @@ export const generateImageConversation: ConversationType = async (conversation, 
         message: { text: amount },
       } = await conversation.waitFor('message:text');
 
+      if (Object.values(BotCommands).includes(amount.slice(1) as BotCommands)) {
+        return await ctx.reply(ctx.t('image-empty-input', { command: amount }));
+      }
+
       amountOfImages = Number(amount) || 1;
     }
 

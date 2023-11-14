@@ -21,7 +21,7 @@ description-message-body = I'm intelligent bot capable of responding to various 
 about-gpt-model = GPT model:
 about-speech-model = Speech model:
 about-image-model = Image model:
-about-release = Releases:
+about-releases = Releases:
 
 # Errors messages
 error-message-common = Your request could not be processed 😔. Try again!
