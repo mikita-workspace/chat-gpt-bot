@@ -21,7 +21,7 @@ description-message-body = I'm intelligent bot capable of responding to various 
 about-gpt-model = GPT model:
 about-speech-model = Speech model:
 about-image-model = Image model:
-about-release = Releases:
+about-releases = Releases:
 
 # Errors messages
 error-message-common = Your request could not be processed 😔. Try again!
@@ -67,6 +67,7 @@ profile-client-rate = Rate:
 profile-client-available-messages = GPT tokens:
 profile-client-available-images = GPT images:
 profile-client-date-expires = Available tokens will be updated { $expiresIn }.
+profile-client-promo-date-expires = The promotion expires { $expiresIn }.
 profile-client-incognito = Incognito
 profile-client-unavailable-info = 🤖 Your tokens will appear here when you write any message to the bot.
 

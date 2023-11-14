@@ -1,3 +1,4 @@
+import { PROMO_RATE } from '@bot/api/clients/constants';
 import { BotType } from '@bot/app/types';
 import { BotCommands } from '@bot/common/constants';
 import { expiresInFormat } from '@bot/common/utils';
@@ -24,7 +25,9 @@ export const profileModule = (bot: BotType) =>
           )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
           )}<b><tg-spoiler> ${rate.images}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
-            'profile-client-date-expires',
+            rate.name === PROMO_RATE
+              ? 'profile-client-promo-date-expires'
+              : 'profile-client-date-expires',
             {
               expiresIn: expiresInFormat(rate.expiresAt, locale),
             },

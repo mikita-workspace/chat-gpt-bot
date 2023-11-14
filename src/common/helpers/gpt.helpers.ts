@@ -1,14 +1,16 @@
 import { chatCompletion } from '@bot/api/gpt';
 import { MAX_CONTEXT_TOKENS, MessageRolesGPT } from '@bot/api/gpt/constants';
 import { BotContextType, SessionMessageType } from '@bot/app/types';
-import { getTimestampUnix } from '@bot/common/utils';
+import { resetSelectedModel } from '@bot/common/helpers';
+import { getTimestampUnix, removeValueFromMemoryCache } from '@bot/common/utils';
 import { encode } from 'gpt-3-encoder';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {
   const telegramId = Number(ctx.message?.from?.id);
   const messageId = Number(ctx.message?.message_id);
 
-  const { gpt } = ctx.session.client.selectedModel;
+  const { gpt: selectedGpt } = ctx.session.client.selectedModel;
+  const currentRateName = ctx.session.client.rate?.name;
 
   ctx.session.client.messages.push({
     content: text,
@@ -19,7 +21,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
     ctx.session.client.messages,
     messageId,
     telegramId,
-    gpt.model,
+    selectedGpt.model,
   );
 
   if (!chatCompletionResponse) {
@@ -36,6 +38,14 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
 
   ctx.session.client.rate = clientRate;
   ctx.session.client.lastMessageTimestamp = getTimestampUnix();
+
+  if (!clientRate.gptModels.includes(selectedGpt.model)) {
+    ctx.session.client.selectedModel = resetSelectedModel();
+  }
+
+  if (clientRate.name !== currentRateName) {
+    removeValueFromMemoryCache('cached-gpt-models');
+  }
 
   return content;
 };

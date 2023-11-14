@@ -2,6 +2,7 @@ import { ChatCompletionResponse } from '@bot/api/gpt/types';
 
 export type ClientRate = {
   expiresAt: number;
+  gptModels: string[];
   gptTokens: number;
   images: number;
   name: string;
