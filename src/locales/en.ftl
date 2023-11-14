@@ -67,6 +67,7 @@ profile-client-rate = Rate:
 profile-client-available-messages = GPT tokens:
 profile-client-available-images = GPT images:
 profile-client-date-expires = Available tokens will be updated { $expiresIn }.
+profile-client-promo-date-expires = The promotion expires { $expiresIn }.
 profile-client-incognito = Incognito
 profile-client-unavailable-info = 🤖 Your tokens will appear here when you write any message to the bot.
 
