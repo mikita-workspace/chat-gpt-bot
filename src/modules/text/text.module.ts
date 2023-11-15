@@ -9,7 +9,7 @@ export const textModule = (bot: BotType) => {
     try {
       const messageId = Number(ctx.message?.message_id);
       const text = String(ctx.message?.text);
-      const locale = String(ctx.from?.language_code);
+      const locale = await ctx.i18n.getLocale();
 
       const rate = ctx.session.client.rate;
 

@@ -3,7 +3,7 @@ import { MODEL_IMAGE_DEFAULT, MODEL_SPEECH_DEFAULT, TypeGPT } from '@bot/api/gpt
 import { GptModelResponse } from '@bot/api/gpt/types';
 import { BotCommands } from '@bot/common/constants';
 import { ConversationType } from '@bot/conversations/types';
-import { customKeyboard } from '@bot/keyboards';
+import { gptKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
 export const changeGptModelConversation: ConversationType = async (conversation, ctx) => {
@@ -47,7 +47,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     } = conversation.session.client.selectedModel;
 
     await ctx.reply(ctx.t('gpt-model-change-title'), {
-      reply_markup: customKeyboard(inlineClientGptModels),
+      reply_markup: gptKeyboard(inlineClientGptModels),
     });
 
     const {

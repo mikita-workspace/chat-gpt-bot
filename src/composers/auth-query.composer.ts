@@ -14,9 +14,10 @@ composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
     lastname: ctx?.from?.last_name,
     username: ctx?.from?.username,
   };
-  const languageCode = ctx?.from?.language_code as LocaleCodes;
 
-  const client = await createClient(telegramId, metadata, languageCode);
+  const locale = await ctx.i18n.getLocale();
+
+  const client = await createClient(telegramId, metadata, locale as LocaleCodes);
 
   await ctx.deleteMessage();
 

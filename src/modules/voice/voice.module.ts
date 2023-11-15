@@ -10,7 +10,7 @@ export const voiceModule = (bot: BotType) => {
     try {
       const telegramId = Number(ctx.message?.from.id);
       const messageId = Number(ctx.message?.message_id);
-      const locale = String(ctx.from?.language_code);
+      const locale = await ctx.i18n.getLocale();
 
       const rate = ctx.session.client.rate;
 

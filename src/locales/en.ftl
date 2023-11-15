@@ -24,7 +24,7 @@ about-image-model = Image model:
 about-releases = Releases:
 
 # Errors messages
-error-message-common = Your request could not be processed 😔. Try again!
+error-message-common = 😔 Your request could not be processed. Try again!
 error-message-gpt = Your message could not be processed. Try again!
 error-message-change-gpt-model = 😬 Oops! It looks like you want to move to another section. Press { $command } again!
 error-message-common-try-again = Try again
@@ -58,7 +58,7 @@ restart-message = Let's start with a clean slate 😊
 
 # Change GPT model
 gpt-model-change-success = The GPT model has been changed.
-gpt-model-change-title = Select an available GPT model:
+gpt-model-change-title = Select an available GPT model.
 
 # Profile
 profile-client-initial-message = Hey 👋, { $firstname } { $lastname }!

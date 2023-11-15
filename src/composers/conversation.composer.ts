@@ -7,7 +7,7 @@ const composer = new Composer<BotContextType>();
 
 composer.use(conversations());
 
-composer.use(createConversation(generateImageConversation));
 composer.use(createConversation(changeGptModelConversation));
+composer.use(createConversation(generateImageConversation));
 
 export const conversationComposer = (): Middleware<BotContextType> => composer;

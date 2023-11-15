@@ -11,7 +11,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
   try {
     const telegramId = Number(ctx?.from?.id);
     const messageId = Number(ctx?.message?.message_id);
-    const locale = String(ctx.from?.language_code);
+    const locale = await conversation.external(() => ctx.i18n.getLocale());
 
     const { image } = conversation.session.client.selectedModel;
     const rate = conversation.session.client.rate;

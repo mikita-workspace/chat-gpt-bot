@@ -31,7 +31,7 @@ export const createBot = () => {
   const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);
 
   const i18n = new I18n<BotContextType>({
-    defaultLocale: 'en',
+    defaultLocale: LocaleCodes.ENGLISH,
     globalTranslationContext: (ctx) => ({
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
@@ -39,7 +39,6 @@ export const createBot = () => {
       username: ctx?.from?.username ?? '',
     }),
     directory: path.join(__dirname, '../locales'),
-    useSession: true,
   });
 
   Object.values(LocaleCodes).forEach(async (languageCode) => {
@@ -68,11 +67,11 @@ export const createBot = () => {
 
   bot.use(sessionComposer());
 
-  bot.use(conversationComposer());
+  bot.use(normalize());
 
   bot.use(callbackQueryComposer());
 
-  bot.use(normalize());
+  bot.use(conversationComposer());
 
   [
     aboutModule,

@@ -2,7 +2,7 @@ export const botName = 'NovaChat | GPT';
 
 export enum BotCommands {
   ABOUT = 'about',
-  CHANGE_MODEL = 'change',
+  CHANGE_MODEL = 'gpt',
   IMAGE = 'image',
   PROFILE = 'profile',
   RESTART = 'restart',
@@ -23,6 +23,12 @@ export enum LocaleCodes {
   BELORUSSIAN = 'be',
   ENGLISH = 'en',
   RUSSIAN = 'ru',
+}
+
+export enum LocaleNames {
+  BELORUSSIAN = 'Беларускі',
+  ENGLISH = 'English',
+  RUSSIAN = 'Русский',
 }
 
 export const WEBHOOK_TIMEOUT = 60_000;
@@ -55,10 +61,6 @@ export enum CommonActions {
 
 export enum AuthActions {
   GET_AUTH = 'get_auth_action',
-}
-
-export enum ClientImagesMenuActions {
-  GENERATE_IMAGE = 'generate-image-action',
 }
 
 export enum FeedbackActions {

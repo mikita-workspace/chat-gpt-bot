@@ -38,3 +38,16 @@ export const applyMixins = (derivedCtor: any, constructors: any[]) => {
 };
 
 export const removeFile = async (path: string) => unlink(path);
+
+export const chunkIntoN = <T>(arr: T[], n: number) =>
+  arr.reduce<T[][]>((resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / n);
+
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = [];
+    }
+
+    resultArray[chunkIndex].push(item);
+
+    return resultArray;
+  }, []);

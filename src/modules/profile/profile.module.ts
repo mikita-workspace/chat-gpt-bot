@@ -8,7 +8,7 @@ export const profileModule = (bot: BotType) =>
   bot.command(BotCommands.PROFILE, async (ctx) => {
     const telegramId = Number(ctx.message?.from?.id);
     const messageId = Number(ctx.message?.message_id);
-    const locale = String(ctx.from?.language_code);
+    const locale = await ctx.i18n.getLocale();
 
     const metadata = ctx.session.client.metadata;
     const rate = ctx.session.client.rate;

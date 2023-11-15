@@ -7,7 +7,7 @@ import { inlineGoToChat } from '@bot/keyboards';
 export const aboutModule = (bot: BotType) =>
   bot.command(BotCommands.ABOUT, async (ctx) => {
     const messageId = Number(ctx.message?.message_id);
-    const locale = String(ctx.from?.language_code);
+    const locale = await ctx.i18n.getLocale();
 
     const { gpt, speech, image } = ctx.session.client.selectedModel;
 

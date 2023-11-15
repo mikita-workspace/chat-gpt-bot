@@ -28,8 +28,8 @@ export const inlineFeedback = (ctx: BotContextType, options?: { isImageGenerator
   return InlineKeyboard.from([feedbackRow]);
 };
 
-export const customKeyboard = (labels: string[]) => {
-  const buttonRows = labels.map((label) => [Keyboard.text(label)]);
+export const gptKeyboard = (models: string[]) => {
+  const buttonRows = models.map((label) => [Keyboard.text(label)]);
 
   return Keyboard.from(buttonRows).resized();
 };
