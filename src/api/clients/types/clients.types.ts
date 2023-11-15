@@ -9,6 +9,13 @@ export type ClientRate = {
   symbol: string;
 };
 
+export type ClientMetadata = {
+  firstname: string;
+  languageCode: string;
+  lastname?: string;
+  username?: string;
+};
+
 export type ClientAvailabilityResponse = {
   rate: ClientRate;
   state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: number };
@@ -27,3 +34,5 @@ export type ClientFeedbackResponse = {
   messages: ChatCompletionResponse['message'][];
   updatedAt: number;
 };
+
+export type ClientMetadataResponse = ClientMetadata;

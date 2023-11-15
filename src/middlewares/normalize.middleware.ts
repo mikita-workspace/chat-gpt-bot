@@ -1,4 +1,4 @@
-import { updateClientRate } from '@bot/api/clients';
+import { updateClientMetadata, updateClientRate } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
 import { isExpiredDate } from '@bot/common/utils';
@@ -8,6 +8,7 @@ import { differenceInMilliseconds, fromUnixTime } from 'date-fns';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   const telegramId = Number(ctx.message?.from?.id);
+  const locale = await ctx.i18n.getLocale();
 
   const sessionMessages = ctx.session.client.messages;
   const lastMessageTimestamp = ctx.session.client.lastMessageTimestamp;
@@ -15,6 +16,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
 
   ctx.session.client.metadata = {
     firstname: ctx?.from?.first_name || '',
+    languageCode: locale,
     lastname: ctx?.from?.last_name || '',
     username: ctx?.from?.username || '',
   };
@@ -33,6 +35,8 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
 
   if (differenceInMilliseconds(new Date(), fromUnixTime(lastMessageTimestamp)) >= ONE_HOUR_MS) {
     ctx.session.client.messages = [];
+
+    await updateClientMetadata(telegramId, ctx.session.client.metadata);
   }
 
   return next();

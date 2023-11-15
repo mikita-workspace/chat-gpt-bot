@@ -1,6 +1,8 @@
 import {
   ClientAvailabilityResponse,
   ClientFeedbackResponse,
+  ClientMetadata,
+  ClientMetadataResponse,
   ClientRate,
   ClientResponse,
 } from '@bot/api/clients/types';
@@ -96,6 +98,27 @@ export const updateClientRate = async (telegramId: number) => {
   } catch (error) {
     Logger.error(
       `src/api/clients/clients.api.ts::updateClientRate::${JSON.stringify(error.message)}`,
+    );
+
+    return null;
+  }
+};
+
+export const updateClientMetadata = async (telegramId: number, metadata: ClientMetadata) => {
+  try {
+    const response = await axios<ClientMetadataResponse>({
+      method: 'post',
+      data: {
+        telegramId,
+        metadata,
+      },
+      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/metadata`,
+    });
+
+    return response.data;
+  } catch (error) {
+    Logger.error(
+      `src/api/clients/clients.api.ts::updateClientMetadata::${JSON.stringify(error.message)}`,
     );
 
     return null;

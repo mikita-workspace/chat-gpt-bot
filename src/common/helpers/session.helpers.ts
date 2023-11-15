@@ -27,6 +27,7 @@ export const createInitialClientSession = (): SessionType['client'] => ({
   lastMessageTimestamp: getTimestampUnix(),
   metadata: {
     firstname: '',
+    languageCode: '',
     lastname: '',
     username: '',
   },
