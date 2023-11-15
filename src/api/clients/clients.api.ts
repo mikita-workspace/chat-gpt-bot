@@ -4,7 +4,6 @@ import {
   ClientRate,
   ClientResponse,
 } from '@bot/api/clients/types';
-import { LocaleCodes } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
@@ -16,13 +15,13 @@ export const createClient = async (
     firstname?: string;
     lastname?: string;
     username?: string;
+    languageCode: string;
   },
-  languageCode = LocaleCodes.ENGLISH,
 ) => {
   try {
     const response = await axios<ClientResponse>({
       method: 'post',
-      data: { languageCode, telegramId, metadata },
+      data: { telegramId, metadata },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/clients`,
     });
 
