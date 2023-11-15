@@ -11,7 +11,6 @@ export type SessionMessageType = { content: string; role: `${MessageRolesGPT}` }
 export type SessionType = {
   client: {
     messages: SessionMessageType[];
-    lastMessageTimestamp: number;
     metadata: ClientMetadata;
     rate: ClientRate | null;
     selectedModel: {

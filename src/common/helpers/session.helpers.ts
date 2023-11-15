@@ -4,7 +4,6 @@ import {
   MODEL_SPEECH_DEFAULT,
 } from '@bot/api/gpt/constants';
 import { SessionType } from '@bot/app/types';
-import { getTimestampUnix } from '@bot/common/utils';
 
 export const resetSelectedModel = (): SessionType['client']['selectedModel'] => ({
   gpt: {
@@ -24,7 +23,6 @@ export const resetSelectedModel = (): SessionType['client']['selectedModel'] => 
 
 export const createInitialClientSession = (): SessionType['client'] => ({
   messages: [],
-  lastMessageTimestamp: getTimestampUnix(),
   metadata: {
     firstname: '',
     languageCode: '',
