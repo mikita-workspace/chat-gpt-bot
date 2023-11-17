@@ -1,7 +1,8 @@
 import { createClient } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
-import { AuthActions, botName } from '@bot/common/constants';
+import { AuthActions } from '@bot/common/constants';
 import { removeValueFromMemoryCache } from '@bot/common/utils';
+import { config } from 'config';
 import { Composer, Middleware } from 'grammy';
 
 const composer = new Composer<BotContextType>();
@@ -24,7 +25,9 @@ composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
   if (client) {
     removeValueFromMemoryCache('cached-client-availability');
 
-    return ctx.reply(ctx.t('auth-success', { botName }));
+    return ctx.reply(ctx.t('auth-success', { botName: `<b>${config.BOT_NAME}</b>` }), {
+      parse_mode: 'HTML',
+    });
   }
 
   return ctx.reply(ctx.t('error-message-common'));

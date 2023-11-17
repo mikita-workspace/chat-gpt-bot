@@ -47,10 +47,10 @@ export const apiErrorPayload = (error: any) => {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*New Error in ${config.CLIENT_NAME}*`,
+          text: `*New Error in ${config.BOT_NAME} Client*`,
         },
       },
     ],
-    text: `${config.CLIENT_NAME} Error`,
+    text: `${config.BOT_NAME} Client Error`,
   };
 };

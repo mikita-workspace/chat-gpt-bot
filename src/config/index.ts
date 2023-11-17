@@ -7,7 +7,7 @@ dotenv.config({
 
 export const config = {
   CHAT_GPT_API_HOST: process.env.CHAT_GPT_API_HOST || '',
-  CLIENT_NAME: process.env.CLIENT_NAME || '',
+  BOT_NAME: process.env.BOT_NAME || '',
   MONGODB_URI: process.env.MONGODB_URI ?? '',
   PORT: parseInt(process.env.PORT ?? '', 10) || 8080,
   SLACK_WEBHOOK: process.env.SLACK_WEBHOOK || '',
