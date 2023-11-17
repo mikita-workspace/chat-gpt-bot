@@ -1,3 +1,4 @@
+import { WEBHOOK_TIMEOUT } from '@bot/common/constants';
 import { Logger } from '@bot/services';
 import { BotError, GrammyError, HttpError } from 'grammy';
 
@@ -5,19 +6,39 @@ export const handleBotError = (error: BotError) => {
   const ctx = error.ctx;
   const err = error.error;
 
-  Logger.error(`handleBotError::error while handling update::${ctx.update.update_id}:`);
+  Logger.error({
+    context: 'src/common/helpers/client-logger.helpers.ts',
+    message: `handleBotError::error while handling update::${ctx.update.update_id}:`,
+    stack: JSON.stringify(error),
+  });
 
   if (err instanceof GrammyError) {
-    Logger.error(`handleBotError::error in request::${err.description}`);
+    Logger.error({
+      context: 'src/common/helpers/client-logger.helpers.ts',
+      message: `handleBotError::error in request::${err.description}`,
+      stack: JSON.stringify(error),
+    });
   } else if (err instanceof HttpError) {
-    Logger.error(`handleBotError::could not contact Telegram::${err.message}`);
+    Logger.error({
+      context: 'src/common/helpers/client-logger.helpers.ts',
+      message: `handleBotError::could not contact Telegram::${err.message}`,
+      stack: JSON.stringify(error),
+    });
   } else {
-    Logger.error(`handleBotError::unknown error::${error.message}`);
+    Logger.error({
+      context: 'src/common/helpers/client-logger.helpers.ts',
+      message: `handleBotError::unknown error::${error.message}`,
+      stack: JSON.stringify(error),
+    });
   }
 };
 
 export const handleTimeoutError = () => {
-  Logger.error(`handleTimeoutError::error::Webhook timeout has been reached`);
+  Logger.error({
+    context: 'src/common/helpers/client-logger.helpers.ts',
+    message: `handleTimeoutError::error::Webhook timeout (${WEBHOOK_TIMEOUT}) has been reached`,
+    stack: '',
+  });
 
   return;
 };

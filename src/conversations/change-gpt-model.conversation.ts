@@ -110,11 +110,11 @@ export const changeGptModelConversation: ConversationType = async (conversation,
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    Logger.error(
-      `src/conversations/change-gpt-model.conversation.ts::changeGptModelConversation::${JSON.stringify(
-        error.message,
-      )}`,
-    );
+    Logger.error({
+      context: 'src/conversations/change-gpt-model.conversation.ts::changeGptModelConversation',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return;
   }

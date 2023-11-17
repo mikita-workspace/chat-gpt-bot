@@ -29,7 +29,11 @@ export const createClient = async (
 
     return response.data;
   } catch (error) {
-    Logger.error(`src/api/clients/clients.api.ts::createClient::${JSON.stringify(error.message)}`);
+    Logger.error({
+      context: 'src/api/clients/clients.api.ts::createClient',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }
@@ -51,9 +55,11 @@ export const getClientAvailability = async (
     return clientAvailability;
   } catch (error) {
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
-      Logger.error(
-        `src/api/clients/clients.api.ts::getClientAvailability::${JSON.stringify(error.message)}`,
-      );
+      Logger.error({
+        context: 'src/api/clients/clients.api.ts::getClientAvailability',
+        message: error.message,
+        stack: JSON.stringify(error),
+      });
     }
 
     return null;
@@ -75,9 +81,11 @@ export const giveClientFeedback = async (
     return response.data;
   } catch (error) {
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
-      Logger.error(
-        `src/api/clients/clients.api.ts::giveClientFeedback::${JSON.stringify(error.message)}`,
-      );
+      Logger.error({
+        context: 'src/api/clients/clients.api.ts::giveClientFeedback',
+        message: error.message,
+        stack: JSON.stringify(error),
+      });
     }
 
     return null;
@@ -96,9 +104,11 @@ export const updateClientRate = async (telegramId: number) => {
 
     return response.data;
   } catch (error) {
-    Logger.error(
-      `src/api/clients/clients.api.ts::updateClientRate::${JSON.stringify(error.message)}`,
-    );
+    Logger.error({
+      context: 'src/api/clients/clients.api.ts::updateClientRate',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }
@@ -117,9 +127,11 @@ export const updateClientMetadata = async (telegramId: number, metadata: ClientM
 
     return response.data;
   } catch (error) {
-    Logger.error(
-      `src/api/clients/clients.api.ts::updateClientMetadata::${JSON.stringify(error.message)}`,
-    );
+    Logger.error({
+      context: 'src/api/clients/clients.api.ts::updateClientMetadata',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }

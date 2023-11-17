@@ -88,11 +88,11 @@ export const generateImageConversation: ConversationType = async (conversation, 
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    Logger.error(
-      `src/conversations/create-image.conversation.ts::generateImageConversation::${JSON.stringify(
-        error.message,
-      )}`,
-    );
+    Logger.error({
+      context: 'src/conversations/create-image.conversation.ts::generateImageConversation',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return;
   }

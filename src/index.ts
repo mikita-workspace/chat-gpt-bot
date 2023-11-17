@@ -5,11 +5,8 @@ import { config } from '@bot/config';
 import { run } from '@grammyjs/runner';
 import express from 'express';
 import { webhookCallback } from 'grammy';
-import mongoose from 'mongoose';
 
 const botInitialize = async () => {
-  await mongoose.connect(config.MONGODB_URI);
-
   const bot = createBot();
 
   if (process.env.NODE_ENV === 'production') {

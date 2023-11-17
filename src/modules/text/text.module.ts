@@ -45,9 +45,11 @@ export const textModule = (bot: BotType) => {
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 
-      Logger.error(
-        `src/modules/text/text.module.ts::textController::${JSON.stringify(error.message)}`,
-      );
+      Logger.error({
+        context: 'src/modules/text/text.module.ts::textModule',
+        message: error.message,
+        stack: JSON.stringify(error),
+      });
     }
   });
 };

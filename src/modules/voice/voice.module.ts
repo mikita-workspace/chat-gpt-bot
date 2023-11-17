@@ -56,9 +56,11 @@ export const voiceModule = (bot: BotType) => {
     } catch (error) {
       await ctx.reply(ctx.t('error-message-common'));
 
-      Logger.error(
-        `src/modules/voice/voice.module.ts::voiceModule::${JSON.stringify(error.message)}`,
-      );
+      Logger.error({
+        context: 'src/modules/voice/voice.module.ts::textModule',
+        message: error.message,
+        stack: JSON.stringify(error),
+      });
     }
   });
 };

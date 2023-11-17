@@ -25,7 +25,11 @@ export const getGptModels = async (telegramId: number): Promise<GptModelResponse
 
     return data;
   } catch (error) {
-    Logger.error(`src/api/gpt/gpt.api.ts::getGptModels::${JSON.stringify(error.message)}`);
+    Logger.error({
+      context: 'src/api/gpt/gpt.api.ts::getGptModels',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return [];
   }
@@ -51,7 +55,11 @@ export const chatCompletion = async (
 
     return response.data;
   } catch (error) {
-    Logger.error(`src/api/gpt/gpt.api.ts::chatCompletion::${JSON.stringify(error.message)}`);
+    Logger.error({
+      context: 'src/api/gpt/gpt.api.ts::chatCompletion',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }
@@ -71,7 +79,11 @@ export const transcription = async (filename: string, telegramId: number, model:
 
     return response.data;
   } catch (error) {
-    Logger.error(`src/api/gpt/gpt.api.ts::transcription::${JSON.stringify(error.message)}`);
+    Logger.error({
+      context: 'src/api/gpt/gpt.api.ts::transcription',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }
@@ -100,7 +112,11 @@ export const generateImages = async (
 
     return response.data;
   } catch (error) {
-    Logger.error(`src/api/gpt/gpt.api.ts::generateImages::${JSON.stringify(error.message)}`);
+    Logger.error({
+      context: 'src/api/gpt/gpt.api.ts::generateImages',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }

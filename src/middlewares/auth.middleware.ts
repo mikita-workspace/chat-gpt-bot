@@ -43,7 +43,11 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
 
     await ctx.reply(`${ctx.t('auth-error')} ${ctx.t('support-contact')}`);
   } catch (error) {
-    Logger.error(`src/middlewares/auth/auth.middleware.ts::auth::${JSON.stringify(error.message)}`);
+    Logger.error({
+      context: 'src/middlewares/auth/auth.middleware.ts::auth',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return;
   }
