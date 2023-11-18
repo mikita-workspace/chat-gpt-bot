@@ -21,9 +21,11 @@ export const getGithubReleases = async (): Promise<GithubReleaseResponse[]> => {
 
     return data;
   } catch (error) {
-    Logger.error(
-      `src/api/github/github.api.ts::getGithubReleases::${JSON.stringify(error.message)}`,
-    );
+    Logger.error({
+      context: 'src/api/github/github.api.ts::getGithubReleases',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return [];
   }

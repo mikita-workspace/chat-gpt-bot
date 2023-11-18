@@ -1,9 +1,8 @@
-import 'winston-mongodb';
-
 import { winstonConfig } from '@bot/common/constants';
 import { config } from '@bot/config';
-import { ClientLoggerModel } from '@bot/models';
+import { apiErrorPayload } from '@bot/services/payloads';
 import { addColors, createLogger, format, Logger, transports } from 'winston';
+import SlackHook from 'winston-slack-webhook-transport';
 
 class LoggerService {
   logger: Logger;
@@ -11,56 +10,54 @@ class LoggerService {
   constructor() {
     addColors(winstonConfig.colors);
 
-    this.logger = createLogger({
-      level: 'info',
-      levels: winstonConfig.levels,
-      format: format.combine(
-        format.timestamp({
-          format: 'YYYY-MM-DD HH:mm:ss',
-        }),
-        format.errors({ stack: true }),
-        format.splat(),
-        format.json(),
-      ),
-      transports: [
-        new transports.File({
-          filename: 'errors.log',
-          level: 'error',
-          format: format.printf(
-            (info) => `${info.timestamp} ${info.level.toLocaleUpperCase()}: ${info.message}`,
-          ),
-        }),
-        new transports.File({
-          filename: 'combined.log',
-          level: 'silly',
-          format: format.printf(
-            (info) => `${info.timestamp} ${info.level.toLocaleUpperCase()}: ${info.message}`,
-          ),
-        }),
-      ],
+    const customFormat = format.printf((info) => {
+      const { timestamp, level, message, ...args } = info;
+
+      const ts = timestamp.slice(0, 19).replace('T', ' ');
+      return `${ts} [${level}]: ${message} ${
+        Object.keys(args).length ? JSON.stringify(args, null, 2) : ''
+      }`;
     });
 
-    // NOTE: Logger with mongoDB does not work on test environment for unit testing
-    if (process.env.NODE_ENV !== 'test') {
-      this.logger.add(
-        new transports.MongoDB({
-          collection: ClientLoggerModel.collection.name,
-          db: config.MONGODB_URI,
-          format: format.metadata(),
-          options: {
-            useUnifiedTopology: true,
-          },
-        }),
-      );
-    }
+    const options = {
+      file: {
+        filename: 'error.log',
+        level: 'error',
+      },
+      console: {
+        level: 'info',
+      },
+    };
 
-    if (process.env.NODE_ENV !== 'production') {
-      this.logger.add(
-        new transports.Console({
-          format: format.combine(format.colorize(), format.simple()),
+    // For Development environment
+    const devLogger = {
+      format: format.combine(
+        format.colorize(),
+        format.timestamp(),
+        format.errors({ stack: true }),
+        customFormat,
+      ),
+      transports: [new transports.Console(options.console)],
+    };
+
+    // For Production environments
+    const prodLogger = {
+      format: format.combine(format.timestamp(), format.errors({ stack: true }), format.json()),
+      transports: [
+        new transports.File(options.file),
+        new transports.File({
+          filename: 'combine.log',
+          level: 'info',
         }),
-      );
-    }
+        new SlackHook({
+          level: 'error',
+          webhookUrl: config.SLACK_WEBHOOK,
+          formatter: (error: any) => apiErrorPayload(error),
+        }),
+      ],
+    };
+
+    this.logger = createLogger(process.env.NODE_ENV === 'production' ? prodLogger : devLogger);
   }
 }
 

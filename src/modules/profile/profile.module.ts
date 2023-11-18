@@ -3,6 +3,7 @@ import { BotType } from '@bot/app/types';
 import { BotCommands } from '@bot/common/constants';
 import { expiresInFormat } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
+import { getClientAvailability } from 'api/clients';
 
 export const profileModule = (bot: BotType) =>
   bot.command(BotCommands.PROFILE, async (ctx) => {
@@ -10,8 +11,14 @@ export const profileModule = (bot: BotType) =>
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
-    const metadata = ctx.session.client.metadata;
+    if (!ctx.session.client.rate) {
+      const availability = await getClientAvailability(telegramId);
+
+      ctx.session.client.rate = availability?.rate ?? null;
+    }
+
     const rate = ctx.session.client.rate;
+    const metadata = ctx.session.client.metadata;
 
     const profileMessageHtml = `<b>${ctx.t('profile-client-initial-message', {
       firstname: metadata.firstname || ctx.t('profile-client-incognito'),

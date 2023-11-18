@@ -1,10 +1,11 @@
 import {
   ClientAvailabilityResponse,
   ClientFeedbackResponse,
+  ClientMetadata,
+  ClientMetadataResponse,
   ClientRate,
   ClientResponse,
 } from '@bot/api/clients/types';
-import { LocaleCodes } from '@bot/common/constants';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
@@ -16,19 +17,23 @@ export const createClient = async (
     firstname?: string;
     lastname?: string;
     username?: string;
+    languageCode: string;
   },
-  languageCode = LocaleCodes.ENGLISH,
 ) => {
   try {
     const response = await axios<ClientResponse>({
       method: 'post',
-      data: { languageCode, telegramId, metadata },
+      data: { telegramId, metadata },
       url: `${config.CHAT_GPT_API_HOST}/v1/api/clients`,
     });
 
     return response.data;
   } catch (error) {
-    Logger.error(`src/api/clients/clients.api.ts::createClient::${JSON.stringify(error.message)}`);
+    Logger.error({
+      context: 'src/api/clients/clients.api.ts::createClient',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }
@@ -50,9 +55,11 @@ export const getClientAvailability = async (
     return clientAvailability;
   } catch (error) {
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
-      Logger.error(
-        `src/api/clients/clients.api.ts::getClientAvailability::${JSON.stringify(error.message)}`,
-      );
+      Logger.error({
+        context: 'src/api/clients/clients.api.ts::getClientAvailability',
+        message: error.message,
+        stack: JSON.stringify(error),
+      });
     }
 
     return null;
@@ -74,9 +81,11 @@ export const giveClientFeedback = async (
     return response.data;
   } catch (error) {
     if (error.response && error.response.status !== HttpStatusCode.NotFound) {
-      Logger.error(
-        `src/api/clients/clients.api.ts::giveClientFeedback::${JSON.stringify(error.message)}`,
-      );
+      Logger.error({
+        context: 'src/api/clients/clients.api.ts::giveClientFeedback',
+        message: error.message,
+        stack: JSON.stringify(error),
+      });
     }
 
     return null;
@@ -95,9 +104,34 @@ export const updateClientRate = async (telegramId: number) => {
 
     return response.data;
   } catch (error) {
-    Logger.error(
-      `src/api/clients/clients.api.ts::updateClientRate::${JSON.stringify(error.message)}`,
-    );
+    Logger.error({
+      context: 'src/api/clients/clients.api.ts::updateClientRate',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
+
+    return null;
+  }
+};
+
+export const updateClientMetadata = async (telegramId: number, metadata: ClientMetadata) => {
+  try {
+    const response = await axios<ClientMetadataResponse>({
+      method: 'post',
+      data: {
+        telegramId,
+        metadata,
+      },
+      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/metadata`,
+    });
+
+    return response.data;
+  } catch (error) {
+    Logger.error({
+      context: 'src/api/clients/clients.api.ts::updateClientMetadata',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return null;
   }

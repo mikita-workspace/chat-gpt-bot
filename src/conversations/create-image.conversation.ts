@@ -1,7 +1,7 @@
 import { generateImages } from '@bot/api/gpt';
 import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
 import { BotCommands } from '@bot/common/constants';
-import { expiresInFormat, getTimestampUnix, isExpiredDate } from '@bot/common/utils';
+import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
 import { ConversationType } from '@bot/conversations/types';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
@@ -74,7 +74,6 @@ export const generateImageConversation: ConversationType = async (conversation, 
 
     conversation.session.store.data = aiMessage;
     conversation.session.client.rate = response.clientRate;
-    conversation.session.client.lastMessageTimestamp = getTimestampUnix();
 
     await ctx.replyWithMediaGroup(
       response.images.map((img) => ({ type: 'photo', media: img.url })),
@@ -89,11 +88,11 @@ export const generateImageConversation: ConversationType = async (conversation, 
   } catch (error) {
     await ctx.reply(ctx.t('error-message-common'));
 
-    Logger.error(
-      `src/conversations/create-image.conversation.ts::generateImageConversation::${JSON.stringify(
-        error.message,
-      )}`,
-    );
+    Logger.error({
+      context: 'src/conversations/create-image.conversation.ts::generateImageConversation',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
 
     return;
   }
