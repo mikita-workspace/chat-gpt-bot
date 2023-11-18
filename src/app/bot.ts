@@ -69,9 +69,9 @@ export const createBot = () => {
 
   bot.use(normalize());
 
-  bot.use(callbackQueryComposer());
-
   bot.use(conversationComposer());
+
+  bot.use(callbackQueryComposer());
 
   [
     aboutModule,
