@@ -27,7 +27,7 @@ export const profileModule = (bot: BotType) =>
       metadata.username || 'username'
     }</a>\n\r\n\r${
       clientAccountLevel
-        ? `<b> ${clientAccountLevel.name} ${clientAccountLevel.symbol}</b>\n\r\n\r${ctx.t(
+        ? `<b>${clientAccountLevel.name} ${clientAccountLevel.symbol}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
           )}<b><tg-spoiler> ${clientAccountLevel.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
