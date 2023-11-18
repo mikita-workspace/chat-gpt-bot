@@ -11,12 +11,16 @@ export const textModule = (bot: BotType) => {
       const text = String(ctx.message?.text);
       const locale = await ctx.i18n.getLocale();
 
-      const rate = ctx.session.client.rate;
+      const clientAccountLevel = ctx.session.client.accountLevel;
 
-      if (rate && !isExpiredDate(rate.expiresAt) && !rate.gptTokens) {
+      if (
+        clientAccountLevel &&
+        !isExpiredDate(clientAccountLevel.expiresAt) &&
+        !clientAccountLevel.gptTokens
+      ) {
         return await ctx.reply(
           `${ctx.t('usage-token-limit', {
-            expiresIn: expiresInFormat(rate.expiresAt, locale),
+            expiresIn: expiresInFormat(clientAccountLevel.expiresAt, locale),
           })} ${ctx.t('support-contact')}`,
           { reply_to_message_id: messageId },
         );

@@ -11,13 +11,13 @@ export const profileModule = (bot: BotType) =>
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
-    if (!ctx.session.client.rate) {
+    if (!ctx.session.client.accountLevel) {
       const availability = await getClientAvailability(telegramId);
 
-      ctx.session.client.rate = availability?.rate ?? null;
+      ctx.session.client.accountLevel = availability?.accountLevel ?? null;
     }
 
-    const rate = ctx.session.client.rate;
+    const clientAccountLevel = ctx.session.client.accountLevel;
     const metadata = ctx.session.client.metadata;
 
     const profileMessageHtml = `<b>${ctx.t('profile-client-initial-message', {
@@ -26,17 +26,17 @@ export const profileModule = (bot: BotType) =>
     })}</b>\n\r<a href="tg://user?id=${telegramId}">@${
       metadata.username || 'username'
     }</a>\n\r\n\r${
-      rate
-        ? `${ctx.t('profile-client-rate')}<b> ${rate.name} ${rate.symbol}</b>\n\r\n\r${ctx.t(
+      clientAccountLevel
+        ? `<b> ${clientAccountLevel.name} ${clientAccountLevel.symbol}</b>\n\r\n\r${ctx.t(
             'profile-client-available-messages',
-          )}<b><tg-spoiler> ${rate.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
+          )}<b><tg-spoiler> ${clientAccountLevel.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
-          )}<b><tg-spoiler> ${rate.images}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
-            rate.name === PROMO_RATE
+          )}<b><tg-spoiler> ${clientAccountLevel.images}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
+            clientAccountLevel.name === PROMO_RATE
               ? 'profile-client-promo-date-expires'
               : 'profile-client-date-expires',
             {
-              expiresIn: expiresInFormat(rate.expiresAt, locale),
+              expiresIn: expiresInFormat(clientAccountLevel.expiresAt, locale),
             },
           )}</b>`
         : `<b>${ctx.t('profile-client-unavailable-info')}</b>`

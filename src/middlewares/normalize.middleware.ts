@@ -1,4 +1,4 @@
-import { updateClientRate } from '@bot/api/clients';
+import { updateClientAccountLevel } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
 import { isExpiredDate } from '@bot/common/utils';
@@ -9,7 +9,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   const locale = await ctx.i18n.getLocale();
 
   const sessionMessages = ctx.session.client.messages;
-  const rate = ctx.session.client.rate;
+  const clientAccountLevel = ctx.session.client.accountLevel;
 
   ctx.session.client.metadata = {
     firstname: ctx?.from?.first_name || '',
@@ -18,10 +18,10 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
     username: ctx?.from?.username || '',
   };
 
-  if (rate && isExpiredDate(rate.expiresAt)) {
-    const updatedClientRate = await updateClientRate(telegramId);
+  if (clientAccountLevel && isExpiredDate(clientAccountLevel.expiresAt)) {
+    const updatedClientRate = await updateClientAccountLevel(telegramId);
 
-    ctx.session.client.rate = updatedClientRate;
+    ctx.session.client.accountLevel = updatedClientRate;
   }
 
   const [headSessionMessages, tailSessionMessages] = splitMessagesByTokenLimit(sessionMessages);

@@ -29,7 +29,7 @@ export const createInitialClientSession = (): SessionType['client'] => ({
     lastname: '',
     username: '',
   },
-  rate: null,
+  accountLevel: null,
   selectedModel: resetSelectedModel(),
 });
 

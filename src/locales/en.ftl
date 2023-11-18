@@ -63,7 +63,6 @@ gpt-model-change-title = Select an available GPT model.
 # Profile
 profile-client-initial-message = Hey 👋, { $firstname } { $lastname }!
 profile-client-select-model = Selected GPT model:
-profile-client-rate = Rate:
 profile-client-available-messages = GPT tokens:
 profile-client-available-images = GPT images:
 profile-client-date-expires = Available tokens will be updated { $expiresIn }.

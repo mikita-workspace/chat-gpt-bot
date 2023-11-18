@@ -14,12 +14,16 @@ export const generateImageConversation: ConversationType = async (conversation, 
     const locale = await conversation.external(() => ctx.i18n.getLocale());
 
     const { image } = conversation.session.client.selectedModel;
-    const rate = conversation.session.client.rate;
+    const clientAccountLevel = conversation.session.client.accountLevel;
 
-    if (rate && !isExpiredDate(rate.expiresAt) && !rate.images) {
+    if (
+      clientAccountLevel &&
+      !isExpiredDate(clientAccountLevel.expiresAt) &&
+      !clientAccountLevel.images
+    ) {
       return await ctx.reply(
         `${ctx.t('usage-image-limit', {
-          expiresIn: expiresInFormat(rate.expiresAt, locale),
+          expiresIn: expiresInFormat(clientAccountLevel.expiresAt, locale),
         })} ${ctx.t('support-contact')}`,
         { reply_to_message_id: messageId },
       );
@@ -73,7 +77,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
     }`;
 
     conversation.session.store.data = aiMessage;
-    conversation.session.client.rate = response.clientRate;
+    conversation.session.client.accountLevel = response.clientAccountLevel;
 
     await ctx.replyWithMediaGroup(
       response.images.map((img) => ({ type: 'photo', media: img.url })),
