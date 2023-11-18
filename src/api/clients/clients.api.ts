@@ -1,9 +1,9 @@
 import {
+  ClientAccountLevel,
   ClientAvailabilityResponse,
   ClientFeedbackResponse,
   ClientMetadata,
   ClientMetadataResponse,
-  ClientRate,
   ClientResponse,
 } from '@bot/api/clients/types';
 import { fetchCachedData } from '@bot/common/utils';
@@ -42,6 +42,10 @@ export const createClient = async (
 export const getClientAvailability = async (
   telegramId: number,
 ): Promise<ClientAvailabilityResponse | null> => {
+  if (Number.isNaN(telegramId)) {
+    return null;
+  }
+
   try {
     const clientAvailability = await fetchCachedData(
       `cached-client-availability-${telegramId}`,
@@ -95,20 +99,20 @@ export const giveClientFeedback = async (
   }
 };
 
-export const updateClientRate = async (telegramId: number) => {
+export const updateClientAccountLevel = async (telegramId: number) => {
   try {
-    const response = await axios<ClientRate>({
+    const response = await axios<ClientAccountLevel>({
       method: 'post',
       data: {
         telegramId,
       },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/rate`,
+      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/accountLevel`,
     });
 
     return response.data;
   } catch (error) {
     Logger.error({
-      context: 'src/api/clients/clients.api.ts::updateClientRate',
+      context: 'src/api/clients/clients.api.ts::updateClientAccountLevel',
       message: error.message,
       stack: JSON.stringify(error),
     });

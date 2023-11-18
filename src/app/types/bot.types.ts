@@ -1,4 +1,4 @@
-import { ClientMetadata, ClientRate } from '@bot/api/clients/types';
+import { ClientAccountLevel, ClientMetadata } from '@bot/api/clients/types';
 import { MessageRolesGPT } from '@bot/api/gpt/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
 import { HydrateFlavor } from '@grammyjs/hydrate';
@@ -12,7 +12,7 @@ export type SessionType = {
   client: {
     messages: SessionMessageType[];
     metadata: ClientMetadata;
-    rate: ClientRate | null;
+    accountLevel: ClientAccountLevel | null;
     selectedModel: {
       speech: {
         model: string;

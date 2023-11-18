@@ -63,7 +63,6 @@ gpt-model-change-title = Выберете доступную GPT модель.
 # Profile
 profile-client-initial-message = Привет 👋, { $firstName } { $lastName }!
 profile-client-select-model = Выбраная GPT модель:
-profile-client-rate = Тариф:
 profile-client-available-messages = GPT токены:
 profile-client-available-images = GPT изображения:
 profile-client-date-expires = Доступные токены будут обновлены { $expiresIn }.

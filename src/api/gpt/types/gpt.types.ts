@@ -1,5 +1,5 @@
 import { MessageRolesGPT, TypeGPT } from '@bot/api/gpt/constants';
-import { ClientRate } from 'api/clients/types';
+import { ClientAccountLevel } from 'api/clients/types';
 
 export type GptModelResponse = {
   associated: string[];
@@ -12,7 +12,7 @@ export type GptModelResponse = {
 };
 
 export type ChatCompletionResponse = {
-  clientRate: ClientRate;
+  clientAccountLevel: ClientAccountLevel;
   message: {
     content: string;
     role: `${MessageRolesGPT}`;
@@ -27,7 +27,7 @@ export type ChatCompletionResponse = {
 export type TranscriptionResponse = { text: string };
 
 export type GenerateImagesResponse = {
-  clientRate: ClientRate;
+  clientAccountLevel: ClientAccountLevel;
   images: {
     bytes: number | null;
     height: number;

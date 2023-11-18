@@ -17,7 +17,7 @@ export const apiErrorPayload = (error: any) => {
             text: {
               type: 'mrkdwn',
               text: `*Level:*\n${level.toUpperCase()}\n\n*Source:*\n${context}\n\n*Happened at:*\n${formatDate(
-                new Date(timestamp),
+                timestamp || new Date(),
                 DATE_FORMAT,
               )}`,
             },

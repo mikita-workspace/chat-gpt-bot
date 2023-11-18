@@ -1,6 +1,6 @@
 import { ChatCompletionResponse } from '@bot/api/gpt/types';
 
-export type ClientRate = {
+export type ClientAccountLevel = {
   expiresAt: number;
   gptModels: string[];
   gptTokens: number;
@@ -17,7 +17,7 @@ export type ClientMetadata = {
 };
 
 export type ClientAvailabilityResponse = {
-  rate: ClientRate;
+  accountLevel: ClientAccountLevel;
   state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: number };
 };
 
