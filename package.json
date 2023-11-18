@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc && tsc-alias -p tsconfig.build.json && copyfiles -u 1 -e \"**/*.ts\" \"./src/locales/**/*.ftl\" \"./build\" --flatten",
-    "start": "cross-env NODE_ENV=production node build/index.js",
+    "start:prod": "cross-env NODE_ENV=production node build/index.js",
     "start:dev": "nodemon --watch 'src/**/*.ts' --exec ts-node -r tsconfig-paths/register src/index.ts",
     "lint": "eslint . --ext .ts --ignore-pattern node_modules/",
     "lint:fix": "eslint . --ext .ts --ignore-pattern node_modules/ --fix",
