@@ -11,7 +11,7 @@ import axios from 'axios';
 
 export const getGptModels = async (telegramId: number): Promise<GptModelResponse[]> => {
   try {
-    const data = await fetchCachedData('cached-gpt-models', async () => {
+    const data = await fetchCachedData(`cached-gpt-models-${telegramId}`, async () => {
       const response = await axios<GptModelResponse[]>({
         method: 'get',
         data: {

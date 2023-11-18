@@ -43,14 +43,17 @@ export const getClientAvailability = async (
   telegramId: number,
 ): Promise<ClientAvailabilityResponse | null> => {
   try {
-    const clientAvailability = await fetchCachedData('cached-client-availability', async () => {
-      const response = await axios<ClientAvailabilityResponse>({
-        method: 'get',
-        url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/availability/${telegramId}`,
-      });
+    const clientAvailability = await fetchCachedData(
+      `cached-client-availability-${telegramId}`,
+      async () => {
+        const response = await axios<ClientAvailabilityResponse>({
+          method: 'get',
+          url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/availability/${telegramId}`,
+        });
 
-      return response.data;
-    });
+        return response.data;
+      },
+    );
 
     return clientAvailability;
   } catch (error) {
