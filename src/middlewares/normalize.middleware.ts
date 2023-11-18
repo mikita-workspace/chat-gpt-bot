@@ -30,6 +30,7 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
     ctx.session.client.messages = headSessionMessages;
   }
 
+  // TODO
   // if (differenceInMilliseconds(new Date(), fromUnixTime(lastMessageTimestamp)) >= ONE_HOUR_MS) {
   //   await updateClientMetadata(telegramId, ctx.session.client.metadata);
   // }
