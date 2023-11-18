@@ -19,9 +19,9 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   };
 
   if (clientAccountLevel && isExpiredDate(clientAccountLevel.expiresAt)) {
-    const updatedClientRate = await updateClientAccountLevel(telegramId);
+    const updatedAccountLevel = await updateClientAccountLevel(telegramId);
 
-    ctx.session.client.accountLevel = updatedClientRate;
+    ctx.session.client.accountLevel = updatedAccountLevel;
   }
 
   const [headSessionMessages, tailSessionMessages] = splitMessagesByTokenLimit(sessionMessages);

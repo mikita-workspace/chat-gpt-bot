@@ -10,7 +10,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   const messageId = Number(ctx.message?.message_id);
 
   const { gpt: selectedGpt } = ctx.session.client.selectedModel;
-  const currentRateName = ctx.session.client.accountLevel?.name;
+  const currentAccountLevelName = ctx.session.client.accountLevel?.name;
 
   ctx.session.client.messages.push({
     content: text,
@@ -42,7 +42,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
     ctx.session.client.selectedModel = resetSelectedModel();
   }
 
-  if (clientAccountLevel.name !== currentRateName) {
+  if (clientAccountLevel.name !== currentAccountLevelName) {
     removeValueFromMemoryCache('cached-gpt-models');
   }
 
