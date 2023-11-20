@@ -1,6 +1,7 @@
-import { WEBHOOK_TIMEOUT } from '@bot/common/constants';
 import { Logger } from '@bot/services';
 import { BotError, GrammyError, HttpError } from 'grammy';
+
+import { WEBHOOK_TIMEOUT } from '../constants';
 
 export const handleBotError = (error: BotError) => {
   const ctx = error.ctx;

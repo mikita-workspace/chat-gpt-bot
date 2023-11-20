@@ -1,8 +1,9 @@
-import { GithubReleaseResponse } from '@bot/api/github/types';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
 import { Logger } from '@bot/services';
 import axios from 'axios';
+
+import { GithubReleaseResponse } from './types';
 
 export const getGithubReleases = async (): Promise<GithubReleaseResponse[]> => {
   try {
@@ -11,7 +12,7 @@ export const getGithubReleases = async (): Promise<GithubReleaseResponse[]> => {
       async () => {
         const response = await axios<GithubReleaseResponse[]>({
           method: 'get',
-          url: `${config.CHAT_GPT_API_HOST}/v1/api/github/releases`,
+          url: `${config.CHAT_GPT_API_HOST}/api/v1/github/releases`,
         });
 
         return response.data;

@@ -1,9 +1,10 @@
 import { chatCompletion } from '@bot/api/gpt';
 import { MAX_CONTEXT_TOKENS, MessageRolesGPT } from '@bot/api/gpt/constants';
 import { BotContextType, SessionMessageType } from '@bot/app/types';
-import { resetSelectedModel } from '@bot/common/helpers';
-import { removeValueFromMemoryCache } from '@bot/common/utils';
 import { encode } from 'gpt-3-encoder';
+
+import { resetSelectedModel } from '../helpers';
+import { removeValueFromMemoryCache } from '../utils';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {
   const telegramId = Number(ctx.message?.from?.id);

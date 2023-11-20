@@ -1,5 +1,4 @@
 import { MODEL_GPT_DEFAULT } from '@bot/api/gpt/constants';
-import { BotContextType } from '@bot/app/types';
 import { LocaleCodes } from '@bot/common/constants';
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/common/helpers';
 import {
@@ -26,6 +25,8 @@ import { limit as rateLimit } from '@grammyjs/ratelimiter';
 import { apiThrottler } from '@grammyjs/transformer-throttler';
 import { Bot } from 'grammy';
 import * as path from 'path';
+
+import { BotContextType } from './types';
 
 export const createBot = () => {
   const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);

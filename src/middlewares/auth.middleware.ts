@@ -1,8 +1,9 @@
 import { getClientAvailability } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { inlineAuthButton } from '@bot/keyboards';
-import { GrammyMiddlewareFn } from '@bot/middlewares/types';
 import { Logger } from '@bot/services';
+
+import { GrammyMiddlewareFn } from './types';
 
 export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   try {

@@ -1,20 +1,16 @@
 import { DAY_MS } from '@bot/common/constants';
+import { Logger } from '@bot/services';
+import { Logger as WinstonLogger } from 'winston';
+
 import {
-  capitalize,
-  decrypt,
-  encrypt,
   fetchCachedData,
-  getKeyByValue,
-  getTimestampUnix,
-  isEmptyObject,
-  isExpiredDate,
   memoryCache,
   removeValueFromMemoryCache,
   setValueToMemoryCache,
-  uniqBy,
-} from '@bot/common/utils';
-import { Logger } from '@bot/services';
-import { Logger as WinstonLogger } from 'winston';
+} from '../cache.utils';
+import { capitalize, getKeyByValue, isEmptyObject, uniqBy } from '../common.utils';
+import { decrypt, encrypt } from '../crypto.utils';
+import { getTimestampUnix, isExpiredDate } from '../date.utils';
 
 jest.spyOn(Logger, 'error').mockReturnValue({} as unknown as WinstonLogger);
 

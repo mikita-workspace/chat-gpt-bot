@@ -17,7 +17,7 @@ export const getGptModels = async (telegramId: number): Promise<GptModelResponse
         data: {
           telegramId,
         },
-        url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/models`,
+        url: `${config.CHAT_GPT_API_HOST}/api/v1/gpt/models`,
       });
 
       return response.data;
@@ -50,7 +50,7 @@ export const chatCompletion = async (
         model,
         telegramId,
       },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/chatCompletions`,
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/gpt/chatCompletions`,
     });
 
     return response.data;
@@ -74,7 +74,7 @@ export const transcription = async (filename: string, telegramId: number, model:
         telegramId,
         model,
       },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/transcriptions`,
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/gpt/transcriptions`,
     });
 
     return response.data;
@@ -107,7 +107,7 @@ export const generateImages = async (
         useCloudinary,
         ...query,
       },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/gpt/generateImages`,
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/gpt/generateImages`,
     });
 
     return response.data;

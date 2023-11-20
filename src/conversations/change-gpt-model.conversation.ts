@@ -2,9 +2,10 @@ import { getGptModels } from '@bot/api/gpt';
 import { MODEL_IMAGE_DEFAULT, MODEL_SPEECH_DEFAULT, TypeGPT } from '@bot/api/gpt/constants';
 import { GptModelResponse } from '@bot/api/gpt/types';
 import { BotCommands } from '@bot/common/constants';
-import { ConversationType } from '@bot/conversations/types';
 import { gptKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
+
+import { ConversationType } from './types';
 
 export const changeGptModelConversation: ConversationType = async (conversation, ctx) => {
   try {

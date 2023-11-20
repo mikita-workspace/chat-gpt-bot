@@ -1,4 +1,4 @@
-import { PROMO_RATE } from '@bot/api/clients/constants';
+import { PROMO_ACCOUNT_LEVEL } from '@bot/api/clients/constants';
 import { BotType } from '@bot/app/types';
 import { BotCommands } from '@bot/common/constants';
 import { expiresInFormat } from '@bot/common/utils';
@@ -32,7 +32,7 @@ export const profileModule = (bot: BotType) =>
           )}<b><tg-spoiler> ${clientAccountLevel.gptTokens}</tg-spoiler></b>\n\r${ctx.t(
             'profile-client-available-images',
           )}<b><tg-spoiler> ${clientAccountLevel.images}</tg-spoiler></b>\n\r\n\r<b>${ctx.t(
-            clientAccountLevel.name === PROMO_RATE
+            clientAccountLevel.name === PROMO_ACCOUNT_LEVEL
               ? 'profile-client-promo-date-expires'
               : 'profile-client-date-expires',
             {

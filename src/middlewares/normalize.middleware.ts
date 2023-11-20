@@ -2,7 +2,8 @@ import { updateClientAccountLevel } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
 import { isExpiredDate } from '@bot/common/utils';
-import { GrammyMiddlewareFn } from '@bot/middlewares/types';
+
+import { GrammyMiddlewareFn } from './types';
 
 export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) => {
   const telegramId = Number(ctx.message?.from?.id);

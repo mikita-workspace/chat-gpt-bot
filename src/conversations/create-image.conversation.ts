@@ -2,10 +2,11 @@ import { generateImages } from '@bot/api/gpt';
 import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
 import { BotCommands } from '@bot/common/constants';
 import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
-import { ConversationType } from '@bot/conversations/types';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 import { gptLoader } from 'common/helpers';
+
+import { ConversationType } from './types';
 
 export const generateImageConversation: ConversationType = async (conversation, ctx) => {
   try {

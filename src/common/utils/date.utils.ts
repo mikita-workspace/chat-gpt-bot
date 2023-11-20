@@ -1,4 +1,3 @@
-import { LocaleCodes } from '@bot/common/constants';
 import {
   compareAsc,
   differenceInMilliseconds,
@@ -8,6 +7,8 @@ import {
   getUnixTime,
 } from 'date-fns';
 import { be, enUS, ru } from 'date-fns/locale';
+
+import { LocaleCodes } from '../constants';
 
 export const convertLocale = (locale: string) => {
   switch (locale) {

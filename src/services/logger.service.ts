@@ -1,8 +1,9 @@
 import { winstonConfig } from '@bot/common/constants';
 import { config } from '@bot/config';
-import { apiErrorPayload } from '@bot/services/payloads';
 import { addColors, createLogger, format, Logger, transports } from 'winston';
 import SlackHook from 'winston-slack-webhook-transport';
+
+import { apiErrorPayload } from './payloads';
 
 class LoggerService {
   logger: Logger;

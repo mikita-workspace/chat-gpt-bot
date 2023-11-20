@@ -1,1 +1,1 @@
-export const PROMO_RATE = 'Promo';
+export const PROMO_ACCOUNT_LEVEL = 'Promo';

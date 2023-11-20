@@ -1,3 +1,8 @@
+import { fetchCachedData } from '@bot/common/utils';
+import { config } from '@bot/config';
+import { Logger } from '@bot/services';
+import axios, { HttpStatusCode } from 'axios';
+
 import {
   ClientAccountLevel,
   ClientAvailabilityResponse,
@@ -5,11 +10,7 @@ import {
   ClientMetadata,
   ClientMetadataResponse,
   ClientResponse,
-} from '@bot/api/clients/types';
-import { fetchCachedData } from '@bot/common/utils';
-import { config } from '@bot/config';
-import { Logger } from '@bot/services';
-import axios, { HttpStatusCode } from 'axios';
+} from './types';
 
 export const createClient = async (
   telegramId: number,
@@ -24,7 +25,7 @@ export const createClient = async (
     const response = await axios<ClientResponse>({
       method: 'post',
       data: { telegramId, metadata },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients`,
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/clients`,
     });
 
     return response.data;
@@ -52,7 +53,7 @@ export const getClientAvailability = async (
       async () => {
         const response = await axios<ClientAvailabilityResponse>({
           method: 'get',
-          url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/availability/${telegramId}`,
+          url: `${config.CHAT_GPT_API_HOST}/api/v1/clients/availability/${telegramId}`,
         });
 
         return response.data;
@@ -82,7 +83,7 @@ export const giveClientFeedback = async (
     const response = await axios<ClientFeedbackResponse>({
       method: 'post',
       data: { telegramId, messageId, feedback },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/feedback`,
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/clients/feedback`,
     });
 
     return response.data;
@@ -106,7 +107,7 @@ export const updateClientAccountLevel = async (telegramId: number) => {
       data: {
         telegramId,
       },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/accountLevel`,
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/clients/accountLevel`,
     });
 
     return response.data;
@@ -129,7 +130,7 @@ export const updateClientMetadata = async (telegramId: number, metadata: ClientM
         telegramId,
         metadata,
       },
-      url: `${config.CHAT_GPT_API_HOST}/v1/api/clients/metadata`,
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/clients/metadata`,
     });
 
     return response.data;
