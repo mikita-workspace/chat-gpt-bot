@@ -1,5 +1,6 @@
 import { DAY_MS } from '@bot/common/constants';
 import { Logger } from '@bot/services';
+import { UTCDate } from '@date-fns/utc';
 import { Logger as WinstonLogger } from 'winston';
 
 import {
@@ -10,7 +11,7 @@ import {
 } from '../cache.utils';
 import { capitalize, getKeyByValue, isEmptyObject, uniqBy } from '../common.utils';
 import { decrypt, encrypt } from '../crypto.utils';
-import { getTimestampUnix, isExpiredDate } from '../date.utils';
+import { getTimestampPlusDays, getTimestampUtc, isExpiredDate } from '../date.utils';
 
 jest.spyOn(Logger, 'error').mockReturnValue({} as unknown as WinstonLogger);
 
@@ -117,42 +118,42 @@ describe('util >> uniqBy', () => {
   });
 });
 
-describe('util >> getTimestampUnix', () => {
-  it('should return a number in Unix format', () => {
+describe('util >> getTimestampUtc', () => {
+  it('should return in Utc format', () => {
     const input = new Date('2021-08-31T13:45:00Z');
-    const expectedOutput = 1630417500;
+    const expectedOutput = new UTCDate('2021-08-31T13:45:00.000Z');
 
-    const output = getTimestampUnix(input);
+    const output = getTimestampUtc(input);
 
-    expect(output).toBe(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 
-  it('should return a number in Unix format when passed a timestamp as string', () => {
+  it('should return in Utc format when passed a timestamp as string', () => {
     const input = '2021-08-31T13:45:00Z';
-    const expectedOutput = 1630417500;
+    const expectedOutput = new UTCDate('2021-08-31T13:45:00.000Z');
 
-    const output = getTimestampUnix(input);
+    const output = getTimestampUtc(input);
 
-    expect(output).toBe(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 
-  it('should return a string in Unix format when passed a timestamp as number', () => {
+  it('should return a string in Utc format when passed a timestamp as number', () => {
     const input = 1630433100000;
-    const expectedOutput = 1630433100;
+    const expectedOutput = new UTCDate(1630433100000);
 
-    const output = getTimestampUnix(input);
+    const output = getTimestampUtc(input);
 
-    expect(output).toBe(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 });
 
 describe('util >> isExpiredDate', () => {
   it('returns True if passed date is expired', () => {
-    expect(isExpiredDate(getTimestampUnix(new Date()) - DAY_MS)).toEqual(true);
+    expect(isExpiredDate(getTimestampUtc(getTimestampPlusDays(-DAY_MS)))).toEqual(true);
   });
 
   it('returns False if passed date is not expired', () => {
-    expect(isExpiredDate(getTimestampUnix(new Date()) + DAY_MS)).toEqual(false);
+    expect(isExpiredDate(getTimestampUtc(getTimestampPlusDays(DAY_MS)))).toEqual(false);
   });
 });
 

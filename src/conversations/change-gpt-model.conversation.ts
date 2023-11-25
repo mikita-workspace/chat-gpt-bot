@@ -1,7 +1,7 @@
 import { getGptModels } from '@bot/api/gpt';
 import { MODEL_IMAGE_DEFAULT, MODEL_SPEECH_DEFAULT, TypeGPT } from '@bot/api/gpt/constants';
 import { GptModelResponse } from '@bot/api/gpt/types';
-import { BotCommands } from '@bot/common/constants';
+import { BotCommand } from '@bot/common/constants';
 import { gptKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -55,7 +55,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       message: { text },
     } = await conversation.waitFor('message:text');
 
-    if (Object.values(BotCommands).includes(text.slice(1) as BotCommands)) {
+    if (Object.values(BotCommand).includes(text.slice(1) as BotCommand)) {
       return await ctx.reply(ctx.t('error-message-change-gpt-model', { command: text }), {
         reply_markup: { remove_keyboard: true },
       });

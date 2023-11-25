@@ -1,13 +1,13 @@
 import { giveClientFeedback } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
-import { FeedbackActions } from '@bot/common/constants';
-import { CommonActions } from '@bot/common/constants';
+import { FeedbackAction } from '@bot/common/constants';
+import { CommonAction } from '@bot/common/constants';
 import { changeGptModelConversation, generateImageConversation } from '@bot/conversations';
 import { Composer, Middleware } from 'grammy';
 
 const composer = new Composer<BotContextType>();
 
-composer.callbackQuery(CommonActions.GO_TO_CHAT, async (ctx) => {
+composer.callbackQuery(CommonAction.GO_TO_CHAT, async (ctx) => {
   await ctx.conversation.exit(changeGptModelConversation.name);
   await ctx.conversation.exit(generateImageConversation.name);
 
@@ -17,13 +17,13 @@ composer.callbackQuery(CommonActions.GO_TO_CHAT, async (ctx) => {
 
 composer.callbackQuery(
   [
-    FeedbackActions.DISLIKE,
-    FeedbackActions.DISLIKE_IMAGE,
-    FeedbackActions.LIKE,
-    FeedbackActions.LIKE_IMAGE,
+    FeedbackAction.DISLIKE,
+    FeedbackAction.DISLIKE_IMAGE,
+    FeedbackAction.LIKE,
+    FeedbackAction.LIKE_IMAGE,
   ],
   async (ctx) => {
-    const callbackData = ctx.callbackQuery.data as FeedbackActions;
+    const callbackData = ctx.callbackQuery.data as FeedbackAction;
     const callbackUpdateMessage = ctx.update.callback_query.message;
 
     const telegramId = Number(ctx?.from?.id);
@@ -57,7 +57,7 @@ composer.callbackQuery(
 
     ctx.session.store.data = null;
 
-    if ([FeedbackActions.LIKE, FeedbackActions.LIKE_IMAGE].includes(callbackData)) {
+    if ([FeedbackAction.LIKE, FeedbackAction.LIKE_IMAGE].includes(callbackData)) {
       return ctx.reply(positiveFeedback);
     }
 

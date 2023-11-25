@@ -1,6 +1,6 @@
 export const botName = 'NovaChat | GPT';
 
-export enum BotCommands {
+export enum BotCommand {
   ABOUT = 'about',
   CHANGE_MODEL = 'gpt',
   IMAGE = 'image',
@@ -10,22 +10,22 @@ export enum BotCommands {
   SUPPORT = 'support',
 }
 
-export const BotCommandsWithDescription = [
-  { command: BotCommands.RESTART, i18nKey: 'command-restart' },
-  { command: BotCommands.IMAGE, i18nKey: 'command-image' },
-  { command: BotCommands.PROFILE, i18nKey: 'command-profile' },
-  { command: BotCommands.CHANGE_MODEL, i18nKey: 'command-change-model' },
-  { command: BotCommands.ABOUT, i18nKey: 'command-about' },
-  { command: BotCommands.SUPPORT, i18nKey: 'command-support' },
+export const BotCommandDescription = [
+  { command: BotCommand.RESTART, i18nKey: 'command-restart' },
+  { command: BotCommand.IMAGE, i18nKey: 'command-image' },
+  { command: BotCommand.PROFILE, i18nKey: 'command-profile' },
+  { command: BotCommand.CHANGE_MODEL, i18nKey: 'command-change-model' },
+  { command: BotCommand.ABOUT, i18nKey: 'command-about' },
+  { command: BotCommand.SUPPORT, i18nKey: 'command-support' },
 ];
 
-export enum LocaleCodes {
+export enum LocaleCode {
   BELORUSSIAN = 'be',
   ENGLISH = 'en',
   RUSSIAN = 'ru',
 }
 
-export enum LocaleNames {
+export enum LocaleName {
   BELORUSSIAN = 'Беларускі',
   ENGLISH = 'English',
   RUSSIAN = 'Русский',
@@ -55,15 +55,15 @@ export const winstonConfig = {
   },
 };
 
-export enum CommonActions {
+export enum CommonAction {
   GO_TO_CHAT = 'go-to-chat-action',
 }
 
-export enum AuthActions {
+export enum AuthAction {
   GET_AUTH = 'get_auth_action',
 }
 
-export enum FeedbackActions {
+export enum FeedbackAction {
   DISLIKE = 'dislike-feedback-action',
   DISLIKE_IMAGE = 'dislike-image-feedback-action',
   LIKE = 'like-feedback-action',

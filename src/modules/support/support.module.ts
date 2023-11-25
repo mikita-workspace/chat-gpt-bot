@@ -1,8 +1,8 @@
 import { BotType } from '@bot/app/types';
-import { BotCommands } from '@bot/common/constants';
+import { BotCommand } from '@bot/common/constants';
 
 export const supportModule = (bot: BotType) =>
-  bot.command(BotCommands.SUPPORT, async (ctx) => {
+  bot.command(BotCommand.SUPPORT, async (ctx) => {
     const messageId = Number(ctx.message?.message_id);
 
     // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000832/f

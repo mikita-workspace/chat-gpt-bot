@@ -1,13 +1,13 @@
 import { createClient } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
-import { AuthActions } from '@bot/common/constants';
+import { AuthAction } from '@bot/common/constants';
 import { removeValueFromMemoryCache } from '@bot/common/utils';
 import { config } from 'config';
 import { Composer, Middleware } from 'grammy';
 
 const composer = new Composer<BotContextType>();
 
-composer.callbackQuery(AuthActions.GET_AUTH, async (ctx) => {
+composer.callbackQuery(AuthAction.GET_AUTH, async (ctx) => {
   const telegramId = Number(ctx?.from?.id);
   const locale = await ctx.i18n.getLocale();
 

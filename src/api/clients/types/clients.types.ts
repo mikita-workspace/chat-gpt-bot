@@ -1,7 +1,7 @@
 import { ChatCompletionResponse } from '@bot/api/gpt/types';
 
 export type ClientAccountLevel = {
-  expiresAt: number;
+  expiresAt: Date;
   gptModels: string[];
   gptTokens: number;
   images: number;
@@ -18,21 +18,21 @@ export type ClientMetadata = {
 
 export type ClientAvailabilityResponse = {
   accountLevel: ClientAccountLevel;
-  state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: number };
+  state: { blockReason: string; isApproved: string; isBlocked: string; updatedAt: Date };
 };
 
 export type ClientResponse = {
-  createdAt: number;
+  createdAt: Date;
   telegramId: number;
   username: string;
 };
 
 export type ClientFeedbackResponse = {
-  createdAt: number;
+  createdAt: Date;
   feedback: string;
   messageId: number;
   messages: ChatCompletionResponse['message'][];
-  updatedAt: number;
+  updatedAt: Date;
 };
 
 export type ClientMetadataResponse = ClientMetadata;

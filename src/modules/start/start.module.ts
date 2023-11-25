@@ -1,8 +1,8 @@
 import { BotType } from '@bot/app/types';
-import { BotCommands } from '@bot/common/constants';
+import { BotCommand } from '@bot/common/constants';
 
 export const startModule = (bot: BotType) =>
-  bot.command(BotCommands.START, async (ctx) => {
+  bot.command(BotCommand.START, async (ctx) => {
     const messageId = Number(ctx.message?.message_id);
 
     return ctx.reply(ctx.t('start-description'), {

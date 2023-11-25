@@ -330,6 +330,11 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
+"@date-fns/utc@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@date-fns/utc/-/utc-1.1.0.tgz#5b0048f9fd0bbbe7844a307adc1316b3b473e2e2"
+  integrity sha512-b56U3yaziw3yBDWj0OVq+KrAVZxkQrXXjV6nygP8myG7MxR97aB8SJCRCi9WE357u3FlvIowxr960h5kj2Heqg==
+
 "@deno/shim-deno-test@^0.3.2":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@deno/shim-deno-test/-/shim-deno-test-0.3.3.tgz#2dd014a2649507477f904d0172dd88341354086d"

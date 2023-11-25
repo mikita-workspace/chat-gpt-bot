@@ -1,8 +1,8 @@
 import { BotType } from '@bot/app/types';
-import { BotCommands } from '@bot/common/constants';
+import { BotCommand } from '@bot/common/constants';
 
 export const restartModule = (bot: BotType) =>
-  bot.command(BotCommands.RESTART, async (ctx) => {
+  bot.command(BotCommand.RESTART, async (ctx) => {
     const messageId = Number(ctx.message?.message_id);
 
     ctx.session.client.messages = [];

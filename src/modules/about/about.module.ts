@@ -1,11 +1,11 @@
 import { getGithubReleases } from '@bot/api/github';
 import { BotType } from '@bot/app/types';
-import { BotCommands, botName, DATE_FORMAT } from '@bot/common/constants';
+import { BotCommand, botName, DATE_FORMAT } from '@bot/common/constants';
 import { formatDate } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
 
 export const aboutModule = (bot: BotType) =>
-  bot.command(BotCommands.ABOUT, async (ctx) => {
+  bot.command(BotCommand.ABOUT, async (ctx) => {
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 

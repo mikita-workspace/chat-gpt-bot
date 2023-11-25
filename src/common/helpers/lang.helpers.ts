@@ -1,10 +1,10 @@
 import { BotContextType } from '@bot/app/types';
 import { I18n } from '@grammyjs/i18n';
 
-import { BotCommandsWithDescription, botName } from '../constants';
+import { BotCommandDescription, botName } from '../constants';
 
 export const mapBotCommands = (i18n: I18n<BotContextType>, languageCode = 'en') =>
-  BotCommandsWithDescription.map(({ command, i18nKey }) => ({
+  BotCommandDescription.map(({ command, i18nKey }) => ({
     command,
     description: i18n.t(languageCode, i18nKey),
   }));

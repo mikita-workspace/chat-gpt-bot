@@ -1,5 +1,5 @@
 import { MODEL_GPT_DEFAULT } from '@bot/api/gpt/constants';
-import { LocaleCodes } from '@bot/common/constants';
+import { LocaleCode } from '@bot/common/constants';
 import { handleBotError, mapBotCommands, mapBotDescription } from '@bot/common/helpers';
 import {
   authQueryComposer,
@@ -32,7 +32,7 @@ export const createBot = () => {
   const bot = new Bot<BotContextType>(config.TELEGRAM_TOKEN);
 
   const i18n = new I18n<BotContextType>({
-    defaultLocale: LocaleCodes.ENGLISH,
+    defaultLocale: LocaleCode.ENGLISH,
     globalTranslationContext: (ctx) => ({
       firstName: ctx?.from?.first_name ?? '',
       lastName: ctx?.from?.last_name ?? '',
@@ -42,7 +42,7 @@ export const createBot = () => {
     directory: path.join(__dirname, '../locales'),
   });
 
-  Object.values(LocaleCodes).forEach(async (languageCode) => {
+  Object.values(LocaleCode).forEach(async (languageCode) => {
     await bot.api.setMyDescription(mapBotDescription(i18n, languageCode), {
       language_code: languageCode,
     });

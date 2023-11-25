@@ -1,12 +1,12 @@
 import { PROMO_ACCOUNT_LEVEL } from '@bot/api/clients/constants';
 import { BotType } from '@bot/app/types';
-import { BotCommands } from '@bot/common/constants';
+import { BotCommand } from '@bot/common/constants';
 import { expiresInFormat } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
 import { getClientAvailability } from 'api/clients';
 
 export const profileModule = (bot: BotType) =>
-  bot.command(BotCommands.PROFILE, async (ctx) => {
+  bot.command(BotCommand.PROFILE, async (ctx) => {
     const telegramId = Number(ctx.message?.from?.id);
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();

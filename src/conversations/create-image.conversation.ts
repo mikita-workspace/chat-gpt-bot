@@ -1,6 +1,6 @@
 import { generateImages } from '@bot/api/gpt';
 import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
-import { BotCommands } from '@bot/common/constants';
+import { BotCommand } from '@bot/common/constants';
 import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
@@ -36,7 +36,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
       message: { text: prompt },
     } = await conversation.waitFor('message:text');
 
-    if (Object.values(BotCommands).includes(prompt.slice(1) as BotCommands)) {
+    if (Object.values(BotCommand).includes(prompt.slice(1) as BotCommand)) {
       return await ctx.reply(ctx.t('image-empty-input', { command: prompt }));
     }
 
@@ -49,7 +49,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
         message: { text: amount },
       } = await conversation.waitFor('message:text');
 
-      if (Object.values(BotCommands).includes(amount.slice(1) as BotCommands)) {
+      if (Object.values(BotCommand).includes(amount.slice(1) as BotCommand)) {
         return await ctx.reply(ctx.t('image-empty-input', { command: amount }));
       }
 
