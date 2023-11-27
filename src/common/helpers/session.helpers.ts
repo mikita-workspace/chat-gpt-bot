@@ -5,7 +5,7 @@ import {
 } from '@bot/api/gpt/constants';
 import { SessionType } from '@bot/app/types';
 
-export const resetSelectedModel = (): SessionType['client']['selectedModel'] => ({
+export const resetSelectedModel = (): SessionType['selectedModel'] => ({
   gpt: {
     model: MODEL_GPT_DEFAULT.model,
     title: MODEL_GPT_DEFAULT.title,
@@ -30,7 +30,6 @@ export const createInitialClientSession = (): SessionType['client'] => ({
     username: '',
   },
   accountLevel: null,
-  selectedModel: resetSelectedModel(),
 });
 
 export const createInitialStoreSession = (): SessionType['store'] => ({ data: null });

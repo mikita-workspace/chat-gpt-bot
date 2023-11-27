@@ -14,7 +14,7 @@ export const generateImageConversation: ConversationType = async (conversation, 
     const messageId = Number(ctx?.message?.message_id);
     const locale = await conversation.external(() => ctx.i18n.getLocale());
 
-    const { image } = conversation.session.client.selectedModel;
+    const { image } = conversation.session.selectedModel;
     const clientAccountLevel = conversation.session.client.accountLevel;
 
     if (

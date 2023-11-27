@@ -9,7 +9,7 @@ export const aboutModule = (bot: BotType) =>
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
-    const { gpt, speech, image } = ctx.session.client.selectedModel;
+    const { gpt, speech, image } = ctx.session.selectedModel;
 
     const releases = await getGithubReleases();
 

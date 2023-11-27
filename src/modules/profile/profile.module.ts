@@ -3,7 +3,7 @@ import { BotType } from '@bot/app/types';
 import { BotCommand } from '@bot/common/constants';
 import { expiresInFormat } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
-import { getClientAvailability } from 'api/clients';
+import { getClientAvailability, updateClientMetadata } from 'api/clients';
 
 export const profileModule = (bot: BotType) =>
   bot.command(BotCommand.PROFILE, async (ctx) => {
@@ -16,6 +16,8 @@ export const profileModule = (bot: BotType) =>
 
     const clientAccountLevel = ctx.session.client.accountLevel;
     const metadata = ctx.session.client.metadata;
+
+    await updateClientMetadata(telegramId, metadata);
 
     const profileMessageHtml = `<b>${ctx.t('profile-client-initial-message', {
       firstname: metadata.firstname || ctx.t('profile-client-incognito'),

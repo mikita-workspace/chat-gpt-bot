@@ -18,16 +18,19 @@ export const supportConversation: ConversationType = async (conversation, ctx) =
       ? availability.state.isApproved || availability.state.isBlocked
       : false;
 
-    const topics = (await conversation.external(() => getCsmTopics(telegramId))).filter(
-      (topic) => topic.isPrivate === isAuth,
-    );
+    const topics = await conversation.external(() => getCsmTopics(telegramId));
+
+    if (!topics.length) {
+      return await ctx.reply(ctx.t('error-message-common'), { reply_to_message_id: messageId });
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const otherTopic = topics.find(({ key }) => key === 'other')!;
 
     const inlineTopics = [
       ...topics
-        .reduce<string[]>((acc, { name, key }) => {
-          if (key !== 'other') {
+        .reduce<string[]>((acc, { name, key, isPrivate }) => {
+          if (key !== 'other' && isPrivate === isAuth) {
             acc.push(getMessageByAvailableLocale(name, locale));
           }
 
@@ -36,10 +39,6 @@ export const supportConversation: ConversationType = async (conversation, ctx) =
         .sort(),
       getMessageByAvailableLocale(otherTopic.name, locale),
     ];
-
-    if (!inlineTopics.length) {
-      return await ctx.reply(ctx.t('error-message-common'), { reply_to_message_id: messageId });
-    }
 
     await ctx.reply(ctx.t('support-select-topic'), {
       reply_markup: supportKeyboard(inlineTopics),

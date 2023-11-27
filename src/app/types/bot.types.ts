@@ -13,20 +13,20 @@ export type SessionType = {
     messages: SessionMessageType[];
     metadata: ClientMetadata;
     accountLevel: ClientAccountLevel | null;
-    selectedModel: {
-      speech: {
-        model: string;
-        title: string;
-      };
-      gpt: {
-        model: string;
-        title: string;
-      };
-      image: {
-        model: string;
-        title: string;
-        max: number;
-      };
+  };
+  selectedModel: {
+    speech: {
+      model: string;
+      title: string;
+    };
+    gpt: {
+      model: string;
+      title: string;
+    };
+    image: {
+      model: string;
+      title: string;
+      max: number;
     };
   };
   store: {
