@@ -39,6 +39,10 @@ auth-error = Access is denied.
 
 # Support
 support-contact = If you have any questions, press /support.
+support-select-topic = Select the topic of the appeal.
+support-enter-description = Describe your problem or idea.
+support-success = 🤖 Your request { $csm } has been accepted. We will try to solve your question promptly. Thanks!
+support-error = 😬 Oops! It looks like you want to move to another section. Press { $command } again!
 
 # Feedback
 feedback-like = 👍
@@ -66,7 +70,7 @@ profile-client-select-model = Selected GPT model:
 profile-client-available-messages = GPT tokens:
 profile-client-available-images = GPT images:
 profile-client-date-expires = Available tokens will be updated { $expiresIn }.
-profile-client-promo-date-expires = The promotion expires { $expiresIn }.
+profile-client-promo-date-expires = The Promo account expires { $expiresIn }.
 profile-client-incognito = Incognito
 profile-client-unavailable-info = 🤖 Your tokens will appear here when you write any message to the bot.
 

@@ -1,5 +1,6 @@
 import { BotContextType } from '@bot/app/types';
 import { AuthAction, CommonAction, FeedbackAction } from '@bot/common/constants';
+import { chunkIntoN } from '@bot/common/utils';
 import { InlineKeyboard, Keyboard } from 'grammy';
 
 export const inlineGoToChat = (ctx: BotContextType) =>
@@ -29,7 +30,13 @@ export const inlineFeedback = (ctx: BotContextType, options?: { isImageGenerator
 };
 
 export const gptKeyboard = (models: string[]) => {
-  const buttonRows = models.map((label) => [Keyboard.text(label)]);
+  const buttonRows = models.map((model) => [Keyboard.text(model)]);
+
+  return Keyboard.from(buttonRows).resized();
+};
+
+export const supportKeyboard = (topics: string[]) => {
+  const buttonRows = chunkIntoN(topics, 2);
 
   return Keyboard.from(buttonRows).resized();
 };

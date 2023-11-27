@@ -2,7 +2,11 @@ import { giveClientFeedback } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { FeedbackAction } from '@bot/common/constants';
 import { CommonAction } from '@bot/common/constants';
-import { changeGptModelConversation, generateImageConversation } from '@bot/conversations';
+import {
+  changeGptModelConversation,
+  generateImageConversation,
+  supportConversation,
+} from '@bot/conversations';
 import { Composer, Middleware } from 'grammy';
 
 const composer = new Composer<BotContextType>();
@@ -10,6 +14,7 @@ const composer = new Composer<BotContextType>();
 composer.callbackQuery(CommonAction.GO_TO_CHAT, async (ctx) => {
   await ctx.conversation.exit(changeGptModelConversation.name);
   await ctx.conversation.exit(generateImageConversation.name);
+  await ctx.conversation.exit(supportConversation.name);
 
   await ctx.deleteMessage();
   await ctx.reply(ctx.t('start-message'));

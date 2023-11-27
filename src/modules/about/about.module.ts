@@ -18,7 +18,7 @@ export const aboutModule = (bot: BotType) =>
         const { repoName, name, htmlUrl, publishedAt } = release;
 
         return `<code>${repoName}</code>\n\r<a href="${htmlUrl}">${name}</a> (${formatDate(
-          new Date(publishedAt),
+          publishedAt,
           DATE_FORMAT,
           locale,
         )})\n\r`;
