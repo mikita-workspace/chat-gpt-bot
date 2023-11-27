@@ -9,8 +9,8 @@ An [**Client**](https://t.me/novachat_gpt_bot) bot for an intelligent bot capabl
 ## Getting Started
 > **Note**: The production build uses a [Webhook](https://core.telegram.org/bots/webhooks).
 ```bash
-yarn build
-yarn start
+docker compose up --build
+docker compose down
 ```
 ## Support GPT models
 ```
