@@ -29,7 +29,7 @@ export const voiceModule = (bot: BotType) => {
 
       const message = await gptLoader(ctx, messageId);
 
-      const { speech: selectedSpeechModel } = ctx.session.client.selectedModel;
+      const { speech: selectedSpeechModel } = ctx.session.selectedModel;
 
       const filename = (await ctx.getFile()).file_path ?? '';
 

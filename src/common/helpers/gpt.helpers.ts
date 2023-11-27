@@ -10,7 +10,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   const telegramId = Number(ctx.message?.from?.id);
   const messageId = Number(ctx.message?.message_id);
 
-  const { gpt: selectedGpt } = ctx.session.client.selectedModel;
+  const { gpt: selectedGpt } = ctx.session.selectedModel;
   const currentAccountLevelName = ctx.session.client.accountLevel?.name;
 
   ctx.session.client.messages.push({
@@ -40,7 +40,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   ctx.session.client.accountLevel = clientAccountLevel;
 
   if (!clientAccountLevel.gptModels.includes(selectedGpt.model)) {
-    ctx.session.client.selectedModel = resetSelectedModel();
+    ctx.session.selectedModel = resetSelectedModel();
   }
 
   if (clientAccountLevel.name !== currentAccountLevelName) {

@@ -43,7 +43,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       gpt: selectedGptModel,
       image: selectedImageModel,
       speech: selectedSpeechModel,
-    } = conversation.session.client.selectedModel;
+    } = conversation.session.selectedModel;
 
     await ctx.reply(ctx.t('gpt-model-change-title'), {
       reply_markup: gptKeyboard(inlineClientGptModels),
@@ -68,7 +68,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       associated.includes(newGptModel?.model || ''),
     );
 
-    conversation.session.client.selectedModel = {
+    conversation.session.selectedModel = {
       gpt: {
         model: newGptModel?.model || selectedGptModel.model,
         title: newGptModel?.title || selectedGptModel.title,
@@ -84,7 +84,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       },
     };
 
-    const changedModels = conversation.session.client.selectedModel;
+    const changedModels = conversation.session.selectedModel;
 
     return await ctx.reply(
       `${ctx.t('gpt-model-change-success')}\n\r\n\r<b>${ctx.t('about-gpt-model')}</b> <s>${

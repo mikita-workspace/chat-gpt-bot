@@ -1,7 +1,12 @@
 import { BotContextType, SessionType } from '@bot/app/types';
 import { ONE_HOUR_MS } from '@bot/common/constants';
-import { createInitialClientSession, createInitialStoreSession } from '@bot/common/helpers';
+import {
+  createInitialClientSession,
+  createInitialStoreSession,
+  resetSelectedModel,
+} from '@bot/common/helpers';
 import { config } from '@bot/config';
+import { freeStorage } from '@grammyjs/storage-free';
 import { RedisAdapter } from '@grammyjs/storage-redis';
 import { StorageAdapter } from '@grammyjs/storage-redis/dist/cjs/deps.node';
 import {
@@ -43,6 +48,10 @@ composer.use(
     client: {
       storage: clientStorage,
       initial: createInitialClientSession,
+    },
+    selectedModel: {
+      storage: freeStorage<SessionType['selectedModel']>(config.TELEGRAM_TOKEN),
+      initial: resetSelectedModel,
     },
     store: {
       initial: createInitialStoreSession,
