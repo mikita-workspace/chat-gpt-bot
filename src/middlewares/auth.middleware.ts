@@ -3,6 +3,7 @@ import { BotContextType } from '@bot/app/types';
 import { inlineAuthButton } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 import { BotCommand } from 'common/constants';
+import { resetSelectedModel } from 'common/helpers';
 
 import { GrammyMiddlewareFn } from './types';
 
@@ -34,6 +35,8 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
     const { isApproved, isBlocked } = availability.state;
 
     if (isApproved && !isBlocked) {
+      ctx.session.selectedModel = resetSelectedModel();
+
       return await next();
     }
 
@@ -53,7 +56,6 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
 
     return;
   } catch (error) {
-    console.log(error);
     return;
   }
 };
