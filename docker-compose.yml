@@ -1,0 +1,14 @@
+version: '3.9' 
+
+services:
+  client:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    command: yarn start:prod
+    volumes:
+      - .:/usr/src/app
+    env_file:
+    - .env.production
+    ports:
+      - 50:50

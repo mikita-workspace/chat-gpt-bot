@@ -17,7 +17,7 @@ const botInitialize = async () => {
     app.use(express.json());
     app.use(webhookCallback(bot, 'express', handleTimeoutError, WEBHOOK_TIMEOUT));
 
-    app.listen(config.PORT, () => {
+    app.listen(config.PORT, '0.0.0.0', () => {
       // eslint-disable-next-line no-console
       console.info(`Bot listening on port ${config.PORT}`);
     });
