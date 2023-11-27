@@ -1,12 +1,6 @@
 import { BotType } from '@bot/app/types';
 import { BotCommand } from '@bot/common/constants';
+import { supportConversation } from '@bot/conversations';
 
 export const supportModule = (bot: BotType) =>
-  bot.command(BotCommand.SUPPORT, async (ctx) => {
-    const messageId = Number(ctx.message?.message_id);
-
-    // TODO: Will be implemented here: https://app.asana.com/0/1205877070000801/1205877070000832/f
-    return ctx.reply(ctx.t('unavailable-section'), {
-      reply_to_message_id: messageId,
-    });
-  });
+  bot.command(BotCommand.SUPPORT, async (ctx) => ctx.conversation.enter(supportConversation.name));

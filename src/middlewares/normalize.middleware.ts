@@ -1,4 +1,4 @@
-import { updateClientAccountLevel } from '@bot/api/clients';
+import { getClientAvailability, updateClientAccountLevel } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { splitMessagesByTokenLimit } from '@bot/common/helpers/gpt.helpers';
 import { isExpiredDate } from '@bot/common/utils';
@@ -11,6 +11,12 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
 
   const sessionMessages = ctx.session.client.messages;
   const clientAccountLevel = ctx.session.client.accountLevel;
+
+  const availability = await getClientAvailability(telegramId);
+
+  if (availability) {
+    ctx.session.client.accountLevel = availability.accountLevel;
+  }
 
   ctx.session.client.metadata = {
     firstname: ctx?.from?.first_name || '',
@@ -30,11 +36,6 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   if (tailSessionMessages.length > 0) {
     ctx.session.client.messages = headSessionMessages;
   }
-
-  // TODO
-  // if (differenceInMilliseconds(new Date(), fromUnixTime(lastMessageTimestamp)) >= ONE_HOUR_MS) {
-  //   await updateClientMetadata(telegramId, ctx.session.client.metadata);
-  // }
 
   return next();
 };

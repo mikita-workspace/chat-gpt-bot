@@ -44,15 +44,16 @@ export const getTimestampPlusDays = (days = 0, startDate = getTimestampUtc()) =>
   return getTimestampUtc(newDate);
 };
 
-export const isExpiredDate = (expiresAt: Date) => compareAsc(getTimestampUtc(), expiresAt) > 0;
+export const isExpiredDate = (expiresAt: Date | string) =>
+  compareAsc(getTimestampUtc(), getTimestampUtc(expiresAt)) > 0;
 
-export const expiresInMs = (expiresAt: Date) =>
-  Math.abs(differenceInMilliseconds(getTimestampUtc(), expiresAt));
+export const expiresInMs = (expiresAt: Date | string) =>
+  Math.abs(differenceInMilliseconds(getTimestampUtc(), getTimestampUtc(expiresAt)));
 
-export const expiresInFormat = (expiresAt: Date, locale = 'en') => {
+export const expiresInFormat = (expiresAt: Date | string, locale = 'en') => {
   const clientLocale = convertLocale(locale);
 
-  return formatDistance(expiresAt, getTimestampUtc(), {
+  return formatDistance(getTimestampUtc(expiresAt), getTimestampUtc(), {
     addSuffix: true,
     locale: clientLocale,
   });
@@ -60,8 +61,8 @@ export const expiresInFormat = (expiresAt: Date, locale = 'en') => {
 
 export const fromMsToMins = (ms: number | string) => parseInt(String(ms), 10) / MIN_IN_MS;
 
-export const formatDate = (date: Date, template: string, locale = 'en') => {
+export const formatDate = (date: Date | string, template: string, locale = 'en') => {
   const clientLocale = convertLocale(locale);
 
-  return format(date, template, { locale: clientLocale });
+  return format(getTimestampUtc(date), template, { locale: clientLocale });
 };

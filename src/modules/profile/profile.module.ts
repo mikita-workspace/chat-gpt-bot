@@ -11,11 +11,8 @@ export const profileModule = (bot: BotType) =>
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
-    if (!ctx.session.client.accountLevel) {
-      const availability = await getClientAvailability(telegramId);
-
-      ctx.session.client.accountLevel = availability?.accountLevel ?? null;
-    }
+    const availability = await getClientAvailability(telegramId);
+    ctx.session.client.accountLevel = availability?.accountLevel ?? null;
 
     const clientAccountLevel = ctx.session.client.accountLevel;
     const metadata = ctx.session.client.metadata;

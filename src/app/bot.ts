@@ -5,6 +5,7 @@ import {
   authQueryComposer,
   callbackQueryComposer,
   conversationComposer,
+  publicConversationComposer,
   sessionComposer,
 } from '@bot/composers';
 import { config } from '@bot/config';
@@ -62,11 +63,13 @@ export const createBot = () => {
 
   bot.use(i18n);
 
+  bot.use(sessionComposer());
+
+  bot.use(publicConversationComposer());
+
   bot.use(authQueryComposer());
 
   bot.use(auth());
-
-  bot.use(sessionComposer());
 
   bot.use(normalize());
 

@@ -13,8 +13,8 @@ export enum BotCommand {
 export const BotCommandDescription = [
   { command: BotCommand.RESTART, i18nKey: 'command-restart' },
   { command: BotCommand.IMAGE, i18nKey: 'command-image' },
-  { command: BotCommand.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommand.CHANGE_MODEL, i18nKey: 'command-change-model' },
+  { command: BotCommand.PROFILE, i18nKey: 'command-profile' },
   { command: BotCommand.ABOUT, i18nKey: 'command-about' },
   { command: BotCommand.SUPPORT, i18nKey: 'command-support' },
 ];

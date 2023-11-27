@@ -1,5 +1,7 @@
 import { unlink } from 'fs/promises';
 
+import { LocaleCode } from '../constants';
+
 export const isEmptyObject = (object: object) => Object.keys(object).length === 0;
 
 export const getKeyByValue = (object: object, value: string) => {
@@ -51,3 +53,9 @@ export const chunkIntoN = <T>(arr: T[], n: number) =>
 
     return resultArray;
   }, []);
+
+export const getMessageByAvailableLocale = (
+  message: Record<string, string>,
+  targetLocale: string,
+) =>
+  Object.keys(message).includes(targetLocale) ? message[targetLocale] : message[LocaleCode.ENGLISH];

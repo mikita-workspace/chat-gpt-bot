@@ -2,6 +2,7 @@ import { getClientAvailability } from '@bot/api/clients';
 import { BotContextType } from '@bot/app/types';
 import { inlineAuthButton } from '@bot/keyboards';
 import { Logger } from '@bot/services';
+import { BotCommand } from 'common/constants';
 
 import { GrammyMiddlewareFn } from './types';
 
@@ -11,7 +12,13 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
     const telegramId = Number(ctx?.from?.id);
     const messageId = Number(ctx?.message?.message_id);
 
+    const isSupportCommand = ctx?.message?.text?.slice(1) === BotCommand.SUPPORT;
+
     Logger.defaultMeta = { username, telegramId };
+
+    if (isSupportCommand) {
+      return await next();
+    }
 
     const availability = await getClientAvailability(telegramId);
 
@@ -43,7 +50,10 @@ export const auth = (): GrammyMiddlewareFn<BotContextType> => async (ctx, next) 
     }
 
     await ctx.reply(`${ctx.t('auth-error')} ${ctx.t('support-contact')}`);
+
+    return;
   } catch (error) {
+    console.log(error);
     return;
   }
 };
