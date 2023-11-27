@@ -33,9 +33,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       [[], [], []],
     );
 
-    const inlineClientGptModels = clientGptModels
-      .map(({ title, creator }) => `${title} by ${creator}`)
-      .sort();
+    const inlineClientGptModels = clientGptModels.map(({ title }) => title).sort();
 
     if (!inlineClientGptModels.length) {
       return await ctx.reply(ctx.t('error-message-common'), { reply_to_message_id: messageId });
@@ -52,23 +50,16 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     });
 
     const {
-      message: { text },
+      message: { text: gptTitle },
     } = await conversation.waitFor('message:text');
 
-    if (Object.values(BotCommand).includes(text.slice(1) as BotCommand)) {
-      return await ctx.reply(ctx.t('error-message-change-gpt-model', { command: text }), {
+    if (Object.values(BotCommand).includes(gptTitle.slice(1) as BotCommand)) {
+      return await ctx.reply(ctx.t('error-message-change-gpt-model', { command: gptTitle }), {
         reply_markup: { remove_keyboard: true },
       });
     }
 
-    const [head, tail] = text.split('by');
-
-    const gptTitle = head.trim();
-    const gptCreator = tail.trim();
-
-    const newGptModel = clientGptModels.find(
-      ({ creator, title }) => creator === gptCreator && title === gptTitle,
-    );
+    const newGptModel = clientGptModels.find(({ title }) => title === gptTitle.trim());
 
     const newSpeechModel = clientSpeechModels.find(({ associated }) =>
       associated.includes(newGptModel?.model || ''),
@@ -102,7 +93,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         selectedSpeechModel.title
       }</s> ${changedModels.speech.title}\n\r<b>${ctx.t('about-image-model')}</b> <s>${
         selectedImageModel.title
-      }</s> ${changedModels.image.title}`,
+      }</s> ${changedModels.image.title}\n\r\n\r<b>by ${newGptModel?.creator || ''}</b>`,
       {
         reply_markup: { remove_keyboard: true },
         parse_mode: 'HTML',

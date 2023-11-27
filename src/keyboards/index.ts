@@ -30,7 +30,7 @@ export const inlineFeedback = (ctx: BotContextType, options?: { isImageGenerator
 };
 
 export const gptKeyboard = (models: string[]) => {
-  const buttonRows = models.map((model) => [Keyboard.text(model)]);
+  const buttonRows = chunkIntoN(models, 2);
 
   return Keyboard.from(buttonRows).resized();
 };
