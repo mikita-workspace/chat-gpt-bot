@@ -4,8 +4,8 @@ import { UTCDate } from '@date-fns/utc';
 import { Logger as WinstonLogger } from 'winston';
 
 import {
+  cacheProvider as memoryCache,
   fetchCachedData,
-  memoryCache,
   removeValueFromMemoryCache,
   setValueToMemoryCache,
 } from '../cache.utils';
@@ -24,20 +24,20 @@ describe('util >> memory cache', () => {
     memoryCache.del(key);
   });
 
-  it('sets a key-value pair in the memory cache', () => {
+  it('sets a key-value pair in the memory cache', async () => {
     const expires = 3600; // 1 hour expiry
 
     setValueToMemoryCache(key, value, expires);
 
-    const result = memoryCache.get(key);
+    const result = await memoryCache.get(key);
 
     expect(result).toEqual(value);
   });
 
-  it('sets a key-value pair in the memory cache with default expiry time', () => {
+  it('sets a key-value pair in the memory cache with default expiry time', async () => {
     setValueToMemoryCache(key, value);
 
-    const result = memoryCache.get(key);
+    const result = await memoryCache.get(key);
 
     expect(result).toEqual(value);
   });
@@ -60,10 +60,10 @@ describe('util >> memory cache', () => {
     expect(result).toEqual(data);
   });
 
-  it('remove a key-value pair in the memory cache', () => {
+  it('remove a key-value pair in the memory cache', async () => {
     setValueToMemoryCache(key, value);
 
-    const result = removeValueFromMemoryCache(key);
+    const result = await removeValueFromMemoryCache(key);
 
     expect(result).toEqual(1);
   });

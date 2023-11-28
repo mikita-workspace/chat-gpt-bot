@@ -44,7 +44,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   }
 
   if (clientAccountLevel.name !== currentAccountLevelName) {
-    removeValueFromMemoryCache('cached-gpt-models');
+    await removeValueFromMemoryCache('cached-gpt-models');
   }
 
   return content;

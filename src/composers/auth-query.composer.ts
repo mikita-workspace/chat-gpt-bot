@@ -23,7 +23,7 @@ composer.callbackQuery(AuthAction.GET_AUTH, async (ctx) => {
   await ctx.deleteMessage();
 
   if (client) {
-    removeValueFromMemoryCache('cached-client-availability');
+    await removeValueFromMemoryCache('cached-client-availability');
 
     return ctx.reply(ctx.t('auth-success', { botName: `<b>${config.BOT_NAME}</b>` }), {
       parse_mode: 'HTML',
