@@ -50,7 +50,6 @@ composer.use(
       initial: createInitialClientSession,
     },
     selectedModel: {
-      storage: clientStorage<SessionType['selectedModel']>(),
       initial: resetSelectedModel,
     },
     store: {
