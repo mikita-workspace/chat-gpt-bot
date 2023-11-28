@@ -6,7 +6,6 @@ import {
   resetSelectedModel,
 } from '@bot/common/helpers';
 import { config } from '@bot/config';
-import { freeStorage } from '@grammyjs/storage-free';
 import { RedisAdapter } from '@grammyjs/storage-redis';
 import { StorageAdapter } from '@grammyjs/storage-redis/dist/cjs/deps.node';
 import {
@@ -35,22 +34,23 @@ const storageAdapter = (() => {
   }
 
   return new MemorySessionStorage();
-})() as StorageAdapter<Enhance<SessionType['client']>>;
+})();
 
-const clientStorage = enhanceStorage({
-  storage: storageAdapter,
-  millisecondsToLive: ONE_HOUR_MS,
-});
+const clientStorage = <T>() =>
+  enhanceStorage({
+    storage: storageAdapter as StorageAdapter<Enhance<T>>,
+    millisecondsToLive: ONE_HOUR_MS,
+  });
 
 composer.use(
   session({
     type: 'multi',
     client: {
-      storage: clientStorage,
+      storage: clientStorage<SessionType['client']>(),
       initial: createInitialClientSession,
     },
     selectedModel: {
-      storage: freeStorage<SessionType['selectedModel']>(config.TELEGRAM_TOKEN),
+      storage: clientStorage<SessionType['selectedModel']>(),
       initial: resetSelectedModel,
     },
     store: {
