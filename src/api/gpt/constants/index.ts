@@ -6,6 +6,7 @@ export enum TypeGPT {
   AUDIO = 'audio',
   IMAGE = 'image',
   TEXT = 'text',
+  VISION = 'vision',
 }
 
 export enum MessageRolesGPT {

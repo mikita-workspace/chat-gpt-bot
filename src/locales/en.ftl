@@ -21,6 +21,7 @@ description-message-body = I'm intelligent bot capable of responding to various 
 about-gpt-model = GPT model:
 about-speech-model = Speech model:
 about-image-model = Image model:
+about-vision-model = Vision model:
 about-releases = Releases:
 
 # Errors messages
@@ -56,6 +57,7 @@ feedback-like-response-image-dislike = If you don't like the result, give me ano
 loader-message-start = Great request,
 loader-message-end = 💬 I read it, thinking about the answer...
 loader-message-image-end = 🏙️ Generating an image...
+loader-message-vision-end = 🕵️ Generating a response to your photo...
 
 # Restart
 restart-message = Let's start with a clean slate 😊
@@ -85,3 +87,9 @@ usage-image-limit = You have used up all the images. Try again { $expiresIn }.
 
 # Unavailable section
 unavailable-section = 👷 This section is under development.
+
+# Vision
+vision-incorrect-extension = 📂 Invalid file extension. Available extensions are { $extensions }.
+vision-enter-query = 🤔 Enter your request for the uploaded image.
+vision-empty-query = 😬 Oops! It looks like you want to move to another section. Press { $command } again!
+vision-denied = 🚫 It seems that this functionality is not available to you.

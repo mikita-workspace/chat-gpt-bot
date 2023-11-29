@@ -12,6 +12,7 @@ import { config } from '@bot/config';
 import { auth, normalize } from '@bot/middlewares';
 import { aboutModule } from '@bot/modules/about';
 import { changeModule } from '@bot/modules/change';
+import { fileModule } from '@bot/modules/file';
 import { imageModule } from '@bot/modules/image';
 import { profileModule } from '@bot/modules/profile';
 import { restartModule } from '@bot/modules/restart';
@@ -20,6 +21,7 @@ import { supportModule } from '@bot/modules/support';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
 import { autoRetry } from '@grammyjs/auto-retry';
+import { hydrateFiles } from '@grammyjs/files';
 import { hydrate } from '@grammyjs/hydrate';
 import { I18n } from '@grammyjs/i18n';
 import { limit as rateLimit } from '@grammyjs/ratelimiter';
@@ -57,6 +59,8 @@ export const createBot = () => {
 
   bot.api.config.use(apiThrottler());
 
+  bot.api.config.use(hydrateFiles(config.TELEGRAM_TOKEN));
+
   bot.use(rateLimit());
 
   bot.use(hydrate());
@@ -80,6 +84,7 @@ export const createBot = () => {
   [
     aboutModule,
     changeModule,
+    fileModule,
     imageModule,
     profileModule,
     restartModule,

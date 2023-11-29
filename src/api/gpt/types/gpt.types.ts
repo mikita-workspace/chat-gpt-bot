@@ -24,6 +24,8 @@ export type ChatCompletionResponse = {
   };
 };
 
+export type VisionCompletionResponse = ChatCompletionResponse;
+
 export type TranscriptionResponse = { text: string };
 
 export type GenerateImagesResponse = {
