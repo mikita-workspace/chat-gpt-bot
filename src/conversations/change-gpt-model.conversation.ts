@@ -12,10 +12,10 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     const telegramId = Number(ctx?.from?.id);
     const messageId = Number(ctx.message?.message_id);
 
-    const [clientGptModels, clientSpeechModels, clientImageModels] = (
+    const [clientGptModels, clientSpeechModels, clientImageModels, clientVisionModels] = (
       await conversation.external(() => getGptModels(telegramId))
-    ).reduce<[GptModelResponse[], GptModelResponse[], GptModelResponse[]]>(
-      ([gptModels, speechModels, imageModels], model) => {
+    ).reduce<[GptModelResponse[], GptModelResponse[], GptModelResponse[], GptModelResponse[]]>(
+      ([gptModels, speechModels, imageModels, visionModels], model) => {
         if (model.type === TypeGPT.TEXT) {
           gptModels.push(model);
         }
@@ -28,9 +28,13 @@ export const changeGptModelConversation: ConversationType = async (conversation,
           imageModels.push(model);
         }
 
-        return [gptModels, speechModels, imageModels];
+        if (model.type === TypeGPT.VISION) {
+          visionModels.push(model);
+        }
+
+        return [gptModels, speechModels, imageModels, visionModels];
       },
-      [[], [], []],
+      [[], [], [], []],
     );
 
     const inlineClientGptModels = clientGptModels.map(({ title }) => title).sort();
@@ -67,6 +71,9 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     const newImageModel = clientImageModels.find(({ associated }) =>
       associated.includes(newGptModel?.model || ''),
     );
+    const newVisionModel = clientVisionModels.find(({ associated }) =>
+      associated.includes(newGptModel?.model || ''),
+    );
 
     conversation.session.selectedModel = {
       gpt: {
@@ -82,6 +89,10 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         model: newImageModel?.model || MODEL_IMAGE_DEFAULT.model,
         title: newImageModel?.title || MODEL_IMAGE_DEFAULT.title,
       },
+      vision: {
+        model: newVisionModel?.model || null,
+        title: newVisionModel?.title || null,
+      },
     };
 
     const changedModels = conversation.session.selectedModel;
@@ -93,7 +104,11 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         selectedSpeechModel.title
       }</s> ${changedModels.speech.title}\n\r<b>${ctx.t('about-image-model')}</b> <s>${
         selectedImageModel.title
-      }</s> ${changedModels.image.title}\n\r\n\r<b>by ${newGptModel?.creator || ''}</b>`,
+      }</s> ${changedModels.image.title}${
+        changedModels.vision.title
+          ? `\n\r<b>${ctx.t('about-vision-model')}</b> ${changedModels.vision.title}`
+          : ''
+      }\n\r\n\r<b>by ${newGptModel?.creator || ''}</b>`,
       {
         reply_markup: { remove_keyboard: true },
         parse_mode: 'HTML',

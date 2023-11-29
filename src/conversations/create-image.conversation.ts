@@ -1,10 +1,10 @@
 import { generateImages } from '@bot/api/gpt';
 import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
 import { BotCommand } from '@bot/common/constants';
+import { gptLoader } from '@bot/common/helpers';
 import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
-import { gptLoader } from 'common/helpers';
 
 import { ConversationType } from './types';
 

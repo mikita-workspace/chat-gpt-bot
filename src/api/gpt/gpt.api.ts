@@ -3,6 +3,7 @@ import {
   GenerateImagesResponse,
   GptModelResponse,
   TranscriptionResponse,
+  VisionCompletionResponse,
 } from '@bot/api/gpt/types';
 import { fetchCachedData } from '@bot/common/utils';
 import { config } from '@bot/config';
@@ -114,6 +115,41 @@ export const generateImages = async (
   } catch (error) {
     Logger.error({
       context: 'src/api/gpt/gpt.api.ts::generateImages',
+      message: error.message,
+      stack: JSON.stringify(error),
+    });
+
+    return null;
+  }
+};
+
+export const visionCompletion = async (
+  message: string,
+  messageId: number,
+  filename: string,
+  telegramId: number,
+  model: string,
+) => {
+  const useCloudinary = config.USE_CLOUDINARY === 'true';
+
+  try {
+    const response = await axios<VisionCompletionResponse>({
+      method: 'post',
+      data: {
+        filename,
+        message,
+        messageId,
+        model,
+        telegramId,
+        useCloudinary,
+      },
+      url: `${config.CHAT_GPT_API_HOST}/api/v1/gpt/visionCompletions`,
+    });
+
+    return response.data;
+  } catch (error) {
+    Logger.error({
+      context: 'src/api/gpt/gpt.api.ts::visionCompletion',
       message: error.message,
       stack: JSON.stringify(error),
     });

@@ -19,6 +19,10 @@ export const resetSelectedModel = (): SessionType['selectedModel'] => ({
     model: MODEL_IMAGE_DEFAULT.model,
     title: MODEL_IMAGE_DEFAULT.title,
   },
+  vision: {
+    model: null,
+    title: null,
+  },
 });
 
 export const createInitialClientSession = (): SessionType['client'] => ({

@@ -6,6 +6,7 @@ import {
   changeGptModelConversation,
   generateImageConversation,
   supportConversation,
+  visionConversation,
 } from '@bot/conversations';
 import { Composer, Middleware } from 'grammy';
 
@@ -15,6 +16,7 @@ composer.callbackQuery(CommonAction.GO_TO_CHAT, async (ctx) => {
   await ctx.conversation.exit(changeGptModelConversation.name);
   await ctx.conversation.exit(generateImageConversation.name);
   await ctx.conversation.exit(supportConversation.name);
+  await ctx.conversation.exit(visionConversation.name);
 
   await ctx.deleteMessage();
   await ctx.reply(ctx.t('start-message'));

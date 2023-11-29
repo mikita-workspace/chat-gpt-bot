@@ -1,6 +1,7 @@
 import { ClientAccountLevel, ClientMetadata } from '@bot/api/clients/types';
 import { MessageRolesGPT } from '@bot/api/gpt/constants';
 import { ConversationFlavor } from '@grammyjs/conversations';
+import { FileFlavor } from '@grammyjs/files';
 import { HydrateFlavor } from '@grammyjs/hydrate';
 import { I18nFlavor } from '@grammyjs/i18n';
 import { MenuFlavor } from '@grammyjs/menu';
@@ -28,14 +29,18 @@ export type SessionType = {
       title: string;
       max: number;
     };
+    vision: {
+      model: string | null;
+      title: string | null;
+    };
   };
   store: {
     data: unknown;
   };
 };
 
-export type BotContextType = HydrateFlavor<
-  Context & SessionFlavor<SessionType> & I18nFlavor & MenuFlavor & ConversationFlavor
+export type BotContextType = FileFlavor<
+  HydrateFlavor<Context & SessionFlavor<SessionType> & I18nFlavor & MenuFlavor & ConversationFlavor>
 >;
 
 export type BotType = Bot<BotContextType>;

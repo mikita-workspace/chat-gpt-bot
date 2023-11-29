@@ -69,3 +69,5 @@ export enum FeedbackAction {
   LIKE = 'like-feedback-action',
   LIKE_IMAGE = 'like-image-feedback-action',
 }
+
+export const FILE_EXTENSIONS = ['jpg', 'jpeg', 'png'];
