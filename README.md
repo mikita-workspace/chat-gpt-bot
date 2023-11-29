@@ -26,12 +26,14 @@ general (Premium)
 Image:
 dall-e-2 (Base)
 dall-e-3 (Promo & Premium)
+
+Vision:
+gpt-4-vision-preview (Premium)
 ```
 ## Support languages
 ```
 en: English
 ru: Russian
-be: Belarusian
 ```
 ## License
 Distributed under the [Apache License 2.0](LICENSE).
