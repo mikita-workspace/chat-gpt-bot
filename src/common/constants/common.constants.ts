@@ -64,10 +64,14 @@ export enum AuthAction {
 }
 
 export enum FeedbackAction {
+  CRY_IMAGE = 'cry-image-feedback-action',
   DISLIKE = 'dislike-feedback-action',
   DISLIKE_IMAGE = 'dislike-image-feedback-action',
   LIKE = 'like-feedback-action',
   LIKE_IMAGE = 'like-image-feedback-action',
+  NEUTRAL_IMAGE = 'neutral-image-feedback-action',
+  SMILE_IMAGE = 'smile-image-feedback-action',
+  ZANY_IMAGE = 'zany-image-feedback-action',
 }
 
 export const FILE_EXTENSIONS = ['jpg', 'jpeg', 'png'];

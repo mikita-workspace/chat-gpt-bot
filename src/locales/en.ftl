@@ -48,6 +48,10 @@ support-error = 😬 Oops! It looks like you want to move to another section. Pr
 # Feedback
 feedback-like = 👍
 feedback-dislike = 👎
+feedback-zany = 🤪
+feedback-smile = 🤩
+feedback-neutral = 😑
+feedback-cry = 😫
 feedback-like-response-first = 🤗 Thank you for your feedback! I'm very pleased
 feedback-like-response-second = 🙏 Thank you for your feedback! Glad I could help.
 feedback-like-response-dislike = If you don't like my answer, give me another chance and press /restart. I'll think about it better 🤔

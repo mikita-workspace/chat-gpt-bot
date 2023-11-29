@@ -28,6 +28,10 @@ composer.callbackQuery(
     FeedbackAction.DISLIKE_IMAGE,
     FeedbackAction.LIKE,
     FeedbackAction.LIKE_IMAGE,
+    FeedbackAction.SMILE_IMAGE,
+    FeedbackAction.ZANY_IMAGE,
+    FeedbackAction.NEUTRAL_IMAGE,
+    FeedbackAction.CRY_IMAGE,
   ],
   async (ctx) => {
     const callbackData = ctx.callbackQuery.data as FeedbackAction;
@@ -64,7 +68,14 @@ composer.callbackQuery(
 
     ctx.session.store.data = null;
 
-    if ([FeedbackAction.LIKE, FeedbackAction.LIKE_IMAGE].includes(callbackData)) {
+    if (
+      [
+        FeedbackAction.LIKE,
+        FeedbackAction.LIKE_IMAGE,
+        FeedbackAction.SMILE_IMAGE,
+        FeedbackAction.ZANY_IMAGE,
+      ].includes(callbackData)
+    ) {
       return ctx.reply(positiveFeedback);
     }
 

@@ -16,8 +16,10 @@ export const inlineFeedback = (ctx: BotContextType, options?: { isImageGenerator
   const feedbackLabels = [
     ...(options?.isImageGenerator
       ? [
-          [ctx.t('feedback-like'), FeedbackAction.LIKE_IMAGE],
-          [ctx.t('feedback-dislike'), FeedbackAction.DISLIKE_IMAGE],
+          [ctx.t('feedback-smile'), FeedbackAction.SMILE_IMAGE],
+          [ctx.t('feedback-zany'), FeedbackAction.ZANY_IMAGE],
+          [ctx.t('feedback-neutral'), FeedbackAction.NEUTRAL_IMAGE],
+          [ctx.t('feedback-cry'), FeedbackAction.CRY_IMAGE],
         ]
       : [
           [ctx.t('feedback-like'), FeedbackAction.LIKE],
