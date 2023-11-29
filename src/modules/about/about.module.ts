@@ -9,7 +9,7 @@ export const aboutModule = (bot: BotType) =>
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
-    const { gpt, speech, image } = ctx.session.selectedModel;
+    const { gpt, speech, image, vision } = ctx.session.selectedModel;
 
     const releases = await getGithubReleases();
 
@@ -31,9 +31,11 @@ export const aboutModule = (bot: BotType) =>
       gpt.title
     } (<code>${gpt.model}</code>)\n\r<b>${ctx.t('about-speech-model')}</b> ${speech.title} (<code>${
       speech.model
-    }</code>)\n\r<b>${ctx.t('about-image-model')}</b> ${image.title} (<code>${
-      image.model
-    }</code>)\n\r\n\r<b>${ctx.t('about-releases')}</b>\n\r${releasesHtml}`;
+    }</code>)\n\r<b>${ctx.t('about-image-model')}</b> ${image.title} (<code>${image.model}</code>)${
+      vision.title
+        ? `\n\r<b>${ctx.t('about-vision-model')}</b> ${vision.title} (<code>${vision.model}</code>)`
+        : ''
+    }\n\r\n\r<b>${ctx.t('about-releases')}</b>\n\r${releasesHtml}`;
 
     return ctx.reply(profileMessageHtml, {
       disable_web_page_preview: true,
