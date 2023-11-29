@@ -71,7 +71,6 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
     conversation.session.client.accountLevel = response.clientAccountLevel;
 
     return await message.editText(response.message.content, {
-      parse_mode: 'HTML',
       reply_markup: inlineFeedback(ctx),
       reply_to_message_id: messageId,
     });
