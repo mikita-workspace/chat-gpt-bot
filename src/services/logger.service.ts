@@ -53,6 +53,7 @@ class LoggerService {
         new SlackHook({
           level: 'error',
           webhookUrl: config.SLACK_WEBHOOK,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           formatter: (error: any) => apiErrorPayload(error),
         }),
       ],
