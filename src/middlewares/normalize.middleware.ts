@@ -9,14 +9,14 @@ export const normalize = (): GrammyMiddlewareFn<BotContextType> => async (ctx, n
   const telegramId = Number(ctx.message?.from?.id);
   const locale = await ctx.i18n.getLocale();
 
+  if (!ctx.session.client.accountLevel) {
+    const availability = await getClientAvailability(telegramId);
+
+    ctx.session.client.accountLevel = availability?.accountLevel ?? null;
+  }
+
   const sessionMessages = ctx.session.client.messages;
   const clientAccountLevel = ctx.session.client.accountLevel;
-
-  const availability = await getClientAvailability(telegramId);
-
-  if (availability) {
-    ctx.session.client.accountLevel = availability.accountLevel;
-  }
 
   ctx.session.client.metadata = {
     firstname: ctx?.from?.first_name || '',

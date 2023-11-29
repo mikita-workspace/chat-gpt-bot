@@ -3,19 +3,13 @@ import { BotType } from '@bot/app/types';
 import { BotCommand } from '@bot/common/constants';
 import { expiresInFormat } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
-import { getClientAvailability, updateClientMetadata } from 'api/clients';
+import { updateClientMetadata } from 'api/clients';
 
 export const profileModule = (bot: BotType) =>
   bot.command(BotCommand.PROFILE, async (ctx) => {
     const telegramId = Number(ctx.message?.from?.id);
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
-
-    if (!ctx.session.client.accountLevel) {
-      const availability = await getClientAvailability(telegramId);
-
-      ctx.session.client.accountLevel = availability?.accountLevel ?? null;
-    }
 
     const clientAccountLevel = ctx.session.client.accountLevel;
     const metadata = ctx.session.client.metadata;
