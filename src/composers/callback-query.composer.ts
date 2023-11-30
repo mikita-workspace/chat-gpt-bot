@@ -50,16 +50,18 @@ composer.callbackQuery(
 
     const storeData = typeof ctx.session.store.data === 'string' ? ctx.session.store.data : '';
 
-    const clientMessage = isImageGenerator
-      ? storeData || callbackUpdateMessage?.text?.split(ctx.t('image-feedback'))[0]
-      : callbackUpdateMessage?.text;
+    const clientMessage = storeData || callbackUpdateMessage?.text;
+    const clientImageMessage =
+      storeData || callbackUpdateMessage?.text?.split(ctx.t('image-feedback'))[0];
+
+    const message = isImageGenerator ? clientImageMessage : clientMessage;
 
     await giveClientFeedback(telegramId, messageId, feedback);
 
     await ctx.deleteMessage();
 
-    if (clientMessage && messageId) {
-      await ctx.reply(clientMessage, {
+    if (message && messageId) {
+      await ctx.reply(message, {
         disable_web_page_preview: true,
         parse_mode: isImageGenerator ? 'HTML' : 'Markdown',
         reply_to_message_id: messageId,

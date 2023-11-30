@@ -38,6 +38,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   });
 
   ctx.session.client.accountLevel = clientAccountLevel;
+  ctx.session.store.data = content;
 
   if (!clientAccountLevel.gptModels.includes(selectedGpt.model)) {
     ctx.session.selectedModel = resetSelectedModel();
