@@ -61,7 +61,7 @@ composer.callbackQuery(
     if (clientMessage && messageId) {
       await ctx.reply(clientMessage, {
         disable_web_page_preview: true,
-        parse_mode: isImageGenerator ? 'HTML' : undefined,
+        parse_mode: isImageGenerator ? 'HTML' : 'Markdown',
         reply_to_message_id: messageId,
       });
     }
