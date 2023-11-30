@@ -62,15 +62,18 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
       visionCompletion(query, messageId, filename, telegramId, visionModel as unknown as string),
     );
 
+    await message.delete();
+
     if (!response) {
-      return await message.editText(ctx.t('error-message-common'), {
+      return await ctx.reply(ctx.t('error-message-common'), {
         reply_to_message_id: messageId,
       });
     }
 
     conversation.session.client.accountLevel = response.clientAccountLevel;
 
-    return await message.editText(response.message.content, {
+    return await ctx.reply(response.message.content, {
+      parse_mode: 'Markdown',
       reply_markup: inlineFeedback(ctx),
       reply_to_message_id: messageId,
     });

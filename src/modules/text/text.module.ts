@@ -36,14 +36,17 @@ export const textModule = (bot: BotType) => {
 
       const gptContent = await getGptContent(ctx, text);
 
+      await message.delete();
+
       if (gptContent) {
-        return await message.editText(gptContent, {
-          reply_to_message_id: messageId,
+        return await ctx.reply(gptContent, {
+          parse_mode: 'Markdown',
           reply_markup: inlineFeedback(ctx),
+          reply_to_message_id: messageId,
         });
       }
 
-      return await message.editText(ctx.t('error-message-gpt'), {
+      return await ctx.reply(ctx.t('error-message-gpt'), {
         reply_to_message_id: messageId,
       });
     } catch (error) {
