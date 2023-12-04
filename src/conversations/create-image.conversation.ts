@@ -1,8 +1,8 @@
 import { generateImages } from '@bot/api/gpt';
 import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
-import { BotCommand, SELECTED_MODEL_KEY } from '@bot/common/constants';
+import { BotCommand, SELECTED_MODEL_KEY, TTL_SELECTED_MODEL_CACHE } from '@bot/common/constants';
 import { gptLoader, resetSelectedModel } from '@bot/common/helpers';
-import { expiresInFormat, getValueFromMemoryCache, isExpiredDate } from '@bot/common/utils';
+import { expiresInFormat, fetchCachedData, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -14,11 +14,12 @@ export const generateImageConversation: ConversationType = async (conversation, 
     const messageId = Number(ctx?.message?.message_id);
     const locale = await conversation.external(() => ctx.i18n.getLocale());
 
-    const selectedModel = await conversation.external(
-      async () =>
-        JSON.parse(
-          (await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}',
-        ) || resetSelectedModel(),
+    const selectedModel = await conversation.external(async () =>
+      fetchCachedData(
+        `${SELECTED_MODEL_KEY}-${telegramId}`,
+        resetSelectedModel,
+        TTL_SELECTED_MODEL_CACHE,
+      ),
     );
 
     const { image } = selectedModel;

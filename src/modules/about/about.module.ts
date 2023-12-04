@@ -1,8 +1,14 @@
 import { getGithubReleases } from '@bot/api/github';
 import { BotType } from '@bot/app/types';
-import { BotCommand, botName, DATE_FORMAT, SELECTED_MODEL_KEY } from '@bot/common/constants';
+import {
+  BotCommand,
+  botName,
+  DATE_FORMAT,
+  SELECTED_MODEL_KEY,
+  TTL_SELECTED_MODEL_CACHE,
+} from '@bot/common/constants';
 import { resetSelectedModel } from '@bot/common/helpers';
-import { formatDate, getValueFromMemoryCache } from '@bot/common/utils';
+import { fetchCachedData, formatDate } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
 
 export const aboutModule = (bot: BotType) =>
@@ -11,9 +17,11 @@ export const aboutModule = (bot: BotType) =>
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
-    const selectedModel =
-      JSON.parse((await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}') ||
-      resetSelectedModel();
+    const selectedModel = await fetchCachedData(
+      `${SELECTED_MODEL_KEY}-${telegramId}`,
+      resetSelectedModel,
+      TTL_SELECTED_MODEL_CACHE,
+    );
 
     const { gpt, speech, image, vision } = selectedModel;
 

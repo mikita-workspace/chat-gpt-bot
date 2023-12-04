@@ -1,8 +1,8 @@
 import { transcription } from '@bot/api/gpt';
 import { BotType } from '@bot/app/types';
-import { SELECTED_MODEL_KEY } from '@bot/common/constants';
+import { SELECTED_MODEL_KEY, TTL_SELECTED_MODEL_CACHE } from '@bot/common/constants';
 import { getGptContent, gptLoader, resetSelectedModel } from '@bot/common/helpers';
-import { expiresInFormat, getValueFromMemoryCache, isExpiredDate } from '@bot/common/utils';
+import { expiresInFormat, fetchCachedData, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -30,11 +30,11 @@ export const voiceModule = (bot: BotType) => {
 
       const message = await gptLoader(ctx, messageId);
 
-      const selectedModel =
-        JSON.parse(
-          (await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}',
-        ) || resetSelectedModel();
-
+      const selectedModel = await fetchCachedData(
+        `${SELECTED_MODEL_KEY}-${telegramId}`,
+        resetSelectedModel,
+        TTL_SELECTED_MODEL_CACHE,
+      );
       const { speech: selectedSpeechModel } = selectedModel;
 
       const filename = (await ctx.getFile()).file_path ?? '';

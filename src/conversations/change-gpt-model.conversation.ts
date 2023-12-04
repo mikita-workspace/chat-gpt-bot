@@ -3,7 +3,7 @@ import { MODEL_IMAGE_DEFAULT, MODEL_SPEECH_DEFAULT, TypeGPT } from '@bot/api/gpt
 import { GptModelResponse } from '@bot/api/gpt/types';
 import { BotCommand, SELECTED_MODEL_KEY, TTL_SELECTED_MODEL_CACHE } from '@bot/common/constants';
 import { resetSelectedModel } from '@bot/common/helpers';
-import { getValueFromMemoryCache, setValueToMemoryCache } from '@bot/common/utils';
+import { fetchCachedData, setValueToMemoryCache } from '@bot/common/utils';
 import { gptKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -45,11 +45,12 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       return await ctx.reply(ctx.t('error-message-common'), { reply_to_message_id: messageId });
     }
 
-    const selectedModel = await conversation.external(
-      async () =>
-        JSON.parse(
-          (await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}',
-        ) || resetSelectedModel(),
+    const selectedModel = await conversation.external(async () =>
+      fetchCachedData(
+        `${SELECTED_MODEL_KEY}-${telegramId}`,
+        resetSelectedModel,
+        TTL_SELECTED_MODEL_CACHE,
+      ),
     );
 
     const {

@@ -5,19 +5,17 @@ import { SELECTED_MODEL_KEY, TTL_SELECTED_MODEL_CACHE } from '@bot/common/consta
 import { encode } from 'gpt-3-encoder';
 
 import { resetSelectedModel } from '../helpers';
-import {
-  getValueFromMemoryCache,
-  removeValueFromMemoryCache,
-  setValueToMemoryCache,
-} from '../utils';
+import { fetchCachedData, removeValueFromMemoryCache, setValueToMemoryCache } from '../utils';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {
   const telegramId = Number(ctx.message?.from?.id);
   const messageId = Number(ctx.message?.message_id);
 
-  const selectedModel =
-    JSON.parse((await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}') ||
-    resetSelectedModel();
+  const selectedModel = await fetchCachedData(
+    `${SELECTED_MODEL_KEY}-${telegramId}`,
+    resetSelectedModel,
+    TTL_SELECTED_MODEL_CACHE,
+  );
 
   const { gpt: selectedGpt } = selectedModel;
   const currentAccountLevelName = ctx.session.client.accountLevel?.name;
