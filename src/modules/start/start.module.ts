@@ -5,10 +5,11 @@ import { setValueToMemoryCache } from '@bot/common/utils';
 
 export const startModule = (bot: BotType) =>
   bot.command(BotCommand.START, async (ctx) => {
+    const telegramId = Number(ctx.message?.from.id);
     const messageId = Number(ctx.message?.message_id);
 
     await setValueToMemoryCache(
-      SELECTED_MODEL_KEY,
+      `${SELECTED_MODEL_KEY}-${telegramId}`,
       JSON.stringify(resetSelectedModel()),
       TTL_SELECTED_MODEL_CACHE,
     );

@@ -47,8 +47,9 @@ export const changeGptModelConversation: ConversationType = async (conversation,
 
     const selectedModel = await conversation.external(
       async () =>
-        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
-        resetSelectedModel(),
+        JSON.parse(
+          (await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}',
+        ) || resetSelectedModel(),
     );
 
     const {
@@ -104,7 +105,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
     };
 
     await setValueToMemoryCache(
-      SELECTED_MODEL_KEY,
+      `${SELECTED_MODEL_KEY}-${telegramId}`,
       JSON.stringify(changedModels),
       TTL_SELECTED_MODEL_CACHE,
     );

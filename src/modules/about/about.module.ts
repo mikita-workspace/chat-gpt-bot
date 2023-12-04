@@ -7,11 +7,12 @@ import { inlineGoToChat } from '@bot/keyboards';
 
 export const aboutModule = (bot: BotType) =>
   bot.command(BotCommand.ABOUT, async (ctx) => {
+    const telegramId = Number(ctx.message?.from.id);
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
     const selectedModel =
-      JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
+      JSON.parse((await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}') ||
       resetSelectedModel();
 
     const { gpt, speech, image, vision } = selectedModel;

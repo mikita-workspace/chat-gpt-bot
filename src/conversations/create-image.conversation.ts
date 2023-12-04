@@ -16,8 +16,9 @@ export const generateImageConversation: ConversationType = async (conversation, 
 
     const selectedModel = await conversation.external(
       async () =>
-        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
-        resetSelectedModel(),
+        JSON.parse(
+          (await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}',
+        ) || resetSelectedModel(),
     );
 
     const { image } = selectedModel;

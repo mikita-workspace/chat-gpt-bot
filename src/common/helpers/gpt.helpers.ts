@@ -16,7 +16,8 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   const messageId = Number(ctx.message?.message_id);
 
   const selectedModel =
-    JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') || resetSelectedModel();
+    JSON.parse((await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}') ||
+    resetSelectedModel();
 
   const { gpt: selectedGpt } = selectedModel;
   const currentAccountLevelName = ctx.session.client.accountLevel?.name;
@@ -50,7 +51,7 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
 
   if (!clientAccountLevel.gptModels.includes(selectedGpt.model)) {
     await setValueToMemoryCache(
-      SELECTED_MODEL_KEY,
+      `${SELECTED_MODEL_KEY}-${telegramId}`,
       JSON.stringify(resetSelectedModel()),
       TTL_SELECTED_MODEL_CACHE,
     );

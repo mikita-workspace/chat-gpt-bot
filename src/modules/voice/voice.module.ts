@@ -31,8 +31,9 @@ export const voiceModule = (bot: BotType) => {
       const message = await gptLoader(ctx, messageId);
 
       const selectedModel =
-        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
-        resetSelectedModel();
+        JSON.parse(
+          (await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}',
+        ) || resetSelectedModel();
 
       const { speech: selectedSpeechModel } = selectedModel;
 

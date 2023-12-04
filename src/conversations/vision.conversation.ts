@@ -20,8 +20,9 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
 
     const selectedModel = await conversation.external(
       async () =>
-        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
-        resetSelectedModel(),
+        JSON.parse(
+          (await getValueFromMemoryCache(`${SELECTED_MODEL_KEY}-${telegramId}`)) || '{}',
+        ) || resetSelectedModel(),
     );
 
     if (!selectedModel.vision.model) {
@@ -38,7 +39,7 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
         selectedModel.vision = changedModels;
 
         await setValueToMemoryCache(
-          SELECTED_MODEL_KEY,
+          `${SELECTED_MODEL_KEY}-${telegramId}`,
           JSON.stringify(selectedModel),
           TTL_SELECTED_MODEL_CACHE,
         );
