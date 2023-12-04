@@ -1,8 +1,8 @@
 import { generateImages } from '@bot/api/gpt';
 import { MAX_IMAGES_REQUEST } from '@bot/api/gpt/constants';
-import { BotCommand } from '@bot/common/constants';
-import { gptLoader } from '@bot/common/helpers';
-import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
+import { BotCommand, SELECTED_MODEL_KEY } from '@bot/common/constants';
+import { gptLoader, resetSelectedModel } from '@bot/common/helpers';
+import { expiresInFormat, getValueFromMemoryCache, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -14,7 +14,13 @@ export const generateImageConversation: ConversationType = async (conversation, 
     const messageId = Number(ctx?.message?.message_id);
     const locale = await conversation.external(() => ctx.i18n.getLocale());
 
-    const { image } = conversation.session.selectedModel;
+    const selectedModel = await conversation.external(
+      async () =>
+        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
+        resetSelectedModel(),
+    );
+
+    const { image } = selectedModel;
     const clientAccountLevel = conversation.session.client.accountLevel;
 
     if (

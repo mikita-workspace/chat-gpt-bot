@@ -1,8 +1,13 @@
 import { getGptModels, visionCompletion } from '@bot/api/gpt';
 import { TypeGPT } from '@bot/api/gpt/constants';
-import { SessionType } from '@bot/app/types';
-import { BotCommand, FILE_EXTENSIONS } from '@bot/common/constants';
-import { gptLoader } from '@bot/common/helpers';
+import {
+  BotCommand,
+  FILE_EXTENSIONS,
+  SELECTED_MODEL_KEY,
+  TTL_SELECTED_MODEL_CACHE,
+} from '@bot/common/constants';
+import { gptLoader, resetSelectedModel } from '@bot/common/helpers';
+import { getValueFromMemoryCache, setValueToMemoryCache } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -13,16 +18,30 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
     const telegramId = Number(ctx?.from?.id);
     const messageId = Number(ctx?.message?.message_id);
 
-    if (!conversation.session.selectedModel.vision.model) {
+    const selectedModel = await conversation.external(
+      async () =>
+        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
+        resetSelectedModel(),
+    );
+
+    if (!selectedModel.vision.model) {
       const gptModels = await conversation.external(() => getGptModels(telegramId));
 
       const visionModel = gptModels.find(({ type }) => type === TypeGPT.VISION);
 
       if (visionModel) {
-        (conversation.session.selectedModel as SessionType['selectedModel']).vision = {
+        const changedModels = {
           model: visionModel.model,
           title: visionModel.title,
         };
+
+        selectedModel.vision = changedModels;
+
+        await setValueToMemoryCache(
+          SELECTED_MODEL_KEY,
+          JSON.stringify(selectedModel),
+          TTL_SELECTED_MODEL_CACHE,
+        );
       } else {
         return await ctx.reply(ctx.t('vision-denied'), {
           reply_to_message_id: messageId,
@@ -56,7 +75,7 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
 
     const {
       vision: { model: visionModel },
-    } = conversation.session.selectedModel;
+    } = selectedModel;
 
     const response = await conversation.external(() =>
       visionCompletion(query, messageId, filename, telegramId, visionModel as unknown as string),

@@ -1,16 +1,24 @@
 import { chatCompletion } from '@bot/api/gpt';
 import { MAX_CONTEXT_TOKENS, MessageRolesGPT } from '@bot/api/gpt/constants';
 import { BotContextType, SessionMessageType } from '@bot/app/types';
+import { SELECTED_MODEL_KEY, TTL_SELECTED_MODEL_CACHE } from '@bot/common/constants';
 import { encode } from 'gpt-3-encoder';
 
 import { resetSelectedModel } from '../helpers';
-import { removeValueFromMemoryCache } from '../utils';
+import {
+  getValueFromMemoryCache,
+  removeValueFromMemoryCache,
+  setValueToMemoryCache,
+} from '../utils';
 
 export const getGptContent = async (ctx: BotContextType, text: string) => {
   const telegramId = Number(ctx.message?.from?.id);
   const messageId = Number(ctx.message?.message_id);
 
-  const { gpt: selectedGpt } = ctx.session.selectedModel;
+  const selectedModel =
+    JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') || resetSelectedModel();
+
+  const { gpt: selectedGpt } = selectedModel;
   const currentAccountLevelName = ctx.session.client.accountLevel?.name;
 
   ctx.session.client.messages.push({
@@ -41,7 +49,11 @@ export const getGptContent = async (ctx: BotContextType, text: string) => {
   ctx.session.store.data = content;
 
   if (!clientAccountLevel.gptModels.includes(selectedGpt.model)) {
-    ctx.session.selectedModel = resetSelectedModel();
+    await setValueToMemoryCache(
+      SELECTED_MODEL_KEY,
+      JSON.stringify(resetSelectedModel()),
+      TTL_SELECTED_MODEL_CACHE,
+    );
   }
 
   if (clientAccountLevel.name !== currentAccountLevelName) {

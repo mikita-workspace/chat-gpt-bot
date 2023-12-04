@@ -1,7 +1,8 @@
 import { transcription } from '@bot/api/gpt';
 import { BotType } from '@bot/app/types';
-import { getGptContent, gptLoader } from '@bot/common/helpers';
-import { expiresInFormat, isExpiredDate } from '@bot/common/utils';
+import { SELECTED_MODEL_KEY } from '@bot/common/constants';
+import { getGptContent, gptLoader, resetSelectedModel } from '@bot/common/helpers';
+import { expiresInFormat, getValueFromMemoryCache, isExpiredDate } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -29,7 +30,11 @@ export const voiceModule = (bot: BotType) => {
 
       const message = await gptLoader(ctx, messageId);
 
-      const { speech: selectedSpeechModel } = ctx.session.selectedModel;
+      const selectedModel =
+        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
+        resetSelectedModel();
+
+      const { speech: selectedSpeechModel } = selectedModel;
 
       const filename = (await ctx.getFile()).file_path ?? '';
 

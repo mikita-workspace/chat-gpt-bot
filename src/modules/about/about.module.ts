@@ -1,7 +1,8 @@
 import { getGithubReleases } from '@bot/api/github';
 import { BotType } from '@bot/app/types';
-import { BotCommand, botName, DATE_FORMAT } from '@bot/common/constants';
-import { formatDate } from '@bot/common/utils';
+import { BotCommand, botName, DATE_FORMAT, SELECTED_MODEL_KEY } from '@bot/common/constants';
+import { resetSelectedModel } from '@bot/common/helpers';
+import { formatDate, getValueFromMemoryCache } from '@bot/common/utils';
 import { inlineGoToChat } from '@bot/keyboards';
 
 export const aboutModule = (bot: BotType) =>
@@ -9,7 +10,11 @@ export const aboutModule = (bot: BotType) =>
     const messageId = Number(ctx.message?.message_id);
     const locale = await ctx.i18n.getLocale();
 
-    const { gpt, speech, image, vision } = ctx.session.selectedModel;
+    const selectedModel =
+      JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
+      resetSelectedModel();
+
+    const { gpt, speech, image, vision } = selectedModel;
 
     const releases = await getGithubReleases();
 

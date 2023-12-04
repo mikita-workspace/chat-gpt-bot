@@ -15,27 +15,28 @@ export type SessionType = {
     metadata: ClientMetadata;
     accountLevel: ClientAccountLevel | null;
   };
-  selectedModel: {
-    speech: {
-      model: string;
-      title: string;
-    };
-    gpt: {
-      model: string;
-      title: string;
-    };
-    image: {
-      model: string;
-      title: string;
-      max: number;
-    };
-    vision: {
-      model: string | null;
-      title: string | null;
-    };
-  };
   store: {
     data: unknown;
+  };
+};
+
+export type SelectedModelType = {
+  speech: {
+    model: string;
+    title: string;
+  };
+  gpt: {
+    model: string;
+    title: string;
+  };
+  image: {
+    model: string;
+    title: string;
+    max: number;
+  };
+  vision: {
+    model: string | null;
+    title: string | null;
   };
 };
 

@@ -3,9 +3,9 @@ import {
   MODEL_IMAGE_DEFAULT,
   MODEL_SPEECH_DEFAULT,
 } from '@bot/api/gpt/constants';
-import { SessionType } from '@bot/app/types';
+import { SelectedModelType, SessionType } from '@bot/app/types';
 
-export const resetSelectedModel = (): SessionType['selectedModel'] => ({
+export const resetSelectedModel = (): SelectedModelType => ({
   gpt: {
     model: MODEL_GPT_DEFAULT.model,
     title: MODEL_GPT_DEFAULT.title,

@@ -1,7 +1,9 @@
 import { getGptModels } from '@bot/api/gpt';
 import { MODEL_IMAGE_DEFAULT, MODEL_SPEECH_DEFAULT, TypeGPT } from '@bot/api/gpt/constants';
 import { GptModelResponse } from '@bot/api/gpt/types';
-import { BotCommand } from '@bot/common/constants';
+import { BotCommand, SELECTED_MODEL_KEY, TTL_SELECTED_MODEL_CACHE } from '@bot/common/constants';
+import { resetSelectedModel } from '@bot/common/helpers';
+import { getValueFromMemoryCache, setValueToMemoryCache } from '@bot/common/utils';
 import { gptKeyboard } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -43,11 +45,17 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       return await ctx.reply(ctx.t('error-message-common'), { reply_to_message_id: messageId });
     }
 
+    const selectedModel = await conversation.external(
+      async () =>
+        JSON.parse((await getValueFromMemoryCache(SELECTED_MODEL_KEY)) || '{}') ||
+        resetSelectedModel(),
+    );
+
     const {
       gpt: selectedGptModel,
       image: selectedImageModel,
       speech: selectedSpeechModel,
-    } = conversation.session.selectedModel;
+    } = selectedModel;
 
     await ctx.reply(ctx.t('gpt-model-change-title'), {
       reply_markup: gptKeyboard(inlineClientGptModels),
@@ -75,7 +83,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       associated.includes(newGptModel?.model || ''),
     );
 
-    conversation.session.selectedModel = {
+    const changedModels = {
       gpt: {
         model: newGptModel?.model || selectedGptModel.model,
         title: newGptModel?.title || selectedGptModel.title,
@@ -95,7 +103,11 @@ export const changeGptModelConversation: ConversationType = async (conversation,
       },
     };
 
-    const changedModels = conversation.session.selectedModel;
+    await setValueToMemoryCache(
+      SELECTED_MODEL_KEY,
+      JSON.stringify(changedModels),
+      TTL_SELECTED_MODEL_CACHE,
+    );
 
     return await ctx.reply(
       `${ctx.t('gpt-model-change-success')}\n\r\n\r<b>${ctx.t('about-gpt-model')}</b> <s>${

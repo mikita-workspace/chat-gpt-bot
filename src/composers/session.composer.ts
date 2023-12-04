@@ -1,10 +1,6 @@
 import { BotContextType, SessionType } from '@bot/app/types';
 import { ONE_HOUR_MS } from '@bot/common/constants';
-import {
-  createInitialClientSession,
-  createInitialStoreSession,
-  resetSelectedModel,
-} from '@bot/common/helpers';
+import { createInitialClientSession, createInitialStoreSession } from '@bot/common/helpers';
 import { config } from '@bot/config';
 import { RedisAdapter } from '@grammyjs/storage-redis';
 import { StorageAdapter } from '@grammyjs/storage-redis/dist/cjs/deps.node';
@@ -48,9 +44,6 @@ composer.use(
     client: {
       storage: clientStorage<SessionType['client']>(),
       initial: createInitialClientSession,
-    },
-    selectedModel: {
-      initial: resetSelectedModel,
     },
     store: {
       initial: createInitialStoreSession,

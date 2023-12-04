@@ -32,6 +32,7 @@ export enum LocaleName {
 }
 
 export const WEBHOOK_TIMEOUT = 60_000;
+export const TTL_SELECTED_MODEL_CACHE = 60 * 60 * 24 * 30;
 
 // Winston logger
 export const winstonConfig = {
@@ -75,3 +76,5 @@ export enum FeedbackAction {
 }
 
 export const FILE_EXTENSIONS = ['jpg', 'jpeg', 'png'];
+
+export const SELECTED_MODEL_KEY = 'selected-model-key';
