@@ -20,7 +20,7 @@ import { startModule } from '@bot/modules/start';
 import { supportModule } from '@bot/modules/support';
 import { textModule } from '@bot/modules/text';
 import { voiceModule } from '@bot/modules/voice';
-import { autoRetry } from '@grammyjs/auto-retry';
+// import { autoRetry } from '@grammyjs/auto-retry';
 import { hydrateFiles } from '@grammyjs/files';
 import { hydrate } from '@grammyjs/hydrate';
 import { I18n } from '@grammyjs/i18n';
@@ -55,7 +55,7 @@ export const createBot = () => {
     });
   });
 
-  bot.api.config.use(autoRetry());
+  // bot.api.config.use(autoRetry());
 
   bot.api.config.use(apiThrottler());
 
