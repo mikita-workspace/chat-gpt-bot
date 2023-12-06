@@ -1,10 +1,10 @@
 import { createBot } from '@bot/app';
-import { WEBHOOK_TIMEOUT } from '@bot/common/constants';
-import { handleTimeoutError } from '@bot/common/helpers';
-import { config } from '@bot/config';
+// import { WEBHOOK_TIMEOUT } from '@bot/common/constants';
+// import { handleTimeoutError } from '@bot/common/helpers';
+// import { config } from '@bot/config';
 import { run } from '@grammyjs/runner';
-import express from 'express';
-import { webhookCallback } from 'grammy';
+// import express from 'express';
+// import { webhookCallback } from 'grammy';
 
 const botInitialize = async () => {
   const bot = createBot();
@@ -23,8 +23,8 @@ const botInitialize = async () => {
   //     console.info(`Bot listening on port ${config.PORT}`);
   //   });
   // } else {
-    // Use Long Polling for development
-    run(bot);
+  // Use Long Polling for development
+  run(bot, { runner: { fetch: { timeout: 60 * 5 } } });
   // }
 
   process.once('SIGINT', () => bot.stop());
