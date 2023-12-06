@@ -31,7 +31,7 @@ export enum LocaleName {
   RUSSIAN = 'Русский',
 }
 
-export const WEBHOOK_TIMEOUT = 120_000;
+export const WEBHOOK_TIMEOUT = 300_000;
 export const TTL_SELECTED_MODEL_CACHE = 60 * 60 * 24 * 30;
 
 // Winston logger
