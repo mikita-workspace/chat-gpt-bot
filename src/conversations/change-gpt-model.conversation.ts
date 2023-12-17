@@ -122,7 +122,7 @@ export const changeGptModelConversation: ConversationType = async (conversation,
         changedModels.vision.title
           ? `\n\r<b>${ctx.t('about-vision-model')}</b> ${changedModels.vision.title}`
           : ''
-      }\n\r\n\r<b>by ${newGptModel?.creator || ''}</b>`,
+      }\n\r\n\r<b>Powered by ${newGptModel?.creator || ''}</b>`,
       {
         reply_markup: { remove_keyboard: true },
         parse_mode: 'HTML',
