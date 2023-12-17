@@ -26,28 +26,9 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
     );
 
     if (!selectedModel.vision.model) {
-      const gptModels = await conversation.external(() => getGptModels(telegramId));
-
-      const visionModel = gptModels.find(({ type }) => type === TypeGPT.VISION);
-
-      if (visionModel) {
-        const changedModels = {
-          model: visionModel.model,
-          title: visionModel.title,
-        };
-
-        selectedModel.vision = changedModels;
-
-        await setValueToMemoryCache(
-          `${SELECTED_MODEL_KEY}-${telegramId}`,
-          JSON.stringify(selectedModel),
-          TTL_SELECTED_MODEL_CACHE,
-        );
-      } else {
-        return await ctx.reply(ctx.t('vision-denied'), {
+      return await ctx.reply(ctx.t('vision-denied'), {
           reply_to_message_id: messageId,
-        });
-      }
+      });
     }
 
     const filename = (await ctx.getFile()).file_path ?? '';
