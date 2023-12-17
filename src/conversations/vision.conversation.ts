@@ -1,13 +1,7 @@
-import { getGptModels, visionCompletion } from '@bot/api/gpt';
-import { TypeGPT } from '@bot/api/gpt/constants';
-import {
-  BotCommand,
-  FILE_EXTENSIONS,
-  SELECTED_MODEL_KEY,
-  TTL_SELECTED_MODEL_CACHE,
-} from '@bot/common/constants';
+import { visionCompletion } from '@bot/api/gpt';
+import { BotCommand, FILE_EXTENSIONS, SELECTED_MODEL_KEY } from '@bot/common/constants';
 import { gptLoader, resetSelectedModel } from '@bot/common/helpers';
-import { getValueFromMemoryCache, setValueToMemoryCache } from '@bot/common/utils';
+import { getValueFromMemoryCache } from '@bot/common/utils';
 import { inlineFeedback } from '@bot/keyboards';
 import { Logger } from '@bot/services';
 
@@ -27,7 +21,7 @@ export const visionConversation: ConversationType = async (conversation, ctx) =>
 
     if (!selectedModel.vision.model) {
       return await ctx.reply(ctx.t('vision-denied'), {
-          reply_to_message_id: messageId,
+        reply_to_message_id: messageId,
       });
     }
 
