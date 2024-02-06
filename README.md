@@ -18,6 +18,7 @@ Text:
 gpt-3.5-turbo-1106 (Base)
 gpt-4-1106-preview (Promo & Premium)
 GigaChat:latest (Premium)
+GigaChat-Pro (Premium)
 
 Audio:
 whisper-1 (Base)
